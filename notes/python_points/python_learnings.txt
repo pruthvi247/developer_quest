@@ -1,0 +1,2190 @@
+==============================================================================
+===================================Durgasoft==================================
+==============================================================================
+
+link : "https://www.youtube.com/watch?v=VqSNhdCyZUc&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=5"
+
+Link : "https://www.youtube.com/watch?v=Y3ASaSgOQNo&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=6"
+
+_ => private variables
+__ => Double under score (strictly private,strongly private)
+__main__ => magic methods->language defined special identifiers.
+
+=======================
+range  |
+       |=> Both are also data types
+none   |
+========================
+Base conversions:
+> bin()
+> oct()
+> hex()
+>> for float data type there is no such thing like binary,octa,hexa
+>> exponential form:
+	1.2e^3 -> 1.2*10^3
+>> complex :
+		10+20j, a+bj -> j is compulsory(imaginary)
+		a = 0B111 +20j (correct)
+		a = 15 + oB111j (incorrect)
+==========================
+Strings :
+	Thriple single/Double quotes are used for multiline string
+	a = ''' hello
+				world'''
+==============================================================================
+==============================================================================
+
+fundamental data types :
+---------------------
+int,float,boolean,complex,string
+complex(x,y)-> x+yj
+
+immutable vs fundamental data types:
+-----------------------------------
+> all fundamental data types are immutable
+
+x= 10  |
+y = 10 | -> both are pointing to same object ie. id(x)=id(y)
+
+> x is y (to check if both objects are pointing to same object, instead of using id())
+
+
+>>> x =257
+>>> y =257
+>>> x is y
+False (int capacity is 256 anything greater than 256 will create different objects)
+
+>>> x = 10.0
+>>> y = 10.0
+>>> x is y
+False (no object reuse concept in float, same with complex types)
+
+==================================================================================
+Link : https://www.youtube.com/watch?v=8SdPW2NA1vI&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=9
+==================================================================================
+
+only in following ranges :
+------------------------
+> reusing same object
+int -> 0 to 256
+bool -> always
+string -> some times rule are not clear
+
+>float and complex doesnt have reusing objects concept
+>reason: when python interpreter starts 0 to 256 objects will be created, 0 to 256 is most commonly used, same with "string object"
+> float doesnot have object reusability because ,bet ween 0 and one we have infinite number of values Eg: 0.1,0.11,0.1111 ..... it is difficult for python interpreter to create all the objects, same with complex 0.1+0.2j
+
+> there are infinite number of strings also:
+>>> a = "python is cool!"
+>>> b = "python is cool!"
+>>> a is b
+False
+
+>>> a = "python"
+>>> b = "python"
+>>> a is b
+True   # a and b refer to the same object!
+
+====================
+
+
+>>> L = [1, 2, 3]
+>>> id(L)
+4431388424
+>>> L = L + [4]
+>>> id(L)
+4434330504   
+
+subtle difference behind the operators. The + operator calls the __add__ magic method (these are methods automatically called instead of having to be explicitly invoked), which does not modify either arguments. Hence, the expression L + [4] creates a new object with the value [1, 2, 3, 4], which L on the left hand side now refers to. On the other hand, the += operator calls __iadd__ that modifies the arguments in place.
+
+================Type system=================
+
+width: int
+width = 15
+ 
+
+from typing import List
+
+
+> my_list: List[int]
+
+from typing import Tuple
+
+> bob: Tuple[str, str, int] = ('Bob', 'Smith', 25)
+
+> def broken_add(x: int, y: int) -> str:
+
+====================
+https://www.youtube.com/watch?v=m6P5Xx4Y1n8&index=10&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF
+====================
+
+List[] : mutable
+------------------------
+> insertion order is preserved
+> duplicates are allowed
+> heteroteneous objects are allowed -> s= [10,"durga",True]
+> growable in size
+> list example - [10,20,30]
+> index ==> +ve or -ve
+	+ve from left to right
+	-ve from right to left
+> slice operator is applicable
+
+>>> s= [10,"durga",True]
+>>> s1 = s*2  (repetetion operator)
+>>> [10,"durga",True,10,"durga",True]
+
+>>> s * s -> not applicable (* should be int)
+
+
+tuple():
+-----
+> same as list
+> only difference is tuple is immutable
+L = []
+T = ()
+
+range():
+-------
+> range data type represent a sequence of values
+> range is immutable
+> slicing is applicable
+syntax :
+	Form 1 -> range(10) >>> it represents values form 0 to 9
+	Form 2 -> range(10,30) >>> represents numbers form 10 to 29
+	Form 3 -> range(10,50,5) >>> 10 to 49 increment by 5 (step)
+> range is applicable of int, not applicatble for float ,range(20.6)
+
+Set{}:
+-----
+> s=set()
+> no duplicates,no insertion order
+> index and slicing is not applicable in set ie. s[0]-> does not support and same with slicing s[1:]
+> slicing and indexing is not applicable while reading
+> set is mutable
+> s.add('durga') -> applicable
+> s.remove(20) -> applicable
+> set is growable
+
+>> bytes is immutable byte array is mutable
+
+forzenset:
+---------
+fs = frozenset(s)
+> frozenset -> immutable
+> fs.add(50) -> not applicatble
+
+
+dict{}:
+----
+> d = {} -> by default it is dict
+> mutable
+> d = {100:'durga',200:'hello'}
+> keys can not be duplicate, values can be
+> d[300] = 'tuts'
+> d[300] = 'chinni' -> old value will be replace with new value
+
+
+escape characters :
+s = "durga \n soft"
+>>> s
+durga
+software
+
+> \n , \t, \r,\f,\',\",\\,\v
+
+10/4=2.5 <----normal division
+10//4=2 <----floor division
+
+Chaining of relation operators:
+------------------------------
+>>> 10<20<30
+true
+> if one condition fails then result will be false
+>>>10<10<20
+false
+>>> 10<20<35>3
+true
+
+
+> the are no increment and decrement operators in python -> x++,--y
+
+Ternary operator:
+----------------
+> in other languages
+	x = (condition)?truevalue:falsevalue	
+	x= (10<20)?true:false
+> in python
+	x = firstvalue if condition else secondvalue
+	x=30 if 10<20 else 40
+	x=30 if 10>20 else 40 if 10<20 else 50
+
+
+==============================================================
+https://www.youtube.com/watch?v=JYuE8ZiDPl4
+==============================================================
+
+
+
+>>> num =[]1,2,3,4,5] - > list
+>>> squares = (n**2 for n in numbers) - > generators
+ > generators are lazy
+ > tuple(squares)
+
+Containment checking:
+--------------------
+>>> 9 in squares
+True
+>>> 9 in squares
+False
+
+Unpacking:
+---------
+>>> counts = {'apples':2,"oranges":1}
+>>> x,y = counts
+>>> x
+'apples'
+
+
+Python for loop:
+---------------
+> python for loop is not same as for loop in other languages
+> iterables are the ones which can be looped
+> iterators are used in looping (for loop) in python
+
+> Iterable is an object, which one can iterate over. It generates an Iterator when passed to iter() method. Iterator is an object, which is used to iterate over an iterable object using __next__() method.
+
+>>> numbers = [1,2,3,4,5]
+>>> coordianates =(4,5,6,7)
+>>> iter(numbers)
+>>> iter(coordiantes)
+
+>>> numbers = [1,2,3,4,5]
+>>> iterator = iter(numbers)
+>>> next(iterator)
+
+Iterator protocol in python:
+---------------------------
+>>>	for item in iterable
+		action(on item)
+
+
+> generators are iterators
+> we can loop over generators
+
+
+iterators vs iterables:
+----------------------
+
+> Every iterator is also an iterable, but not every iterable is an iterator
+
+> For example, a list is iterable but a list is not an iterator. An iterator can be created from an iterable by using the function iter()
+
+>>>
+# list of cities 
+cities = ["Berlin", "Vienna", "Zurich"] 
+  
+# intialize the object 
+iterator_obj = iter(cities) 
+  
+print(next(iterator_obj)) 
+
+[link:] https://www.freecodecamp.org/news/how-and-why-you-should-use-python-generators-f6fb56650888/
+
+An iterator is defined by a class that implements the Iterator Protocol. This protocol looks for two methods within the class: __iter__ and __next__.
+
+Identity operator:
+---------------
+a is b -> compares address
+a == b -> compares content
+
+Membership operator:
+------------------
+
+>>> list1 =[1,2,3,5]
+>>> 5 in list1
+True
+
+Reading user input(python 3) :
+------------------
+> x = input("enter some number ") - > str type, we need to use type casting functions
+
+read multiple values from input:
+
+x,y = [int(x) for x in input("enter 2 numbers:").split()]
+
+
+eval():
+------
+>>> x = eval("10+20+30")
+>>> print(x)
+60
+
+>>> x = eval(input("enter some list :"))
+>>>print(type(x))
+<class 'list'>
+
+command line arguments:
+----------------------
+argv ==> list type -> it is in sys module -> from sys import argv
+
+
+
+====================================================================
+https://www.youtube.com/watch?v=uPpaeHPjDoI&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=2
+====================================================================
+
+class employee:
+	'''description of your class- doc string'''
+	def __init_(self,enam,eno):
+		self.ename=name
+		self.eno=eno
+	def info(self)
+		print(self.ename)
+		print(self.eno)
+
+e1 = employee('surya','123')
+
+Docstring :
+---------
+> if we want to access doc string -> print(employee.__doc__)
+> (or) help(employee)
+
+self variable:
+-------------
+> 'self' variable always points to current object
+>>> print(id(self))
+>>> e = employee()
+>>> id(self) == id(s)
+>>> e1 = employee()
+>>> id(self) == id(e1)
+
+
+
+class employee:
+	'''description of your class- doc string'''
+	def __init_(self,enam,eno):
+		self.ename=name
+		self.eno=eno
+	def info(self):
+		eno = 888       |-> local variable
+		print(eno)		|
+		print(self.eno)	|-> see the diff, and why we  use self.
+
+
+> with in the class to access instance variables we can use self 
+> first argument of class will be treated as self
+
+__init__:
+
+
+constructor: to declare and initialize instance variables
+> constructor will be executed only once
+> every constructor will be taking atleast one argument (self)
+
+
+========================================================================
+https://www.youtube.com/watch?v=IioFvmBgDnQ
+========================================================================
+
+f1 = outer() -> function call
+f1= outer -> for outer funtion we are giving another name
+
+funtion decorators:
+------------------
+
+decorator(input funtion):
+	retrun "output funtion_with extended funtionality"
+
+
+=====================================================
+https://www.youtube.com/watch?v=H7yIT4u00C8
+=====================================================
+Logging:
+-------
+CRITICAL 	-->50
+ERROR		-->40
+WARNING		-->30
+info    	-->20
+DEBUG		-->10
+NOTSET		-->0
+
+
+NOTSET<DEBUG<INFO<WARNING<ERROR<CRITICAL
+
+
+logging.basicConfig(level=logging.INFO,format='%(asctime)s:%(levelname)s:%(message)s')
+
+logging.debug("starting....")
+
+
+=====================================================
+https://www.youtube.com/watch?v=5_cJIcgM7rw
+=====================================================
+Definitions:
+-----------
+> iterable: anything you can loop over
+> list comprehension : for making a new list from an iterable
+> generator : for making a "lazy"(pause-able) iterable
+> generator expression : used to make a generator
+
+
+
+Turning lis into list:
+--------------------
+
+new_list = [n**2 for n in numbers if n%2 == 1]
+
+> we can add more for loops in list comprehension:
+Multiple loops:
+--------------
+flattened = [ item
+ for row in matrix
+ for item in row]
+
+Set comprehensions:
+------------------
+
+new_set = {n**2 for n in numbers if n%2 == 1}
+
+Dictionary comprehensions:
+-------------------------
+> both set and dict uses curly braces('{}') in comprehension, only thing that differs is ':'(colon)
+eg : letter_position = {
+	letter :n
+	for n, letter in enumerate(ascii_lowercase,start=1)
+}
+
+-----------------------------
+Generator expressions:
+---------------------
+
+> If you are making a list to loop over it exactly once, use a generator expression instead for a list comprehension
+
+Do's and dont's:
+---------------
+> print statements should not be part of comprehensions
+> do not use comprehension if we are not modifying elemets of list or if you are not filtering data
+> 
+
+
+
+=====================================================
+https://realpython.com/python-keyerror/
+=====================================================
+
+Python KeyError:
+---------------
+
+> A Python KeyError exception is what is raised when you try to access a key that isn’t in a dictionary (dict)
+> When You Need to Raise a Python KeyError in Your Own Code -> raise KeyError(message)
+
+How to Handle a Python KeyError When You See It :
+-----------------------------------------------
+
+The Usual Solution: .get() :
+
+# ages.py
+
+ages = {'Jim': 30, 'Pam': 28, 'Kevin': 33}
+person = input('Get age for: ')
+age = ages.get(person)
+
+if age:
+    print(f'{person} is {age} years old.')
+else:
+    print(f"{person}'s age is unknown.")
+
+
+> we can pass default value when key is not found -> age = ages.get(person, default=0)
+
+The General Solution: try except :
+
+# ages.py
+
+ages = {'Jim': 30, 'Pam': 28, 'Kevin': 33}
+person = input('Get age for: ')
+
+try:
+    print(f'{person} is {ages[person]} years old.')
+except KeyError:
+    print(f"{person}'s age is unknown.")
+
+=================================================================
+https://towardsdatascience.com/bite-sized-python-recipes-52cde45f1489
+=================================================================
+Create a Dictionary From Two Lists:
+----------------------------------
+
+>>> prod_id = [1, 2, 3]
+>>> prod_name = ['foo', 'bar', 'baz']
+>>> prod_dict = dict(zip(prod_id, prod_name))
+
+Remove Duplicates From a List and Keep the Order:
+------------------------------------------------
+>>> list(dict.fromkeys(nums))
+[1, 2, 4, 3, 0, 5]
+
+
+
+Be careful not to mix up mutable and immutable objects!:
+-------------------------------------------------------
+>>> nums = [1, 2, 3, 4]
+# Create a dictionary with keys from the list. 
+# Let's implement the dictionary in two ways
+>>> d1 = {n: [] for n in nums}
+>>> d2 = dict.fromkeys(nums, [])
+# d1 and d2 may look similar. But list is mutable.
+>>> d1[1].append(5)
+>>> d2[1].append(5)
+# Let's see if d1 and d2 are similar
+>>> print(f'd1 = {d1} \nd2 = {d2}')
+d1 = {1: [5], 2: [], 3: [], 4: []} 
+d2 = {1: [5], 2: [5], 3: [5], 4: [5]}
+
+
+=================================================================
+https://realpython.com/python-modules-packages/
+=================================================================
+
+
+> you can put the module file in any directory of your choice and then modify sys.path at run-time so that it contains that directory
+>>> sys.path.append(r'C:\Users\john')
+>>> sys.path
+
+> Once a module has been imported, you can determine the location where it was found with the module’s __file__ attribute
+
+>>> import mod
+>>> mod.__file__
+
+
+> Python 3 does not allow the indiscriminate import * syntax from within a function:
+
+>>> def bar():
+...     from mod import *
+...
+SyntaxError: import * only allowed at module level
+
+
+A try statement with an except ImportError clause can be used to guard against unsuccessful import attempts:
+
+>>> try:
+...     # Non-existent module
+...     import baz
+... except ImportError:
+...     print('Module not found')
+...
+
+Module not found
+
+The dir() Function:
+
+> The built-in function dir() returns a list of defined names in a namespace. Without arguments, it produces an alphabetically sorted list of names in the current local symbol table
+> A namespace is a system to have a unique name for each and every object in Python. An object might be a variable or a method. Python itself maintains a namespace in the form of a Python dictionary
+> The built-in namespace encompasses global namespace and global namespace encompasses local namespace.
+
+> This can be useful for identifying what exactly has been added to the namespace by an import statement:
+
+>>> import mod
+>>> dir()
+['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__',
+'__package__', '__spec__', 'mod']
+
+> When given an argument that is the name of a module, dir() lists the names defined in the module:
+>>> import mod
+>>> dir(mod)
+['Foo', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__',
+'__name__', '__package__', '__spec__', 'a', 'foo', 's']
+
+> If you make a change to a module and need to reload it, you need to either restart the interpreter or use a function called reload() from module importlib:
+
+>>> import importlib
+>>> importlib.reload(mod)
+
+Package Initialization:
+
+> If a file named __init__.py is present in a package directory, it is invoked when the package or a module in the package is imported. This can be used for execution of package initialization code, such as initialization of package-level data.
+
+>>> import pkg
+Invoking __init__.py for pkg
+>>> pkg.A
+['quux', 'corge', 'grault']
+
+A module in the package can access the global by importing it in turn:
+
+mod1.py
+
+def foo():
+    from pkg import A
+    print('[mod1] foo() / A = ', A)
+
+class Foo:
+    pass
+----->
+>>> from pkg import mod1
+Invoking __init__.py for pkg
+>>> mod1.foo()
+[mod1] foo() / A =  ['quux', 'corge', 'grault']
+
+
+> Python follows this convention: if the __init__.py file in the package directory contains a list named __all__, it is taken to be a list of modules that should be imported when the statement from <package_name> import * is encountered.
+
+> pkg/__init__.py
+
+__all__ = [
+        'mod1',
+        'mod2',
+        'mod3',
+        'mod4'
+        ]
+>>> from pkg import *
+>>> dir()
+['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__',
+'__package__', '__spec__', 'mod1', 'mod2', 'mod3', 'mod4']
+
+
+=================================================================
+https://www.geeksforgeeks.org/class-method-vs-static-method-python/
+=================================================================
+Class Method:
+
+> A class method is a method which is bound to the class and not the object of the class.
+> They have the access to the state of the class as it takes a class parameter that points to the class and not the object instance.
+> It can modify a class state that would apply across all the instances of the class. For example it can modify a class variable that will be applicable to all the instances
+> A class method receives the class as implicit first argument, just like an instance method receives the instance
+
+Static Method:
+
+> A static method does not receive an implicit first argument.
+> A static method is also a method which is bound to the class and not the object of the class.
+> A static method can’t access or modify class state.
+> It is present in a class because it makes sense for the method to be present in class.
+
+Class method vs Static Method:
+
+> A class method takes cls as first parameter while a static method needs no specific parameters.
+> A class method can access or modify class state while a static method can’t access or modify it.
+> In general, static methods know nothing about class state. They are utility type methods that take some parameters and work upon those parameters. On the other hand class methods must have class as parameter.
+> We generally use class method to create factory methods. Factory methods return class object ( similar to a constructor ) for different use cases.
+> We generally use static methods to create utility functions.
+--->
+# Python program to demonstrate  
+# use of class method and static method. 
+from datetime import date 
+  
+class Person: 
+    def __init__(self, name, age): 
+        self.name = name 
+        self.age = age 
+      
+    # a class method to create a Person object by birth year. 
+    @classmethod
+    def fromBirthYear(cls, name, year): 
+        return cls(name, date.today().year - year) 
+      
+    # a static method to check if a Person is adult or not. 
+    @staticmethod
+    def isAdult(age): 
+        return age > 18
+  
+person1 = Person('mayank', 21) 
+person2 = Person.fromBirthYear('mayank', 1996) 
+  
+print person1.age 
+print person2.age 
+  
+# print the result 
+print Person.isAdult(22) 
+
+=================================================================
+https://www.geeksforgeeks.org/decorators-in-python/
+=================================================================
+
+Decorators in Python:
+
+In Decorators, functions are taken as the argument into another function and then called inside the wrapper function.
+
+@gfg_decorator
+def hello_decorator(): 
+    print("Gfg") 
+  
+'''Above code is equivalent to - 
+  
+def hello_decorator(): 
+    print("Gfg") 
+      
+hello_decorator = gfg_decorator(hello_decorator)'''
+
+----->
+# defining a decorator 
+def hello_decorator(func): 
+  
+    # inner1 is a Wrapper function in  
+    # which the argument is called 
+      
+    # inner function can access the outer local 
+    # functions like in this case "func" 
+    def inner1(): 
+        print("Hello, this is before function execution") 
+  
+        # calling the actual function now 
+        # inside the wrapper function. 
+        func() 
+  
+        print("This is after function execution") 
+          
+    return inner1 
+  
+  
+# defining a function, to be called inside wrapper 
+def function_to_be_used(): 
+    print("This is inside the function !!") 
+  
+  
+# passing 'function_to_be_used' inside the 
+# decorator to control its behavior 
+function_to_be_used = hello_decorator(function_to_be_used) 
+  
+  
+# calling the function 
+function_to_be_used() 
+
+Output:
+
+Hello, this is before function execution
+This is inside the function !!
+This is after function execution
+
+
+
+=================================================================
+https://realpython.com/instance-class-and-static-methods-demystified/
+=================================================================
+
+Instance, Class, and Static Methods :
+-----------------------------------	
+Instance Method :
+
+> Not only can they modify object state, instance methods can also access the class itself through the self.__class__ attribute. This means instance methods can also modify class state.
+
+Class Methods:
+
+> the class method only has access to this cls argument, it can’t modify object instance state. That would require access to self. However, class methods can still modify class state that applies across all instances of the class.
+
+> static method can neither modify object state nor class state. Static methods are restricted in what data they can access - and they’re primarily a way to namespace your methods.
+
+
+## when a class method is invoked through the object instance, you get the class passed that belongs to the specific object (i.e. the type of that object), not necessarily the class in which the class method was defined.
+
+An example:
+
+class Animal:
+    @classmethod
+    def showcls(cls):
+        print("The class is {cls!r}".format(cls=cls))
+
+
+class Dog(Animal):
+    pass
+
+
+spaniel = Dog()
+spaniel.showcls()
+The class is <class 'Dog'>
+
+=================================================================
+https://realpython.com/pointers-in-python/
+=================================================================
+
+>>> s += "_rocks"
+
+> The += operator translates to various method calls.
+
+For some objects like list, += will translate into __iadd__() (in-place add). This will modify self and return the same ID. However, str and int don’t have these methods and result in __add__() calls instead of __iadd__().
+
+> sys.getrefcount(object)
+	Return the reference count of the object. The count returned is generally one higher than you might expect, because it includes the (temporary) reference as an argument to getrefcount().
+
+
+======= Durgasoft variable =======
+
+6 levels in logging
+> critical ==>50
+> error ==>40
+> warning ==>30
+> info ==>20
+> debug ==> 10
+> notset ==>0
+----------------------
+
+How to implement logginig:
+-------------------------
+name of file
+level of message
+
+basicConfig() of logging module
+
+loggging.basicConfig(filename='log.txt',level=logging.warning)
+
+
+logging.debug(message)
+logging.info(message) 
+-----------------------
+session 2 oops -42
+----------
+
+objectreference.__dict__
+
+
+to delete instance variable:
+-------------------------
+out side the class -> del objectreference.variablename
+t1 = Test()
+del t1.a
+
+with in the class  -> del self.variablename
+
+def delete(self):
+	del self.b
+	del self.c
+
+Class methods
+--------------------------
+Class methods are the third and final OOP method type to know. Class methods know about their class. They can’t access specific instance data, but they can call other static methods.
+
+Class methods don’t need self as an argument, but they do need a parameter called cls. This stands for class, and like self, gets automatically passed in by Python.
+================================================================
+====== advanced python types of variales and methods - lec 3====
+
+https://www.youtube.com/watch?v=rGU9DJ4TNLw&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=3
+================================================================
+
+
+> constructor will be executed only once, where as method can be called any number of times.
+ 
+3 types of variables:
+--------------------
+> instance variables(object level variables)
+> static variables(class level variables)
+> local variables(inside method/for temp purpose only)
+
+3 types of methods
+------------------
+> instance methods(inside a method if we are using instance variables then its called instance method)
+> class methods(
+	@classmethod
+	def getCollegeName(cls):
+	print("class level method"))
+> static methods(
+	@staticmethod
+	def findAverage():
+	print("inside static level method"))
+--we can directly call static level method with class name eg: Student.findAverage() or s1.findAverage()
+-- if we dont use @staticmethod annotation(decorator in python) then we should call the method using class name,if we use @staticmethod we can call using object variable
+
+
+
+================================================================
+====== the complete story of instance variables - lec 4====
+
+https://www.youtube.com/watch?v=Zm34I5zFXWs&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=4
+================================================================
+
+Instance variables:
+
+> If the value of the variable is varied form  object to object it is called instance variable.For every object a seperate copy will be created.
+
+Places we can declare instance variable:
+
+> Inside constructor
+> Inside instance method by using self
+
+> class Student:
+	def __init__(self,name,rollno):
+			self.name=name
+			self.rollno=rollno
+	def info(self):
+			self.marks=60
+
+s1 = Sturdent('ravi',1234)
+s2 = Student('madhu',1235)
+s1.marks()
+
+> if we declare a variable inside a method it is called local variable,but if we declare it with self.variable, then its called instance variable
+
+> From outside of class using object reference then it is also called instance variable
+Eg: s3 = Student('binny',1235)
+	s3.age = 22 -->	 instance variable (age)
+
+
+How to delete instance variable:
+
+> del self.variablename (with in the class)
+> del objectreference.variablename (outside of the class)`
+
+
+================================================================
+====== the complete story of static variables - lec 5====
+
+https://www.youtube.com/watch?v=QEvQ18iR5HU&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=5
+================================================================
+
+if __name__ = '__main__' - > if we want to execute the module directly form command promt
+
+what are various places to declare static variables ?
+-----------------------------------------------------
+1. Within the class directly but form out side of any method
+2. Inside constructor by using classname
+3. Inside instance method by using class name
+4. Inside classmethod by using cls variable of class name
+5. Inside static method by using classname
+6. Form outside of class by using class name
+class Test:
+	a=10 (static vairable)
+	def__init__(self):
+		Test.b=20(static variable)
+	def m1(self):
+		Test.c=30(static variable)
+	@classmethod
+	def m2(cls):
+		cls.d=40(static)
+		Test.e=50(static)
+	@staticmethod
+	def m3():
+		Test.f=60(static)
+Test.g=70
+
+
+================================================================
+====== bank application by using python - lec 6====
+https://www.youtube.com/watch?v=k0Q2ksHr10M&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=6
+================================================================
+
+Local Variables:
+
+> Method level variables,we should not use self,cls reference
+
+
+eg :
+
+x =100
+
+class Test:
+	x=777 # static variable can be accesed by self or class name ,but we can not modify we can only acces
+	def m1(self):
+		print(x)
+		print(self.x)
+	def m2(self):
+		print(x)
+		print(Test.x)
+
+t = Test()
+t.m1()
+t.m2()
+
+o/p >> 100
+777
+100
+777
+
+> We can declare global variables inside method also but we have to use "global"  key word
+>> class Test:	
+	def m1(self):
+		global x
+		x=999
+		print(x)
+
+> 
+
+================================================================
+======getter and setters- lec 7====
+https://www.youtube.com/watch?v=kNGYzlKQ37A&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=7
+================================================================
+
+> alternate to constructor is setter and getter
+>>  print(s.name) # direct access
+>> print(s.getname()) # we can perform some validation inside the getname() method
+>> hiding data behind methods -> encapsulation
+
+class Geeks: 
+     def __init__(self): 
+          self._age = 0
+       
+     # using property decorator 
+     # a getter function 
+     @property
+     def age(self): 
+         print("getter method called") 
+         return self._age 
+       
+     # a setter function 
+     @age.setter 
+     def age(self, a): 
+         if(a < 18): 
+            raise ValueError("Sorry you age is below eligibility criteria") 
+         print("setter method called") 
+         self._age = a 
+  
+mark = Geeks() 
+  
+mark.age = 19
+  
+print(mark.age) 
+
+
+> we can also implemetn setter and getter in another way
+class Geeks: 
+     def __init__(self): 
+          self._age = 0
+       
+     # function to get value of _age 
+     def get_age(self): 
+         print("getter method called") 
+         return self._age 
+       
+     # function to set value of _age 
+     def set_age(self, a): 
+         print("setter method called") 
+         self._age = a 
+  
+     # function to delete _age attribute 
+     def del_age(self): 
+         del self._age 
+     
+     age = property(get_age, set_age, del_age)  
+  
+mark = Geeks() 
+  
+mark.age = 10
+  
+print(mark.age) 
+
+
+================================================================
+======instance method vs static Method vs class method lec 8====
+https://www.youtube.com/watch?v=fOBO7UGbfHc&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=8
+================================================================
+> if we are using only static variable inside method body then this method no way related to particular object,we should declare such type of methods as classmethod.
+we can call either by using object reference or by using class name
+
+> instance method will have self as first arugument
+
+
+> if we are not using any instance variable and any static variable inside method body, to define such type of general utility methods we should go for static methods.
+we can call either by using object refernce or by using class name.
+
+> if we are using atleast one instance variable inside method then it will be instance method
+> if wer are using only static variable but not instance variable then we can call it class method
+> if we are not using any instance or static variables then it will be called static methods(generally they will be utility methods)
+
+> instance method will always have "self" keyword as first argument
+> if there is no self declared then it will be static method, class method will always have @class method annotation
+
+
+================================================================
+======inner classes lec 9====
+https://www.youtube.com/watch?v=jtLdzK11d5g&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=9
+================================================================
+Inner class:
+> with out existing one type of object if there is no chance of existing another type of object then we should go for inner classes.
+
+>> class car:
+		.....
+		class Engine:
+			.....
+
+>> class outer:
+		def __init__(self):
+			print("outer class object creatioin")
+
+		class Inner:
+
+			def __init__(self):
+				print("inner class object creation")
+
+			def m1(self):
+				print("inner class method")
+>> o = Outer()
+>> i = o.Inner()
+>> i.m1()
+>> using inner class object we can not call outer class methods
+
+>> class Person:
+		def __init__(self):
+			self.name='Durga'
+			self.dob = self.DOB()
+
+
+		def display(self):
+			print(self.name)
+			self.dob.display()
+
+		class DOB:
+			def __init__(self):
+				self.dd=15
+				self.mm=02
+				self.yyyy=1956
+
+			def display(self):
+				print(self.dd,self.mm,self.yyyy)
+
+
+>> p= person() #when person object is created ,DOB object is also created since it is in constructor 
+>> p.display()
+
+
+================================================================
+======nested class and nested methods ====
+https://www.youtube.com/watch?v=HxpvR2ETvQw&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=10
+================================================================
+
+> Inside inner class we can take any number of inner class
+
+>> class Person:
+		def __init__(self):
+			self.name='Durga'
+			self.head = self.Head()
+
+
+		def display(self):
+			print(self.name)
+			self.head.display()
+
+		class Head:
+			def __init__(self):
+				pass
+
+			def display(self):
+				print("inside head display")
+
+			class Brain():
+				def mem():
+					print("inside brain memeory")
+
+Nested Method:
+-------------
+
+def m1:
+	.....
+	.....
+	def m2():
+		.....
+		.....
+	m2()
+	m2()
+
+
+> del t1 is not equal to t1=None
+> we can enable and disable garbage collection in python (depends on platform window,linux...)
+> __int__ -> constructor
+> __del__ -> destructor
+
+
+================================================================
+====== grabage collection====
+https://www.youtube.com/watch?v=MQYuxQdx_oA&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=11
+================================================================
+
+GC modules:
+
+> gc.isenabled()
+> gc.disable()
+> gc.enable()
+
+
+__del__(self):
+
+> garbage collector will call __del__ method just before destructing object(to perform clean up activities or resource de allocation ), in java we have finalise() method
+>
+
+> number of reference to an object - > sys.getrefcout(obj)
+
+================================================================
+======operator over loading part1 ====
+https://www.youtube.com/watch?v=kIAUW3UnH9Q&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=12
+================================================================
+
+
+> polymorphism : one name but multiple forms
+
+> same method names but different argument types is called method over loading
+> no concept of overriding in python (if return type is different the it is called over riding)
+
+> duck typing in python
+> Method over loading and constructor overloading are not there in python
+> method over riding and constructor over riding are present in python    
+
+
+operator overloading :
+----------------------
+
+Class Book:
+	def __init__(self,pages):
+		self.pages= pages
+
+b1 = book(100)
+b2 = book(200)
+print(b1+b2) -> unsupported operator type error
+
+> operator overloading using magic methods : (__add__(self,other) -> b1+b2 )
+
+
+def __add__(self,other):
+	return self.page+other.page
+
+
+# self.page -> b1
+# other.page -> b2
+------------------------------
+
+Class Book:
+	def __init__(self,pages):
+		self.pages= pages
+
+	def __add__(self,other):
+	return self.page+other.page
+
+b1 = book(100)
+b2 = book(200)
+b3 = booke(700)
+>> print (b1+b2)
+>> 300 
+
+> print(b1+b2+b3) -> error because b1+b2 returns int and that int we are adding it to b3(book object), depends on how we implement __add__ method
+
+
+
+================================================================
+======operator over loading part2 ====
+https://www.youtube.com/watch?v=rVoMkLHyOI4&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=13
+================================================================
+
+
+__str__ :  this magic method will be executed whern we call print
+
+
+
+
+> print(b1+b2+b3)
+
+Class Book:
+	def __init__(self,pages):
+		self.pages= pages
+
+	def __add__(self,other):
+		total = self.pages + other.pages
+		b = Book(total)
+		return b
+
+
+b1 = book(100)
+b2 = book(200)
+b3 = booke(300)
+
+>> print(b1+b2+b3)
+>> 600
+
+Method overloading:
+
+> same name but different argument types
+
+Class Test :
+	def m1(self):
+		print("no args method")
+
+	def m1(self,x):
+		print("one arg method")
+
+>> t = test()
+>>t.m1() # type error:m1() missing positional argument
+>>t.m1("abc")
+
+> python with same method names will consider only last declared method
+
+
+================================================================
+======method over loading and over riding ====
+https://www.youtube.com/watch?v=rVoMkLHyOI4&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=13
+================================================================
+
+
+java : method over loading
+
+m1(int a)
+m1(int a,int b)
+m1(float a,float b)
+
+> in python we never declare type , so we can pass any type so no method over loading in python
+> if number of args are different for same method then only last method decleration will be considered
+
+Methods with variable length args :
+
+> def sum(*args ) # takes different number of arguments
+>> sum(10)
+>> sum (10,30)
+>> sum (3+4+56 )
+
+> for constructor also we can follow the same way
+>> class Test:
+		def __init__(self,*args):
+				print("constructors with variable number of arguments ")
+
+================================================================				
+https://www.geeksforgeeks.org/association-composition-aggregation-java/
+================================================================
+
+
+Aggregation vs Composition
+
+Dependency: Aggregation implies a relationship where the child can exist independently of the parent. For example, Bank and Employee, delete the Bank and the Employee still exist. whereas Composition implies a relationship where the child cannot exist independent of the parent. Example: Human and heart, heart don’t exist separate to a Human
+Type of Relationship: Aggregation relation is “has-a” and composition is “part-of” relation.
+Type of association: Composition is a strong Association whereas Aggregation is a weak Association.
+
+
+================================================================
+======types of inheritance lec 15====
+https://www.youtube.com/watch?v=jjTys6DKhrw&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=15
+================================================================
+
+
+composition and aggregation:
+
+> composition -> strong relation(is-a) (two entities are highly dependent on each other.)
+> aggregation -> weak relation(Has-a) (two entities can survive individually)
+
+
+
+
+
+
+Types of inheritance:
+--------------------
+Single inheritance
+Multi level inheritance
+Hierarchical inheritance
+Multiple Inheritance
+Hybrid Inheritance
+Cyclic Inheritance(not supported in most of the language along with python)
+
+
+
+Single Inheritance:
+-------------------
+> single parent
+> single child
+
+
+class p:
+	def m1(self):
+		print("parent class method")
+class c(p):
+	def m2(self):
+		print("child class method")
+
+
+
+Multi level inheritance:
+------------------------
+> one parent but multiple childs at different level
+
+
+class P:
+	def m1(self):
+		print("parent class method")
+class C(P):
+	def m2(self):
+		print("child class method")
+class A(C):
+	def m3(self):
+		print("second level")
+
+
+
+Hierarchical inheritance:
+------------------------
+> one parent but multiple childs at same level
+
+
+
+class P:
+	def m1(self):
+		print("parent class method")
+class C1(P):
+	def m2(self):
+		print("child class method")
+class C2(P):
+	def m3(self):
+		print("second child at same level")
+
+
+
+ 
+Multiple Inheritance:
+--------------------
+> multiple parents but single child
+> method resolution algorithm is used to resolve dependencies(Diamond problem )
+> method resolution is based on order of parents
+
+
+class P1:
+	def m1(self):
+		print("parent class method")
+class P2():
+	def m2(self):
+		print("parent class method")
+class A(P1,P2):
+	def m3(self):
+		print(" single child")
+
+> if both P1 and P2 have same method, then child will use method in order of parents declared (P1,P2), in this case it will look in P1 and then P2
+
+> c(P2,P1), now first will look in P2 then P1, but if child has the method then it will first consider method present in child
+
+
+Hybrid Inheritance:
+--------------------
+> combination of multi level and multiple and hierarchical and single
+
+
+
+================================================================
+======MRO lec 16====
+================================================================
+
+
+
+================================================================
+======super() Method lec 17====
+https://www.youtube.com/watch?v=XxFBPU4vT1g&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=17
+================================================================
+
+
+> from child class by using super() we cannot call parent class instance variables we should use self only.
+> from child class by using super() we can call parent class call static variable
+
+
+Class Person:
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+
+
+Class Student:
+	def __init__(self,name,age,rollno,marks):
+		super().__init__(age,rollno) # initialized by parent constructor
+		self.rollno = rollno
+		self.marks = marks
+
+Class Teacher:
+	def __init__(self,name,age,salary,subject):
+		super().__init__(age,name)
+		self.salary = salary
+		self.subject = subject
+
+s=Student("ravi",15,123,90)
+
+
+
+How to call a particular parent class method:
+
+Class A:
+	def m1(self)
+		print("A class method")
+Class B(A):
+	def m1(self)
+		print("B class method")
+Class C(B):
+	def m1(self)
+		print("C class method")
+Class D(C):
+	def m1(self)
+		print("D class method")
+Class E(D):
+	def m1(self)
+		super().m1()
+
+There are two ways
+1) parentclassname.methodname(self) -> eg : def m1(self):
+													B.m1()
+2) super(D,self).m1() -> super of 'D' so 'C' class m1 method will get chance
+
+In multi level inhereitence to call particular super class method above are the two methods
+
+ 
+--------------------------------
+
+class P:
+	a=10
+	def __int__(self):
+		self.b=20
+
+class C(P):
+	def m1(self):
+		print(super().a)
+		print(super().b) # through error
+
+
+> From child class by using super() we cannot call parent class instance variables,We should use self only
+
+class P:
+	a=10
+	def __int__(self):
+		self.b=20
+
+class C(P):
+	def m1(self):
+		print(super().a)
+		print(self.b) # works fine
+
+> form child class by suing super() Method we can call parent class static variables
+--------------->
+
+class P:
+	def __int__(self):
+		print("parent constructor")
+	def m1(self):
+		print("parent instance method")
+	@classmethod
+	def m2(cls):
+		print("parent class method") # works fine because we have declared in init
+	@staticmethod
+	def m1():
+		print("parent static method") # works fine
+
+class C(P):
+	def __int__(self):
+		super().__init__()
+		super().m1
+		super().m2
+		super().m3
+
+c =C()
+
+------------------>
+class C(P):
+	def method(self): # instance method also works fine
+		super().__init__()
+		super().m1
+		super().m2
+		super().m3
+
+------------------>
+class C(P):
+	@classmethod
+	def method(self): # it is class method , dont know that happens , should check
+		super().__init__()
+		super().m1
+		super().m2
+		super().m3
+
+================================================================
+================= generators lec 22===============
+ https://www.youtube.com/watch?v=r7Ke4vuvL4Q&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=22
+================================================================
+
+> generator: to generate a sequence of values using yield keyword
+
+						
+								 ___________________	
+								|					|
+i/p function	--------------> |	Decorator		|	------------>o/p function(more enhanced function)						|					|
+								|					|
+								|___________________|
+
+
+
+>
+								 ___________________	
+								|					|
+							 	|generator function	|	------------> sequence of values
+								|					|
+								|___________________|
+
+> generator will not take any input, it will use "yeild" key word
+> using yeild key word memory utilisation will be improved (instead of saving all elements in list/dict/array )
+
+>> l = (x*x for x in range(100000000000 ))   
+>> print(l) # entire object will be stored in memory
+
+>> g = (x*x for x in range(100000000000 ))
+>> type(g) # generator type
+
+>> while True:
+	print(next(g)) # generator will retrun element when ever required (called), not all element are stored in memory
+
+
+
+
+
+
+
+
+=================================================================
+https://codesachin.wordpress.com/2016/06/09/the-magic-behind-attribute-access-in-python/
+=================================================================
+
+> attribute access is the way you retrieve an object linked to the one you already have.
+> Most people know just one thing when it comes to attribute access – the dot ‘.’ (as in x.some_attribute). 
+
+The __dict__ attribute:
+
+> This dictionary/dictionary-like (I will explain this shortly) object contains all the attributes defined for the object itself.
+>>> class C(object):
+    x = 4
+ 
+>>> c = C()
+>>> c.y = 5
+>>> c.__dict__
+{'y': 5}
+Notice how 'x' is not in c.__dict__. The reason for this is simple enough. While y was defined for the object c, x was defined for its class (C). Therefore, it will appear in the __dict__ of C. In fact, C‘s __dict__ contains a lot of other keys too (including '__dict__'): 
+
+
+
+Descriptors:
+
+> A descriptor is an object that has atleast one of the following magic methods in its attributes: __get__, __set__ or __delete__ (Remember, methods are ultimately objects in Python
+> Descriptors can help you define the behaviour of an object’s attribute in Python. 
+
+There are two types of descriptors :
+ 1. Data Descriptors
+ 2. Non-Data Descriptors.
+
+> Non-Data Descriptors only have __get__ defined. All others are Data Descriptors. 
+
+> An example of two classes that will come up with data and non-data descriptor objects respectively:
+
+class DataDesc(object):
+    def __init__(self, name):
+        self._name = name
+ 
+    def __get__(self, obj, objclass):
+        try:
+            print("Retrieving attr " + self._name + " from " +
+                  str(obj) + "...")
+            return objclass.x + " + " + obj.y
+        except:
+            raise AttributeError("Attr " + self._name + " could not be " +
+                                 "retrieved from " + str(obj))
+     
+    def __set__(self, obj, value):
+        raise AttributeError("Attr " + self._name + " cannot be " +
+                             "set in " + str(obj))
+ 
+    def __delete__(self, obj):
+        raise AttributeError("Attr " + self._name + " cannot be " +
+                             "deleted in " + str(obj))
+ 
+class NonDataDesc(object):
+    def __init__(self, name):
+        self._name = name
+ 
+    def __get__(self, obj, objclass):
+        try:
+            print("Retrieving attr " + self._name + " from " +
+                  str(obj) + "...")
+            return objclass.x + " + " + obj.y
+        except:
+            raise AttributeError("Attr " + self._name + " could not be " +
+                                 "retrieved from " + str(obj))
+
+
+__slots__ :
+
+> To put it concisely, __slots__ is a way to disallow objects from having their own __dict__ in Python. This means, that if you define __slots__ in a Class, then you cannot set arbitrary attributes(apart from the ones mentioned in the ‘slots’) on its objects.
+
+Heres an example of such a class:
+
+class SomeClass(object):
+    __slots__ = ['x', 'y']
+ 
+obj = SomeClass()
+
+Now see how this behaves:
+
+>>> obj.x = 4
+>>> obj.y = 5
+>>> obj.x
+4
+>>> obj.y
+5
+>>> obj.z = 6
+ 
+Traceback (most recent call last):
+  File "<pyshell#135>", line 1, in <module>
+    obj.z = 6
+AttributeError: 'SomeClass' object has no attribute 'z'
+
+You can ofcourse do this:
+
+>>> obj.__class__.z = 6
+>>> obj.z
+6
+But then, remember you have now defined z in SomeClass‘s __dict__, not in obj‘s.
+
+
+=================================================================
+https://stackoverflow.com/questions/11235932/what-is-the-difference-between-cause-and-context=================================================================
+
+
+__cause__ is the cause of the exception - due to the given exception, the current exception was raised. This is a direct link - X threw this exception, therefore Y has to throw this exception.
+
+__context__ on the other hand means that the current exception was raised while trying to handle another exception, and defines the exception that was being handled at the time this one was raised. This is so that you don't loose the fact that the other exceptions happend (and hence were at this code to throw the exception) - the context. X threw this exception, while handling it, Y was also thrown.
+
+__traceback__ shows you the stack - the various levels of functions that have been followed to get to the current line of code. This allows you to pinpoint what caused the exception. It is likely to be used (potentially in tandem with __context__) to find what caused a given bug.
+
+
+
+=================================================================
+https://www.python-course.eu/python3_magic_methods.php
+=================================================================
+
+Magic Methods :
+
+> syntax : the double underscores at the beginning and the end
+> If we have an expression "x + y" and x is an instance of class K, then Python will check the class definition of K. If K has a method __add__ it will be called with x.__add__(y), otherwise we will get an error message. 
+
+>> Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: unsupported operand type(s) for +: 'K' and 'K'
+
+
+=================================================================
+================== Multi threading and multi processing =========
+=================================================================
+
+--------------> https://medium.com/contentsquare-engineering-blog/multithreading-vs-multiprocessing-in-python-ece023ad55a
+
+> There can only be one thread running at any given time in a python process.
+> Multiprocessing is parallelism. Multithreading is concurrency.
+> Multiprocessing is for increasing speed. Multithreading is for hiding latency.
+> Multiprocessing is best for computations. Multithreading is best for IO.
+> If you have CPU heavy tasks, use multiprocessing with n_process = n_cores and never more. Never!
+> If you have IO heavy tasks, use multithreading with n_threads = m * n_cores with m a number bigger than 1 that you can tweak on your own. Try many values and choose the one with the best speedup because there isn’t a general rule. For instance the default value of m in ThreadPoolExecutor is set to 5 [Source] which honestly feels quite random in my opinion.
+
+-------------->
+>>> https://www.youtube.com/watch?v=zMupiqj2r90&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=20
+
+>>> https://medium.com/@bfortuner/python-multithreading-vs-multiprocessing-73072ce5600b
+
+=================================================================
+================== GIL Global Interpreter lock =========
+=================================================================
+
+>>>>> https://medium.com/@bfortuner/python-multithreading-vs-multiprocessing-73072ce5600b <<<<<
+
+> Global Interpreter Lock, which prevent two threads from executing simultaneously in the same program
+> A process is an instance of program (e.g. Jupyter notebook, Python interpreter). Processes spawn threads (sub-processes) to handle subtasks like reading keystrokes, loading HTML pages, saving files. Threads live inside processes and share the same memory space.
+
+> multi Processes avoid the GIL and execute code simultaneously on multiple cores.
+
+
+=================================================================
+https://medium.com/fintechexplained/top-python-tips-tricks-dd996b807865
+=================================================================
+
+> python tips and triks : above link is really good
+
+
+=================================================================
+https://www.geeksforgeeks.org/python-subprocess-module-to-execute-programs-written-in-different-languages/
+=================================================================
+
+> The subprocess module present in Python(both 2.x and 3.x) is used to run new applications or programs through Python code by creating new processes. It also helps to obtain the input/output/error pipes as well as the exit codes of various commands
+
+=================================================================
+https://www.geeksforgeeks.org/python-lambda-anonymous-functions-filter-map-reduce/
+=================================================================
+
+lambda arguments: expression
+
+> This function can have any number of arguments but only one expression, which is evaluated and returned.
+> One is free to use lambda functions wherever function objects are required.
+> You need to keep in your knowledge that lambda functions are syntactically restricted to a single expression.
+> It has various uses in particular fields of programming besides other types of expressions in functions.
+> Lambda functions can be used along with built-in functions like filter(), map() and reduce().
+
+
+=================================================================
+https://www.youtube.com/watch?v=LhadeL7_EIU
+=================================================================
+> 
+
+=================================================================
+https://stackoverflow.com/questions/22171558/what-does-enumerate-mean/22171593
+=================================================================
+Enumerate:
+
+> The enumerate() function adds a counter to an iterable.
+
+So for each element in cursor, a tuple is produced with (counter, element); the for loop binds that to row_number and row, respectively.
+
+>>> elements = ('foo', 'bar', 'baz')
+>>> for elem in elements:
+...     print elem
+... 
+foo
+bar
+baz
+>>> for count, elem in enumerate(elements):
+...     print count, elem
+... 
+0 foo
+1 bar
+2 baz
+
+
+### this is explanation from danbader mail
+Basically, enumerate() allows you to loop over a collection of items while keeping track of the current item’s index in a counter variable.
+
+Let’s take a look at a quick example:
+
+names = ['Bob', 'Alice', 'Guido']
+for index, value in enumerate(names):
+    print(f'{index}: {value}')
+
+This produces the following output:
+ 
+
+0: Bob
+1: Alice
+2: Guido
+
+
+# HARMFUL: Don't do this
+for i in range(len(my_items)):
+    print(i, my_items[i])
+    # we can use enumerate to keep track of index like above examples
+> enumerate is implemented as a Python iterator
+
+The enumerate() function accepts an optional argument which allows you to set the initial value for its counter variable:
+The counter starts at 0 by default, but you can set it to any integer.
+
+names = ['Bob', 'Alice', 'Guido']
+for index, value in enumerate(names, 1):
+    print(f'{index}: {value}')
+
+=================================================================
+https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/
+=================================================================
+
+=================================================================
+https://blog.insightdatascience.com/how-to-easily-understand-your-python-objects-8c3e954f88ac
+=================================================================
+> above link is used to debug and filter methods the objects in python has
+
+> The dir function is a simple built-in that lists all attributes and methods of an object unless __dir__ has been overloaded
+
+> class Rectangle:
+	def __init__(self, a: float, b: float):
+		self.a = a
+		self.b = b
+	def area(self) -> float:
+		return self.a * self.b
+	def scale(self, factor: float):
+		""" scale the side lengths by `factor` """
+		self.a = factor * self.a
+		self.b = factor * self.b
+	def bisect(self):
+		""" reduce a by a factor of 2 to "cut in half" """
+		self.a /= 2
+	def __str__(self):
+		return self.__class__.__name__ + str({'a': self.a, 'b': self.b})
+
+
+rect = Rectangle(3., 4.)
+dir(rect)
+
+def dir_string_filter(obj):
+    is_magic = lambda x: (x.startswith('__') and x.endswith('__'))
+    return [x for x in dir(obj) if not is_magic(x)]
+
+dir_string_filter(rect)
+
+
+from types import BuiltinMethodType
+def dir_type_filter(obj):
+    is_builtin = lambda x: isinstance(getattr(obj, x), BuiltinMethodType) 
+    return [x for x in dir(obj) if not is_builtin(x)]
+
+dir_type_filter(rect) 
+
+
+=================================================================
+Random
+=================================================================
+An accessor method is a function that returns a copy of an internal variable or computed value. A common practice is to name these with the word get. A mutator method is a function that modifies the value of an internal data variable in some way. The simplest form of mutator function is one that sets a variable directly to a new value. A common practice is to name these with the word set.
+
+
+> The isinstance() function checks if the object (first argument) is an instance or subclass of classinfo class (second argument).
+
+> isinstance(object, classinfo) 
+The isinstance() takes two parameters:
+object : object to be checked
+classinfo : class, type, or tuple of classes and types
+
+> Using isinstance() is preferable in this case because it will check inheritence also
+
+
+>>>>>>
+getattr() method:
+----------------
+getattr() function is used to access the attribute value of an object and also give an option of executing the default value in case of unavailability of the key.
+
+
+# Python code to demonstrate 
+# working of getattr() 
+  
+# declaring class  
+class GfG : 
+    name = "GeeksforGeeks"
+    age = 24
+  
+# initializing object 
+obj = GfG() 
+  
+# use of getattr 
+print("The name is " + getattr(obj,'name')) 
+  
+# use of getattr with default 
+print("Description is " + getattr(obj, 'description' , 'CS Portal')) 
+  
+# use of getattr without default 
+print("Motto is " + getattr(obj, 'motto')) 
+
+
+Output:
+
+The name is GeeksforGeeks
+Description is CS Portal
+Exception:
+
+AttributeError: GfG instance has no attribute 'motto'
+
+RESULT : Conventional method takes less time than getattr(), but when default values have to be used in case of missing attributes, getattr() is a good choice.
+
+>>>>>>
+
+
+=================================================================
+https://towardsdatascience.com/memory-management-in-python-6bea0c8aecc9
+=================================================================
+
+Don’t do this:
+>> mymsg=’line1\n’
+>> mymsg+=’line2\n’
+Better choice:
+>> mymsg=[‘line1’,’line2']
+>> ‘\n’.join(mymsg)
+
+Don’t do this:
+>> msg=’hello’+mymsg+’world’
+Better choice:
+>> msg=’hello %s world’ % mymsg
+
+
+Use Generators :
+---------------
+> Generators allow you to create a function that returns one item at a time rather than all the items at once. This means that if you have a large dataset, you don’t have to wait for the entire dataset to be accessible.
+
+def __iter__(self):
+     return self._generator()
+def _generator(self):
+     for itm in self.items():
+         yield itm
+
+Assign a function to a local variable :
+-------------------------------------
+Python accesses local variables much more efficiently than global variables. Assign functions to local variables then use them.
+myLocalFunc=myObj.func
+for i in range(n):
+    myLocalFunc(i)
+
+Use built-in functions and libraries:
+------------------------------------
+mylist=[]
+for myword in oldlist:
+      mylist.append(myword.upper())
+Better choice:
+mylist=map(str.lower, oldlist)
+=================================================================
+https://realpython.com/introduction-to-python-generators/
+=================================================================
+Better way to read csv :
+
+
+# this method loads entire csv to memory - inefficient
+def csv_reader(file_name):
+    file = open(file_name)
+    result = file.read().split("\n")
+    return result
+
+ # open method returns a generator where it retruns sigle row when called
+ def csv_reader(file_name):
+    for row in open(file_name, "r"):
+        yield row
+What’s happening here? Well, you’ve essentially turned csv_reader() into a generator function. This version opens a file, loops through each line, and yields each row, instead of returning it.
+
+
+csv_gen = (row for row in open(file_name)) - > called as generator comprehension or generator expression same as above yeild method
+
+csv_gen = [row for row in open(file_name)]-> list comprehension difference is sqare brackets
+
+Generating an infinite sequence:
+def infinite_sequence():
+    num = 0
+    while True:
+        yield num
+        num += 1
+
+>>> for i in infinite_sequence():
+...     print(i, end=" ") #The program will continue to execute until you stop it manually
+
+Generator functions use the Python yield keyword instead of return
+
+StopIteration: is a natural exception that’s raised to signal the end of an iterator. for loops, for example, are built around StopIteration. You can even implement your own for loop by using a while loop:
+
+>>> letters = ["a", "b", "c", "y"]
+>>> it = iter(letters)
+>>> while True:
+...     try:
+...         letter = next(it)
+...     except StopIteration:
+...         break
+...     print(letter)
+
+Using Advanced Generator Methods:
+
+.send():
+>>> def double_inputs():
+...     while True:
+...         x = yield
+...         yield x * 2
+...
+>>> gen = double_inputs()
+>>> next(gen)       # run up to the first yield
+>>> gen.send(10)    # goes into 'x' variable
+20
+>>> next(gen)       # run up to the next yield
+>>> gen.send(6)     # goes into 'x' again
+12
+>>> next(gen)       # run up to the next yield
+>>> gen.send(94.3)  # goes into 'x' again
+188.5999999999999
+
+
+
+>>> def f():
+...     while True:
+...         val = yield
+...         yield val*10
+... 
+>>> g = f()
+>>> g.next()
+>>> g.send(1)
+10
+>>> g.next()
+>>> g.send(10)
+100
+>>> g.next()
+>>> g.send(0.5)
+5.0
+
+>When we do g = f(), g gets the generator. Python's generator class has generator.next() and generator.send(value) methods. What the next() does is clear: the execution continues to the next yield expression. The send(value) sends a value into the generator function. The value argument becomes the result of the current yield expression.
+
+
+How to Use .close() :
+
+As its name implies, .close() allows you to stop a generator. This can be especially handy when controlling an infinite sequence generator. Let’s update the code above by changing .throw() to .close() to stop the iteration:
+
+=================================================================
+https://medium.com/@jasonrigden/a-guide-to-python-itertools-82e5a306cdf8
+=================================================================
+
+> this blog is good of itertools explanation, one have to read the blog
+
+> [link:]https://www.youtube.com/watch?v=3pXquKQf2qk
+
+for memory management this video is good
+
+> Memory can be stored on either a stack (for static memory allocation) or a heap (for dynamic memory allocation)
+
+
+argparser :
+[link : https://levelup.gitconnected.com/the-easy-guide-to-python-command-line-arguments-96b4607baea1]
+
+
+================================================
+https://levelup.gitconnected.com/introducing-high-performance-datatypes-in-python-with-the-collections-library-3d8c334827a5
+================================================
+python collections:
+
+> counter
+> named tuple
+> default dict
+> deque
+
+
+================================================
+underscores
+================================================
+> Single Leading Underscore _var: Naming convention indicating name is meant for internal use. A hint for programmers and not enforced by programmers.
+
+> Double Leading Underscore __var: Triggers name mangling when used in class context. Enforced by the Python interpreter.
+
+> Single Trailing Underscore var_: Used by convention to avoid naming conflicts with Python keywords.
+
+> Double Trailing Underscore __var__: Indicates special methods defined by Python language.
+
+> Underscore _: Used as a name for temporary variables.
+
+======================================================
+https://realpython.com/python-type-checking/?source=post_page-----ce917d0705b5----------------------
+======================================================
+
+
+
+
+
+
+
+
+=================================================================
+random
+=================================================================
+>>> integers = [1, 2, 3]
+>>> letters = ['a', 'b', 'c']
+>>> floats = [4.0, 5.0, 6.0]
+>>> zipped = zip(integers, letters, floats)  # Three input iterables
+>>> list(zipped)
+
+[link:https://medium.com/better-programming/20-python-snippets-you-should-learn-today-8328e26ff124]
+
+> sorting complex data structure using lamdas:
+
+>> scores = [("Jade",21),("Rab",110),("Sylvando",39),("Erik",19)]
+>> scores.sort(key=lambda t: t[1]) # sort by 2nd value in tuple
+Filtering in same way :
+>> scores = [("Jade",21),("Rab",110),("Sylvando",39),("Erik",19)]
+>> result = filter(lambda t: t[1] > 25, scores)
+>> a, b, _ = (1, 2, 3) ->Using _ tells Python you don’t need this variable, and it won’t show any warning.
+> what if you have multiple return values, but you’re only interested in one?
+		>> a, *_ = (1, 2, 3, 4)
+
+# BAD CODE
+>> digit_list = [1, 2, 3]
+>> for item in digit_list:
+>>     digit_list[digit_list.index(item)] = item*2
+>> digit_list
+   [2, 4, 6]
+
+# GOOD CODE
+>> digit_list = [1, 2, 3]
+>> digit_list = [item*2 for item in digit_list]
+
+> above code is also called list comprehension
+
+collections.Counter()
+A counter is a container that stores elements as dictionary keys, and their counts are stored as dictionary values.
+>>> myList = [1,1,2,3,4,5,3,2,3,4,2,1,2,3]
+>>> print Counter(myList)
+Counter({2: 4, 3: 4, 1: 3, 4: 2, 5: 1})

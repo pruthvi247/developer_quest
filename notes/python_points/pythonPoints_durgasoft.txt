@@ -1,0 +1,219 @@
+6 levels in logging
+> critical ==>50
+> error ==>40
+> warning ==>30
+> info ==>20
+> debug ==> 10
+> notset ==>0
+----------------------
+
+How to implement logginig:
+-------------------------
+name of file
+level of message
+
+basicConfig() of logging module
+
+loggging.basicConfig(filename='log.txt',level=logging.warning)
+
+
+logging.debug(message)
+logging.info(message) 
+-----------------------
+session 2 oops -42
+----------
+
+objectreference.__dict__
+
+
+to delete instance variable:
+-------------------------
+out side the class -> del objectreference.variablename
+t1 = Test()
+del t1.a
+
+with in the class  -> del self.variablename
+
+def delete(self):
+	del self.b
+	del self.c
+
+Class methods
+--------------------------
+Class methods are the third and final OOP method type to know. Class methods know about their class. They can’t access specific instance data, but they can call other static methods.
+
+Class methods don’t need self as an argument, but they do need a parameter called cls. This stands for class, and like self, gets automatically passed in by Python.
+================================================================
+====== advanced python types of variales and methods - lec 3====
+================================================================
+
+
+> constructor will be executed only once, where as method can be called any number of times.
+ 
+3 types of variables:
+--------------------
+> instance variables(object level variables)
+> static variables(class level variables)
+> local variables(inside method/for temp purpose only)
+
+3 types of methods
+------------------
+> instance methods(inside a method if we are using instance variables then its called instance method)
+> class methods(
+	@classmethod
+	def getCollegeName(cls):
+	print("class level method"))
+> static methods(
+	@staticmethod
+	def findAverage():
+	print("inside static level method"))
+--we can directly call static level method with class name eg: Student.findAverage() or s1.findAverage()
+-- if we dont use @staticmethod annotation(decorator in python) then we should call the method using class name,if we use @staticmethod we can call using object variable
+
+
+================================================================
+====== the complete story of static variables - lec 4====
+================================================================
+
+if __name__ = '__main__' - > if we want to execute the module directly form command promt
+
+what are various places to declare static variables ?
+-----------------------------------------------------
+1. Within the class directly but form out side of any method
+2. Inside constructor by using classname
+3. Inside instance method by using class name
+4. Inside classmethod by using cls variable of class name
+5. Inside static method by using classname
+6. Form outside of class by using class name
+class Test:
+	a=10 (static vairable)
+	def__init__(self):
+		Test.b=20(static variable)
+	def m1(self):
+		Test.c=30(static variable)
+	@classmethod
+	def m2(cls):
+		cls.d=40(static)
+		Test.e=50(static)
+	@staticmethod
+	def m3():
+		Test.f=60(static)
+Test.g=70
+
+
+================================================================
+====== bank application by using python - lec 5====
+================================================================
+
+================================================================
+======getter and setters- lec 6====
+================================================================
+
+================================================================
+======instance method vs static Method vs class method lec 7====
+================================================================
+> if we are using only static variable inside method body then this method no way related to particular object,we should declare such type of methods as classmethod.
+we can call either by using object reference or by using class name
+
+
+> if we are not using any instance variable and any static variable inside method body, to define such type of general utility methods we should go for static methods.
+we can call either by using object refernce or by using class name.
+
+
+================================================================
+======inner classes lec 9====
+================================================================
+Inner class:
+> with out existing one type of object if there is no chance of existing another type of object then we should go for inner classes.
+
+================================================================
+======operator over loading part1 lec 12====
+================================================================
+
+operator overloading :
+----------------------
+
+
+> operator overloading using magic methods
+__add__(self,other) -> b1+b2 
+
+def __add__(self,other):
+	return self.page+other.page
+
+
+
+================================================================
+======types of inheritance lec 15====
+================================================================
+
+Types of inheritance:
+--------------------
+Single inheritance
+Multi level inheritance
+Hierarchical inheritance
+Multiple Inheritance
+Hybrid Inheritance
+Cyclic Inheritance(not supported in most of the language)
+
+
+
+Single Inheritance:
+-------------------
+> single parent
+> single child
+
+
+Multi level inheritance:
+------------------------
+> one parent but multiple childs at different level
+
+Hierarchical inheritance:
+------------------------
+> one parent but multiple childs at same level
+
+
+Multiple Inheritance:
+--------------------
+> multiple parents but single child
+
+Hybrid Inheritance:
+--------------------
+> combination of multi level and multiple and hierarchical and single
+
+
+================================================================
+======MRO lec 16====
+================================================================
+
+
+
+================================================================
+======super() Method lec 17====
+================================================================
+
+
+> from child class by using super() we cannot call parent class instance variables we should use self only.
+> from child class by using super() we can call parent class call static variable
+
+
+================================================================
+====== generators lec 22====
+================================================================
+
+> generator: to generate a sequence of values using yield keyword
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,80 @@
+The boring show - ep-4
+---------------
+> we should use Behaviour subject in bloc pattern because it send output as soon as an entry, where as other opproach waits till there is any change
+
+> safe area
+> navigator.push
+> switch class
+> shared preferences
+> flutter inspector
+> modal / bottom sheets
+> Testing flutter apps
+> in app paymentss
+> state managements using providers
+
+[link :https://medium.com/flutter-community/flutter-effectively-scale-ui-according-to-different-screen-sizes-2cb7c115ea0a]
+
+> [link : https://medium.com/@jelenaaa.lecic/complex-layout-in-flutter-example-8c50e81d5aa9]
+> linkg : https://medium.com/flutter-community/flutter-login-tutorial-with-flutter-bloc-ea606ef701ad
+
+> copy with method (we have to google and read)
+
+> [link : https://medium.com/better-programming/simple-firebase-login-flow-in-flutter-6f44c2b5c58a?source=email-38f618178336-1584483767666-digest.reader------0-59------------------c13eaf01_7679_4a6e_a357_96fa403fd763-1-97e5cd15_35b1_4815_89ad_4d74812e5383----]
+
+
+> [link : https://medium.com/flutter-community/5-tips-to-know-before-you-start-developing-your-app-with-flutter-50771507dae0] [must read]
+
+> [link : https://medium.com/coding-with-flutter/flutter-the-power-of-small-and-reusable-widgets-7649e3b0bca2]
+
+
+The boring show -  refactoring and dart advanced features:
+----------------------------------------------------------
+
+> we can use const for Edgeinsets
+> valid syntax : int get number => 42;
+> factory constructors
+
+cascade operation:
+------------------
+> result.add('a')
+> result.add('b')
+> result.add('c')
+>> result.add('a')..add('b')..add('c')
+---------------
+> unmodifiablelistview
+
+> animation controller
+> WillPopScope class
+link:  [https://medium.com/@iamatul_k/flutter-handle-back-button-in-a-flutter-application-override-back-arrow-button-in-app-bar-d17e0a3d41f]
+
+> classpath "com.google.gms:google-services:4.2.0"
+
+AIzaSyB5eM5i_2OlBBkSkr8CGSKGKNYYTXy91xQ
+
+
+
+>>> udemy tutorial
+> navigator.pop (to close the bottom sheet)
+> text field we can set input key board type like to only display numbers in key board
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

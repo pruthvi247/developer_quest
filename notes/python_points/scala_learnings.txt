@@ -1,0 +1,149 @@
+
+=================================================================
+https://www.youtube.com/watch?v=xNAD6cBKyaA 
+=================================================================
+
+
+> In scala everything is object
+> Scala doce -> compile -> java bytecode -> jvm
+> REPL - > Read Evaluate print loop
+
+Declaring variables :
+-------------------
+val -> immutable (mostly used in reading)
+var -> mutable(reading and wrinting)
+
+> val x :INT = 10 -> type inference -> val x = 10 -> scala converts it to int(or considers it to respective data type)
+
+> var y :Float  = 10
+
+Assingning block expressions:
+----------------------------
+ > val x = {var a=10;var b=20; a+b}
+
+ 	In scala last expression is returned from the bolck, in the above case it is a+b.If we are writing code in same line then ';' is the delimiter, by default newline is the delimiter in scala , we need not use ';' if we are using new line 
+
+Lazy evaluation:
+---------------
+> scala uses lazy evaluation thats why it is used in spark
+
+	lazy val x = 10 -> no memory will be assigned to x now
+	>> x*2 -> now x will be alocated memory and expression is executed (Lazy loading/loading on demand)
+> val x = (1 to 1000).toList
+
+
+Loops:
+-----
+>> val s = "Test"
+>> s.foreach(println) -> we can pass any fuction in place of 'println'
+
+forloop:
+
+Syntax : for (arg <- collection) code
+
+>> for (i <- 1 to 5) print(i) -> increment by 1 in loop
+
+>> for (i <- 5 to 1 by -1 ) print(i) -> i starts from 5 and decrements by 1 
+
+>> for (i <- 1 to 5;j<- 1 to 4) print(s"($i,$j)") 
+	> to refere variable we use '$' symbol
+	> if we want to convert variable to int we can do print(d"($i,$j)")
+
+>> for (i <- 1 to 5;j<- 1 to 4 if i==j) print(s"($i,$j)")
+
+	|->for loop with guard condition -> if i==j
+
+>> for (cust <- custlist if cust.isActive()) processing
+	
+	|-> If custormer is active then we are processing the
+
+>> in yeild - the result of each for loop iteration is stored in a list(vector)
+
+
+Funtions in scale:
+-----------------
+
+def function_name(funtion params) : return_type = {
+	code...
+}
+
+>> 	 def areaRect(a:Float,b:Float): Float ={
+		a*b
+		}
+
+> last expression becomes return statment,here it is a*b
+
+
+>> def areaRect(a:Float,b:Float): Unit ={
+		print(a*b)
+	}
+	|-> Return type 'Unit' will not return anything(void return type)
+
+default arguments:
+
+>> def areaRect(a:Float,b:Int =10): Float ={
+		a*b
+		}
+
+Collections:
+-----------
+> Arrays, ArrayBuffers,Maps,Tuples,Lists
+> every collection has mutable and immutable objects
+
+Array:
+
+>> val arr = new Array[Int](10)
+>> arr = new Array('a','b','c') 
+	
+	|->We can not assing arr to new array because we have delated arr as val which is immutable, but we can change elements of the same array like arr[0]=10, here arr is immutable not the object new Array
+
+
+
+ArrayBuffers:
+
+> Difference between array and arrayBuffers is arrayBufferes can grow in size
+>> import scala.collection.mutable.ArrayBuffer
+>> val arr = new ArrayBuffer[Int]()
+>> arr +=100
+>> arr +=200
+>> arr += (300,400,500)
+>> arr ++= Array(600,700,800) -> adding Array to ArrayBuffer Note : its ++ not +
+>> arr --= Array(600,700,800)
+>> 
+
+Maps:
+
+>> val m = Map(1-> "Binny",2-> "benny")
+>> m(key) or m.get(key) or m.getOrElse(key,"message")
+>> m +=(3 -> 'jenny')
+>> def getCustormerRecods():scal.collection.immtable.Map[Int,Customer] -> one way to declare immutable map
+
+Tuples:
+> tuples is more generalized form of pair
+> Tuple has more than two values of potentially different types
+		val a =(1,4,"bob","jack")
+
+> Accesing tupel elements : a._2 or a_2
+> in tuples the offset starts with 1 NOT form 0
+> Tuples are typically used for the functions which return more than one value:
+> we use case classes in scala more than Tuples
+
+Lists:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

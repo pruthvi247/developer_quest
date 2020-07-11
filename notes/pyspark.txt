@@ -1,0 +1,649 @@
+
+
+
+
+
+from pyspark.ml.linalg import Vectors
+from pyspark.ml.stat import Correlation
+
+data = [(Vectors.sparse(4, [(0, 1.0), (3, -2.0)]),),(Vectors.dense([4.0, 5.0, 0.0, 3.0]),),(Vectors.dense([6.0, 7.0, 0.0, 8.0]),),(Vectors.sparse(4, [(0, 9.0), (3, 1.0)]),)]
+
+df = spark.createDataFrame(data, ["features"])
+
+r1 = Correlation.corr(df, "features").head()
+print("Pearson correlation matrix:\n" + str(r1[0]))
+
+r2 = Correlation.corr(df, "features", "spearman").head()
+print("Spearman correlation matrix:\n" + str(r2[0]))
+
+
+seriesz = sc.parallelize([10.0, 20.0, 30.0, 30.0, 550.0])
+
+	sendsordf = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/home/AD.NOODLE.AI/pruthvi.kumar/Desktop/sensordata.csv')
+company-df.take(1)
+
+
+>> from pyspark import SparkConf, SparkContext
+>>> from pyspark.sql import SQLContext
+>>> from pyspark.mllib.stat import Statistics
+>>> from pyspark.ml.stat import Correlation
+>>> from pyspark.mllib.stat import Statistics
+
+>>> sqlContext = SQLContext(sc)
+>>> sensordf = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/home/AD.NOODLE.AI/pruthvi.kumar/Desktop/sensordata.csv')
+>>> sensordf.take(1)
+>>> sensordf.show()
+>>> sensordf.cache()
+>>> sensordf.printSchema()
+>>> sensordf.describe().toPandas().transpose()
+
+>>> features = sensordf.columns
+>>>r1 = Correlation.corr(sensordf, features)
+>>> r2 = Correlation.corr(sensordf, "features", "spearman").head()
+
+
+>>> r2 = Correlation.corr(sensordf, "sensor_value3", "spearman").head()
+correlation_matrix = Statistics.corr(sensordf, method="spearman")
+
+
+sensordf.stat.corr('sensor_value3','sensor_value2')
+sensordf.stat.corr('sensor_value3','sensor_value1')
+
+=====
+from pyspark.ml.feature import VectorAssembler
+vectorAssembler = VectorAssembler(inputCols = [‘Rank’, ‘Employees’], outputCol = ‘features’)
+tcompany-df = vectorAssembler.transform(company-df)
+tcompany-df = tcompany-df.select([‘features’, ‘Employees’])
+tcompany-df.show(3)
+
+
+
+from pyspark.ml.feature import VectorAssembler
+
+vectorAssembler = VectorAssembler(inputCols = ['sensor_value2', 'sensor_value1'], outputCol = 'outcoeff')
+
+newsensonrdf = vectorAssembler.transform(sensordf)
+======
+assembler = VectorAssembler(inputCols=sensordf.columns, outputCol="output")
+
+sensonrdf2 = assembler.transform(sensordf)
+>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>>>>>
+
+
+rdd=sc.textFile('/home/AD.NOODLE.AI/pruthvi.kumar/Desktop/sensordata.csv')
+Statistics.corr(rdd, pearson)
+
+
+
+=====>>>>>>>>>=======
+
+df = datos
+col_names = df.columns
+features = df.rdd.map(lambda row: row[0:])
+corr_mat=Statistics.corr(features, method="pearson")
+corr_df = pd.DataFrame(corr_mat)
+corr_df.index, corr_df.columns = col_names, col_names
+
+
+-df=mappedRddWithoutHeader.toDF(rdd)
+
+col_names = sensordf.columns
+features = sensordf.rdd.map(lambda row: row[0:])
+corr_mat=Statistics.corr(features, method="pearson")
+corr_df = pd.DataFrame(corr_mat)
+
+
+newfeatures = sensordf.rdd.map(lambda row: row[1:])
+
+==============march 20========
+
+from pyspark import SparkConf, SparkContext
+from pyspark.mllib.stat import Statistics
+from pyspark.sql import SQLContext
+import pandas as pd
+
+sensordf = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('/home/AD.NOODLE.AI/pruthvi.kumar/Desktop/sensordata.csv')
+
+features = sensordf.rdd.map(lambda row: row[0:])
+corr_mat=Statistics.corr(features, method="pearson")
+corr_df = pd.DataFrame(corr_mat)
+print(corr_df)
+
+corr_mat1=Statistics.corr(features, method="spearman")
+corr_df1 = pd.DataFrame(corr_mat1)
+
+
+
+/home/AD.NOODLE.AI/pruthvi.kumar/Documents/softwares/temp/corr_job.py
+
+
+./bin/spark-submit /home/AD.NOODLE.AI/pruthvi.kumar/Documents/softwares/temp/corr_job.py
+
+./bin/spark-submit /home/AD.NOODLE.AI/pruthvi.kumar/Documents/softwares/temp/corr_job.py
+
+
+=========
+=========
+
+
+query = """
+    (
+    SELECT 
+                ltrim(rtrim(a.Item)) ITEM_ID, 
+                ltrim(rtrim(a.LOC)) SAP_PLANT, 
+                CAST(a.Period AS DATE) CALENDAR_PERIOD,
+                a.[Billing Units (EA)] SHIPMENT_QTY_SUM,
+                a.[Order Quantity (EA)] ORDER_QTY_SUM,
+                a.[Forecast Quantity (Lag 3)] FORECAST_QTY_SUM
+            FROM ELC_NoodleRW.scaleout.t_2018_2017_Merged_Fill_Rate AS a
+            INNER JOIN 
+                (SELECT
+                     ITEM_ID
+                 FROM
+                     ELC_NoodleRW.raw.t_MaterialMaster
+                 WHERE
+                     MATERIAL_TYPE = 'FERT'
+                     AND MAJOR_INVENTORY_DESCRIPTION = 'Saleable') AS b
+            ON
+                ltrim(rtrim(a.Item)) = ltrim(rtrim(b.ITEM_ID))
+            WHERE a.Item is not null
+                  and a.LOC is not null
+    )t
+ """
+
+FillRate = spark.read.format("jdbc")\
+.option("url", "jdbc:sqlserver://192.168.10.5:1433;databaseName=ELC_NoodleRW")\
+.option("dbtable", query)\
+.option("user", "ELC_Dev_Suman")\
+.option("password", “uuu”)\
+.load()
+
+
+/var/log/hadoopyarnnodemanagerlogs
+
+SELECT week_start, PG, DC, sale_quantity
+FROM Ds_training.DF.df_input_data;
+
+service msqld status
+service ambari-agent status
+service ufw status
+ambari-agent restart
+
+bin/spark-shell --driver-class-path /tmp/sqljdbc42.jar --jars /tmp/sqljdbc42.jar
+
+SELECT week_start, PG, DC, sale_quantity FROM Ds_training.DF.df_input_data;
+SELECT week_start, PG, DC, sale_quantity FROM Ds_training.DF.df_input_data;
+
+bin/spark-shell --driver-class-path /tmp/sqljdbc42.jar --jars /tmp/sqljdbc42.jar
+
+query = """(SELECT week_start, PG, DC, sale_quantity FROM Ds_training.DF.df_input_data)t"""
+
+FillRate = spark.read.format("jdbc").option("url", "jdbc:sqlserver://192.168.2.37:1433;databaseName=Ds_training").option("dbtable",query).option("user", "dsuser_training").option("password", "Noodle1511").load()
+
+
+
+./bin/spark-submit --driver-class-path /tmp/sqljdbc42.jar --jars /tmp/sqljdbc42.jar /home/AD.NOODLE.AI/pruthvi.kumar/Documents/softwares/temp/sql_connect.py
+
+
+===============
+===============
+
+
+from pyspark import SparkConf, SparkContext
+from pyspark.sql import HiveContext
+from pyspark.sql import SQLContext
+from pyspark.mllib.stat import Statistics
+import pandas as pd
+
+def main():
+    query = """(SELECT DC, sale_quantity FROM Ds_training.DF.df_input_data)t"""
+    sc_conf = SparkConf()
+    conf = sc_conf.setMaster("local").setAppName("PySpark_corrApp")
+    sc = SparkContext(conf=conf)
+    sqlContext = SQLContext(sc)
+    dbout_df = sqlContext.read.format("jdbc").option("url",
+                                                  "jdbc:sqlserver://192.168.2.37:1433;databaseName=Ds_training").option(
+        "dbtable", query).option("user", "dsuser_training").option("password", "Noodle1511").load()
+    print("dbout_df.count()=============>{}", dbout_df.count())
+
+    features = dbout_df.rdd.map(lambda row: row[0:])
+    corr_mat = Statistics.corr(features, method="pearson")
+    corr_df = pd.DataFrame(corr_mat)
+    print("========================")
+    print("dbout_df.count()=============>{}", dbout_df.count())
+    print("dbout_df.columns=============>{}", dbout_df.columns)
+    print("corr_df=============>{}",corr_df)
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+=========
+
+hdfs dfs -mkdir /user/livy/testparquet
+
+hdfs dfs -copyFromLocal /opt/temp/ternium_1day.csv hdfs://ahai-hdp-master01.ad.noodle.ai:8020/user/livy/test/
+
+hdfs dfs -copyFromLocal /opt/temp/ternium_1day.parquet hdfs://ahai-hdp-master01.ad.noodle.ai:8020/user/livy/test/
+
+
+hdfs dfs copyFromLocal pyscale_parquet/test_parq_1.parquet/ hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy
+
+
+hdfs dfs -setrep -w 4 /user/livy/testparquet/ternium_1day.parquet
+
+hdfs dfs  -Ddfs.replication=4 -put ternium_1day_4rep.parquet hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy/testparquet/
+
+
+hdfs dfs copyFromLocal -D dfs.replication=4 ternium_1day.parquet hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy/
+
+
+hdfs dfs copyFromLocal -D dfs.replication=0 ternium_1day.parquet hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy/
+
+=========
+
+./bin/spark-submit --driver-class-path /tmp/sqljdbc42.jar --jars /tmp/sqljdbc42.jar /home/AD.NOODLE.AI/pruthvi.kumar/Documents/softwares/temp/get_db_corr.py 
+
+	curl 192.168.10.75:8999/sessions/36 -X GET -H 'Content-Type: application/json' -H "X-Requested-By: admin" | python -m json.tool
+
+	curl 192.168.10.75:8999/sessions/204/statements/0 -X GET -H 'Content-Type: application/json' -H "X-Requested-By: admin" | python -m json.tool
+
+
+
+  curl 192.168.10.75:8999/ws/v1/cluster/metrics -X GET -H 'Content-Type: application/json' -H "X-Requested-By: admin" | python -m json.tool
+
+
+python3 mllib/stat/sample_livy_client.py http://192.168.10.75:8999 2
+
+curl -X POST --data '{"kind": "pyspark"}' -H "Content-Type: application/json" -H "X-Requested-By: admin" 192.168.10.75:8999/sessions
+
+'curl -X POST --data '{"file": "/home/AD.NOODLE.AI/pruthvi.kumar/Documents/softwares/temp/get_db_corr.py", "className": "get_db_corr"}' -H "Content-Type: application/json" -H "X-Requested-By: admin" 192.168.10.75:8999/batches {"id":0,"state":"running","log":[]}'
+
+
+
+curl -X POST --data '{"file": "/home/AD.NOODLE.AI/pruthvi.kumar/Documents/softwares/temp/get_db_corr.py"}' -H "Content-Type: application/json" -H "X-Requested-By: admin"192.168.10.75:8999/batches {"id":0,"state":"running","log":[]}'
+
+
+curl 192.168.10.75:8999/sessions/204/statements -X POST -H 'Content-Type: application/json' -H "X-Requested-By: admin" -d '{"code":"15+20"}'
+
+
+
+
+
+curl 192.168.10.75:8999/sessions/151 -H "X-Requested-By: admin" -X DELETE
+
+curl 192.168.10.75:8999/sessions/14/statements/6
+
+
+
+
+
+
+curl 192.168.10.75:8999/sessions/46/statements/0 | python -m json.tool
+
+
+
+curl 192.168.10.75:8999/sessions/7/statements -X POST -H 'Content-Type: application/json' -H "X-Requested-By: admin" -d'{"code":"sc.parallelize([1, 2, 3, 4, 5]).count()"}'
+
+
+curl 192.168.10.75:8999/sessions/0/statements -X POST -H "Content-Type: application/json" -H "X-Requested-By: admin" -d '{"file": "/home/AD.NOODLE.AI/pruthvi.kumar/Documents/softwares/temp/get_db_corr.py"}' 
+
+=======================
+=======================
+=======================
+
+
+curl 192.168.10.75:8999/sessions/157 -H "X-Requested-By: admin" -X DELETE
+
+curl 192.168.10.75:8999/sessions/46/statements/0 -X POST -H 'Content-Type: application/json' -H "X-Requested-By: admin" 
+
+
+curl 192.168.10.75:8999/sessions/7/statements -X POST -H 'Content-Type: application/json' -H "X-Requested-By: admin" -d'{"code":"sc.parallelize([1, 2, 3, 4, 5,10,11]).count()"}'
+
+
+
+ip-172-31-102-188:~ pruthvi.kumar$ curl 192.168.10.75:8999/sessions/40/statements/0 | python -m json.tool
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1217  100  1217    0     0   2036      0 --:--:-- --:--:-- --:--:--  2035
+{
+    "code": "\nfrom pyspark import SparkConf,SparkContext\nfrom pyspark.sql import HiveContext\nfrom pyspark.sql import SQLContext\nfrom pyspark.mllib.stat import Statistics\nimport time\ndef sample_method():\n    time.sleep(500)\n    query = '''(SELECT [0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59] FROM Ds_training.pred_mnt.cluster_prototype5)t'''\n\n    sqlContext = SQLContext(sc)\n    dbout_df = sqlContext.read.format(\"jdbc\").option(\"url\",\"jdbc:sqlserver://192.168.2.37:1433;databaseName=Ds_training\").option(\"dbtable\", query).option(\"user\", \"dsuser_training\").option(\"password\", \"Noodle1511\").load()\n\n    #print(dbout_df)\n    features = dbout_df.rdd.map(lambda row: row[0:])\n   #print(features)\n    corr_mat = Statistics.corr(features, method=\"pearson\")\n\n    return corr_mat\n\n\nrr = sample_method()\nprint(type(rr))\nprint(rr)\n",
+    "id": 0,
+    "output": null,
+    "progress": 0.0,
+    "state": "running"
+}
+
+=====>>>===
+
+query = '''(SELECT * FROM Ds_training.dbo.corr_tab)t'''
+
+curl 192.168.10.75:8999/sessions/40/statements/0 | python -m json.tool
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1748  100  1748    0     0   3341      0 --:--:-- --:--:-- --:--:--  3335
+{
+    "code": "\nfrom pyspark import SparkConf,SparkContext\nfrom pyspark.sql import HiveContext\nfrom pyspark.sql import SQLContext\nfrom pyspark.mllib.stat import Statistics\nimport time\ndef sample_method():\n    time.sleep(500)\n    query = '''(SELECT [0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59] FROM Ds_training.pred_mnt.cluster_prototype5)t'''\n\n    sqlContext = SQLContext(sc)\n    dbout_df = sqlContext.read.format(\"jdbc\").option(\"url\",\"jdbc:sqlserver://192.168.2.37:1433;databaseName=Ds_training\").option(\"dbtable\", query).option(\"user\", \"dsuser_training\").option(\"password\", \"Noodle1511\").load()\n\n    #print(dbout_df)\n    features = dbout_df.rdd.map(lambda row: row[0:])\n   #print(features)\n    corr_mat = Statistics.corr(features, method=\"pearson\")\n\n    return corr_mat\n\n\nrr = sample_method()\nprint(type(rr))\nprint(rr)\n",
+    "id": 0,
+    "output": {
+        "data": {
+            "text/plain": "<type 'numpy.ndarray'>\n[[1.         0.99918718 0.99808582 ... 0.96737865 0.9654225  0.96491263]\n [0.99918718 1.         0.99968327 ... 0.96803918 0.96555704 0.96448196]\n [0.99808582 0.99968327 1.         ... 0.96804176 0.96528177 0.96387319]\n ...\n [0.96737865 0.96803918 0.96804176 ... 1.         0.99976589 0.99903683]\n [0.9654225  0.96555704 0.96528177 ... 0.99976589 1.         0.99950545]\n [0.96491263 0.96448196 0.96387319 ... 0.99903683 0.99950545 1.        ]]"
+        },
+        "execution_count": 0,
+        "status": "ok"
+    },
+    "progress": 1.0,
+    "state": "available"
+}
+
+
+
+
+============ UDF ===============
+
+>>> def using_pandas_add(v1):
+       import pandas as pd
+       print(type(v1))
+       print(v1)
+
+>>> from pyspark.sql.functions import udf
+>>> pd_udf = udf(using_pandas_add)
+>>> df.select('age',pd_udf('age')).show()
+
+===================
+https://stackoverflow.com/questions/50198636/how-to-set-master-deploy-mode-driver-class-path-and-driver-java-option/50199355#50199355
+
+====================
+
+==================PEX  ===============
+
+virtualenv -p /usr/local/bin/python3.6 pyenv_test
+
+$ export PYSPARK_DRIVER_PYTHON=`which python`
+$ export PYSPARK_PYTHON=./myarchive.pex
+
+export PYSPARK_PYTHON=./q1.pex
+
+pex -r <(pip freeze) -o my_virtualenv.pex
+
+pex -v --disable-cache -r req.txt -o my_virtualenv.pex
+
+pex -v --disable-cache -o my_virtualenv.pex .
+
+./../spark-2.4.0-bin-hadoop2.7/bin/pyspark --conf spark.executorEnv.PEX_ROOT=./.pex --files my_virtualenv.pex
+
+import predictive_maintenance.batch.modeling
+
+
+pex -v --disable-cache -o pm.pex .
+
+from py_commons.data_handling.datawrangling import DataWrangling
+
+from predictive_maintenance.FeatureEngineering import VariableSelection as VS
+
+
+./../softwares/spark-2.4.0-bin-hadoop2.7/bin/pyspark --conf spark.executorEnv.PEX_ROOT=~/.pex --files q1.pex
+
+./Documents/softwares/spark-2.4.0-bin-hadoop2.7/bin/pyspark --master local --conf spark.executorEnv.PEX_ROOT=./.pex --files Documents/pexFiles/numpy.pex
+
+--deploy-mode cluster  
+
+pip install .
+
+python3 setup.py install
+
+/opt/anaconda3/bin/conda install -c conda-forge pandas-profiling
+
+/opt/anaconda3/bin/conda install -c conda-forge tensorflow
+
+/opt/anaconda3/bin/conda install -c conda-forge fbprophet
+
+./../softwares/spark-2.4.0-bin-hadoop2.7/bin/pyspark --conf spark.pyspark.virtualenv.enabled=true  --conf spark.pyspark.virtualenv.type=native
+
+ps aux | awk {'print $8'}|grep Z|wc -l
+sudo kill $(ps -A -ostat,ppid | awk '/[zZ]/ && !a[$2]++ {print $2}')
+pstree -p -s 1164
+pstree -paul
+
+yarn application -kill application_1555482386154_0047
+
+
+yarn application -kill application_1553602877763_0001
+
+yarn application -list -appStates RUNNING 
+yarn application -list -appStates ALL
+
+sudo -H pip3 install pyarrow
+sudo -H pip3 install numpy
+sudo -H pip3 install koalas
+sudo -H pip3 install redis
+sudo -H pip3 install pickle
+sudo -H pip3 install pandas
+
+
+pex flask -o flask.pex .
+
+
+export PYSPARK_PYTHON=flask.pex
+
+livy.spark.yarn.appMasterEnv.PYSPARK_PYTHON=/usr/bin/python3.4
+
+export PYSPARK_PYTHON=/home/AD.NOODLE.AI/pruthvi.kumar/Documents/pexFiles/q1.pex
+
+
+data = {'kind': 'pyspark','conf': {
+'spark.yarn.appMasterEnv.PEX_ROOT' : '/home/ds_cpu_adm/.pex', 'spark.yarn.appMasterEnv.PYSPARK_PYTHON' : '/home/ds_cpu_adm/q1.pex'
+}}
+
+os.environ['PYSPARK_PYTHON'] = "/opt/test_pex/pandas_profiling.pex"
+os.environ['PYSPARK_DRIVER_PYTHON']="/opt/test_pex/pandas_profiling.pex"
+
+
+os.environ['PYSPARK_PYTHON'] = "/home/ds_cpu_adm/q1.pex"
+os.environ['PYSPARK_DRIVER_PYTHON']="/home/ds_cpu_adm/q1.pex"
+
+spark.executorEnv.PEX_ROOT
+
+pex pandas-profiling -o pandas_profiling.pex .
+
+
+pex statsmodels==0.10.0 -o stats_models.pex
+
+pex pandas-profiling==1.4.2 --disable-cache -o pandas_profiling_new.pex
+
+data = {'kind': 'pyspark','conf': {'spark.pyspark.python' : '/home/ds_cpu_adm/.pex'}}
+
+
+ <property>
+      <name>yarn.nodemanager.local-dirs</name>
+      <value>/hadoop/yarn/local,/data/hadoop/yarn/local,/opt/hadoop/yarn/local,/usr/hdp/hadoop/yarn/local,/var/hadoop/yarn/local</value>
+    </property>
+
+
+
+
+
+
+('Time : ', datetime.timedelta(0, 697, 758136))
+('Total time taken : ', -241864)
+
+
+
+=================================>>>>>>>>>>>>>
+
+('Time : ', datetime.timedelta(0, 264, 626039))
+('Total time taken : ', -373961)
+
+data = {'kind': 'pyspark','driverMemory':'10G','driverCores':5,'numExecutors': 5, 'executorMemory': '10G','executorCores':5,'conf':{"spark.sql.execution.arrow.enabled" : "true","spark.sql.execution.arrow.fallback.enabled":"true"}}
+
+
+=================================>>>>>>>>>>>>>
+
+
+dbout_df.toPandas().to_csv('/user/hdfs/test/testcsv.csv')
+
+dbout_df.toPandas().to_csv('hdfs:///user/livy/testcsv.csv')
+
+dbout_df.toPandas().to_csv('hdfs:///root/test/testcsv.csv')
+
+
+pip install py_commons==1.0.2 --trusted-host=noodlenexus.noodle.ai --extra-index-url http://noodlenexus.noodle.ai:8081/repository/python-group/simple
+
+
+
+> livy.spark.deploy-mode
+
+https://community.hortonworks.com/articles/151164/how-to-submit-spark-application-through-livy-rest.html
+
+
+https://github.com/jupyter-incubator/sparkmagic/issues/397
+
+
+https://stackoverflow.com/questions/30279783/apache-spark-how-to-use-pyspark-with-python-3
+
+
+=================== sarfraj meeting ==================
+
+
+==========
+
+export PYSPARK_PYTHON=flask.pex
+
+export PYSPARK_PYTHON=/usr/bin/python3
+
+livy.spark.yarn.appMasterEnv.PYSPARK_PYTHON=/usr/bin/python3.4
+
+export PYSPARK_PYTHON=/home/AD.NOODLE.AI/pruthvi.kumar/Documents/pexFiles/q1.pex
+
+
+sudo vi /usr/bin/spark-submit
+
+sudo vi /usr/bin/pyspark
+
+#!/usr/bin/env bash
+export PYSPARK_PYTHON=/opt/anaconda3/bin/python
+export PYSPARK_DRIVER_PYTHON=/opt/anaconda3/bin/python
+
+
+data = {'kind': 'pyspark','conf': {
+'spark.yarn.appMasterEnv.PEX_ROOT' : '/home/ds_cpu_adm/.pex', 'spark.yarn.appMasterEnv.PYSPARK_PYTHON' : '/home/ds_cpu_adm/q1.pex'
+}}
+
+os.environ['PYSPARK_PYTHON'] = "/opt/test_pex/pandas_profiling.pex"
+os.environ['PYSPARK_DRIVER_PYTHON']="/opt/test_pex/pandas_profiling.pex"
+
+
+os.environ['PYSPARK_PYTHON'] = "/home/ds_cpu_adm/q1.pex"
+os.environ['PYSPARK_DRIVER_PYTHON']="/home/ds_cpu_adm/q1.pex"
+
+data = {'kind': 'pyspark','conf':{'spark.executorEnv.PEX_ROOT':'/home/ds_cpu_adm/.pex','spark.executorEnv.PYSPARK_PYTHON':'/home/ds_cpu_adm/flaskpex.pex'}}
+
+    data = {'kind': 'pyspark','driverMemory':'8G','driverCores':8,'numExecutors': 20, 'executorMemory': '20G','executorCores':10,'conf':{"spark.sql.execution.arrow.enabled" : "true"}}
+
+
+
+data = {‘kind’: ‘pyspark’,‘driverMemory’:‘2G’,‘driverCores’:2,‘numExecutors’: 1,
+           ‘executorMemory’: ‘1G’,‘executorCores’:1,‘conf’:{‘spark.pyspark.virtualenv.enabled’:‘true’,
+           ‘spark.pyspark.virtualenv.type’:‘conda’,
+           ‘spark.pyspark.virtualenv.path’:‘/home/ds_cpu_adm/.conda/envs/conda_test_env/bin/python’}}
+
+./testenv/bin/spark-submit --master local --deploy-mode client --conf “spark.pyspark.virtualenv.enabled=true” --conf “spark.pyspark.virtualenv.type=conda”  --conf “spark.pyspark.virtualenv.path=/home/zeeshan.ali/anaconda3/envs/conda_test_env/bin/conda” spark_panda.py
+
+conda create -n ansible_conda_env python
+test_conda_env
+
+conda activate ansible_conda_env
+source activate ansible_conda_env
+
+conda create -n conda_env python
+conda activate conda_env
+source activate conda_env
+
+export PYSPARK_PYTHON=/opt/anaconda3/bin/python
+
+export PYSPARK_DRIVER_PYTHON=/opt/anaconda3/bin/python
+
+spark-submit --deploy-mode cluster --driver-memory 1g --executor-memory 1g --executor-cores 2 --num-executors 1 --files /home/ds_cpu_adm/temp/test.py
+
+data = {'kind' : 'pyspark','conf': {'spark.yarn.appMasterEnv.PYSPARK_PYTHON':'/opt/anaconda3/bin/python'}}
+
+
+
+data = {'kind': 'pyspark','driverMemory':'2G','driverCores':2,'numExecutors': 1,
+'executorMemory': '1G','executorCores':1,'conf':{'spark.pyspark.virtualenv.enabled':'true',
+'spark.pyspark.virtualenv.type':'conda',
+'spark.submit.deployMode':'cluster'
+'spark.pyspark.virtualenv.path':'/home/ds_cpu_adm/.conda/envs/conda_test_env/bin/python'}}
+
+data = {'kind' : 'pyspark','conf': {'spark.yarn.appMasterEnv.PYSPARK_PYTHON':'/home/ds_cpu_adm/.conda/envs/conda_test_env/bin/python'}}
+
+
+
+pip install py_scale==0.0.56 --trusted-host=noodlenexus.noodle.ai --extra-index-url http://noodlenexus.noodle.ai:8081/repository/python-group/simple --user
+
+
+
+
+
+hdfs dfs -cp file:////home/ds_cpu_adm/pyscale_parquet/process_id
+ hdfs dfs -cp file:////home/ds_cpu_adm/pyscale_parquet/process_id=1/year=2016/month=11 /user/livy/testparquet
+
+part-0000-b678b7f1-d2fc-part-00004-b678b7f1-d2fc-4f40-98c9-13648a2a9e8b.c000.snappy.parquet
+
+
+
+Command to run py_scale test case : pytest -m “smoke” stats_correlation_tests.py
+
+/user/livy/testparquet/month=11
+
+test_parq_1.parquet/
+
+hdfs dfs -copyFromLocal ternium_1day.csv hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy/testparquet/
+
+
+hdfs dfs -copyFromLocal ternium_1day.parquet hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy/testparquet/
+
+
+/user/livy/testparquet/month=11/part-00004-b678b7f1-d2fc-4f40-98c9-13648a2a9e8b.c000.snappy.parquet
+
+
+hdfs dfs -copyFromLocal /user/livy/test_parq_1.parquet hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy/testparquet/
+
+
+hdfs dfs -copyFromLocal part-00522-191abbe5-e8d7-493d-a212-211b78417eab.c000.snappy.parquet /user/livy/testparquet
+
+
+
+
+sqlContext.read.parquet('hdfs://bat-cpu01.ad.noodle.ai:8020/tmp/part-00004-b678b7f1-d2fc-4f40-98c9-13648a2a9e8b.c000.snappy.parquet')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+============= environ ===========
+
+
+environ({'SPARK_YARN_STAGING_DIR': 'hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy/.sparkStaging/application_1562230613656_0029', 'PATH': '/usr/sbin:/sbin:/usr/lib/ambari-server/*:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/ambari-agent', 'HADOOP_CONF_DIR': '/usr/hdp/3.1.0.0-78/hadoop/conf', 'JAVA_HOME': '/usr/jdk64/jdk1.8.0_112', 'XFILESEARCHPATH': '/usr/dt/app-defaults/%L/Dt', 'LANG': 'en_US.UTF-8', 'APP_SUBMIT_TIME_ENV': '1562320106154', 'NM_HOST': 'bat-cpu01.ad.noodle.ai', 'PYSPARK_PYTHON': '/home/ds_cpu_adm/flasknew.pex', 'TIMELINE_FLOW_NAME_TAG': 'livy-session-572', 'SPARK_HOME': '.', 'LD_LIBRARY_PATH': '/usr/hdp/current/hadoop-client/lib/native:/usr/hdp/current/hadoop-client/lib/native/Linux-amd64-64:', 'NM_AUX_SERVICE_timeline_collector': '', 'LOGNAME': 'livy', 'JVM_PID': '10978', 'TIMELINE_FLOW_VERSION_TAG': '1', 'PWD': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001', 'LIVY_SPARK_MAJOR_VERSION': '2', 'PYTHONHASHSEED': '0', '_': '/usr/jdk64/jdk1.8.0_112/bin/java', 'LOCAL_DIRS': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029', 'PYTHONPATH': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/pyspark.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/py4j-0.10.7-src.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/pyspark.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/py4j-0.10.7-src.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/pyspark.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/py4j-0.10.7-src.zip', 'APPLICATION_WEB_PROXY_BASE': '/proxy/application_1562230613656_0029', 'NM_HTTP_PORT': '8042', 'LOG_DIRS': '/hadoop/yarn/log/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001', 'PRELAUNCH_OUT': '/hadoop/yarn/log/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/prelaunch.out', 'NM_AUX_SERVICE_mapreduce_shuffle': 'AAA0+gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=', 'NM_PORT': '45454', 'PYSPARK_GATEWAY_SECRET': 'AsryEcXYR86C/gj0e3SJcwt+SOk6V6miMUP+bcErVEQ=', 'HADOOP_YARN_HOME': '/usr/hdp/3.1.0.0-78/hadoop-yarn', 'USER': 'livy', 'CLASSPATH': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/__spark_conf__:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/__spark_libs__/*:/usr/hdp/3.1.0.0-78/hadoop/conf:/usr/hdp/3.1.0.0-78/hadoop/*:/usr/hdp/3.1.0.0-78/hadoop/lib/*:/usr/hdp/current/hadoop-hdfs-client/*:/usr/hdp/current/hadoop-hdfs-client/lib/*:/usr/hdp/current/hadoop-yarn-client/*:/usr/hdp/current/hadoop-yarn-client/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/mapreduce/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/common/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/common/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/yarn/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/yarn/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/hdfs/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/mr-framework/hadoop/share/hadoop/tools/lib/*:/usr/hdp/3.1.0.0-78/hadoop/lib/hadoop-lzo-0.6.0.3.1.0.0-78.jar:/etc/hadoop/conf/secure:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/__spark_conf__/__hadoop_conf__', 'PRELAUNCH_ERR': '/hadoop/yarn/log/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/prelaunch.err', 'PYSPARK_GATEWAY_PORT': '38439', 'PYTHONUNBUFFERED': 'YES', 'HADOOP_TOKEN_FILE_LOCATION': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0029/container_e20_1562230613656_0029_01_000001/container_tokens', 'SPARK_USER': 'livy', 'NLSPATH': '/usr/dt/lib/nls/msg/%L/%N.cat', 'LOCAL_USER_DIRS': '/data/hadoop/yarn/local/usercache/livy/', 'HADOOP_HOME': '/usr/hdp/3.1.0.0-78/hadoop', 'TIMELINE_FLOW_RUN_ID_TAG': '1562320106158', 'SHLVL': '2', 'HOME': '/home/', 'NM_AUX_SERVICE_spark2_shuffle': '', 'CONTAINER_ID': 'container_e20_1562230613656_0029_01_000001', 'MALLOC_ARENA_MAX': '4'})
+
+
+
+===================================
+
+
+environ({'SPARK_YARN_STAGING_DIR': 'hdfs://bat-cpu01.ad.noodle.ai:8020/user/livy/.sparkStaging/application_1562230613656_0032', 'PATH': '/usr/sbin:/sbin:/usr/lib/ambari-server/*:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/ambari-agent', 'HADOOP_CONF_DIR': '/usr/hdp/3.1.0.0-78/hadoop/conf', 'JAVA_HOME': '/usr/jdk64/jdk1.8.0_112', 'XFILESEARCHPATH': '/usr/dt/app-defaults/%L/Dt', 'LANG': 'en_US.UTF-8', 'APP_SUBMIT_TIME_ENV': '1562322075170', 'NM_HOST': 'bat-cpu03.ad.noodle.ai', 'PYSPARK_PYTHON': '/home/ds_cpu_adm/seaborn.pex', 'TIMELINE_FLOW_NAME_TAG': 'livy-session-575', 'SPARK_HOME': '.', 'LD_LIBRARY_PATH': '/usr/hdp/current/hadoop-client/lib/native:/usr/hdp/current/hadoop-client/lib/native/Linux-amd64-64:', 'NM_AUX_SERVICE_timeline_collector': '', 'LOGNAME': 'livy', 'JVM_PID': '28038', 'TIMELINE_FLOW_VERSION_TAG': '1', 'PWD': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001', 'LIVY_SPARK_MAJOR_VERSION': '2', 'PYTHONHASHSEED': '0', '_': '/usr/jdk64/jdk1.8.0_112/bin/java', 'LOCAL_DIRS': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032', 'PYTHONPATH': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/pyspark.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/py4j-0.10.7-src.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/pyspark.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/py4j-0.10.7-src.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/pyspark.zip:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/py4j-0.10.7-src.zip', 'APPLICATION_WEB_PROXY_BASE': '/proxy/application_1562230613656_0032', 'NM_HTTP_PORT': '8042', 'LOG_DIRS': '/hadoop/yarn/log/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001', 'PRELAUNCH_OUT': '/hadoop/yarn/log/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/prelaunch.out', 'NM_AUX_SERVICE_mapreduce_shuffle': 'AAA0+gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=', 'NM_PORT': '45454', 'PYSPARK_GATEWAY_SECRET': 'kKHm3x1n8E8WjutbLQhP4vXrV0NpMhwpXFiVWefQ0I0=', 'HADOOP_YARN_HOME': '/usr/hdp/3.1.0.0-78/hadoop-yarn', 'USER': 'livy', 'CLASSPATH': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/__spark_conf__:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/__spark_libs__/*:/usr/hdp/3.1.0.0-78/hadoop/conf:/usr/hdp/3.1.0.0-78/hadoop/*:/usr/hdp/3.1.0.0-78/hadoop/lib/*:/usr/hdp/current/hadoop-hdfs-client/*:/usr/hdp/current/hadoop-hdfs-client/lib/*:/usr/hdp/current/hadoop-yarn-client/*:/usr/hdp/current/hadoop-yarn-client/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/mapreduce/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/common/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/common/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/yarn/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/yarn/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/hdfs/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/mr-framework/hadoop/share/hadoop/tools/lib/*:/usr/hdp/3.1.0.0-78/hadoop/lib/hadoop-lzo-0.6.0.3.1.0.0-78.jar:/etc/hadoop/conf/secure:/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/__spark_conf__/__hadoop_conf__', 'PRELAUNCH_ERR': '/hadoop/yarn/log/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/prelaunch.err', 'PYSPARK_GATEWAY_PORT': '44620', 'PYTHONUNBUFFERED': 'YES', 'HADOOP_TOKEN_FILE_LOCATION': '/data/hadoop/yarn/local/usercache/livy/appcache/application_1562230613656_0032/container_e20_1562230613656_0032_01_000001/container_tokens', 'SPARK_USER': 'livy', 'NLSPATH': '/usr/dt/lib/nls/msg/%L/%N.cat', 'LOCAL_USER_DIRS': '/data/hadoop/yarn/local/usercache/livy/', 'HADOOP_HOME': '/usr/hdp/3.1.0.0-78/hadoop', 'TIMELINE_FLOW_RUN_ID_TAG': '1562322075172', 'SHLVL': '2', 'HOME': '/home/', 'NM_AUX_SERVICE_spark2_shuffle': '', 'CONTAINER_ID': 'container_e20_1562230613656_0032_01_000001', 'MALLOC_ARENA_MAX': '4'})
+

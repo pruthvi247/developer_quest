@@ -1,0 +1,66 @@
+ Book : Design patterns - elements of reusable object orineted software
+ ----------------------------------------------------------------------
+chapter:1
+---------
+ > The first criterion, called purpose, reflects what a pattern does. Patterns can have either creational, structural, or behav- ioral purpose. Creational patterns concern the process of object creation. Structural patterns deal with the composition of classes or objects. Behavioral patterns character- ize the ways in which classes or objects interact and distribute responsibility
+
+ >  Some patterns are alternatives: Prototype is often an alternative to Abstract Factory. Some patterns result in similar designs even though the patterns have different intents. For example, the structure diagrams of Composite and Decorator are similar.
+
+ >  Class inheritance defines an object's implementation in terms of another object's implementation. In short, it's a mechanism for code and representation sharing. In contrast, interface inheritance (or subtyping) describes when an object can be used in place of another.
+
+ > Program to an interface, not an implementation.
+ > Favor object composition over class inheritance.
+
+ > Class inheritance is defined statically at compile-time.Object composition is defined dynamically at run-time through objects acquiring refer- ences to other objects.
+
+> Separate what-to-do part from when-to-do part.
+> Ensure that when part knows as little as possible about what part; and vice versa.
+
+
+> [source: ]Inversion of control : https://stackoverflow.com/questions/3058/what-is-inversion-of-control
+> [source: ]https://martinfowler.com/articles/injection.html
+
+	> If there's more than one way to do it, create multiple constructors that show the different combinations.
+	> Another advantage with constructor initialization is that it allows you to clearly hide any fields that are immutable by simply not providing a setter
+	> If you have multiple ways to construct a valid object, it can be hard to show this through constructors, since constructors can only vary on the number and type of parameters. This is when Factory Methods come into play, these can use a combination of private constructors and setters to implement their work
+	> Three types of injections(dependecy injection) : 1.constructor injection 2. setter injection 3. interface injection
+	> If you use Dependency Injection there are a number of styles to choose between. I would suggest you follow constructor injection unless you run into one of the specific problems with that approach, in which case switch to setter injection. If you are choosing to build or obtain a container, look for one that supports both constructor and setter injection
+
+
+
+
+
+chapter 2:
+---------
+
+Strategy pattern:
+
+> Encapsulating an algorithm in an object is the intent of the Strategy (315) pattern. The key participants in the pattern are Strategy objects (which encapsulate different algorithms) and the context in which they operate.
+> You shouldn't have to change the strategy or context interface to support a new algorithm.
+
+Decorator pattern:
+-----------------
+> The Decorator (175) pattern captures class and object relationships that support em- bellishment by transparent enclosure. In the Decorator pattern, embellishment refers to anything that adds responsibilities to an object
+
+Factory pattern:
+
+> We say that factories create product objects. Moreover, the products that a factory produces are related to one another; in this case, the products are all widgets for the same look and feel.
+> This pattern captures how to create families of related product objects without instantiating classes directly.
+
+Bridge Pattern:
+
+>  intent behind Bridge is to allow separate class hierarchies to work together even as they evolve independently.
+
+Command pattern:
+
+> The Command pattern prescribes a uniform interface for issuing requests that lets you configure clients to handle different requests.
+
+
+
+
+
+
+
+
+
+

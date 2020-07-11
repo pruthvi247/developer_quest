@@ -1,0 +1,89 @@
+first layer architecture of networking:
+
+Application ->  Transport -> internetwork -> link
+
+> link layer : 
+	> it  concerns  itself with getting a packet of data across a single physical connection
+	> it is responsible for connecting your computer to its local network and moving the data across a single hop
+> internetwork layer : get a packet of data moved across multiple networks from its source  to its destination
+> Transportation layer (tcp) : this layer arrange the packets in order at destination based on the offset value. In addition to the data , source and destination addresses offset is also needed to make sure that a message can be reassembled when it reaches its destination
+
+> window size: the maximum amount of data a computer can send before receiving an acknowledgement
+> Going back to the Link layer section, recall the first thing your computer does at the link level is ask “Is there a base station on this network?” by sending a message to a special broadcast address. Once your computer is successfully connected at the link layer through that base station, it sends an- other broadcast message, this time asking “Is there a gateway connected to this network that can get me to the Internet? If there is, tell me your IP address and tell me what IP address I
+should use on this network”.
+> Ability for your computer to get a different IP address when it is moved from one network to another uses a protocol called “Dynamic Host Configuration Protocol” (or DHCP for short). DHCP is pretty simple.
+> a new core router can be connected to the Internet and slowly build a map of network numbers to outbound links so it can properly route packets based on the IP address for each incoming packet. We call this mapping of network numbers to outbound links the “routing table” for a particular router.
+
+> “Network Address Translation”, or “NAT”. The gateway has a single routable IP address that it is sharing across multiple workstations that are connected to the gateway. Your computer uses its non-routable address like “192.168.0.5” to send its packets, but as the packets move across the gateway, the gateway replaces the address with its actual routable address. When packets come back to your workstation, the router puts your workstation’s non-routable address back into the returning packets.
+
+> The Internetworking Protocol layer extends our network from a single hop (Link layer) to a series of hops that result in packets quickly and efficiently being routed from your computer to a des- tination IP address and back to your computer. The IP layer is designed to react and route around network outages and main- tain near-ideal routing paths for packets moving between billions of computers without any kind of central routing clearinghouse. Each router learns its position within the overall network, and by cooperating with its neighboring routers helps move packets ef- fectively across the Internet.
+
+>  we leave the prob- lem of packet loss and packets that arrive out of order to our next layer up, the Transport layer.
+> edge router: A router which provides a connection between a
+local network and the Internet. Equivalent to “gateway”.
+
+> NAT: Network Address Translation. This technique allows a single global IP address to be shared by many computers on a single local area network.
+Network Number: The portion of an IP address that is used to identify which local network the computer is connected to.
+
+> routing tables: Information maintained by each router that keeps track of which outbound link should be used for each network number.
+Time To Live (TTL): A number that is stored in every packet that is reduced by one as the packet passes through each router. When the TTL reaches zero, the packet is discarded.
+traceroute: A command that is available on many Linux/UNIX systems that attempts to map the path taken by a packet as it moves from its source to its destination. May be called “tracert” on Windows systems.
+
+>  the purpose of the Transport layer is to compensate for the fact that the Link and Internetworking layers might lose data. When the two lower layers lose or reroute packets, the Transport layer works to reassemble and/or retransmit that data. The existence of the Transport layer makes it possible for the two lower layers to ignore retransmission and rate-limiting issues
+
+> The purpose of the Transport layer is to provide reliable connec- tions between networked applications so those applications can send and receive streams of data. For an application, this is as simple as asking the Transport layer to make a connection to an application running on a remote host.
+packet vortex: An error situation where a packet gets into an infinite loop because of errors in routing tables.
+
+
+> The Ap- plication layer is where the networked software like web browsers, mail programs, video players, or networked video players operate. We as users interact with these applications and the applications interact with the network on our behalf.
+
+OSI model :
+---------
+Physical layer 1:
+
+> The OSI Physical layer deals with the physical attributes of the actual wired, wireless, fiber optic, or other connection that is used to transport data across a single link. The Physical layer also defines the shapes of the connectors and type of media which can be used. Another problem solved at this layer is how to encode the bits (0’s and 1’s) that make up the data being sent across the medium.2 The “bit encoding” (or modulation) determines how fast data can be sent across the link.
+
+
+Data link layer 2:
+
+> The OSI Data Link layer is concerned with how the systems using a physical link cooperate with one another. When data is broken into packets, the Data Link layer defines special sequences to indi- cate the beginning and end of each packet. The stations commu- nicating using the physical connection are assigned addresses to allow for effective use of the media. Sometimes multiple stations are sharing the same media (as on a wireless network) and the Data Link layer defines how those stations will share the connec- tions with the other systems connected to the network. Most Data Link layers also have some form of checksum to detect and/or cor- rect for errors in the transmitted data.
+The design problems solved in the Physical and Data Link layers of the OSI model are addressed by the Link layer of the TCP/IP model.
+
+Network (Layer 3):
+
+> Like the Internetwork Layer (IP) in the TCP/IP model, the OSI Net- work layer deals with the global assignment of “routable” ad- dresses to the various systems connected to the network. The Network layer governs how routers forward packets across mul- tiple hops to get from their source to their destination. Like the IP layer, The OSI Network layer does not attempt to be error free, as it assumes that lost data will be detected and retransmitted at the next layer up.
+
+Transport (Layer 4)
+
+> The Transport layer in the OSI model manages packet loss and retransmission as well as flow control and window size. The rest of the functionality of the TCP/IP Transport layer is handled in the Session layer in the OSI model.
+
+Session (Layer 5)
+
+> The OSI Session layer handles establishing connections between applications. The Session layer deals with “ports” so that a con- necting client application can “find” the correct server application on a particular system. Some aspects of secure transmission are also handled in the OSI Session layer.
+
+Presentation (Layer 6)
+
+> The Presentation layer focuses on how data is represented and encoded for transmission across the network. As an example, the Presentation layer would describe how to encode the pixels of an image so that the receiving application can properly decode the data. The Presentation layer also handles data encryption and decryption.
+
+Application (Layer 7)
+
+> The OSI Application Layer is very similar to the Application layer in the TCP/IP model, in that it contains the applications them- selves. Some applications are client applications that initiate connections, and other applications are the server applications that respond to those connection requests. The various pairs of applications have protocol standards that define interoperability
+
+
+> The TCP/IP Link layer combines the Physical and Data Link layers from the OSI model. The Physical and Data Link layers are usually implemented in hardware. Products like Ethernet, WiFi, satellite, or fiber optic often are implemented in a network driver card that plugs into the back of a computer or router. The network driver card generally implements both the physical and the data link
+
+> One place that maps pretty cleanly between the two models is the OSI Network and TCP/IP Internetwork layers. They perform the same functions of creating a globally routable address space and building routers to insure that packets properly find their way from the source to the destination across multiple hops.
+
+ 
+> The features of the Transport layer in TCP/IP are spread across the Transport and Session layers of the OSI model. The OSI Transport layer deals with flow control and packet retransmission, while the OSI Presentation layer deals with multiple applications running on multiple ports as well as session establishment and teardown.
+The Secure Sockets Layer (SSL) in the TCP/IP model corresponds to parts of the Session and Presentation layers in the OSI model.
+
+> 
+
+
+
+
+
+
+
+
