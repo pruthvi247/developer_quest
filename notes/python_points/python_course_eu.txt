@@ -1,0 +1,26 @@
+[source :  python-course.eu]
+
+iterators and iterables:
+------------------------
+
+> Every iterator is also an iterable, but not every iterable is an iterator. E.g. a list is iterable but a list is not an iterator! An iterator can be created from an iterable by using the function 'iter'. To make this possible the class of an object needs either a method 'iter', which returns an iterator, or a 'getitem' method with sequential indexes starting with 0.Iterators are objects with a 'next' method, which will be used when the function 'next' is called.
+
+eg : cities = ["Berlin", "Vienna", "Zurich"]
+	iterator_obj = iter(cities)
+	print(iterator_obj)
+
+	print(next(iterator_obj))
+	print(next(iterator_obj))
+	print(next(iterator_obj))
+
+> The following function 'iterable' will return True, if the object 'obj' is an iterable and False otherwise.
+def iterable(obj):
+     try:
+         iter(obj)
+         return True
+     except TypeError:
+         return False 
+        
+for element in [34, [4, 5], (4, 5), {"a":4}, "dfsdf", 4.5]:
+    print(element, "iterable: ", iterable(element))
+

@@ -55,6 +55,56 @@ Command pattern:
 
 > The Command pattern prescribes a uniform interface for issuing requests that lets you configure clients to handle different requests.
 
+vistor pattern:
+
+>  The Visitor pattern captures the technique we've used to allow an open-ended number of analyses of glyph structures without having to change the glyph classes themselves.An important question to ask yourself before applying the Visitor pattern is, Which class hierarchies change most often? The pattern is most suitable when you want to be able to do a variety of different things to objects that have a stable class structure
+
+
+Chapter 3: - Creational design patterns
+---------------------------------------
+
+
+> Creational design patterns abstract the instantiation process. They help make a system independent of how its objects are created, composed, and represented. A class cre- ational pattern uses inheritance to vary the class that's instantiated, whereas an object creational pattern will delegate instantiation to another object.
+> Creational patterns become important as systems evolve to depend more on object composition than class inheritance.
+> There are two recurring themes in these patterns.First,they all encapsulate knowledge about which concrete classes the system uses. Second, they hide how instances of these classes are created and put together.
+
+
+# Abstract Factory Pattern :
+
+Intent: Provide the interface for creating families of related or dependent objects with out specifying their concrete classes
+
+Applicability
+Use the Abstract Factory pattern when
+• a system should be independent of how its products are created,composed, and represented.
+• a system should be configured with one of multiple families of products.
+• a family of related product objects is designed to be used together, and you need to enforce this constraint.
+• you want to provide a class library of products,and you want to reveal just their interfaces,not their implementations.
+
+[Source : https://dzone.com/articles/factory-method-vs-abstract]
+
+> Factory Method depends on inheritance to decide which product to be created. There’s no separate and dedicated class for creation of a Product
+> On the other side, in Abstract Factory, there’s a separate class dedicated to create a family of related/dependent Products, it uses composition
+
+> If we think of just a product creation facility and the client that uses it, it is clear that in Factory Method, we are restricted to use inheritance(class based) and in Abstract Factory we have the flexibility of composition (object based) to create specific Products.
+
+> Abstract Factory is one level higher in abstraction than Factory Method. Factory Method abstracts the way objects are created, while Abstract Factory also abstracts the way factories are created which in turn abstracts the way objects are created.
+
+> Abstract Factory is at higher level in abstraction, it often uses Factory Method to create the products in factories.
+[END]
+
+> good example for factory and abstract factory are found here [source : https://www.codeproject.com/Articles/716413/Factory-Method-Pattern-vs-Abstract-Factory-Pattern ]
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

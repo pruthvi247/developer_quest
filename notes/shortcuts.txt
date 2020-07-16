@@ -1,0 +1,96 @@
+############ VI Editor ###########
+source - https://www.washington.edu/computing/unix/vi.html
+
+Command Summary
+STARTING vi
+
+     vi filename    edit a file named "filename"
+     vi newfile     create a new file named "newfile"
+ENTERING TEXT
+
+     i         insert text left of cursor
+     a	       begin insert at right of cursor
+     A	       begin insert at end of line
+     i         begin insert at left of cursor
+     I	       insert at beginning of line
+     o	       open line below, ready for insertion
+     O	       open line above, ready for insertion
+MOVING THE CURSOR
+
+     h            left one space
+     j            down one line
+     k            up one line
+     l            right one space
+BASIC EDITING
+
+     x         delete character
+     nx        delete n characters
+     X         delete character before cursor
+     dw        delete word
+     ndw       delete n words
+     dd        delete line
+     ndd       delete n lines
+     D         delete characters from cursor to end of line
+     r         replace character under cursor
+     cw        replace a word
+     ncw       replace n words
+     C         change text from cursor to end of line
+     o         insert blank line below cursor
+                  (ready for insertion)
+     O         insert blank line above cursor
+                  (ready for insertion)
+     J         join succeeding line to current cursor line
+     nJ        join n succeeding lines to current cursor line
+     u         undo last change
+     U         restore current line
+MOVING AROUND IN A FILE
+
+     w            forward word by word
+     b            backward word by word
+     $            to end of line
+     0 (zero)     to beginning of line
+     H            to top line of screen
+     M            to middle line of screen
+     L            to last line of screen
+     G            to last line of file
+     1G           to first line of file
+     <Control>f   scroll forward one screen
+     <Control>b   scroll backward one screen
+     <Control>d   scroll down one-half screen
+     <Control>u   scroll up one-half screen
+     n            repeat last search in same direction
+     N            repeat last search in opposite direction
+     }            move to next paragraph
+     {            move to previous paragraph
+     )            move to next sentence
+     (            move to previous sentence
+CLOSING AND SAVING A FILE
+
+     ZZ            	save file and then quit
+     :w            	save file
+     :q!            	discard changes and quit file
+     vi -r filename	retrieve saved version of file after system or editor crash
+
+Changing, Replacing, and Copying Text
+	.	                repeat last change
+	n.	                repeat last change n times
+	cwtext	                mark end of a word with $ and change to text (press <Esc> to end)
+	rx	                replace character under cursor with character x
+	nrx	                replace n characters with character x
+	Rtext	                write over existing text, (<Esc> to end)
+	J	                join succeeding line to current cursor line
+	:s/pat1/pat2	        on the current line, substitute the first occurence of pattern 1 with pattern 2
+	:s/pat1/pat2/g	        on the current line, substitute all occurences of pattern 1 with pattern 2
+	:&	                ;repeat the last :s request
+	:%s/pat1/pat2/ g	substitute all occurences of pattern 1 with pattern 2 throughout the file
+	:.,$s/pat1/pat2/ g	substitute all occurences of pattern 1 with pattern 2 from cursor to end of file
+
+
+Moving by searching:
+
+To move quickly by searching for text, while in command mode:
+	1: Type "/"
+	2: Enter the text to search for
+	3: Press <Retrun>
+	4: To repeat the search in a forward direction type - n
+	5: To repeat the search in a backward direction type - N
