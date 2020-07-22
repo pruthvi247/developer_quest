@@ -1,0 +1,22 @@
+[source : https://www.baeldung.com/java-singleton, https://www.baeldung.com/java-singleton-double-checked-locking , https://github.com/eugenp/tutorials/tree/master/patterns/design-patterns-creational/src/main/java/com/baeldung/singleton,https://www.journaldev.com/1377/java-singleton-design-pattern-best-practices-examples]
+
+> The most popular approach is to implement a singleton by creating a regular class and making sure it has:
+	A private constructor
+	A static field containging its only instance
+	A static factory method for obtaining the instance 
+Issues:
+> If a method implementtion depends on a singleton object why not pass it as a parameter? in this case we explicitly show what the method depends on.As a consequence,we may easily mock these dependencies when performing testing
+
+> The implementation with a private constructor that we presented above is not thread-safe.It works well in single threaded environment,in multi-threaded env we shouyld use the synchronization technique to gaurantee the atomicity of the operation
+
+> Synchronization might significantly affect the performance.if the code gets invoked often,we should speed it up using various techniques like lazy initialization or double-checked locking.
+
+> signleton can be a problem for distributed system or systems whose internals are based on distributed technologies
+
+At a high level below are the approaches of singleton pattern(there are other methods as well but listed are the commonoly used ones)
+
+1.Eager initialization
+2.Lazy initialization(Class singleton)
+3.Thread safe singleton
+4.Enum singleton
+5.Double checked locking
