@@ -1,0 +1,34 @@
+
+Technically, Python modules ARE singletons
+
+
+[Source : https://stackoverflow.com/questions/10936709/why-does-a-python-module-act-like-a-singleton]
+
+hi = 'hello'
+
+print(hi)
+
+def print_hi():
+    print(hi)
+
+ipython session
+
+In [1]: from hello import print_hi
+hello
+
+In [2]: print_hi()
+hello
+
+In [3]: from hello import print_hi
+
+In [4]: import hello
+
+In [5]: hello.print_hi()
+hello
+
+> it is adviced to use modules as singleton instead of using class and static methods
+
+[source : https://stackabuse.com/the-singleton-design-pattern-in-python/]
+
+[source : https://stackoverflow.com/questions/6760685/creating-a-singleton-in-python] -> methods given here are overkill for creating singleton, adviced to use module singleton
+

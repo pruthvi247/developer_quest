@@ -94,7 +94,9 @@ Use the Abstract Factory pattern when
 
 > good example for factory and abstract factory are found here [source : https://www.codeproject.com/Articles/716413/Factory-Method-Pattern-vs-Abstract-Factory-Pattern ]
 
-
+Builder Pattern:
+--------------
+[Source : https://www.codeproject.com/Articles/1156619/Builder-Design-Pattern-with-Demo] - good example, and also refere to [https://medium.com/@ajinkyabadve/builder-design-patterns-in-java-1ffb12648850]
 
 
 

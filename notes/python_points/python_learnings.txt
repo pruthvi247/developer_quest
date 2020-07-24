@@ -2188,3 +2188,17 @@ A counter is a container that stores elements as dictionary keys, and their coun
 >>> myList = [1,1,2,3,4,5,3,2,3,4,2,1,2,3]
 >>> print Counter(myList)
 Counter({2: 4, 3: 4, 1: 3, 4: 2, 5: 1})
+
+> static vs class methods -> [source : https://www.geeksforgeeks.org/class-method-vs-static-method-python/]
+
+> Descriptors in python [source : https://www.geeksforgeeks.org/descriptor-in-python/]
+	Descriptors are like setters and getters in other lanquages
+
+> @property  uses python descriptors underneath
+
+> Metaclass : [source: https://www.python-course.eu/python3_metaclasses.php]
+
+> import modules : [source ; https://medium.com/python-features/what-happens-behind-the-scenes-when-we-import-a-module-in-python-2775da153790#:~:text=When%20the%20interpreter%20executes%20the,interpreter%20is%20being%20run%20interactively.]
+
+
+> python modules as singleton : [https://stackoverflow.com/questions/10936709/why-does-a-python-module-act-like-a-singleton]

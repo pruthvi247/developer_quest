@@ -3,8 +3,51 @@ Data Structure:
 A Data Structure is a way of organizing data so that it can be used effectively
 
 
-Abstract Data Type:
+Abstract Data Type(ADT):
 
 An abstract data type is an abstraction of a data structure which provides only the interface to which a data structure must adhere to.The interface does not give any speific details about how something should be implemented or in what programming language
+
+ADT			Implementation
+---			--------------
+List 			Dynamic Array,Linked List
+Queue 			Linked List based Queue,Array based Queue,Stacked based Queue
+Map 			Tree Map, Hash Map,Hash Table
+Vehicle 		Cart,Bicycle,Smart Car
+
+Big O Notation:
+
+> Big O notation gives an upper bound of the complexity in the worst case
+
+complexities ordered in form smallest to largest
+
+constant time : O(1)
+Logarithemic time : O(log(n))
+Linear time : O(n)
+Linearithmic time : O(nlog(n))a
+Quadatic time : O(n*2)
+Cubic time : O(n*3)
+Exponential time : O(b*n), b>1
+Factorial time : O(n!)
+
+Big O examples:
+-------------
+> finding all subsets of set - O(2*n)
+> finding all permutations of a string -O(n!)
+> Sorting using merge sort - O(nlog(n))
+> iterating over all the cells in a matrix of size n by m - O(nm)
+
+Static and Dynamic Arrays:
+
+Complexity:
+
+		Static		Dynamic Array
+
+Access		O(1)		O(1)
+Search		O(n)		O(n)
+Insertion	Not Applicable  O(n)
+Appending	NA 		O(1)
+Deletion	NA 		O(n)
+
+
 
 
