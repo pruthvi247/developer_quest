@@ -1,0 +1,134 @@
+[source : https://medium.com/flutter-community/flutter-design-patterns-1-singleton-437f04e923ce, https://stackoverflow.com/questions/12649573/how-do-you-build-a-singleton-in-dart]
+
+> with Dart's factory constructors, it's easy to build a singleton.But there are other ways to build singleton which we will see.
+
+
+[source: https://dart.dev/guides/language/language-tour#factory-constructors]
+Factory constructors:
+Use the factory keyword when implementing a constructor that doesn’t always create a new instance of its class. For example, a factory constructor might return an instance from a cache, or it might return an instance of a subtype.
+
+
+[source : https://theburningmonk.com/2013/09/dart-implementing-the-singleton-pattern-with-factory-constructors/]
+
+In Dart there is an interesting language feature called ‘Factory Constructors’, which effectively allows you to override the default behaviour when using the new keyword – instead of always creating a new instance the factory constructor is merely required to return an instance of the class,
+
+
+class MyClass {
+  static final MyClass _singleton = new MyClass._internal();
+
+  factory MyClass() {
+    return _singleton;
+  }
+
+  MyClass._internal() {
+    ... // initialization logic here
+  }
+
+  ... // rest of the class
+}
+
+// consuming code
+MyClass myObj = new MyClass(); // get back the singleton
+... 
+// another piece of consuming code
+MyClass myObj = new MyClass(); // still getting back the singleton
+
+
+[source : https://medium.com/flutter-community/flutter-design-patterns-1-singleton-437f04e923ce]
+
+implementation:
+
+> Using a Singleton design pattern which is implemented by definition;
+> Using a Singleton design pattern which is implemented using the Dart language capabilities;
+> Without using a Singleton at all.
+
+> When designing a Singleton, lazy construction should be considered — class instance should only be created when it is first needed;
+
+Base class where other sigleton class extends:
+
+
+abstract class ExampleStateBase {
+  @protected
+  String initialText;
+  @protected
+  String stateText;
+  String get currentText => stateText;
+
+  void setStateText(String text) {
+    stateText = text;
+  }
+
+  void reset() {
+    stateText = initialText;
+  }
+}
+
+
+ExampleStateByDefinition:
+
+
+class ExampleStateByDefinition extends ExampleStateBase {
+  static ExampleStateByDefinition _instance;
+
+  ExampleStateByDefinition._internal() {
+    initialText = "A new 'ExampleStateByDefinition' instance has been created.";
+    stateText = initialText;
+    print(stateText);
+  }
+
+  static ExampleStateByDefinition getState() {
+    if (_instance == null) {
+      _instance = ExampleStateByDefinition._internal();
+    }
+
+    return _instance;
+  }
+}
+
+// Above method is what is genral across all the programming language(also called lazy loading)
+
+
+Singleton’s implementation using Dart magic:
+
+
+class ExampleState extends ExampleStateBase {
+  static final ExampleState _instance = ExampleState._internal();
+
+  factory ExampleState() {
+    return _instance;
+  }
+
+  ExampleState._internal() {
+    initialText = "A new 'ExampleState' instance has been created.";
+    stateText = initialText;
+    print(stateText);
+  }
+}
+
+## above is standard way of initializing singleton in dart, note that the above program has used "factory" constructor (key word)
+> By comparing this code with the previous implementation, you could notice that the static method getState() is missing — well, it is just not needed anymore! Dart language provides a factory constructor. It is used to implement a constructor that does not always create a new instance of its class — it is a nice and elegant way to implement the class as a Singleton.
+
+
+general class with out singleton:
+
+
+> Just a simple implementation of the state class without bothering it with Singleton or any other ”fancy-schmancy” design patterns.
+
+class ExampleStateWithoutSingleton extends ExampleStateBase {
+  ExampleStateWithoutSingleton() {
+    initialText =
+        "A new 'ExampleStateWithoutSingleton' instance has been created.";
+    stateText = initialText;
+    print(stateText);
+  }
+}
+
+
+
+>> will be writing a singleton_main.dart module where all the above initiallized classes are used
+
+
+
+
+
+
