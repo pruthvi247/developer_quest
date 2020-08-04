@@ -2202,3 +2202,216 @@ Counter({2: 4, 3: 4, 1: 3, 4: 2, 5: 1})
 
 
 > python modules as singleton : [https://stackoverflow.com/questions/10936709/why-does-a-python-module-act-like-a-singleton]
+
+> genral discussion from google develpers on design patterns : [https://www.youtube.com/watch?v=1Sbzmz1Nxvo, https://www.youtube.com/watch?v=tJXhtncDBu4]
+
+
+[source : https://realpython.com/python-namespaces-scope/]
+
+> Think of namespace as a dictionary where keys are the object names and values are objects itself
+
+> In python there are 4 types of name space:
+	1)Built-in
+	2)Global
+	3)Enclosing
+	4)Local
+> The Built-In Namespacei:
+The built-in namespace contains the names of all of Python’s built-in objects. These are available at all times when Python is running. You can list the objects in the built-in namespace with the following command:
+
+>>> dir(__builtins__)
+
+> The Global Namespace:
+The global namespace contains any names defined at the level of the main program. Python creates the global namespace when the main program body starts, and it remains in existence until the interpreter terminates.
+
+Strictly speaking, this may not be the only global namespace that exists. The interpreter also creates a global namespace for any module that your program loads with the import statement
+
+> The Local and Enclosing Namespaces:
+1 >>> def f():
+2 ...     print('Start f()')
+3 ...
+4 ...     def g():
+5 ...         print('Start g()')
+6 ...         print('End g()')
+7 ...         return
+8 ...
+9 ...     g()
+10...
+11...     print('End f()')
+12...     return
+13...
+14
+15 >>> f()
+16 Start f()
+17 Start g()
+18 End g()
+19 End f()
+
+in this example, function g() is defined within the body of f(). Here’s what’s happening in this code:
+
+Lines 1 to 12 define f(), the enclosing function.
+Lines 4 to 7 define g(), the enclosed function.
+On line 15, the main program calls f().
+On line 9, f() calls g().
+When the main program calls f(), Python creates a new namespace for f(). Similarly, when f() calls g(), g() gets its own separate namespace. The namespace created for g() is the local namespace, and the namespace created for f() is the enclosing namespace.Each of these namespaces remains in existence until its respective function terminates.
+
+
+> Name space execution order:
+
+
+>>> x = 'global'
+
+>>> def f():
+...     x = 'enclosing'
+...
+...     def g():
+...         x = 'local'
+...         print(x)
+...
+...     g()
+...
+
+>>> f()
+local
+
+> Python provides built-in functions called globals() and locals() that allow you to access global and local namespace dictionaries.
+
+eg :
+globals() funtion:
+>>> x
+'foo'
+>>> globals()['x']
+'foo'
+
+>>> x is globals()['x']
+True
+
+>>> globals()['y'] = 100
+
+>>> globals()
+{'__name__': '__main__', '__doc__': None, '__package__': None,
+'__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': None,
+'__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>,
+'x': 'foo', 'y': 100}
+
+>>> y
+100
+
+>>> globals()['y'] = 3.14159
+
+>>> y
+3.14159
+
+locals() funtion:
+
+>>> def f(x, y):
+...     s = 'foo'
+...     print(locals())
+...
+
+>>> f(10, 0.5)
+{'s': 'foo', 'y': 0.5, 'x': 10}
+
+> If you call locals() outside a function in the main program, then it behaves the same as globals().
+
+A function can modify an object of mutable type that’s outside its local scope if it modifies the object in place:
+
+>>> my_list = ['foo', 'bar', 'baz']
+>>> def f():
+...     my_list[1] = 'quux'
+...
+>>> f()
+>>> my_list
+['foo', 'quux', 'baz']
+
+
+In this case, my_list is a list, and lists are mutable. f() can make changes inside my_list even though it’s outside the local scope.
+
+But if f() tries to reassign my_list entirely, then it will create a new local object and won’t modify the global my_list:
+
+>>> my_list = ['foo', 'bar', 'baz']
+>>> def f():
+...     my_list = ['qux', 'quux']
+...
+>>> f()
+>>> my_list
+['foo', 'bar', 'baz']
+
+
+>>> x = 20
+>>> def f():
+...     x = 40
+...     print(x)
+...
+
+>>> f()
+40
+>>> x
+20
+>>>
+
+What if you really do need to modify a value in the global scope from within f()? This is possible in Python using the global declaration:
+
+>>> x = 20
+>>> def f():
+...     global x
+...     x = 40
+...     print(x)
+...
+
+>>> f()
+40
+>>> x
+40
+
+instead of using a global statement, you could accomplish the same thing using globals()
+
+
+>>> x = 20
+>>> def f():
+...     globals()['x'] = 40
+...     print(x)
+...
+
+>>> f()
+40
+>>> x
+40
+
+n this example, the global x statement not only fails to provide access to x in the enclosing scope, but it also creates an object called x in the global scope whose value is 40:
+
+>>> def f():
+...     x = 20
+...
+...     def g():
+...         global x
+...         x = 40
+...
+...     g()
+...     print(x)
+...
+
+>>> f()
+20
+>>> x
+40
+
+To modify x in the enclosing scope from inside g(), you need the analogous keyword nonlocal. Names specified after the nonlocal keyword refer to variables in the nearest enclosing scope:
+
+
+>>> def f():
+...     x = 20
+...
+...     def g():
+...         nonlocal x
+...         x = 40
+...
+...     g()
+...     print(x)
+...
+
+>>> f()
+40
+
+
+
+

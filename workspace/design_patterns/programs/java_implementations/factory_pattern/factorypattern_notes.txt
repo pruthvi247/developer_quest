@@ -1,0 +1,12 @@
+All three Factory types do the same thing: They are a "smart constructor".(factory,factory method,Abstract factory method)
+
+The Factory Method is used in object-oriented programming as a means to provide factory interfaces for creating objects. These interfaces define the generic structure, but don't initialize objects. The initialization is left to more specific subclasses.
+
+> Factory Method should be used in every situation where an application (client) depends on an interface (product) to perform a task and there are multiple concrete implementations of that interface. You need to provide a parameter that can identify the concrete implementation and use it in the creator to decide the concrete implementation.(definition form real python blog)
+
+> factory pattern is also call virtual constructors
+
+> The primary purpose of the Factory Method design pattern is to separate product construction code from the code that actually uses that product. As a result, when you need to add new concrete product, only a new  subclass should be created which overrides the factory method. So this pattern is a great option when you don’t know the exact types and dependencies of the objects your code should work with.
+
+> As mentioned before, the factory method does not have to create a new instance of the object every single time. So if you want to save some system resources and reuse the already existing object instead of rebuilding it, implementing the Factory Method could be a way to go, e.g. by introducing a caching layer or storage which keeps the track of already created objects and returns the requested object when calling the factory method on a specific creator subclass.
+
