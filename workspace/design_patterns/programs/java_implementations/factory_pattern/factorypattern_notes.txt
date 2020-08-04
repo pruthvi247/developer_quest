@@ -10,3 +10,5 @@ The Factory Method is used in object-oriented programming as a means to provide 
 
 > As mentioned before, the factory method does not have to create a new instance of the object every single time. So if you want to save some system resources and reuse the already existing object instead of rebuilding it, implementing the Factory Method could be a way to go, e.g. by introducing a caching layer or storage which keeps the track of already created objects and returns the requested object when calling the factory method on a specific creator subclass.
 
+
+>>>>> pls refer to code project article on factory pattern by "marla sukesh "

@@ -1,0 +1,12 @@
+[source ; https://medium.com/flutter-community/flutter-design-patterns-10-factory-method-c53ad11d863f]
+
+
+> factory pattern helps in keeping definition,creation,usage of a object separated
+
+> factory pattern is also called "virtual constructor"
+
+> the Factory Method design pattern defines an interface for a class responsible for creating an object, hence deferring the instantiation to specific classes implementing this interface. This resolves the issue of creating objects directly within the class which uses them
+
+> The primary purpose of the Factory Method design pattern is to separate product construction code from the code that actually uses that product. As a result, when you need to add new concrete product, only a new creator subclass should be created which overrides the factory method.(refer blog as they have given uml diagram)
+
+>> ***** As mentioned before, the factory method does not have to create a new instance of the object every single time. So if you want to save some system resources and reuse the already existing object instead of rebuilding it, implementing the Factory Method could be a way to go, e.g. by introducing a caching layer or storage which keeps the track of already created objects and returns the requested object when calling the factory method on a specific creator subclass.

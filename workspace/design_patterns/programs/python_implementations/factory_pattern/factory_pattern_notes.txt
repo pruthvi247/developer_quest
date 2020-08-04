@@ -1,0 +1,115 @@
+[source  : https://medium.com/@hardikpatel_6314/design-patterns-in-python-factory-c728b88603eb]
+
+Benefits of factory pattern -
+**** Object creation can be independent of the class implementation.
+Adding support of new type of object is very easy
+Logic of object creation is hidden
+
+
+Simple factorty example :
+
+from abc import ABCMeta, abstractmethod
+
+class Person(metaclass=ABCMeta):
+    @abstractmethod
+    def create(self):
+        pass
+
+class HR(Person):
+    def create(self, name):
+        print(f"HR {name} is created")
+
+class Engineer(Person):
+    def create(self, name):
+        print(f"Engineer {name} is created")
+
+class PersonFactory(object):
+    @classmethod
+    def createPerson(cls, designation, name):
+        eval(designation)().create(name)
+
+
+if __name__ == "__main__":
+    designation = input("Please enter the designation - ")
+    name = input("Please enter the person's name - ")
+    PersonFactory.createPerson(designation, name)
+
+
+> In future if you want to add new designation you just need to add one class for that by overriding Person(Concrete) class and you will be able to create person with that new designation by the same factory.
+> if you want to control how a object is created or if there are any post/pre object creation steps that needs to be executed then factory method pattern can be used.
+
+
+eg:
+
+from abc import ABCMeta, abstractmethod
+
+class AbstractDegree(metaclass=ABCMeta):
+    @abstractmethod
+    def info(self):
+        pass
+
+
+class BE(AbstractDegree):
+    def info(self):
+        print("Bachelor of engineering")
+
+    def __str__(self):
+        return "Bachelor of engineering"
+
+class ME(AbstractDegree):
+    def info(self):
+        print("Master of engineering")
+
+    def __str__(self):
+        return "Master of engineering"
+
+
+class MBA(AbstractDegree):
+    def info(self):
+        print("Master of business administration")
+
+    def __str__(self):
+        return "Master of business administration"
+
+
+class ProfileAbstractFactory(object):
+    def __init__(self):
+        self._degrees = []
+
+    @abstractmethod
+    def createProfile(self):
+        pass
+
+    def addDegree(self, degree):
+        self._degrees.append(degree)
+
+    def getDegrees(self):
+        return self._degrees
+
+
+class ManagerFactory(ProfileAbstractFactory):
+    def createProfile(self):
+        self.addDegree(BE())
+        self.addDegree(MBA())
+        return self._degrees
+
+class EngineerFactory(ProfileAbstractFactory):
+    def createProfile(self):
+        self.addDegree(BE())
+        self.addDegree(ME())
+        return self._degrees
+
+class ProfileFactory(object):
+    def getProfile(self, factory):
+        return factory.createProfile()
+
+    
+
+if __name__ == "__main__":
+    pf = ProfileFactory().getProfile(ManagerFactory())
+    print(pf)
+
+
+
+> Here, In above example, Degree is an abstract concrete class and BE, ME and MBA are concrete classes. ProfileAbstractFactory is an abstract factory which has one declared methods createProfile which must be implemented by individual profile factory and addDegrees, getDegrees instance methods to help creating profile of different designations. EngineerFactory, ManagerFactory are factories which has implemented createProfile method as both can have different degrees. Now ProfileFactory, final factory which creates profile which you want by passing instance of EngineerFactory or other related.
+Now if you want to have support of having HR profile then just need to implement HRFactory and you have requirement to add one more Degree then you just need to one more concrete class for that. 
