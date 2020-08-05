@@ -1,0 +1,9 @@
+[source : https://medium.com/flutter-community/flutter-design-patterns-11-abstract-factory-7098112925d8,https://www.codeproject.com/Articles/716413/Factory-Method-Pattern-vs-Abstract-Factory-Pattern,https://stackabuse.com/creational-design-patterns-in-java/#prototype]
+
+> Definition : Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+
+> The main purpose of the Abstract Factory design pattern is to encapsulate creating a family of objects in a separate factory object.For all supported families of objects, a common interface for creating a family of objects is defined, then concrete factory class is created implementing this interface.
+
+> The Factory Method design pattern has pretty much the same intention and purpose. Yes, it is true, simply like that. But why there is a separate factory pattern, then? The main difference between these two patterns is that the Abstract Factory pattern provides a way to create a family of related objects — a single factory is responsible for creating several objects. As a result, you don’t need to provide a separate factory for each specific class/component. In fact, you can consider the Factory Method design pattern as a subset of the Abstract Factory pattern — the Abstract Factory consists of several factory methods where each one of it creates only one specific object.
+
+>
