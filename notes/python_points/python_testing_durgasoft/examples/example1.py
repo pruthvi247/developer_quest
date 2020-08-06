@@ -9,7 +9,7 @@ class TestCaseDemo(unittest.TestCase):
 	def tearDown(self):
 		print("Tear down method")
 
-unittest.main()
+# unittest.main() ### commeted this line to test testsuite execution
 
 #### setup and teardown method names can not be changed, but test method can be changed only condition is test method should be prefixed with "test_" eg : "test_method1"
 ### how to run the test -> we should call unittest.main()

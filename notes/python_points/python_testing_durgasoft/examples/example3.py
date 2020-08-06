@@ -24,3 +24,17 @@ class TestCaseDemo(unittest.TestCase):
                 print("Tear down method 2")
 
 unittest.main()
+
+
+
+
+
+###TestSuite
+## import unittest
+## from example1 import *
+## from example2 import *
+
+
+##tc1 =  unittest.TestLoader().loadTestsFromTestCase()
+
+
