@@ -1,0 +1,1 @@
+One of the most popular packages for managing the state in Flutter is the provider package. provider uses the observer pattern to notify the widget tree and relies on InheritedWidget to provide the state to the widget tree and rebuild the listening widgets.

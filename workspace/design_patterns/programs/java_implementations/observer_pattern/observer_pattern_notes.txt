@@ -1,0 +1,10 @@
+[Source : https://medium.com/datadriveninvestor/design-patterns-a-quick-guide-to-observer-pattern-d0622145d6c2,https://www.journaldev.com/1739/observer-design-pattern-in-java,https://www.vogella.com/tutorials/DesignPatternObserver/article.html]
+
+
+> Behavioral design patterns are most specifically concerned with communication between classes/objects
+
+definitio:
+
+The pattern’s aim is to define a one-to-many relationship such that when one object changes state, the others are notified and updated automatically. More precisely, it wishes to be informed about events happening in the system
+
+
