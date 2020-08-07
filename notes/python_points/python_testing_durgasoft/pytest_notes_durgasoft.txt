@@ -114,6 +114,74 @@ class level teardown
 
 
 
+> If we need to use setup and teardown for all the modules then copying the same setup fixtures in all the module is redundant, instead we can use confest.py
 
 
+> all common activities we have to define in this file
+> *** name is constant, we can not change the conftest.py name
+
+
+
+Possible ways to run pytest scrips:
+---------------------------------
+
+> py.test -s -v -> run all test moudles present in folder
+> py.test -s -v <test_module.py> <test_module2.py> -> runs the particular test module
+> py.test -s -v <test_movule.py>::test_medod1 -> only one method of test module will be executed
+> unlike unittest, pytest execution order is from top to bottom
+
+How to customize order of test execution in pytest:>
+--------------------------------------------------
+> pip3 install pytest-ordering
+
+> @pytest.mark.run(order=n)
+
+eg :
+
+@pytest.mark.run(order=2)
+def test_method1(setupandteardownClass,setupandteardownmethod):
+        print('test_method1')
+@pytest.mark.run(order=1)
+def test_method2(setupandteardownmethod):
+        print('test_method2')
+
+
+How to generate Html reports:
+----------------------------
+> pip3 install pytest-html
+
+> command to generate html report -> pytest -s -v <test_module> --html=<test_result_name>.html
+
+>  
+
+
+
+[source : https://stackoverflow.com/questions/10464502/how-can-i-skip-a-test-if-another-test-fails-with-py-test/45834419]
+
+
+How to fail another test if one test fails:
+-----------------------------------------
+
+> pip install pytest-dependency
+
+>>> https://pytest-dependency.readthedocs.io/en/latest/usage.html
+
+import pytest
+import pytest_dependency
+
+@pytest.mark.dependency()   #First test have to have mark too
+def test_function_one():
+    assert 0, "Deliberate fail"
+
+@pytest.mark.dependency(depends=["test_function_one"])
+def test_function_two():
+    pass   #but will be skipped because first function failed
+
+
+
+
+
+
+
+  
 
