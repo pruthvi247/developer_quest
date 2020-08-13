@@ -51,10 +51,49 @@ Insertion	Not Applicable  O(n)
 Appending	NA 		O(1)
 Deletion	NA 		O(n)
 
+Singly and Doubly Linked List:
+-----------------------------
+linked List:
+> A linked list is a sequential list of nodes that hold data which point to other nodes and also contains data
+> used in list,stack and queues, used in hastable implementations to deal with hastable collisions
+> singly will contain pointer to next node, doubly will have pointer to previous and next node
 
 
 
-Calling setState schedules a build() method to be called. Doing this too often can slow down the performance of a screen.
+					Singly			Doubly
+
+Search					o(n)			o(n)
+
+Insert at head				o(1)			o(1)
+
+Insert at tail				o(1)			o(1)
+
+remove at head				o(1)			o(1)
+
+Remove at tail				o(n)			o(1)
+
+Remove in middle			o(n)			o(n)
+
+Note: time complexity to the remove tail of singly linked list is linear -o(n) where as for doubly linked list is o(1),why ?? -> In order to delete a node and connect the previous and the next node together, you need to know their pointers. In a doubly-linked list, both pointers are available in the node that is to be deleted. The time complexity is constant in this case, i.e., O(1).
+
+Whereas in a singly-linked list, the pointer to the previous node is unknown and can be found only by traversing the list from head until it reaches the node that has a next node pointer to the node that is to be deleted. The time complexity in this case is O(n).
+
+[source : https://medium.com/@maximohinojosa/implementing-a-singly-linked-list-9596a05a6f5b]
+Why use a linked list over an array? Well a linked list has an advantage that arrays does not have where values can be efficiently inserted and removed without relocating the rest of the list
+
+[Source : https://stackabuse.com/linked-lists-in-detail-with-python-examples-single-linked-lists/]
+
+
+> Before we study what are linked lists, let's first briefly review how Arrays store data. In arrays, the data is stored at contiguous memory locations. For instance, if the first item in the array is stored at index 10 of the memory and is of size 15 bytes, the second item will be stored at index 10+15+1 = 26th index. Therefore, it is straight forward to traverse an array.
+
+> Linked Lists, on the other hand, are different. Linked lists, do not store data at contiguous memory locations. For each item in the memory location, linked list stores value of the item and the reference or pointer to the next item
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
 
 
 

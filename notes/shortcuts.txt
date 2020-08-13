@@ -89,6 +89,7 @@ Changing, Replacing, and Copying Text
 	:#,#s/old/new/g		To substitute phrases between two line #'s (to replace characters between lines)
 	:%s/old/new/g		To substitute all occurrences in the file type
 	:%s/old/new/gc		To ask for confirmation each time add 'c'
+	:%s:pat1:pat2:g		Replace '/' with ':' if you want to replace special characters
 
 
 [source: http://www2.geog.ucl.ac.uk/~plewis/teaching/unix/vimtutor]
@@ -177,6 +178,15 @@ To move quickly by searching for text, while in command mode:
 > To quickly you can select characters along a column, in Vim, press CTRL+v - now you can select columns. The following command is 8j, letting Vim know that I want to go eight lines down. Then, I press s to substitute a character, and I type in the character t, which I want to put there. Finally, I press Esc twice, and the whole column is changed.
 
 
+[source : https://stackoverflow.com/questions/253380/how-to-insert-text-at-beginning-of-a-multi-line-selection-in-vi-vim]
+
+insert text at beginning of a multi-line selection in vi/Vim 
+
+Press Esc to enter 'command mode'
+Use Ctrl+V to enter visual block mode
+Move Up/Downto select the columns of text in the lines you want to comment.
+Then hit Shift+i and type the text you want to insert.
+Then hit Esc, wait 1 second and the inserted text will appear on every line.
 
 
 

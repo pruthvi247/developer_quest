@@ -77,7 +77,7 @@ Youtube links:
 [Source : https://www.youtube.com/watch?v=PJ_AH61dTIc]
 
 
-
+>> Calling setState schedules a build() method to be called. Doing this too often can slow down the performance of a screen.
 
 
 
