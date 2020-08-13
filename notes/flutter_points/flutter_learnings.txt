@@ -57,6 +57,24 @@ AIzaSyB5eM5i_2OlBBkSkr8CGSKGKNYYTXy91xQ
 > navigator.pop (to close the bottom sheet)
 > text field we can set input key board type like to only display numbers in key board
 >
+important resources:
+--------------------
+Flutter Performance Related articles:
+-------------------------------------
+
+
+[source:https://medium.com/flutter/building-performant-flutter-widgets-3b2558aa08fa ]
+
+[source : https://medium.com/flutter-community/flutter-laggy-animations-how-not-to-setstate-f2dd9873b8fc]
+
+[source: https://medium.com/flutter/improving-perceived-performance-with-image-placeholders-precaching-and-disabled-navigation-6b3601087a2b]
+
+Youtube links:
+-------------
+
+[source : https://www.youtube.com/watch?v=YfQkOfm1OC0&list=PLKlZdGMAYp6_cpXFIhv3nLTZeFClrORoY&index=2]
+
+[Source : https://www.youtube.com/watch?v=PJ_AH61dTIc]
 
 
 

@@ -1,3 +1,6 @@
+[Source :https://www.youtube.com/watch?v=RBSGKlAvoiM]
+
+
 Data Structure:
 
 A Data Structure is a way of organizing data so that it can be used effectively
@@ -48,6 +51,10 @@ Insertion	Not Applicable  O(n)
 Appending	NA 		O(1)
 Deletion	NA 		O(n)
 
+
+
+
+Calling setState schedules a build() method to be called. Doing this too often can slow down the performance of a screen.
 
 
 

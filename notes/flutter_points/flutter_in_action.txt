@@ -1,4 +1,4 @@
-
+[source: flutter in action]
 > start android simulator on ma os
 First list down the installed emulators
 

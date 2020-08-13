@@ -1,3 +1,7 @@
+
+> for quick reference of dart syntax refer : {Source : https://dart.dev/samples}
+
+
 > premitive datatypes:
 // numbers - int,float
 //strings - "hello"
@@ -15,6 +19,25 @@ void main() {
  > above code we have used clousers ,clousers are also called anonymus functions
  > dynamic x=5 -> we can assign any type of value to x since it is delared as dynamic eg : x="hello", it will override to string
  > var x=5 and change to x="hellow" -> will throw error
+
+> you can change the type of x, but not a
+void main() {
+  dynamic x = 'hal';
+  x = 123;
+  print(x);
+  var a = 'hal';
+  a = 123;
+  print(a);
+}
+
+dynamic: can change TYPE of the variable, & can change VALUE of the variable later in code.
+
+var: can't change TYPE of the variable, but can change VALUE of the variable later in code.
+
+final: can't change TYPE of the variable, & can't change VALUE of the variable later in code.
+
+
+
 
  // dynamic -> generalizes all types
  // object -> all types are derived from object
@@ -66,6 +89,10 @@ list
 
 
 > dart 2.3 has a spread operator(...) which is equal to cascade, we need not use add() function
+
+var a = [0,1,2,3,4];
+var b = [6,7,8,9];
+var c = [...a,5,...b];
 
 
 > constructor:
@@ -208,6 +235,7 @@ factory constructor :
 
 //   int get add => _x + y;
 
+
 //   void set x(val) {
 //     _x = val;
 //   }
@@ -307,4 +335,41 @@ https://www.youtube.com/watch?list=PLJbE2Yu2zumDjfrfu8kisK9lQVcpMDDzZ&v=8F2uemqL
 
 > link : https://github.com/erluxman/awesomefluttertips
 
+
+
+======================================================
+https://www.youtube.com/watch?list=PLJbE2Yu2zumDjfrfu8kisK9lQVcpMDDzZ&v=8F2uemqLwvE&feature=emb_logo
+======================================================
+
+> classes in dart:
+
+eg:
+
+
+import 'dart:math';
+
+class Position {
+  // properties
+  int x;
+  int y;
+
+  // methods
+  double distanceTo(Position other) {
+    var dx = other.x - x;
+    var dy = other.y - y;
+    return sqrt(dx * dx + dy * dy);
+  }
+}
+
+main() {
+  var origin = new Position()
+    ..x = 0
+    ..y = 0;
+
+  var p = new Position()
+    ..x = -5
+    ..y = 6;
+
+  print(origin.distanceTo(p));
+}
 
