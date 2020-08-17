@@ -80,7 +80,10 @@ Youtube links:
 >> Calling setState schedules a build() method to be called. Doing this too often can slow down the performance of a screen.
 
 
+[source : https://medium.com/flutter-community/flutter-the-advanced-layout-rule-even-beginners-must-know-edc9516d1a2]
 
+
+> Constraints go down. Sizes go up. Positions are set by parents.
 
 
 
