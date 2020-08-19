@@ -373,3 +373,41 @@ main() {
   print(origin.distanceTo(p));
 }
 
+[source: https://medium.com/analytics-vidhya/getting-started-with-dart-the-basics-24ac13efbc27]
+
+
+> Functions:
+Dart is a true object-oriented language, so even functions are objects and have a type, Function. This means that functions can be assigned to variables or passed as arguments to other functions. Type of passed arguments need not be specific (although it’s best practice to do so)
+// The basic syntax for defining a function is
+<return type>functionName(parameters){
+(function body)
+}
+Inline functions:
+
+Making functions in line using => String sayHi(String name) =>'Hi $name'
+
+Optional Parameters
+Often times while calling functions the user isn’t always aware as to what they should use as arguments. Optional parameters come in handy. They are usually enclosed in square braces []
+
+
+
+
+Classes & Object-Oriented Programming:
+
+Dart is an object-oriented language with classes and mixin-based inheritance. Every object is an instance of a class, and all classes descend from Object. Mixin-based inheritance means that although every class (except for Object) has exactly one superclass, a class body can be reused in multiple class hierarchies. Extension methods are a way to add functionality to a class without changing the class or creating a subclass.
+
+> Use extends to create a subclass, and super to refer to the superclass
+
+> Enumerated types
+Enumerated types, often called enumerations or enums, are a special kind of class used to represent a fixed number of constant values.
+
+enum Days = {monday,tuesday,wednesday}
+
+void main(){
+print(Days.monday.index) //->0
+}
+
+
+
+
+

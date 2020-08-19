@@ -1,0 +1,705 @@
+[source : https://learning.oreilly.com/scenarios/kubernetes-fundamentals-first/9781492078821/]
+
+kubectl version --short && \
+kubectl get componentstatus && \
+kubectl get nodes && \
+kubectl cluster-info
+
+helm version --short
+
+Deployment:
+----------
+Deploy a simple application called echoserver:
+You can administer your cluster with the kubectl CLI tool or use the visual Kubernetes Dashboard. Use this script to access the protected Dashboard. 
+>>token.sh
+
+>> kubectl create -f echoserver.yaml
+
+A simpler way to do this is with the run command, but this only creates a Pod. We actually want a Deployment with a ReplicaSet.
+
+kubectl run hello --image=k8s.gcr.io/echoserver:1.9 --port=8080
+
+Notice this not only defines a kind: Deployment, but inside the deployment is a ReplicaSet of a Pod and that Pod consists of one Container. The Deployment is a preferred way of deploying applications instead of simply standing up just a Pod. You may see the advantage in the later step that scales the application.
+
+ Ensure the Available status changes from 0 to 1.
+
+ > kubectl get deployments,pods
+
+ Service
+The echoserver container is running in a Pod. Each Pod in Kubernetes is assigned an internal and virtual IP address at 10.xx.xx.xx. However, from outside of the cluster these IPs are not addressable, and never should be. Even within the cluster other applications normally should not attempt to address these Pods IPs. Instead each replicated Pod is fronted by a single service.
+
+This service can be referenced by its label, and therefore access with the help of an internal Domain Name System (DNS) that will resolve the URL to the service based on the label. The Service will add a layer of indirection where it will know how to connect to the Pod. All the other applications in the cluster will connect to the service through DNS lookups and the services will connect to the specific Pods.
+
+Expose the Pod by fronting it with a Service labeled hello.
+
+> kubectl expose deployment hello --type=NodePort
+
+> kubectl get service hello
+
+The NodePort is assign a port value at some free port above 30000. For this Katacoda example we need it to be at a definitive value, here we choose 31001. Use the patch command to change the hello service NodePort from its random value to the chosen, fixed value
+
+> kubectl patch service hello --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":31001}]'
+
+
+The service NodePort is now adjusted.
+
+>> kubectl get service hello
+
+>> kubectl describe service hello
+
+Because of Katacoda's virtualization you cannot address this service from your browser, but you can use Katacoda's domain as the URL to the same service. Notice the same port number placed in the subdomain of the URL.
+
+>> curl https://2886795272-31001-kpdwevrya3.environments.katacoda.com/
+
+Scaling:
+-------
+
+Pods are often replicated for handling parallel requests. The Service will take care of round robin load balancing across the available Pods.
+
+We will scale the hello Pod up and down. First, in another terminal start a continuous loop that puts some load the service.
+>> while true; do curl -s https://2886795272-31001-kpdwevrya3.environments.katacoda.com/ -w 'Time: %{time_total}' | grep -E 'Hostname|Time' | xargs; done
+
+With all the curl requests in the loop, the single Pod instance is producing all the responses. However with distributed systems with a deep pool of resources it's very common to add more processes that can service multiple requests. Ask Kubernetes to scaling up the echoservice across more Pods.
+
+>> kubectl scale deployment hello --replicas=3
+
+Kubernetes spins up new and duplicated Pods and the same service begins to balance the requests across the pods.
+>> kubectl get pods -l run=hello
+
+The single service for these 3 pods now has the IPs of the three pods and load balances between them
+
+>> kubectl describe service hello | grep "Endpoints"
+Look at the other terminal and in a few moments the output will indicate the load balancer is rotating the requests across the three nodes.
+
+Scale the Pods to zero and see what happens with the same top command and the requests in the other terminal.
+
+>> kubectl scale deployment hello --replicas=0
+
+The list will show the pods Terminating, then in a moment the list will be blank.
+
+>> kubectl get pods
+
+Notice while the pod count is at zero the service running in Terminal 2 is reporting no responses. Soon the above command will report No resources found.
+
+Scale the Pods back to 1 and see how the requests are restored.
+
+>> kubectl scale deployment hello --replicas=1
+
+A new pod should show in a moment.
+>> kubectl get deployments,pods
+
+A few moments later the metrics will be available for the new pod.
+
+>> kubectl get pods -l run=hello
+
+
+Resilience:
+----------
+
+Applications designed to embrace failure are the most healthy and resistant to interrupting users' experiences. Kubernetes embraces failure and so should your applications. One failure to expect is your containers will fail. Kubernetes expects containers to crash and will restart Pods when that happens. When your application is load balancing and spreading fault tolerance across multiple Pods, whole groups of users should rarely be effected by container failures.
+
+You can witness Kubernetes resilience feature by purposefully killing your Pods. Scale the Pods back up.
+
+>> kubectl scale deployment hello --replicas=3
+
+Get the list of running pods.
+
+>> kubectl get pods --selector=run=hello
+
+Get the list of running pods.
+
+>> kubectl get pods --selector=run=hello
+
+Delete one of the Pods.
+>> kubectl delete --now pod $(kubectl get pods --selector=run=hello | sed '2!d' | cut -d' ' -f1) > /dev/null &
+
+When a Pod is no longer running, the Kubernetes controller recognizes the different between the declared state and the reality of the cluster state. The controller will instruct the Scheduler on how to resolve the problem and the Schedular will search out the most healthy and optimum Kubelet among of the worker nodes. The Kubelet will start the new Pod. Shortly thereafter the Controller will recognize the state of the cluster now matches the declared state and peace is restored.
+
+
+Rollout:
+--------
+If you inspect the Pod you will see the running container is version 1.9.
+
+
+>> kubectl describe pod hello | grep "Image:"
+
+A newer version of the container is 1.10 as listed here (image registry).
+
+An important aspect of Kubernetes is your users may benefit from the ideas of continuous deployment. A fundamental way to approach this is with Kubernetes rollouts.
+
+
+Here are two approaches.
+
+1. A precise surgical way is with the set image command. This will modify the image version for the container in each Pod.
+
+>> kubectl set image deployment/hello hello=k8s.gcr.io/echoserver:1.10 --all
+
+Now, the Pod inspection will report the updated container.
+
+>> kubectl describe pod hello | grep "Image:"
+
+2. Another way is to modify the YAML then apply the change with the replace command.
+
+After trying the above set image change the image back using the replace which will move the container back to version 1.9 as specified in the YAML.
+
+>> kubectl replace -f echoserver.yaml
+
+Verify the version has been restored to 1.9.
+
+>> kubectl describe pod hello | grep "Image:"
+
+
+Then, look up the resource, change the image version with SED, then pipe modified stream to the replace command.
+
+>> kubectl get deployment hello -o yaml | sed 's/\(echoserver\):.*$/\1:1.10/' | kubectl replace -f -
+
+Verify the version has been upgraded using the replace command.
+
+>> kubectl describe pod hello | grep "Image:"
+
+
+Once an application is in a container, it's fairly simple to ask Kubernetes to serve up the container in multiple Pods fronted with a load balancing Service. Thereafter, Kubernetes dutifully respects your declared request by ensuring the application remains running on the cluster.
+
+There are many other resources that can be added to Kubernetes besides just Pods, Services and Deployments, however, these are the most common resources. Later, explore the Helm scenarios to see how whole charts of more complex deployments can be installed.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+[source : https://learning.oreilly.com/live-training/courses/kubernetes-in-three-weeks/0636920446392/] - safari online learning
+
+
+
+
+
+More than 20 years ago Peter Deutsch and James Gosling defined the 8 fallacies of distributed computing. These are false assumptions that many developers make about distributed systems. These are usually proven wrong in the long run, leading to hard to fix bugs.
+
+The 8 fallacies are:
+
+The network is reliable.
+Latency is zero.
+Bandwidth is infinite.
+The network is secure.
+Topology doesn't change.
+There is one administrator.
+Transport cost is zero.
+The network is homogeneous.
+
+
+> blogs : https://github.com/kelseyhightower/kubernetes-the-hard-way
+
+
+Kubernetes 16 funtions:
+
+> security: we can acheive thorough rbac,meshing (ssl),namespace (add boundaries between namespaces)
+
+> volume: pod runs on node,node has volume and if we want to pesist volumes to external storage - s3,filemounts,blob
+
+> Balancing : we can put service in front of pod so we can blance traffic between pods
+
+> portability : 
+
+> Resources : kube manages resources for you like compute,cpu,storage
+
+> Sheculing : kube will check where to run the application in the cluster and it manages all the communication between nodes
+
+> kubernetes is declerative(abstraction),distributed, extensible(we can extend same kube for custom functions-needs),(observability - monitoring-logging,tracing,metrics)
+
+> kube has networking layer
+
+>  self healing: when pod goes down(fail) it will bring up automatically
+
+> name space : kafka we can put in name space, DB another name space,QA name space,DEV namespace. we can add security walls for each name space
+
+Master node: Master node runs the process that manages the cluster, we should have two masters atleast for high availability.
+worker nodes: worker nodes run the porcess
+pods: pods are grouping of one or more containers. why should we run more than one container ??
+Services: load balancing between replicated pods (round robin), one pod will not directly talk to another pod,it communicates thorough services
+
+> what makes a worker as worker node is it has kubelet which is linux process written in go, main job of kubelet is to execute the instructions given by master node and also it is responsible of life cycle of pods,reports the state of the pods
+
+> etcd: is brain of the kubernetes, it maitains the state of the cluster, all the informations shared by kubelet is stored in etcd, works on raft consensus algorithm.it should be highly available
+
+> scheduler: will work on the health of all the kubelets and manage the running of the pods based on the health of the node, in crisp it will find the space to run the pod,scheduler will allocated the pod details but it will not start the pods, kubelet will start the pods and communicates the status of pods to master (controller manager) 
+
+> control manager: when we say 100 pods running, contorller know how to manage them, it will works with scheduler to bring up 100 pods if its not up and running, will keep pinging pods in loop and check if all the pods are up.
+
+>  proxy: outside customers will talk to kube cluster through ingress. traffic from ingress will travel through pod services, its like routing tables
+
+> every time kubelet creates a POD, that pod will be assigned a new ip address(virtual ip)
+
+> kubelet starts and stops the pod in cluster, kubelet doesnt have any code to start of stop the containers/pods , it talks thorough CRI-container runtime interface 
+
+> Helm: package manager for kubenates, pack group of yaml files
+
+> when we create a pod we can put a service in front of it
+
+> probes: liveness probe,startup probe,readiness probe 
+
+
+
+> kubernetes scenarios:
+
+1> kubernetes fundamentals first kube application
+
+>> kubectl get namespaces
+>> kubectl get pods -n <namespace>
+
+
+
+2> scenario : [source :https://learning.oreilly.com/scenarios/kubernetes-applications-nginx/9781492078890/]
+
+ngnix:
+
+>> 
+>> In the first deployment we simply pass a few parameters that declare to Kubernetes our intent to make Nginx available. Use this command.
+
+kubectl run nginx-one --image=nginx --port=80
+
+from outside of Kubernetes at this terminal, it cannot be easily reached. Let's front the Pod with a Service. The service type will be NodePort which will expose the service on a high, random port.
+
+>> kubectl expose pod nginx-one --type=NodePort
+
+check the service list and notice the nginx-one service now is listed with a high port number.
+
+>> kubectl get services
+
+The service is assigned a random Kubernetes NodePort (some value above 30000) and this next line will force the NodePort to 31111
+
+>> 
+>> kubectl patch service nginx-one --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":31111}]'
+
+Deploy Nginx with Manifest Technique:
+Kubernetes relies on manifests as declarations for the desired state of the cluster. When you submit a manifest, the Kubernetes components such as the controller, scheduler, and Kubelets will busily help you by accepting this new state and ensure the cluster matches the declaration you specified. Nothing you do with Kubernetes is scripted with long and imperative scripts. Instead, a series of declarative manifests simply state the truth and the Kubernetes reconciliation engine (controller) will ensure your statements of truth matches the reality of the cluster. If it does not, notifications can be queried or published.
+
+
+controlplane $ cat nginx.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-two-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx-two
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx-two
+    spec:
+      containers:
+      - name: nginx-two
+        image: nginx:1.17-alpine
+        ports:
+        - containerPort: 80
+          name: nginx-pod-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-two
+  labels:
+    app: nginx-two
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: nginx-pod-port
+    nodePort: 31112
+    protocol: TCP
+  selector:
+    app: nginx-two
+
+Typically manifests are sources stored in version control in YAML file format. Kubernetes also accepts manifests in JSON form but since we often edit these files, the YAML format tends to be easier to read and edit than JSON. These source files are examples of infrastructure-as-code (IaC).
+
+Let's send this manifest declaration to our Kubernetes cluster.
+
+>> kubectl apply -f nginx.yaml
+
+
+Notice the manifest defines both a Kind: Deployment and a Kind: Service. The Deployment defines the Nginx in a container and in a Pod. The Service provides an access point and load balancer in front of the Pod. This specific deployment has three Pods specified.
+
+As we did in the previous step, inspect the starting resources. This time they are named nginx-two.
+
+>> kubectl get deployments,replicasets,pods,services.
+>> kubectl get pods -A
+
+
+>> scenario : [source: https://learning.oreilly.com/scenarios/kubernetes-applications-rabbitmq/9781492078913/]
+
+RabbitMQ is an open-source message broker software (sometimes called message-oriented middleware) that originally implemented the Advanced Message Queuing Protocol (AMQP) and has since been extended with a plug-in architecture to support Streaming Text Oriented Messaging Protocol (STOMP), Message Queuing Telemetry Transport (MQTT), and other protocols.
+
+The RabbitMQ server program is written in the Erlang programming language and is built on the Open Telecom Platform framework for clustering and failover.
+
+Deploy RabbitMQ
+Create a namespace for the installation target.
+
+>> kubectl create namespace rabbit
+
+
+Add the chart repository for the Helm chart to be installed.
+
+>> helm search repo rabbitmq
+
+>> helm repo add stable https://kubernetes-charts.storage.googleapis.com
+
+Provisioning RabbitMQ on Kubernetes is easy, just install this Helm chart.
+
+>> helm install my-rabbit stable/rabbitmq-ha \
+  --version 1.46.1 \
+  --namespace rabbit \
+  -f rabbit-values.yaml
+
+The RabbitMQ containers take a few moments to start. To get a complete status of provisioning this sequence, run this inspection.
+
+>> watch kubectl get services,statefulsets,pods --namespace rabbit
+
+In a few moments the 3 StatefulSet Pods (RabbitMQ Nodes) labeled pod/my-rabbit-rabbitmq-ha-[0|1|2] will appear and move to the Running status. Once all are running, discontinue the watch.
+
+
+>> controlplane $ cat rabbit-values.yaml
+# Customize of rabbitmq-ha chart found here:# https://github.com/helm/charts/tree/master/stable/rabbitmq-ha# Requested Rabbit MQ "nodes" (StatefulSet Pods), not to be confused with Kubernetes "nodes".replicaCount: 3
+# Exposed dashboard as NodePort for demonstration purposes.
+service:
+  type: NodePort
+  managerNodePort: 31000
+
+# Admin credentials, use these for sign in to RabbitMQ dashboard
+rabbitmqUsername: guest
+rabbitmqPassword: guest
+
+# No monitoring at the moment, but may add soon
+prometheus:
+  operator:
+    enabled: false
+
+# A blank probe disables the default probe. Keeps false failing for some reason.
+readinessProbe:
+
+
+> restarting the pod with same ip address is statefulset
+
+Kubernetes fundamentals: configmaps and secrets:
+-----------------------------------------------
+
+[source : https://learning.oreilly.com/scenarios/kubernetes-fundamentals-configmaps/9781492078869/]
+
+> Configuration that varies between deployments should be stored in the environment.Anything that is configurable, changeable or varies between contexts should be submitted separately for each deployment. 
+
+> A core component of the Kubernetes management plane is etcd. Etcd is a high-available, distributed key/value store ideal for contextual environment settings and data. The ConfigMaps and Secrets are simply interfaces for managing this information in etcd.
+
+Pods provide containerized applications access to ConfigMaps and Secrets with three techniques:
+
+1)command-line arguments
+2)Environment variables
+3)Files in a volume
+
+Create
+Before containers can consume contextual configuration data, that data must first be created and stored in ConfigMaps. In later steps the same will be done slightly differently for Secrets.
+
+A ConfigMap is simple data associated with a unique key.
+
+Create ConfigMap from CLI:
+Use the kubectl tool to create two manually entered data items with a key called mountains.
+
+>> kubectl create configmap mountains --from-literal=aKey=aValue --from-literal=14ers=www.14ers.com
+Check Kubernetes using get after the create and it will indicate 2 for DATA associated with mountains.
+
+>> kubectl get configmap mountains
+
+To see the actual data, get it in YAML form.
+
+>> kubectl get configmap mountains -o yaml
+or in description form
+>> kubectl describe configmap mountains
+
+Finally, to complete CRUD operations delete the mountains.
+
+>> kubectl delete configmap mountains
+
+Create from YAML
+A better way to define ConfigMaps is with a resource YAML file in this form.
+
+cat ucs-org.yaml
+>>>
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ucs-info
+  namespace: default
+data:
+  property.1: hello
+  property.2: world
+  ucs-org: |-
+    description="Our scientists and engineers develop and implement innovative, practical solutions to some of our planet's most pressing problems"
+    formation=1969
+    headquarters="Cambridge, Massachusetts, US"
+    membership="over 200,000"
+    director="Kathleen Rest"
+    president="Kenneth Kimmell"
+    founder="Kurt Gottfried"
+    concerns="Global warming and developing sustainable ways to feed, power, and transport ourselves, to fighting misinformation, advancing racial equity, and reducing the threat of nuclear war."
+    website="ucsusa.org"
+
+>> kubectl create -f ucs-org.yaml
+
+
+>> kubectl describe configmap ucs-info
+
+
+
+
+Three Access Techniques:
+Once the configuration data is stored in ConfigMaps, the containers can access the data. Pods grant their containers access to the ConfigMaps through these three techniques:
+
+> through the application command-line arguments,
+> through the system environment variables accessible by the application,
+> through a specific read-only file accessible by the application.
+The next steps, explore these access techniques.
+
+Command Line Arguments
+This example shows how a Pod accesses configuration data from the ConfigMap by passing in the data through the command-line arguments when running the container. Upon startup, the application would reference these parameters from the program's command-line arguments.
+
+View the resource definition.
+
+cat consume-via-cli.yaml
+
+>>>
+apiVersion: v1
+kind: Podmetadata:
+  name: consume-via-cli
+spec:
+  containers:
+    - name: consuming-container      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "echo $(PROPERTY_ONE_KEY); echo $(UCS_INFO); env" ]
+      env:
+        - name: PROPERTY_ONE_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: ucs-info
+              key: property.1        - name: UCS_INFO          valueFrom:            configMapKeyRef:
+              name: ucs-info
+              key: ucs-org
+  restartPolicy: Never
+
+Create the Pod.
+
+>> kubectl create -f consume-via-cli.yaml
+
+Environment Variables:
+This example shows how a Pod accesses configuration data from the ConfigMap by passing in the data as environmental parameters of the container. Upon startup, the application would reference these parameters as system environment variables.
+
+View the resource definition.
+
+cat consume-via-env.yaml
+>>>
+apiVersion: v1
+kind: Podmetadata:
+  name: consume-via-env
+spec:
+  containers:
+    - name: consuming-container      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "env" ]
+      envFrom:
+      - configMapRef:
+          name: ucs-info
+  restartPolicy: Never
+
+Create the Pod.
+
+>> kubectl create -f consume-via-env.yaml
+
+Once the pod starts, its log can be viewed. The container in the Pod has written its environment variables to the console, which is now visible in the Pod's log.
+
+>> kubectl logs consume-via-cli
+
+Volume Mounts:
+This example shows how a Pod accesses configuration data from the ConfigMap by reading from a file in a directory of the container. Upon startup, the application would reference these parameters by referencing the named files in the known directory.
+
+View the resource definition.
+
+cat consume-via-vol.yaml
+>>>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: consume-via-vol
+spec:  containers:
+    - name: consuming-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh","-c","cat /etc/config/keys" ]
+      volumeMounts:      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: ucs-info
+        items:
+        - key: ucs-org          path: keys
+  restartPolicy: Never
+
+>> kubectl create -f consume-via-vol.yaml
+
+
+Create Secret
+Both ConfigMaps and Secrets are stored in etcd, but the way you submit secrets is slightly different than ConfigMaps.
+
+Create from CLI
+>> kubectl create secret generic db-password --from-literal=password=MyDbPassw0rd
+
+>> kubectl get secret db-password
+
+>> kubectl get secret db-password -o yaml
+
+Notice when the secret is returned it's not the same string that was passed in, password: TXlEYlBhc3N3MHJk. It is the same data, just encoded in 64bit form. Kubernetes stores the data assigned to a secret in 64-bit form. Never confuse encoding with encryption, as they are two very different concepts. Values encoded are not encrypted. The encoding is to allow a wider variety of values for secrets. You can easily decode the text with a simple base64 command to reveal the original password text.
+
+>> echo "TXlEYlBhc3N3MHJkCg==" | base64 --decode or kubectl get secrets db-password -o 'go-template={{index .data "password"}}' | base64 --decode
+
+
+Create from YAML
+A better way to define Secrets is with a resource YAML file in this form.
+
+kubectl create -f secret.yaml
+
+Look inside the YAML.
+
+cat secret.yaml
+>>>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-creds
+type: Opaque
+data:
+  username: dXNlcgo=
+  password: TXlEYlBhc3N3MHJkCg==
+
+
+When first creating the YAML file you can skip using the base64 command and instead use the kubectl --dry-run feature which will generate the YAML file for you with the encoding.
+
+>> kubectl create secret generic db-password --from-literal=password=MyDbPassw0rd --dry-run -o yaml > my-secret.yaml
+
+cat my-secret.yaml
+>>>
+apiVersion: v1
+data:
+  password: TXlEYlBhc3N3MHJk
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: db-password
+
+
+Read Secret:
+Just as there are three ways to get ConfigMap data into a container, the same three techniques are available for Secrets. This step covers secrets supplied to containers as environment properties.
+cat kuard.yaml
+>>>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kuard
+  labels:
+    app: kuard
+spec:
+  containers:
+  - image: gcr.io/kuar-demo/kuard-amd64:1
+    name: kuard
+    ports:
+    - containerPort: 8080
+      name: http
+      protocol: TCP
+    env:
+    - name: SECRET_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: db-creds
+          key: username
+    - name: SECRET_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: db-creds
+          key: password
+Launch the Kuard application and associate a service with its Pod.
+
+>> kubectl create -f kuard.yaml
+>> kubectl create -f kuard-service.yaml
+
+[useful source : https://github.com/bitnami-labs/sealed-secrets, https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/#4-separate-and-firewall-your-etcd-cluster, https://redlock.io/blog/cryptojacking-tesla]
+
+> enable RBAC and protect your Kubernetes API. Unprotected access to the cluster, such as through the dashboard, can unveil secrets. Invest in protecting your Kubernetes cluster and avoid what others have done in the past
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

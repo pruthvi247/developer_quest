@@ -1,0 +1,4 @@
+> To get cpu temperature:
+		>> sudo powermetrics --samplers smc |grep -i "CPU die temperature"
+		>> sudo powermetrics --samplers smc -i1 -n1
+
