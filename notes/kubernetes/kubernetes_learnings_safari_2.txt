@@ -1,0 +1,257 @@
+[source : https://learning.oreilly.com/scenarios/kubernetes-observability-scaling/9781492079002/]
+
+Scaling Your Applications, Automatically:
+----------------------------------------
+
+> There are three types of scaling in Kubernetes:
+
+1) Horizontal Pod Scaling
+2) Cluster Node Scaling
+3) Vertical Pod Scaling
+
+> This scenario shows you how to achieve Horizontal Pod Scaling, automatically. While you can scale manually, ideally the scaling should be automatic based on demand, so the complete name for this Kubernetes feature is the Horizontal Pod Autoscaler (HPA).
+
+> Basic automatic scaling is simply achieved by declaring the CPU threshold and the minimum and maximum number of Pods to scale up and the minimum Pod count down. Exceeding the CPU threshold is monitored by observing the current CPU load metric and triggering scaling events when the activity goes up or down within a specified period. It's essentially a control loop comparing metrics against declared states.
+
+In the following steps you will learn how to:
+
+install the metrics-server for gathering metrics,
+install a pod that can be scaled,
+define the scaling rules and the number of pods to scale up and down,
+increase service demand to trigger scaling up,
+observe scaling up and down.
+
+
+Install Metrics Server:
+The de facto light monitoring application for Kubernetes is metrics-server. Metrics Server is a metrics aggregator. It discovers all nodes on the cluster and queries each node’s kubelet for CPU and memory usage. There is no long term metrics storage, it holds just the latest metrics. Typically, the server may be installed with a Helm chart.
+
+Add the Bitnami chart repository for the Helm chart to be installed.
+>> helm repo add bitnami https://charts.bitnami.com/bitnami
+Install the chart.
+
+>> helm install metrics-server bitnami/metrics-server \
+  --version=4.2.2 \
+  --namespace kube-system \
+  --set apiService.create=true \
+  --set extraArgs.kubelet-insecure-tls=true \
+  --set extraArgs.kubelet-preferred-address-types=InternalIP
+
+This will install the server in the kube-system namespace. It also add a new API endpoint named metrics.k8s.io. In a few moments you should be able to list metrics using the following command:
+
+>> kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes | jq
+
+If the metrics are not ready, this message will appear
+
+Error from server (ServiceUnavailable): the server is currently unable to handle the request
+
+Once the metrics are ready, a JSON dump of the metrics will appear. You can also inspect metrics such as the CPU and memory of a Node.
+
+>> kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/node01 | jq
+
+These metrics also appears in the top report.
+
+>> kubectl top node
+
+Pod information can also be observed.
+
+>> kubectl top pods --all-namespaces
+
+Metrics information is also reflected in the dashboard. Launch the Kubernetes dashboard and in pages for each resource the same Top information appears in the UI. The also utilizes these vital metrics to make decisions to scale up and down Pod instances.
+
+In the past, there was no Resource Metrics API and a service called Heapster, now deprecated, used to gather all the cAdvisor metrics and bit more manually. Around the 1.6 to 1.8 Kubernetes releases the Resource Metrics API was added. In concert, Heapster was removed and Metrics Server is now the de facto service that aggregates metrics from the Metrics API.
+
+Metrics-server is a lighter version of Heapster. It gathers the latest metrics for reference and does not store historical data. For accumulation of trending metrics, the de facto Prometheus time-series database can optionally be added to a cluster.
+
+The exposed Resource Metrics API is documented here[https://github.com/kubernetes/community/blob/master/contributors/design-proposals/instrumentation/resource-metrics-api.md].
+
+Another metric gathering server is kube-state-metrics[https://github.com/kubernetes/kube-state-metrics#kube-state-metrics-vs-metrics-server]. It is used to provide metrics information for Prometheus. Once you need more metrics that are gathered over time, then typically Prometheus is added to the cluster.
+
+
+
+Deploy Sample Application:
+To demonstrate Horizontal Pod Autoscaler (HPA) we will use a custom container image based on the php-apache image. This image is part of the Kubernetes project to demonstrate CPU load. The Dockerfile has the following content:
+>>>
+FROM php:5-apache
+ADD index.php /var/www/html/index.php
+RUN chmod a+rx index.php
+
+The app defines an index.php page which performs some CPU intensive computations:
+>>>
+<?php
+  $x = 0.0001;
+  for ($i = 0; $i <= 1000000; $i++) {
+    $x += sqrt($x);
+  }
+  echo "OK!";
+?>
+
+Pods defined inside DaemonSets, StatefulSet, Jobs, and CronJobs are not scaled with replication so HPA only scale Pods defined inside Deployment of ReplicaSet objects.
+
+Deploy the app to your Kubernetes cluster.
+
+>> kubectl apply -f php-apache.yaml
+
+>> cat php-apache.yaml
+>>>
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: php-apache
+  name: php-apache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php-apache
+  template:
+    metadata:
+      labels:
+        app: php-apache
+    spec:
+      containers:
+      - image: k8s.gcr.io/hpa-example
+        name: hello
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "1"
+          requests:
+            cpu: 500m
+            memory: 500M
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-apache
+spec:
+  type: ClusterIP
+  selector:
+    app: php-apache
+  ports:
+  - port: 80
+    targetPort: 80
+
+If you inspect the YAML file (ccat php-apache.yaml) you will see a "resource.requests.cpu" setting. When a Pod is deployed these quotas must be specified for the metrics to expect the scaler to make observations and decisions upon. For instance, if you omit the CPU quota for the Pod the HPA will log "missing request for cpu". It's also a best practice to provide the resource quotas of CPU and memory for each container as it helps the Kubernetes Scheduler to efficiently find the best locations (bin packing) where to run your containers.
+
+The Pod with its Service will be available in a moment.
+
+>> kubectl get deployments,pods,services
+
+
+Apply Pressure:
+
+Without any scaling logic applied we can apply stress to the single instance PHP application that is now running. In a second terminal this step will run two commands. First, shell into a new busybox Pod.
+
+>> kubectl run -i --tty load-generator --image=busybox /bin/sh
+
+Hit Enter for command prompt. Exercise the service in a loop.
+
+>> while true; do wget -q -O- http://php-apache.default.svc.cluster.local; done
+
+With the loop running the service continue to respond with OK!. This is just one Pod that is serving handling all these requests. In the next step let's add some scaling rules.
+
+Declare HPA Criteria:
+
+Simple autoscaling declarations can be applied directly with the Kubectl.
+
+>> kubectl autoscale deployments/php-apache --cpu-percent=40 --min=1 --max=10
+
+However, we will declare the HPA rules with a YAML manifest.
+
+>> ccat hpa.yaml
+>>>
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: php-apache-hpa
+  namespace: default
+spec:
+  maxReplicas: 10
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-apache
+  targetCPUUtilizationPercentage: 40
+
+
+Apply these HPA rules.
+
+>> kubectl apply -f hpa.yaml
+
+A new HPA is now registered. Inspect the HPA list.
+
+>> kubectl get hpa
+
+Inspect the state of the HPA with the describe command.
+
+>> kubectl describe hpa php-apache
+
+With the HPA enabled notice more Pods are started. It will take about a minute before you start seeing the Pods scale up.
+
+>> watch "kubectl get pods && echo "" && kubectl top pods && echo "" && kubectl get hpa"
+
+Once complete use this clear to break out of the watch or press ctrl+c
+
+
+Decrease Load:
+
+While automatically scaling up your instances are vital to help maintain a consistent and performant service, it's equally important to shut down cloned instances when they are not being used. The less that is running hot on a Kubernetes cluster, the more money you will save. The real cost savings kicks in when you combine the HPA feature with the scaling down of Nodes with Cluster Node Scaling. In this scenario, we are just looking at HPA.
+
+API version Note:
+The Kubernetes cluster you are running is version 1.14 and this version only supports "apiVersion: autoscaling/v1" as you can see in the HPA.yaml manifest and through this API version check.
+
+>> kubectl version --short=true && \
+kubectl api-versions | grep autoscaling && \
+cat hpa.yaml | grep apiVersion
+
+Kubernetes version 1.17 released an improved HPA controller that responds to "apiVersion:v2beta2"
+
+The v2beta2 version of the HPA offers many more declarations to control the scaling up and scaling down behavior. For instance, in this demo, there is a window to allow the scaling down to happen much faster than the default five minutes. There is another flag on the Kubernetes cluster called "horizontal-pod-autoscaler-downscale-delay", but that would have to be established before the cluster started which is why the newer versions of HPA allow settings such as these behaviors.
+>>>
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+      - type: Pods
+        value: 4
+        periodSeconds: 15
+      selectPolicy: Max
+More on these newer behavior features is here[https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-configurable-scaling-behavior].
+
+Scale Down:
+
+So, if you are willing to wait the default 5 minutes you can watch the Pods automatically scale down. Stop the load testing requests and observe how the HPA reacts by scaling down the Pod count.
+
+Go back Terminal 2 from the Tab above and break out of the loop. Use this clear to break out of the loop or press +.
+
+Go back to Terminal 1 and notice all but 2 php-apache Pods will shut down after the default 5 minutes window.
+
+>> watch "kubectl get pods && echo "" && kubectl top pods && echo "" && kubectl get hpa "
+
+
+Scale Down:
+So, if you are willing to wait the default 5 minutes you can watch the Pods automatically scale down. Stop the load testing requests and observe how the HPA reacts by scaling down the Pod count.
+
+Go back Terminal 2 from the Tab above and break out of the loop. Use this clear to break out of the loop or press +.
+
+Go back to Terminal 1 and notice all but 2 php-apache Pods will shut down after the default 5 minutes window.
+
+>> watch "kubectl get pods && echo "" && kubectl top pods && echo "" && kubectl get hpa "
+
+Once complete use this clear to break out of the watch or press ctrl+c
+
+There are more complex rules that can be applied to the HPA triggering logic and the HPA can reference metrics from other metrics registries such as Prometheus. The HPA uses the standardized Custom Metrics API to reference metrics from different sources.
+
