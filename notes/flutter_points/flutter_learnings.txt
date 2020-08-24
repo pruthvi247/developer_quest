@@ -85,9 +85,30 @@ Youtube links:
 
 > Constraints go down. Sizes go up. Positions are set by parents.
 
+[source : https://twitter.com/biz84/status/1295783344827965441?s=20]
 
+Private named constructor:
+class singleton{
+singleton._();
+static final instance = Singleton._();
+}
 
+[source : https://stackoverflow.com/questions/42718973/run-avd-emulator-without-android-studio]
 
+On MacOS:
+---------
+First list down the installed emulators
+
+~/Library/Android/sdk/tools/emulator -list-avds
+
+then run an emulator
+
+~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_27
+
+iphone simulator :
+>>  open -a simulator
+or 
+>> open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
 
 
 
