@@ -110,6 +110,758 @@ iphone simulator :
 or 
 >> open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
 
+[source : https://medium.com/@jelenaaa.lecic/when-to-use-async-await-then-and-future-in-dart-5e00e64ab9b1]
+Dart Async programming:
+----------------------
+
+## look at flutter in focus on async programming videos(explanation is good)
+
+> Async means that this function is asynchronous and you might need to wait a bit to get its result.
+> Await literally means - wait here until this function is finished and you will get its return value.
+> Future is a type that ‘comes from the future’ and returns value from your asynchronous function. It can complete with success(.then) or with
+an error(.catchError).
+> .Then((value){…}) is a callback that’s called when future completes successfully(with a value).
+>>>
+void main() async {
+  print(getMeSomeFood());   
+  print(await getMeSomethingBetter());  
+  print(getMeSomethingBetter().runtimeType);  
+  maybeSomethingSweet().then((String value) {
+    print(value);                    
+  });
+}Future<String> getMeSomeFood() async {
+  return "an apple";
+}Future<String> getMeSomethingBetter() async {
+  return "a burger?";
+}Future<String> maybeSomethingSweet() async {
+  return "a chocolate cake!!";
+}Future<String> bye() async{          //will not compile, add async
+  return "see you soon! :)";
+}
+//output:
+Instance of '_Future<String>'
+a burger?
+_Future<String>
+a chocolate cake!!
+
+> As you could see, there’s no difference between .then and await when it comes to fetching results. But be careful, when you use await, your program will wait there until async function finishes:
+
+>>> void main() async {
+  await waitForMe();
+  print('I was waiting here :)');
+}Future waitForMe() async {
+  print('Started.');
+  return Future.delayed(Duration(seconds: 5), () {
+    print("Now I'm done!");
+  });
+}
+//output : Started.
+Now I’m done!
+I was waiting here :)
+ 
+> And this is an example where we do not want to wait:
+>>> void main() async {
+  waitForMe().then((_) {
+    print("I'm more done THEN you :)");
+  });
+  print('I was waiting here :)');
+}Future waitForMe() async {
+  print('Started.');
+  return Future.delayed(Duration(seconds: 3), () {
+    print("Now I'm done!");
+  });
+}
+//output:
+Started.
+I was waiting here :)
+Now I’m done!
+I’m more done THEN you :)
+
+Build context:
+-------------
+[source : https://engineering.liefery.com/2019/02/18/flutter-for-newbies-why-you-should-care-about-the-build-context.html, https://medium.com/flutter-community/widget-state-buildcontext-inheritedwidget-898d671b7956]
+
+> Every widget in Flutter is created from a build method, and every build method takes a BuildContext as an argument.
+> This build context describes where you are in the tree of widgets of your application
+
+> If a widget ‘A’ has children widgets, the BuildContext of widget ‘A’ will become the parent BuildContext of the direct children BuildContexts.
+
+BuildContext visibility (Simplified statement):
+‘Something’ is only visible within its own BuildContext or in the BuildContext of its parent(s) BuildContext. From this statement we can derive that from a child BuildContext, it is easily possible to find an ancestor (= parent) Widget.
+
+> An example is, considering the Scaffold > Center > Column > Text:
+context.ancestorWidgetOfExactType(Scaffold) => returns the first Scaffold by going up to tree structure from the Text context.
+> From a parent BuildContext, it is also possible to find a descendant (= child) Widget but it is not advised to do so
+
+###### [source : https://medium.com/flutter-community/understanding-buildcontext-6df0d540bad3]
+note: pls run the below examples in dart pad to see the difference
+
+eg1: >>>
+/////////////
+import 'package:flutter/material.dart';
+
+final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: darkBlue),
+      debugShowCheckedModeBanner: false,
+      home: MaterialApp(
+        home:MyWidget()
+      ),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: MaterialButton(
+          child: Text(
+            "SnackBar",
+            style: TextStyle(color: Colors.white),
+          ),
+          color: Colors.red,
+          onPressed: () {
+             print("pressed!!!");
+            Scaffold.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Oh! You clicked me!"),
+            ),
+          );},
+        ),
+      ),
+    );
+  }
+}
+////////////////////
+> But if we click on the button, no SnackBar is displayed, and we get the following error: flutter: Scaffold.of() called with a context that does not contain a Scaffold.
+
+>we may be inclined to access the showSnackbarmethod, which resides in the ScaffoldState, with a GlobalKey:
+//// need not try thin in dartpad
+>>> class MyHomePage extends StatelessWidget {
+	// The GlobalKey will allow us to access the Scaffold's State
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+		// We add the key to the Scaffold so we can access it later
+      key: _key,
+      body: Center(
+          child: MaterialButton(
+            child: Text(
+              "SnackBar",
+              style: TextStyle(color: Colors.white),
+            ),
+            color: Colors.red,
+			   // We now can access the currentState via the GlobalKey
+            onPressed: () => _key.currentState.showSnackBar(
+              SnackBar(
+                content: Text("Oh! You clicked me!"),
+              ),
+            ),
+          ),
+        ),
+    );
+  }
+}
+//////////////////
+> Though this works, the GlobalKey documentation page states that: "Global keys are relatively expensive", so we should avoid using them when we can find another solution.
+
+> The Tale of Two BuildContexts
+Let’s examine the error message:
+> No Scaffold ancestor could be found starting from the context that was passed to Scaffold.of(). This usually happens when the context provided is from the same StatefulWidget as that whose build function actually creates the Scaffold widget being sought
+
+> This is because both button widget and scafold are in same build method (same buildcontext)
+
+
+				     _______Scaffold
+				    |
+				    |
+build(BuildContext context)----------
+				    |
+				    |_______ Material Button
+
+> Looking inside the Scaffold.of(context) method, we see that it will call a method named findAncestorStateOfType , and if this method returns null , then the error message is printed in the console
+
+> The findAncestorStateOfType method describes in its name what its purpose is - to find a Widget that is above in the Widget tree whose State's matches the ScaffoldState. How does this work? If we look into the framework.dart file, we verify that BuildContext is an abstract class that is implemented by the Element class.
+>> abstract class Element extends DiagnosticableTree implements BuildContext 
+
+> To put it simply, the Element class’ purpose is to instantiate new Widget s. In order to track its position in the Widget tree, it will have a reference to its ancestor and, since all Element objects have a parent, we can now traverse up the Element tree and verify if we can find a State that matches the one we are looking for
+
+>Looking at the previous image, we can clearly see now that the Scaffold then when the findAncestorStateOfType method is called, the ScaffoldState will not be found since the BuildContext we are using is of mywidget() (class MyWidget extends StatelessWidget ) does not have a Scaffold as an ancestor (ancestor is MeterialApp)
+
+> we can solve this by wrapping the material buttorn with scaffold.
+
+eg2 : >>> run it in dartpad
+///////////////////////
+import 'package:flutter/material.dart';
+
+final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: darkBlue),
+      debugShowCheckedModeBanner: false,
+      home: MaterialApp(
+        home:MyWidget()
+      ),
+    );
+  }
+}
+
+class MyWidget extends StatelessWidget {
+   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: CustomButton(),
+      ),
+    );
+  }
+}
+
+/// We separate the UI by creating a new StatelessWidget
+class CustomButton extends StatelessWidget {
+	
+	/// This build method will create a new `BuildContext` that will have as an ancestor the `Scaffold`
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      child: Text(
+        "SnackBar",
+        style: TextStyle(color: Colors.white),
+      ),
+      color: Colors.red,
+		// We can now safely find the ancestor `Scaffold` via the `BuildContext`
+      onPressed: () => Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Oh! You clicked me!"),
+        ),
+      ),
+    );
+  }
+}
+////////////////////////////////
+> above widget tree can be transformed to : 
+Screen context -> scaffold-> custom Button-> custombotton context -> button
+
+> When the Buttoncalls tries to find an ancestor with the CustomButton's BuildContext, it will find the Scaffold as a direct ancestor, so the findAncestorStateOfType find a ScaffoldStatewhich we can access to call the showSnackBar method.
+
+> But what if we want to keep it all in the same StatelessWidget? That's where the Builder Widget comes in. It provides us with a WidgetBuilder callback with a new BuildContext
+
+>>>
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+		// The `Builder` widget will provide a `builder` method with its own `BuildContext` so that we can access any ancestor above it with this new context
+      body: Builder(
+              builder: (secondContext) => Center(
+          child: MaterialButton(
+            child: Text(
+              "SnackBar",
+              style: TextStyle(color: Colors.white),
+            ),
+            color: Colors.red,
+			  // Using the `Builder` `BuildContext`, named `secondContext` we can reach the `Scaffold` ancestor.
+            onPressed: () => Scaffold.of(secondContext).showSnackBar(
+              SnackBar(
+                content: Text("Oh! You clicked me!"),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+> This will create exactly the same Widget- BuildContext graph that we have seen previously, with the main difference that now we have all Widgets in the same class.
+
+screen context -> scaffold -> Builder -> Builder context -> Button
+
+
+Why should we take care of our BuildContext:
+-------------------------------------------
+> We now know that the BuildContext can be used to locate our widget and other widgets in the tree. But the question is - why should we care?
+
+In the below example we created an initial screen in which a Scaffold accepts a StatelessWidget as a body. As with the previous section, we will want to show a SnackbBar with some text.
+We also decide to abstract the onPressed method, but since we don’t have access to the BuildContext in a StatelessWidget, we cache it
+>>> eg3: // try it in dart pad
+//////////////
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: darkBlue),
+      debugShowCheckedModeBanner: false,
+      home: MaterialApp(
+        home:MyHomePage()
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() =>
+      _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+	/// The child Widget
+  Widget _child;
+  @override
+  void initState() {
+    super.initState();
+    _child = PageBody();
+  }
+  @override
+  Widget build(BuildContext context) {
+      return _getMaterialScaffold(_child);
+  }
+
+  Widget _getMaterialScaffold(Widget child) => Scaffold(
+        appBar: AppBar(
+          title: Text("This is a material widget"),
+        ),
+        body: child,
+      );
+
+}
+
+class PageBody extends StatelessWidget {
+	/// The cached instance of the BuildContext
+  BuildContext _context;
+
+	/// Shows a snackbar with the cached BuildContext
+  void showSnackbar() {
+    Scaffold.of(_context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Yay!",
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Called build");
+    // Caching the context when this Widget is first built
+    if (_context == null) {
+      _context = context;
+    }
+
+    return Center(
+      child: RaisedButton(
+            color: Colors.red,
+            child: Text(
+              "Show Snackbar",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => showSnackbar()),
+    );
+  }
+}
+////////////////////
+
+> Though this works as intended, we may ask: What happens if the Widget tree changes and it no longer has a Scaffold Ancestor?
+> examples given below is to show the importance of buildcontext with when scafold is not present 
+
+> Let’s look at the following example: we have two buttons in the screen:
+	The first one shows a SnackBar
+	The second one changes the page root Widget from a Scaffold to a CupertinoPageScaffold
+
+//////////// eg 4: /// try it in dart pad
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: darkBlue),
+      debugShowCheckedModeBanner: false,
+      home: MaterialApp(
+        home:MyHomePage()
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() =>
+      _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+	/// The child Widget
+  Widget _child;
+
+  bool _isMaterial = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _child = PageBody();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    /// We check if the `isMaterial` flag is true to either return a `Scaffold` or a `CupertinoPageScaffold` as the root Widget
+    if (_isMaterial) {
+      return _getMaterialScaffold(_child);
+    }
+    return _getCupertinoScaffold(_child);
+  }
+
+  Widget _getMaterialScaffold(Widget child) => Scaffold(
+        appBar: AppBar(
+          title: Text("This is a material widget"),
+        ),
+        body: child,
+      );
+
+  Widget _getCupertinoScaffold(Widget child) => CupertinoPageScaffold(
+        child: child,
+        navigationBar: CupertinoNavigationBar(
+          backgroundColor: Colors.red,
+          middle: Column(
+            children: <Widget>[
+              Icon(Icons.warning),
+              Text(
+                "Changed Theme to cupertino!",
+                style: TextStyle(color: Colors.white),
+              )
+            ],
+          ),
+        ),
+      );
+
+	/// Public method to change the current root widget
+  void changeType() {
+    setState(() => _isMaterial = !_isMaterial);
+  }
+}
+
+class PageBody extends StatelessWidget {
+  BuildContext _context;
+
+  void showSnackbar() {
+    Scaffold.of(_context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Yay!",
+        ),
+      ),
+    );
+  }
+
+  void changePageType() {
+    _context
+        .findAncestorStateOfType<_MyHomePageState>()
+        .changeType();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Called build");
+    // Caching the context
+    if (_context == null) {
+      _context = context;
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        RaisedButton(
+            color: Colors.red,
+            child: Text(
+              "Show Snackbar",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => showSnackbar()),
+        SizedBox(
+          height: 20,
+        ),
+        RaisedButton(
+            color: Colors.blue,
+            child: Text(
+              "Change Style",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => changePageType()),
+      ],
+    );
+  }
+}
+//////////////////////////
+> This Widget exposes the changeType method that will force a rebuild with the different root Widget .
+> The PageBody will contain two buttons and the methods to access both the Scaffold, to show a SnackBar, and MyHomePageso that we can access the public method changeType. As with before, since it's a StatelessWidget, we opt to cache the BuildContext
+> We can click on the “Show Snackbar” button once, and it shows the SnackBar correctly. However, when we click the Change Style button, the root widget of MyHomePagewill be changed to a CupertinoPageScaffoldthat cannot be accessed via the Scaffold.of(_context) method.
+> As predicted, when clicking again in the Show Snackbar button again, the error that we have encountered before.What’s more interesting is that if we click again in the Change Type button, it will not work and in turn it throws different error. (flutter: calling dependOnInheritedWidgetOfExactType() in the widget's didChangeDependencies() method.)
+
+> differnt error is because the cached BuildContext is now referencing a deactivated widget.
+Looking at the findAncestorStateOfType method again, we verify that the in the first line there is a call to:
+>> assert(_debugCheckStateIsActiveForAncestorLookup());
+This will in turn verify if the Element is in active state or not
+
+> while the parent was rebuilding, the Element related to the cached BuildContext was marked as not active, and we will no longer be able to look up ancestors in the tree. To learn more about how Flutter builds its UI elements, specifically Widgets, Elements and Render Objects
+
+> how can we solve it? And, as we may guess, the solution is to always use the BuildContext provided by the build method
+//// eg 5: //// try in dartpad
+
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: darkBlue),
+      debugShowCheckedModeBanner: false,
+      home: MaterialApp(
+        home:MyHomePage()
+      ),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() =>
+      _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+	/// The child Widget
+  Widget _child;
+
+  bool _isMaterial = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _child = PageBody();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    /// We check if the `isMaterial` flag is true to either return a ` fold` or a `CupertinoPageScaffold` as the root Widget
+    if (_isMaterial) {
+      return _getMaterialScaffold(_child);
+    }
+    return _getCupertinoScaffold(_child);
+  }
+
+  Widget _getMaterialScaffold(Widget child) => Scaffold(
+        appBar: AppBar(
+          title: Text("This is a material widget"),
+        ),
+        body: child,
+      );
+
+  Widget _getCupertinoScaffold(Widget child) => CupertinoPageScaffold(
+        child: child,
+        navigationBar: CupertinoNavigationBar(
+          backgroundColor: Colors.red,
+          middle: Column(
+            children: <Widget>[
+              Icon(Icons.warning),
+              Text(
+                "Changed Theme to cupertino!",
+                style: TextStyle(color: Colors.white),
+              )
+            ],
+          ),
+        ),
+      );
+
+	/// Public method to change the current root widget
+  void changeType() {
+    setState(() => _isMaterial = !_isMaterial);
+  }
+}
+
+class PageBody extends StatelessWidget {
+  BuildContext _context;
+
+  void showSnackbar(BuildContext context) {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Yay!",
+        ),
+      ),
+    );
+  }
+
+  void changePageType(BuildContext context) {
+    context
+        .findAncestorStateOfType<_MyHomePageState>()
+        .changeType();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Called build");
+    // Caching the context
+    if (_context == null) {
+      _context = context;
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        RaisedButton(
+            color: Colors.red,
+            child: Text(
+              "Show Snackbar",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => showSnackbar(context)),
+        SizedBox(
+          height: 20,
+        ),
+        RaisedButton(
+            color: Colors.blue,
+            child: Text(
+              "Change Style",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => changePageType(context)),
+      ],
+    );
+  }
+}
+///////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
