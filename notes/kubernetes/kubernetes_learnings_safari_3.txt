@@ -1,0 +1,1611 @@
+// Slides and cheatsheet are present in learning/tutorials/kubernetes folder of computer. (its not pushed to git)A
+
+[Source : https://learning.oreilly.com/live-training/courses/kubernetes-in-three-weeks/0636920446392/]
+
+[katacoda source: https://learning.oreilly.com/scenarios/kubernetes-fundamentals-configmaps/9781492078869/]
+
+> 12 Factor app: Configuration that varies between deployments should be stored in the environment.
+>Since your deployed containers have no context, that information (configs) needs to be supplied when the containers start. Context information can typically include names of other services, database locations, service URLs, running modes, feature enable/disable requests. Sensitive context information can include passwords, account IDs, security tokens, and the like.This is where Kubernetes ConfigMaps and Secrets can help by supplying your deployment containers with the contextual and secretive information they require.
+> A core component of the Kubernetes management plane is etcd. Etcd is a high-available, distributed key/value store ideal for contextual environment settings and data. The ConfigMaps and Secrets are simply interfaces for managing this information in etcd.we dont directly talk to etcd, we talk through cofigmaps and secrets. In few implementations people use sqlite instead of etcd
+
+> Pods provide containerized applications access to ConfigMaps and Secrets with three techniques:
+	a) command-line arguments
+	b) Environment variables
+	c) Files in a volume
+> In the following steps you will learn:
+	how to create configuration data in the form of ConfigMaps and Secrets,
+	how Pods make configuration accessible for applications in containers,
+	how secrets should remain secrets.
+> Create:
+Before containers can consume contextual configuration data, that data must first be created and stored in ConfigMaps. In later steps the same will be done slightly differently for Secrets.
+
+A ConfigMap is simple data associated with a unique key.
+
+Create ConfigMap from CLI:
+Use the kubectl tool to create two manually entered data items with a key called mountains.
+
+>> kubectl create configmap mountains --from-literal=aKey=aValue --from-literal=14ers=www.14ers.com
+
+Check Kubernetes using get after the create and it will indicate 2 for DATA associated with mountains.
+
+>> kubectl get configmap mountains (when you execute this command value of the keys will be shown as empty,if you want to look at values we can get it using "describe" comamnd or from kubeUI)
+
+To see the actual data, get it in YAML form.
+
+>> kubectl get configmap mountains -o yaml
+
+Or, in description form
+
+>> kubectl describe configmap mountains
+
+Finally, to complete CRUD operations delete the mountains.
+
+>> kubectl delete configmap mountains
+
+OK, your right, we skipped the update of CRUD. From the CLI one way to achieve this is to delete the resource and create it again with the new values.
+
+Create from YAML:
+A better way to define ConfigMaps is with a resource YAML file in this form.
+
+>> cat ucs-org.yaml
+>>> apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ucs-info
+  namespace: default
+data:
+  property.1: hello
+  property.2: world
+  ucs-org: |-
+    description="Our scientists and engineers develop and implement innovative, practical solutions to some of our planet's most pressing problems"
+    formation=1969
+    headquarters="Cambridge, Massachusetts, US"
+    membership="over 200,000"
+    director="Kathleen Rest"
+    president="Kenneth Kimmell"
+    founder="Kurt Gottfried"
+    concerns="Global warming and developing sustainable ways to feed, power, and transport ourselves, to fighting misinformation, advancing racial equity, and reducing the threat of nuclear war."
+    website="ucsusa.org"
+
+
+The same create command can be used to submit a YAML resource file.
+
+>> kubectl create -f ucs-org.yaml
+
+Then, view it.
+
+>> kubectl describe configmap ucs-info
+The same ConfigMaps can also be explored in the Kubernetes dashboard.
+
+Three Access Techniques:
+> Once the configuration data is stored in ConfigMaps, the containers can access the data. Pods grant their containers access to the ConfigMaps through these three techniques:
+
+	a) through the application command-line arguments,
+	b) through the system environment variables accessible by the application,
+	c)through a specific read-only file accessible by the application.
+> if our configs will change frequently like db url,end point url its preffered to use option' c' ie.file access
+
+Command Line Arguments:
+> This example shows how a Pod accesses configuration data from the ConfigMap by passing in the data through the command-line arguments when running the container. Upon startup, the application would reference these parameters from the program's command-line arguments.
+
+View the resource definition.
+>> cat consume-via-cli.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: consume-via-cli
+spec:
+  containers:
+    - name: consuming-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "echo $(PROPERTY_ONE_KEY); echo $(UCS_INFO); env" ]
+      env:
+        - name: PROPERTY_ONE_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: ucs-info
+              key: property.1
+        - name: UCS_INFO
+          valueFrom:
+            configMapKeyRef:
+              name: ucs-info
+              key: ucs-org  restartPolicy: Never
+>> kubectl create -f consume-via-cli.yaml
+
+Using the Dashboard, inspect the Pod log and information page to see mapped data.
+
+Environment Variables:
+> This example shows how a Pod accesses configuration data from the ConfigMap by passing in the data as environmental parameters of the container. Upon startup, the application would reference these parameters as system environment variables.
+
+>> cat consume-via-env.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: consume-via-env
+spec:
+  containers:
+    - name: consuming-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "env" ]
+      envFrom:
+      - configMapRef:
+          name: ucs-info
+  restartPolicy: Never
+
+>> kubectl create -f consume-via-env.yaml
+
+Once the pod starts, its log can be viewed. The container in the Pod has written its environment variables to the console, which is now visible in the Pod's log.
+
+>> kubectl logs consume-via-env
+
+Volume Mounts:
+>> This example shows how a Pod accesses configuration data from the ConfigMap by reading from a file in a directory of the container. Upon startup, the application would reference these parameters by referencing the named files in the known directory.
+
+>> cat consume-via-vol.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: consume-via-vol
+spec:  containers:
+    - name: consuming-container
+      image: k8s.gcr.io/busybox      command: [ "/bin/sh","-c","cat /etc/config/keys" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:    - name: config-volume
+      configMap:
+        name: ucs-info        items:
+        - key: ucs-org
+          path: keys
+  restartPolicy: Never
+
+Create Secret:
+> Both ConfigMaps and Secrets are stored in etcd, but the way you submit secrets is slightly different than ConfigMaps.
+
+Create from CLI:
+>> kubectl create secret generic db-password --from-literal=password=MyDbPassw0rd
+>> kubectl get secret db-password
+>> kubectl get secret db-password -o yaml
+
+> Notice when the secret is returned it's not the same string that was passed in, password: TXlEYlBhc3N3MHJk. It is the same data, just encoded in 64bit form. Kubernetes stores the data assigned to a secret in 64-bit form. Never confuse encoding with encryption, as they are two very different concepts. Values encoded are not encrypted. The encoding is to allow a wider variety of values for secrets. You can easily decode the text with a simple base64 command to reveal the original password text.
+
+>> echo "TXlEYlBhc3N3MHJkCg==" | base64 --decode
+>> kubectl get secrets db-password -o 'go-template={{index .data "password"}}' | base64 --decode
+
+Create from YAML:
+A better way to define Secrets is with a resource YAML file in this form.
+
+>> kubectl create -f secret.yaml
+Look inside the YAML.
+>> cat secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-creds
+type: Opaque
+data:
+  username: dXNlcgo=
+  password: TXlEYlBhc3N3MHJkCg==
+
+> When first creating the YAML file you can skip using the base64 command and instead use the kubectl --dry-run feature which will generate the YAML file for you with the encoding.
+
+>> kubectl create secret generic db-password --from-literal=password=MyDbPassw0rd --dry-run -o yaml > my-secret.yaml
+
+Read Secre:t
+> Just as there are three ways to get ConfigMap data into a container, the same three techniques are available for Secrets. This step covers secrets supplied to containers as environment properties.
+
+From the previous steps, there is a secret in the cluster called db-creds.
+>> kubectl get secrets
+The secret has two values username and password.
+
+>> kubectl get secret db-creds -o yaml
+
+View the definition of the Pod that will access this secret.
+
+>> cat kuard.yaml
+>>> 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kuard
+  labels:
+    app: kuard
+spec:
+  containers:
+  - image: gcr.io/kuar-demo/kuard-amd64:1
+    name: kuard
+    ports:
+    - containerPort: 8080
+      name: http
+      protocol: TCP
+    env:
+    - name: SECRET_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: db-creds
+          key: username
+    - name: SECRET_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: db-creds
+          key: password
+
+
+Launch the Kuard application and associate a service with its Pod.
+
+>> kubectl create -f kuard.yaml
+
+>> cat kuard-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: kuard
+  labels:
+    app: kuard
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: http
+    nodePort: 31001
+    protocol: TCP
+  selector:
+    app: kuard
+
+>> kubectl create -f kuard-service.yaml
+
+Secrets and Protection
+If you are interested in storing secrets safely in version control, consider this approach "Sealed Secrets"(https://github.com/bitnami-labs/sealed-secrets) for Kubernetes.
+
+Since secrets are stored in etcd it's recommended to separate and firewall your etcd cluster. This is an advanced administration topic for Kubernetes, but it's important to keep your secrets secret. See 11 Ways (Not) to Get Hacked.
+
+Lastly, enable RBAC and protect your Kubernetes API. Unprotected access to the cluster, such as through the dashboard, can unveil secrets. Invest in protecting your Kubernetes cluster and avoid what others have done in the past
+
+[katacoda source: https://learning.oreilly.com/scenarios/kubernetes-observability-basics/9781492078982/]
+
+Sample Application:
+Before exploring observability topics, start a small application to provide something to observe.
+
+Run 3 instances of the random-logger container to start generating continuously random logging events.
+
+>> kubectl create deployment random-logger --image=chentex/random-logger
+
+logger source code: https://github.com/chentex/random-logger
+Scale to 3 instances.
+
+>> kubectl scale deployment/random-logger --replicas=3
+
+The 3 pods will start shortly.
+
+>> kubectl get pods
+
+Resource Inspection:
+> General Inspection of a Cluster
+	When you first start interacting with a running cluster there are a few commands to help you get oriented with its health and state.
+
+>> kubectl cluster-info
+Inspect this Kubernetes cluster only Worker node.
+
+>> kubectl describe node node01
+
+For deeper details, you can generate a complete dump of the cluster state to a directory.
+
+>> kubectl cluster-info dump --all-namespaces --output-directory=cluster-state --output=json
+
+This creates a directory where each file is a report on all the nodes and namespaces.
+
+>> tree cluster-state
+
+There is a wealth of information you can mine.
+
+Show me all the container images names in the kube-system namespace. 
+>> jq '.items[]?.status.containerStatuses[]?.image' cluster-state/kube-system/pods.json
+
+Show me when all the container images were started in the default namespace.
+
+>> jq '.items[]?.status.containerStatuses[]? | [.image, .state[]?.startedAt]' cluster-state/default/pods.json
+
+General Inspection for a Deployment:
+
+The running state of an application can be observed through a variety of kubectl describe commands across various resources.
+Inspect the last deployment.
+>> kubectl describe deployment random-logger
+
+Specifically, the replica state.
+>> kubectl describe deployments | grep "Replicas:"
+
+Inspect the 3 pods.
+>> kubectl get pods
+>> kubectl describe pods
+
+Events
+Kubernetes also maintains a history of events.
+
+>> kubectl get events
+
+Scaling is a type of event. Scale down the Pod from 3 down to 2.
+>> kubectl scale deployment/random-logger --replicas=2
+
+//output
+2m11s       Normal   ScalingReplicaSet         deployment/random-logger              Scaled up replica set random-logger-7687d48b59 to3
+6s          Normal   ScalingReplicaSet         deployment/random-logger              Scaled down replica set random-logger-7687d48b59 to 2
+
+Notice the last event will reflect the scaling request.
+>> kubectl get events --sort-by=.metadata.creationTimestamp
+
+These events are not to be confused with security audit logs which are also recorded.
+Inspecting Containers
+You can also typically get into a running container and inspect it as well. Get the name of the first Pod.
+>> POD=$(kubectl get pod  -o jsonpath="{.items[0].metadata.name}")
+
+Inspect the script contents inside the container file system.
+>> kubectl exec $POD -- cat entrypoint.sh
+Or, shell into the container.
+>> kubectl exec -it $POD -- /bin/sh
+
+
+There is a wealth of helpful Linux commands to give you information about the Linux containers. Here are just a few.
+
+>> kubectl exec $POD -- uptime
+>>kubectl exec $POD -- ps
+>> kubectl exec $POD -- stat -f /
+>> kubectl exec $POD --container random-logger -- lsof
+>> kubectl exec $POD --container random-logger -- iostat
+
+When the Pod has more than one container, the specific container name may be referenced.
+>> kubectl exec $POD --container random-logger -- ls -a -l
+
+cAdvisor:
+> Every Node in a Kubernetes cluster has a Kubelet process. Within each Kubelet process is a cAdvisor. The cAdvisor continuously gathers metrics about the state of the Kubernetes resources on each Node. This metrics information is vital to monitor to understand the state of the cluster. This wealth of information is available through the Resource Metrics API. Let's inspect the metrics.
+Each node exposes statistics continuously updated by cAdvisor. For your cluster, get a list of the node names.
+>> kubectl get nodes
+
+For this small Kubernetes cluster on Katacoda, the two node names can be listed.
+>> export NODE_0=$(kubectl get nodes -o=jsonpath="{.items[0].metadata.name}")
+>> export NODE_1=$(kubectl get nodes -o=jsonpath="{.items[1].metadata.name}")
+>> echo -e "The master node is $NODE_0 \nThe worker node is $NODE_1"
+
+Open a proxy to the Kubernetes API port.
+>> kubectl proxy > /dev/null &
+
+Query the metrics for the master node.
+>> curl localhost:8001/api/v1/nodes/$NODE_0/proxy/metrics
+
+Query the metrics for the worker node.
+>> curl localhost:8001/api/v1/nodes/$NODE_1/proxy/metrics
+
+The Kubernetes API aggregates cluster-wide metrics at /metrics.
+>> curl localhost:8001/metrics/ | jq
+
+Metrics Server
+The de facto light monitoring application for Kubernetes is metrics-server. Metrics Server is a metrics aggregator. It discovers all nodes on the cluster and queries each node’s kubelet for CPU and memory usage. There is no long term metrics storage, it holds just the latest metrics. Typically, the server may be installed with a Helm chart.
+
+Add the Bitnami chart repository for the Helm chart to be installed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+and come back out with the exit command.
+
+There is a wealth of helpful Linux commands to give you information about the Linux containers. Here are just a few.
+>> kubectl exec $POD -- uptime
+>> kubectl exec $POD -- ps
+>> kubectl exec $POD -- stat -f /
+>> kubectl exec $POD --container random-logger -- lsof
+>> kubectl exec $POD --container random-logger -- iostat
+
+When the Pod has more than one container, the specific container name may be referenced.
+>> kubectl exec $POD --container random-logger -- ls -a -l
+
+
+cAdvisor:
+>> Every Node in a Kubernetes cluster has a Kubelet process. Within each Kubelet process is a cAdvisor. The cAdvisor continuously gathers metrics about the state of the Kubernetes resources on each Node. This metrics information is vital to monitor to understand the state of the cluster. This wealth of information is available through the Resource Metrics API. Let's inspect the metrics.
+
+Each node exposes statistics continuously updated by cAdvisor. For your cluster, get a list of the node names.
+
+>> kubectl get nodes
+For this small Kubernetes cluster on Katacoda, the two node names can be listed.
+
+>> export NODE_0=$(kubectl get nodes -o=jsonpath="{.items[0].metadata.name}")
+>> export NODE_1=$(kubectl get nodes -o=jsonpath="{.items[1].metadata.name}")
+>> echo -e "The master node is $NODE_0 \nThe worker node is $NODE_1"
+
+Open a proxy to the Kubernetes API port.
+>> kubectl proxy > /dev/null &
+
+Query the metrics for the master node.
+>> curl localhost:8001/api/v1/nodes/$NODE_0/proxy/metrics
+
+Query the metrics for the worker node.
+>> curl localhost:8001/api/v1/nodes/$NODE_1/proxy/metrics
+
+The Kubernetes API aggregates cluster-wide metrics at /metrics.
+>> curl localhost:8001/metrics/ | jq
+
+Metrics Server:
+>> The de facto light monitoring application for Kubernetes is metrics-server. Metrics Server is a metrics aggregator. It discovers all nodes on the cluster and queries each node’s kubelet for CPU and memory usage. There is no long term metrics storage, it holds just the latest metrics. Typically, the server may be installed with a Helm chart.
+
+Add the Bitnami chart repository for the Helm chart to be installed.
+>> helm repo add bitnami https://charts.bitnami.com/bitnami
+
+Install the chart.
+
+>> helm install metrics-server bitnami/metrics-server \
+  --version=4.2.2 \
+  --namespace kube-system \
+  --set apiService.create=true \
+  --set extraArgs.kubelet-insecure-tls=true \
+  --set extraArgs.kubelet-preferred-address-types=InternalIP
+
+This will install the server in the kube-system namespace. It also add a new API endpoint named metrics.k8s.io. In a few moments you should be able to list metrics using the following command:
+
+>> kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes | jq
+
+If the metrics are not ready, this message will appear
+Once the metrics are ready, a JSON dump of the metrics will appear. You can also inspect metrics such as the CPU and memory of a Node.
+>> kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/node01 | jq
+These metrics also appears in the top report.
+>> kubectl top node
+
+Pod information can also be observed.
+>> kubectl top pods --all-namespaces
+
+Metrics information is also reflected in the dashboard. Launch the Kubernetes dashboard and in pages for each resource the same Top information appears in the UI. The also utilizes these vital metrics to make decisions to scale up and down Pod instances.
+
+In the past, there was no Resource Metrics API and a service called Heapster, now deprecated, used to gather all the cAdvisor metrics and bit more manually. Around the 1.6 to 1.8 Kubernetes releases the Resource Metrics API was added. In concert, Heapster was removed and Metrics Server is now the de facto service that aggregates metrics from the Metrics API.
+
+
+Metrics-server is a lighter version of Heapster. It gathers the latest metrics for reference and does not store historical data. For accumulation of trending metrics, the de facto Prometheus time-series database can optionally be added to a cluster.
+
+The exposed Resource Metrics API is documented here (https://github.com/kubernetes/community/blob/master/contributors/design-proposals/instrumentation/resource-metrics-api.md)
+
+Another metric gathering server is kube-state-metrics(https://github.com/kubernetes/kube-state-metrics#kube-state-metrics-vs-metrics-server). It is used to provide metrics information for Prometheus. Once you need more metrics that are gathered over time, then typically Prometheus is added to the cluster. 
+
+[katacoda source: https://learning.oreilly.com/scenarios/kubernetes-observability-scaling/9781492079002/]
+
+Scaling Your Applications, Automatically:
+
+> Almost always there will be more than once instance of each of your applications on Kubernetes. Multiple instances provide both fault tolerance and increased traffic serving when the demand for your service increases. After all, why did you move your applications to a distributed platform like Kubernetes? Because you want to leverage large amounts of CPU, memory, and I/O across your cluster. However, as you know these resources cost money so you only want your service replications to increase when the demand increases. When service demand is low the instances should scale down to save you money, and lessen your carbon footprint.
+There are three types of scaling in Kubernetes:
+
+	a)Horizontal Pod Scaling
+	b)Cluster Node Scaling
+	c)Vertical Pod Scaling
+> This scenario shows you how to achieve Horizontal Pod Scaling, automatically. While you can scale manually, ideally the scaling should be automatic based on demand, so the complete name for this Kubernetes feature is the Horizontal Pod Autoscaler (HPA)> 
+> Basic automatic scaling is simply achieved by declaring the CPU threshold and the minimum and maximum number of Pods to scale up and the minimum Pod count down. Exceeding the CPU threshold is monitored by observing the current CPU load metric and triggering scaling events when the activity goes up or down within a specified period. It's essentially a control loop comparing metrics against declared states.
+
+In the following steps you will learn how to:
+	install the metrics-server for gathering metrics,
+	install a pod that can be scaled,
+	define the scaling rules and the number of pods to scale up and down,
+	increase service demand to trigger scaling up,
+	observe scaling up and down.
+
+Install Metrics Server:
+> The de facto light monitoring application for Kubernetes is metrics-server. Metrics Server is a metrics aggregator. It discovers all nodes on the cluster and queries each node’s kubelet for CPU and memory usage. There is no long term metrics storage, it holds just the latest metrics. Typically, the server may be installed with a Helm chart.
+
+Add the Bitnami chart repository for the Helm chart to be installed.
+
+>> helm repo add bitnami https://charts.bitnami.com/bitnami
+
+Install the chart.
+
+>> helm install metrics-server bitnami/metrics-server \
+  --version=4.2.2 \
+  --namespace kube-system \
+  --set apiService.create=true \
+  --set extraArgs.kubelet-insecure-tls=true \
+  --set extraArgs.kubelet-preferred-address-types=InternalIP
+This will install the server in the kube-system namespace. It also add a new API endpoint named metrics.k8s.io. In a few moments you should be able to list metrics using the following command:
+>> kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes | jq
+
+Once the metrics are ready, a JSON dump of the metrics will appear. You can also inspect metrics such as the CPU and memory of a Node.
+>> kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/node01 
+
+Deploy Sample Application:
+> To demonstrate Horizontal Pod Autoscaler (HPA) we will use a custom container image based on the php-apache image. This image is part of the Kubernetes project to demonstrate CPU load. The Dockerfile has the following content:
+>>>
+FROM php:5-apache
+ADD index.php /var/www/html/index.php
+RUN chmod a+rx index.php
+> The app defines an index.php page which performs some CPU intensive computations:
+>>>
+<?php
+  $x = 0.0001;
+  for ($i = 0; $i <= 1000000; $i++) {
+    $x += sqrt($x);
+  }
+  echo "OK!";
+?>
+
+> Pods defined inside DaemonSets, StatefulSet, Jobs, and CronJobs are not scaled with replication so HPA only scale Pods defined inside Deployment of ReplicaSet objects.
+
+Deploy the app to your Kubernetes cluster.
+
+>>cat php-apache.yaml
+>>>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: php-apache
+  name: php-apache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php-apache
+  template:
+    metadata:
+      labels:
+        app: php-apache
+    spec:
+      containers:
+      - image: k8s.gcr.io/hpa-example
+        name: hello
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "1"
+          requests:
+            cpu: 500m
+            memory: 500M
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-apache
+spec:
+  type: ClusterIP
+  selector:
+    app: php-apache
+  ports:
+  - port: 80
+    targetPort: 80
+
+> If you inspect the YAML file (ccat php-apache.yaml) you will see a resource.requests.cpu setting. When a Pod is deployed these quotas must be specified for the metrics to expect the scaler to make observations and decisions upon. For instance, if you omit the CPU quota for the Pod the HPA will log missing request for cpu. It's also a best practice to provide the resource quotas of CPU and memory for each container as it helps the Kubernetes Scheduler to efficiently find the best locations (bin packing) where to run your container
+
+
+>> kubectl apply -f php-apache.yaml
+
+The Pod with its Service will be available in a moment.
+
+>> kubectl get deployments,pods,services
+
+Apply Pressure:
+> Without any scaling logic applied we can apply stress to the single instance PHP application that is now running. In a second terminal this step will run two commands. First, shell into a new busybox Pod.
+
+>> kubectl run -i --tty load-generator --image=busybox /bin/sh
+
+Hit Enter for command prompt. Exercise the service in a loop.
+
+>> while true; do wget -q -O- http://php-apache.default.svc.cluster.local; done
+
+> With the loop running the service continue to respond with OK!. This is just one Pod that is serving handling all these requests. In the next step let's add some scaling rules.
+
+Declare HPA Criteria:
+Simple autoscaling declarations can be applied directly with the Kubectl.
+
+>> kubectl autoscale deployments/php-apache --cpu-percent=40 --min=1 --max=10
+However, we will declare the HPA rules with a YAML manifest.
+
+>> ccat hpa.yaml
+>>>
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: php-apache-hpa
+  namespace: default
+spec:
+  maxReplicas: 10
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-apache
+  targetCPUUtilizationPercentage: 40
+
+> Apply these HPA rules.
+>> kubectl apply -f hpa.yaml
+
+A new HPA is now registered. Inspect the HPA list.
+
+>> kubectl get hpa
+
+Inspect the state of the HPA with the describe command.
+
+>> kubectl describe hpa php-apache
+With the HPA enabled notice more Pods are started. It will take about a minute before you start seeing the Pods scale up.
+
+>> watch "kubectl get pods && echo "" && kubectl top pods && echo "" && kubectl get hpa"
+
+Decrease Load:
+
+> While automatically scaling up your instances are vital to help maintain a consistent and performant service, it's equally important to shut down cloned instances when they are not being used. The less that is running hot on a Kubernetes cluster, the more money you will save. The real cost savings kicks in when you combine the HPA feature with the scaling down of Nodes with Cluster Node Scaling. In this scenario, we are just looking at HPA.
+
+API version Note:
+> The Kubernetes cluster you are running is version 1.14 and this version only supports apiVersion: autoscaling/v1 as you can see in the HPA.yaml manifest and through this API version check.
+
+>> kubectl version --short=true && \
+kubectl api-versions | grep autoscaling && \
+cat hpa.yaml | grep apiVersion
+
+Kubernetes version 1.17 released an improved HPA controller that responds to apiVersion:v2beta2
+
+> The v2beta2 version of the HPA offers many more declarations to control the scaling up and scaling down behavior. For instance, in this demo, there is a window to allow the scaling down to happen much faster than the default five minutes. There is another flag on the Kubernetes cluster called horizontal-pod-autoscaler-downscale-delay, but that would have to be established before the cluster started which is why the newer versions of HPA allow settings such as these behaviors
+>>>
+behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+      - type: Pods
+        value: 4
+        periodSeconds: 15
+      selectPolicy: Max
+
+> for more info on bhiheviours - https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-configurable-scaling-behavior
+
+
+Scale Down:
+So, if you are willing to wait the default 5 minutes you can watch the Pods automatically scale down. Stop the load testing requests and observe how the HPA reacts by scaling down the Pod count.
+
+Go back Terminal 2 from the Tab above and break out of the loop. Use this clear to break out of the loop or press +.
+
+Go back to Terminal 1 and notice all but 2 php-apache Pods will shut down after the default 5 minutes window.
+
+>> watch "kubectl get pods && echo "" && kubectl top pods && echo "" && kubectl get hpa "
+
+
+Deamon set:
+
+> DaemonSet takes a pod specification given to it and ensures that the pod is scheduled and running on every single available node. Of course, if a node is unavailable or out of resources, it will not schedule. This is why many DaemonSets run with resource requests set to “0,” even though they need resources.Once the DaemonSet is created, it will dynamically add pods to nodes. For example, if a new node is added to the cluster, the DaemonSet controller will automatically add a pod to this node. On the contrary, if a node is removed from the cluster, a DaemonSet will ensure that pods living on that node are garbage collected.
+> Some typical uses of a DaemonSet are:
+	running a cluster storage daemon on every node
+	running a logs collection daemon on every node
+	running a node monitoring daemon on every node
+
+
+
+Patterns in kubernetes:
+
+ Work Queue Pattern: [source : https://medium.com/@karthi.net/8-container-design-patterns-that-you-should-know-970a1d6a594c]
+
+> This pattern allows to handling of arbitrary processing code packaged as a container, and arbitrary data, and build a complete work queue system.
+> This pattern is used in kubernetes to run jobs parallel [mor info at : https://kubernetes.io/docs/tasks/job/fine-parallel-processing-work-queue/]
+Use Case : Situations that warrant work queue based system
+
+Scatter and gatehr pattern:
+
+> Initial request would be sent to main container,this container then fans the request out to a large number of servers to perform computations in parallel. Each container returns partial data, and the main container gathers this data into a single response to the original request.
+Use case : Fan out the request out to a large number of servers to perform computations in parallel,Common in search engines.
+
+##> when pod comes up it will get two things a virtual ip and filesystem
+
+Side Car Pattern:
+> In this pattern, the sidecar is attached to a parent application and provides supporting features for the application. The sidecar also shares the same life cycle as the parent application, being created and retired alongside the parent. example two containers in same pod
+Use Case : Can be used for Runtime debugging, observability, reliability,logging and security
+
+> side cars are not part of transactions, it is secondary , mostly used to get/support primary container
+
+
+Ambassador pattern:
+> Ambassador containers proxy communication to and from a main container. For example, application that is speaking the memcache protocol with a twemproxy ambassador. The application believes that it is simply talking to a single memcache on localhost, but actually twemproxy is sharding the requests across a distributed installation of multiple memcache nodes elsewhere in the cluster.
+Use Case : Situations where you have to off load / Proxy requests to other containers
+
+Adapter Pattern:
+> In contrast to the ambassador pattern,which presents an application with a simplified view of the outside world, adapters present the outside world with a simplified, homogenized view of an application.They do this by standardizing output and interfaces across multiple containers.
+Use Case : Cases where you have to standardize output and interfaces across multiple containers
+
+
+Container Storage Interface:
+
+> CSI is a standard for exposing storage systems in an arbitrary block and file storage to containerized workloads on Container Orchestrations
+> This new plugin mechanism has been one of the most powerful features of Kubernetes. It enables the storage vendors to:
+	> Automatically create storage when required.
+	> Make storage available to containers wherever they’re scheduled.
+	> Automatically delete the storage when no longer needed.
+
+Helm:
+----
+> kube ctx , kube ns, (switch between different kube context and namespace)
+
+> crud commands: helm version, helm create, helm install, helm update,helm delete,helm test
+
+
+[source: https://learning.oreilly.com/scenarios/kubernetes-fundamentals-sidecar/9781492078845/]
+
+Side car containers:
+
+> Nginx is a web server which can also be used as a reverse proxy, load balancer, mail proxy, and HTTP cache. The software was created by Igor Sysoev and first publicly released in 2004
+
+Communication Between Containers:
+> Containers in the same Pod have several advantages. Primarily these colocated containers benefit from fast communication channels between each other. The transmission of data use the established Linux inter-process communication (IPC) techniques:
+
+Signals
+Pipes
+Sockets
+Message queues
+Semaphores
+Shared memory
+
+> Sidecars are a common pattern that takes advantage of the fact that two containers in a Pod share the same Linux process namespaces. Sidecar containers often share:
+
+	a) PersistenceVolume mount: "emptyDir"
+	b) localhost
+
+Deploy Pod with Two Containers:
+> Shown here is a YAML file that associates two containers in a Pod. The containers communicate with each other through shared path mounts. This allows the second container to act as a sidecar. Inspect how the Pod is created.
+>ccat sidecar-example.yaml
+>>> piVersion: v1
+kind: Pod
+metadata:
+  name: sidecar-pod
+  labels:
+    app: sidecar-pod
+spec:
+  volumes:
+  - name: shared-data    emptyDir: {}
+
+  containers:
+
+  - name: first
+    image: nginx
+    volumeMounts:
+    - name: shared-data
+      mountPath: /usr/share/nginx/html
+
+  - name: second
+    image: debian
+    volumeMounts:
+    - name: shared-data      mountPath: /pod-data    command: ["/bin/sh"]    args:      - "-c"      - >        while true; do          echo "Hello from the sidecar container. My time is:" >> /pod-data/index.html;
+          date >> /pod-data/index.html;
+          sleep 1;
+        done
+
+Deploy the Pod.
+>> kubectl apply -f sidecar-example.yaml
+
+Inspect the initialization progress.
+>> kubectl get pods
+
+> Both containers in the Pod start quickly so the Pod status may be already running, creating, or initializing. One downside is the more containers you put in a Pod, the more time it will take to create, restart, and scale. Be aware that containers start in parallel and the order of availability is not predictable. Nginx is running once the status of the Pod status reports Running
+
+> To interact with the Nginx application in the Pod we need a Service that can address the Pod. Let's expose a Service with the NodePort type.
+
+>> kubectl expose pod sidecar-pod --type=NodePort --port=80
+>> kubectl get services
+
+> The service is on a high, random Kubernetes NodePort (some value above 30000). This next line will force the NodePort to 31111
+
+>> kubectl patch service sidecar-pod --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":31111}]'
+
+Query Nginx with its Sidecar:
+> Once available, you can exercise the service two ways. First, simply from the command line,
+>> curl https://2886795331-31111-host11nc.environments.katacoda.com
+
+> You can also watch the sidecar continuously update the Nginx static web page with an accumulating timestamp
+>> while true; do sleep 1; curl -s https://2886795331-31111-host11nc.environments.katacoda.com | tail -2; done;
+
+> The same Nginx output from the sidecar-pod can also be seen in your browser from the sidecar-pod tab above the command-line area or this link: https://2886795331-31111-host11nc.environments.katacoda.com
+As an alternative to the kubectl CLI, you can also observe the pod logs in the Kubernetes Dashboard
+
+[source : https://learning.oreilly.com/scenarios/create-kubernetes-ingress/9781492061977/]
+
+Ingress:
+-------
+
+> Kubernetes have advanced networking capabilities that allow Pods and Services to communicate inside the cluster's network. An Ingress enables inbound connections to the cluster, allowing external traffic to reach the correct Pod.
+Ingress enables externally-reachable urls, load balance traffic, terminate SSL, offer name based virtual hosting for a Kubernetes cluster.
+
+Step 1 - Create Deployment:
+
+> To start, deploy an example HTTP server that will be the target of our requests. The deployment contains three deployments, one called webapp1 and a second called webapp2, and a third called webapp3 with a service for each.
+
+>> cat deployment.yaml
+>>>
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp1
+    spec:
+      containers:
+      - name: webapp1
+        image: katacoda/docker-http-server:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp2
+    spec:
+      containers:
+      - name: webapp2
+        image: katacoda/docker-http-server:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp3
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp3
+    spec:
+      containers:
+      - name: webapp3
+        image: katacoda/docker-http-server:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp1-svc
+  labels:
+    app: webapp1
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: webapp1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp2-svc
+  labels:
+    app: webapp2
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: webapp2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp3-svc
+  labels:
+    app: webapp3
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: webapp3
+
+Task:
+Deploy the definitions with 
+>> kubectl apply -f deployment.yaml
+
+The status can be viewed with 
+>> kubectl get deployment
+
+Step 2 - Deploy Ingres:s
+> The YAML file ingress.yaml defines a Nginx-based Ingress controller together with a service making it available on Port 80 to external connections using ExternalIPs. If the Kubernetes cluster was running on a cloud provider then it would use a LoadBalancer service type.
+The ServiceAccount defines the account with a set of permissions on how to access the cluster to access the defined Ingress Rules. The default server secret is a self-signed certificate for other Nginx example SSL connections and is required by the Nginx Default Example.(https://github.com/nginxinc/kubernetes-ingress/tree/master/deployments)
+>> cat ingress.yaml
+>>>
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nginx-ingress
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: default-server-secret
+  namespace: nginx-ingress
+type: Opaque
+data:
+  tls.crt: <huge data so deleted>
+  tls.key: <huge data so deleted>
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-ingress
+  namespace: nginx-ingress
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-config
+  namespace: nginx-ingress
+data:
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-ingress
+  namespace: nginx-ingress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-ingress
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress
+    spec:
+      serviceAccountName: nginx-ingress
+      containers:
+      - image: nginx/nginx-ingress:edge
+        imagePullPolicy: Always
+        name: nginx-ingress
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        args:
+          - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
+          - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress
+  namespace: nginx-ingress
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: https
+  selector:
+    app: nginx-ingress
+  externalIPs:
+    - 172.17.0.28
+
+Task
+The Ingress controllers are deployed in a familiar fashion to other Kubernetes objects with 
+>> kubectl create -f ingress.yaml
+The status can be identified using 
+>> kubectl get deployment -n nginx-ingress
+
+Step 3 - Deploy Ingress Rules:
+> Ingress rules are an object type with Kubernetes. The rules can be based on a request host (domain), or the path of the request, or a combination of both.
+An example set of rules are defined within 
+>> cat ingress-rules.yaml
+>>> 
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: webapp-ingress
+spec:
+  rules:
+  - host: my.kubernetes.example
+    http:
+      paths:
+      - path: /webapp1
+        backend:
+          serviceName: webapp1-svc
+          servicePort: 80
+      - path: /webapp2
+        backend:
+          serviceName: webapp2-svc
+          servicePort: 80
+      - backend:
+          serviceName: webapp3-svc
+          servicePort: 80
+The important parts of the rules are defined below.
+
+The rules apply to requests for the host my.kubernetes.example. Two rules are defined based on the path request with a single catch all definition. Requests to the path /webapp1 are forwarded onto the service webapp1-svc. Likewise, the requests to /webapp2 are forwarded to webapp2-svc. If no rules apply, webapp3-svc will be used.
+
+This demonstrates how an application's URL structure can behave independently about how the applications are deployed
+
+Task
+As with all Kubernetes objects, they can be deployed via 
+>> kubectl create -f ingress-rules.yaml
+
+Once deployed, the status of all the Ingress rules can be discovered via 
+>> kubectl get ing
+
+
+Step 4 - Test:
+With the Ingress rules applied, the traffic will be routed to the defined place.
+The first request will be processed by the webapp1 deployment.
+>> curl -H "Host: my.kubernetes.example" 172.17.0.28/webapp1
+
+The second request will be processed by the webapp2 deployment.
+>> curl -H "Host: my.kubernetes.example" 172.17.0.28/webapp2
+
+Finally, all other requests will be processed by webapp3 deployment.
+>> curl -H "Host: my.kubernetes.example" 172.17.0.28
+
+
+[source : https://learning.oreilly.com/scenarios/run-stateful-services/9781492062103/]
+Stateful services:
+
+Step 1 - Deploy NFS Server
+NFS is a protocol that allows nodes to read/write data over a network. The protocol works by having a master node running the NFS daemon and stores the data. This master node makes certain directories available over the network.
+Clients access the masters shared via drive mounts. From the viewpoint of applications, they are writing to the local disk. Under the covers, the NFS protocol writes it to the master.
+
+Task:
+> In this scenario, and for demonstration and learning purposes, the role of the NFS Server is handled by a customised container. The container makes directories available via NFS and stores the data inside the container. In production, it is recommended to configure a dedicated NFS Server.
+
+Start the NFS using the command 
+>> docker run -d --net=host \
+   --privileged --name nfs-server \
+   katacoda/contained-nfs-server:centos7 \
+   /exports/data-0001 /exports/data-0002
+
+The NFS server exposes two directories, data-0001 and data-0002. In the next steps, this is used to store data.
+
+Step 2 - Deploy Persistent Volume:
+> For Kubernetes to understand the available NFS shares, it requires a PersistentVolume configuration. The PersistentVolume supports different protocols for storing data, such as AWS EBS volumes, GCE storage, OpenStack Cinder, Glusterfs and NFS. The configuration provides an abstraction between storage and API allowing for a consistent experience.
+In the case of NFS, one PersistentVolume relates to one NFS directory. When a container has finished with the volume, the data can either be Retained for future use or the volume can be Recycled meaning all the data is deleted. The policy is defined by the persistentVolumeReclaimPolicy option.
+
+For structure is:
+>>>
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: <friendly-name>
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    server: <server-name>
+    path: <shared-path>
+
+>>> cat nfs-0001.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-0001
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    server: 172.17.0.35
+    path: /exports/data-0001
+
+Task
+Create two new PersistentVolume definitions to point at the two available NFS shares.
+
+>> kubectl create -f nfs-0001.yaml
+>> kubectl create -f nfs-0002.yaml
+>> kubectl get pv
+
+Step 3 - Deploy Persistent Volume Claim:
+> Once a Persistent Volume is available, applications can claim the volume for their use. The claim is designed to stop applications accidentally writing to the same volume and causing conflicts and data corruption.
+
+The claim specifies the requirements for a volume. This includes read/write access and storage space required. An example is as follows:
+>>>
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: claim-mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+
+>> cat pvc-mysql.yaml
+kind: PersistentVolumeClaimapiVersion: v1
+metadata:
+name: claim-mysql
+spec:
+ accessModes:
+   - ReadWriteOnce
+resources:
+    requests:
+    storage: 3Gi
+
+> cat pvc-http.yaml
+>>>
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: claim-http
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+> Once created, view all PersistentVolumesClaims in the cluster using 
+>>kubectl get pvc
+
+Step 4 - Use Volume:
+> When a deployment is defined, it can assign itself to a previous claim. The following snippet defines a volume mount for the directory /var/lib/mysql/data which is mapped to the storage mysql-persistent-storage. The storage called mysql-persistent-storage is mapped to the claim called claim-mysql.
+>>>
+  spec:
+      volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql/data
+  volumes:
+    - name: mysql-persistent-storage
+      persistentVolumeClaim:
+        claimName: claim-mysql
+
+> cat pod-mysql.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+name: mysql
+labels:
+name: mysql
+spec:
+  containers:
+  - name: mysql
+  image: openshift/mysql-55-centos7
+  env:      
+  - name: MYSQL_ROOT_PASSWORD
+    value: yourpassword
+  - name: MYSQL_USER
+    value: wp_user
+  - name: MYSQL_PASSWORD
+    value: wp_pass   
+  - name: MYSQL_DATABASE
+    value: wp_db
+  ports:
+  - containerPort: 3306
+        name: mysql
+  volumeMounts:
+  - name: mysql-persistent-storage
+    mountPath: /var/lib/mysql/data
+  volumes:
+  - name: mysql-persistent-storage
+      persistentVolumeClaim:
+      claimName: claim-mysql
+
+
+> cat pod-www.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: www
+  labels:
+  name: www
+spec:
+  containers:
+  - name: www
+    image: nginx:alpine
+    ports:
+      - containerPort: 80
+      name: www
+      volumeMounts:
+      - name: www-persistent-storage
+      mountPath: /usr/share/nginx/html
+  volumes:
+    - name: www-persistent-storage
+    persistentVolumeClaim:
+      claimName: claim-http
+
+> If a Persistent Volume Claim is not assigned to a Persistent Volume, then the Pod will be in Pending mode until it becomes available. In the next step, we'll read/write data to the volume
+
+Step 5 - Read/Write Data:
+
+> Our Pods can now read/write. MySQL will store all database changes to the NFS Server while the HTTP Server will serve static from the NFS drive. When upgrading, restarting or moving containers to a different machine the data will still be accessible.
+To test the HTTP server, write a 'Hello World' index.html homepage. In this scenario, we know the HTTP directory will be based on data-0001 as the volume definition hasn't driven enough space to satisfy the MySQL size requirement.
+
+>> docker exec -it nfs-server bash -c "echo 'Hello World' > /exports/data-0001/index.html"
+
+Based on the IP of the Pod, when accessing the Pod, it should return the expected response.
+
+>> ip=$(kubectl get pod www -o yaml |grep podIP | awk '{split($0,a,":"); print a[2]}'); echo $ip
+>> curl $ip
+
+Update Data
+When the data on the NFS share changes, then the Pod will read the newly updated data.
+>> docker exec -it nfs-server bash -c "echo 'Hello NFS World' > /exports/data-0001/index.html"
+>> curl $ip
+
+Step 6 - Recreate Pod:
+Because a remote NFS server stores the data, if the Pod or the Host were to go down, then the data will still be available.
+Task:
+Deleting a Pod will cause it to remove claims to any persistent volumes. New Pods can pick up and re-use the NFS share.
+
+>> kubectl delete pod www
+>> kubectl create -f pod-www2.yaml
+>> ip=$(kubectl get pod www2 -o yaml |grep podIP | awk '{split($0,a,":"); print a[2]}'); curl $ip
+
+The applications now use a remote NFS for their data storage. Depending on requirements, this same approach works with other storage engines such as GlusterFS, AWS EBS, GCE storage or OpenStack Cinder.
+
+>> cat pod-www2.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: www2
+  labels:
+    name: www2
+spec:
+  containers:
+  - name: www2
+    image: nginx:alpine
+    ports:
+      - containerPort: 80
+        name: www2
+    volumeMounts:
+      - name: www-persistent-storage
+        mountPath: /usr/share/nginx/html
+  volumes:
+    - name: www-persistent-storage
+      persistentVolumeClaim:
+        claimName: claim-http
+
+Kubernetes pipelines Helm:
+[source : https://learning.oreilly.com/scenarios/kubernetes-pipelines-helm/9781492078968/]
+
+> Helm is the best way to find, share, and use software built for Kubernetes.
+
+Install Helm
+Helm is a cluster administration tool that manages charts on Kubernetes.
+Helm relies on a packaging format called charts. Charts define a composition of related Kubernetes resources and values that make up a deployment solution. Charts are source code that can be packaged, named, versioned, and maintained in version control. The chart is a collection of Kubernetes manifests in the form of YAML files along with a templating language to allow contextual values to be injected into the YAMLs. Charts complement your infrastructure-as-code (IaC) processes.
+Helm also helps you manage the complexities of dependency management. Charts can include dependencies on other charts. A chart is a deployable unit that can be inspected, listed, updated, and removed. The Helm CLI tool deploys charts to Kubernetes.
+Interaction with Helm is through its command-line tool (CLI). This Katacoda instance already has a recent version of Helm version 3 installed and ready for use.
+
+>> helm version --short
+
+This scenario covers version 3.x of Helm. If you are using version 2.x, it's highly advisable to move to the recent version. Helm is evolving and there is a newer version available from its list of releases. With its shell script installer, Helm can be installed or upgraded from a single line.
+
+>> curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+Now you have a slightly newer version of Helm.
+>> helm version --short
+
+Based on your preferences, your local operating system package manager (apt-get, choco, brew, etc) can also install Helm.
+The current local state of Helm is kept in your environment in the home location.
+>> helm env
+
+The Helm command line tool defaults to discovering the current Kubernetes host by reading the same configuration that kubectl uses in ~/.kube/config. There is a way to switch the current cluster context, but that's beyond the scope of this scenario.
+
+Search For Redis Chart:
+Many common and publicly available open source projects can run on Kubernetes. Many of these projects offer containers that package these applications and vetted Helm charts for full production installations on Kubernetes.
+Up until recently in 2020, all of the most commonly used public Helm charts were being lumped into a single Git repository for incubating and stable Helm charts. This idea of centralizing all charts in GitHub has since been abandoned, thankfully. There are too many charts now being maintained by many different organizations and projects. Every day more charts are being added to our community.
+
+Helm Hub:
+Now, the canonical source for Helm charts is Helm Hub, an aggregator for distributed chart repos. This central registry that has risen from the need for us to have a single place for us to search for charts. While these charts are listed here, the actual charts are hosted in a growing variety of repos. If you find a chart of interest the page for the specific chart will reveal the chart name, list of versions (semver.org format) and the repo where the chart can be found.
+
+>> helm search hub | wc -l
+
+You can search the Helm Hub for specific charts.
+>> helm search hub clair
+
+You will find different organizations offering overlapping chart solutions for installing a specific technology your are looking for. Look at the various providers for Redis.
+>> helm search hub redis
+
+At last count there were about 15 Redis related public charts. One provider who has been prolific at providing well written charts is Bitnami. So let's narrow our search.
+>> helm search hub redis | grep bitnami
+
+For this scenario we are interested in the Redis chart described here. Click on that hyperlink to see the chart hosting details
+
+Repos:
+While the chart is listed in Helm Hub, the Bitnami organization has a public repo of all its charts. In each Helm Hub chart page a repo is listed for you to add for access the chart. The instructions for the Redis chart says to add the bitnami repo.
+
+>> helm repo add bitnami https://charts.bitnami.com/bitnami
+
+Your Helm now has access to the Bitnami charts.
+>> helm repo list
+
+Instead of searching the Hub for charts you can also search the Bitnami repo.
+>> helm search repo bitnami/redis
+
+The Helm command can reveal additional information about the chart.
+>> helm show chart bitnami/redis
+
+The readme.
+>> helm show readme bitnami/redis
+
+The definable context values.
+>> helm show values bitnami/redis
+
+Fabric8
+As another example, if you search Helm for fabric8, nothing will be listed.
+>> helm search repo fabric8
+
+This is because fabric8 maintains its own chart repository that can be added to Helm.
+>> helm repo add fabric8 https://fabric8.io/helm
+
+With this, the repo will appear in the repo list.
+>> helm repo list
+
+Now, their charts can be listed.
+>> helm search repo fabric8
+
+Now you know how to find and list public charts. In the next step you will install the Redis chart you discovered.
+
+Deploy Redis:
+Create a namespace for the installation target.
+>> kubectl create namespace redis
+
+Add the chart repository for the Helm chart to be installed. You did this in the previous step, but it's no harm to attempt to add it twice.
+>> helm repo add bitnami https://charts.bitnami.com/bitnami
+
+With a known chart name, use the install command to deploy the chart to your cluster.
+>> helm install my-redis bitnami/redis --version 10.7.16 --namespace redis
+
+This will name a new install called my-redis and install a specific chart name and version into the redis namespace. With the install command Helm will launch the required Deployments, ReplicaSets, Pods, Services, ConfigMaps, or any other Kubernetes resource the chart defines.
+Well written charts will present notes as part of the installation instructions. The notes will provide helpful information on how to access the new services. We'll follow these notes in the next step, but first, view all the installed charts.
+>> helm list --all-namespaces
+or
+>> helm ls -n redis
+
+The installed my-redis chart should be listed.
+
+Chart Installation Information:
+For each chart deployed to the cluster its deployment information is maintained in a secret stored on the targeted Kubernetes cluster. This way multiple Helm clients can consistently list the installed charts on the cluster. The secrets are deployed to the namespace where the chart is deployed. The secret names have the sh.helm. prefix.
+>> kubectl get secrets --all-namespaces | grep sh.helm
+
+When you ask Helm for a list of charts:
+>> helm list -A
+
+then Helm will query Kubernetes for a list of secrets filtered for Helm.
+>> kubectl get secrets --all-namespaces --selector owner=helm
+
+For the Redis chart, you installed to the redis namespace you can see the secret information about the deployment.
+>> kubectl --namespace redis describe secret sh.helm.release.v1.my-redis.v1
+
+The next step will verify the deployment status.
+
+Observe Redis:
+Helm deploys all the chart defined Deployments, Pods, Services. The redis Pod will be in a pending state while the container image is downloaded and until a Persistent Volume is available. Once complete it will move into a running state.
+Use the get command to find out what was deployed.
+>> watch kubectl get statefulsets,pods,services -n redis
+
+The Pod will be in a pending state while the Redis container image is downloaded and until a Persistent Volume is available. You will see a my-redis-master-0 and my-redis-slave-0 pod. Use this clear to break out of the watch or press +.
+Unfortunately, the old terminology for the Pod root names remains unchanged. Perhaps the Redis project still has room for maturation and a future chart will correct the tight coupling to these names.
+
+Create a Persistent Volume for Redis
+
+>> cat pv.yaml
+cat pv.yaml
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-volume1
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data1"
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-volume2
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data2"
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-volume3
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data3"master
+
+Create a Persistent Volume for Redis.:
+>> kubectl apply -f pv.yaml
+and ensure Redis has permissions to write to these mount points.
+>> mkdir /mnt/data1 /mnt/data2 /mnt/data3 --mode=777
+
+Now, notice Pod status will change to Running.
+>> watch kubectl get statefulsets,pods,services -n redis
+
+In a moment and all the 3 Pods will move to the Running state. Use this clear to break out of the watch or press +.
+You have successfully installed Redis. The redis-cli tool has been installed for this scenario so you can verify Redis on Kubernetes is responding. When the chart installed there were some helpful instruction on how to connect. The following are those instructions.
+
+Connect to Your Redis Server:
+To get your password query the Redis Secret.
+>> export REDIS_PASSWORD=$(kubectl get secret --namespace redis my-redis -o jsonpath="{.data.redis-password}" | base64 --decode)
+
+Expose the Redis master service.:
+>> kubectl port-forward --namespace redis service/my-redis-master 6379:6379 > /dev/null &
+
+Connect to your database from outside the cluster.
+>> redis-cli -h 127.0.0.1 -p 6379 -a $REDIS_PASSWORD ping
+
+If you see PONG as the response you have connected successfully to the Redis application installed by the Helm chart. Nice work!
+
+Remove Redis:
+
+Now that Redis is running, take it back down. After all, these installations should not be precious snowflakes.
+>> helm delete my-redis -n redis
+
+No matter how complex the chart, the delete command will undo everything the install provisioned. The only thin left behind will be the namespace. Delete the namespace if you wish.
+>> kubectl delete namespace redis
+
+Next, explore the wealth of charts available.
+
+Explore Repositories
+Just to emphasize.
+>> echo "The number of chart on Helm Hub is: $(helm search hub | wc -l)."
+
+> https://github.com/minio/charts 
+> https://github.com/helm/charts#deprecation-timeline
+
+
+Create Chart:
+Charts are helpful when creating your unique solutions. Application charts are often a combination on 3rd party public charts as well as your own. The first step is to create your new chart.
+>> helm create app-chart
+
+This will create the directory my-app-chart as the skeleton for your chart. All chart directories will have these standard files and directories.
+
+>> tree app-chart
+
+All of your Kubernetes resource definitions in YAML files are located in the templates directory. Take a look at the top of deployments.yaml.
+
+>> cat app-chart/templates/deployment.yaml | grep 'kind:' -n -B1 -A5
+
+Notice it looks like a normal deployment YAML with the kind: Deployment defined. However, there is new syntax sugar using double braces {{ .. }}. This is the templating mechanism that Helm uses to inject values into this template. Instead of hard coding in values instead, this templating injects values. The templating language has many features by leveraging the Go templating API.
+
+What about defining the container image for the deployment? That is an injected value as well.
+
+>> cat app-chart/templates/deployment.yaml | grep 'image:' -n -C3
+
+Notice the {{ .Values.image.repository }}, this is where the container name gets injected. All of these values have defaults typically found in the values.yaml file in the chart directory.
+
+>> cat app-chart/values.yaml | grep 'repository' -n -C3
+
+Notice the templating key uses the dot ('.') notation to navigate and extract the values from the hierarchy in the values.yaml.
+
+In this case, the Helm create feature defaulted the deployed container to be the ubiquitous demonstration application nginx.
+
+As is, this chart is ready to be deployed since all the defaults have been supplied. A complete set of sensible defaults is a good practice for any chart you author. A good README for your chart should also have a table to reflect these defaults, options, and descriptions.
+
+Before deploying to Kubernetes, the dry-run feature will list out the resources to the console. This allows you to inspect the injection of the values into the template without committing an installation, a helpful development technique. Observe how the container image name is injected into the template.
+
+>> helm install my-app ./app-chart --dry-run --debug | grep 'image: "' -n -C3
+
+Notice the ImagePullPolicy is set to the default of IfNotPreset. Before we deploy the chart we could modify the values.yaml file and change the policy value in there, but perhaps we would like to locally modify a different policy setting first to verify it works. Use the --set command to override a default value. Here we change the Nginx container image ImagePullPolicy from IfNotPreset to Always.
+
+>> helm install my-app ./app-chart --dry-run --debug --set image.pullPolicy=Always | grep 'image: "' -n -C3
+
+With the version injecting correctly, install it.
+
+>> helm install my-app ./app-chart --set image.pullPolicy=Always
+
+In a moment the app will start. Inspect its progress.
+
+>> helm list
+
+>> kubectl get deployments,service
+
+Making your own chart repo
+When you develop your charts, there are a few ways to add your charts to custom repositories, either publicly or privately. Some examples are:
+
+If your chart is in a GitHub account, the location can be registered to Helm so it can pull the chart from that source.
+
+A popular chart repo hosting service you can add to Kubernetes is called ChartMuseum. Guess what, it also can be installed with a ChartMuseum Helm chart. (ツ)
+
+You can also use GitHub pages to host an inexpensive chart repo.
+
+>> helm search hub chartmuseum
+
+There are other helm commands such as helm package and helm pull that open the possibilities to publish charts to these repositories.
+
+
+Update Chart:
+Look at the service. Notice the service type is ClusterIP. To see the Nginx default page we would like to instead expose it as a NodePort. A kubectl patch could be applied, but it would be best to change the values.yaml file. Perhaps this is just to verify. We could simply change the installed application with a new value. Use the Helm upgrade command to modify the deployment.
+
+>> helm upgrade my-app ./app-chart --install --reuse-values --set service.type=NodePort
+
+Well, this demonstration chart is a bit deficient as it does not allow the values for the NodePort to be assigned. Right now it's a random value. We could modify the chart template to accept a nodePort value, but for this exercise apply this quick patch.
+
+>> kubectl patch service my-app-app-chart --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":31111}]'
+
+With this adjustment my-app's Nginx default page will be reachable.
+
+Further commands
+There are a few more helpful commands that you can discover.
+
+>> helm --help
+
+The helm lint command will check your charts for errors. Something that commonly happens when editing YAML files and experimenting with the Go templating syntax in the template files.
+
+The helm test command can be used to bake testing into your chart usage in CI/CD pipelines.
+
+The helm plugin opens Helm for many extension possibilities. Here is a curated list of helpful extensions for Helm.
+
+
+
+
+
+
+
+
+
+
+

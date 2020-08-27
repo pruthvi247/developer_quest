@@ -1,4 +1,7 @@
+
 [source : https://learning.oreilly.com/scenarios/kubernetes-observability-scaling/9781492079002/]
+// // Slides and cheatsheet are present in learning/tutorials/kubernetes folder of computer. (its not pushed to git)
+
 
 Scaling Your Applications, Automatically:
 ----------------------------------------

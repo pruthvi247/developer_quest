@@ -1,3 +1,9 @@
+[source : https://learning.oreilly.com/live-training/courses/kubernetes-in-three-weeks/0636920446392/]
+
+// Slides and cheatsheet are present in learning/tutorials/kubernetes folder of computer. (its not pushed to git)
+
+
+
 [source : https://learning.oreilly.com/scenarios/kubernetes-fundamentals-first/9781492078821/]
 
 kubectl version --short && \

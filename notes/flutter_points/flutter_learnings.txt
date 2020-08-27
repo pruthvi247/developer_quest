@@ -774,7 +774,69 @@ class PageBody extends StatelessWidget {
   }
 }
 ///////////////////////////////
+[source : https://stackoverflow.com/questions/51983011/when-should-i-use-a-futurebuilder]
 
+Future builder:
+--------------
+
+> FutureBuilder removes some of the boilerplate codes.
+
+> Lets say you want to fetch data from backend on launch of page and show loader till data comes.
+
+Tasks for ListBuilder:
+
+a) have two state variables 
+	1.dataFromBackend 
+	2.isLoadingFlag
+b) On launch, set isLoadingFlag = true and based on which show loader.
+c) Once data arrival, set data with what you get from backend and set isLoadingFlag = false (inside setState obviously)
+d) We need to have a if-else in widget creation. If isLoadingFlag is true, show loader else show the data. If failure, show error message.
+Tasks for FutureBuilder:
+
+a) give the async task in future of Future Builder
+b) based on connectionState, show message (loading, active(streams), done)
+c)based on data(snapshot.hasError) show view
+Pros of FutureBuilder
+
+a) no two flags and no setState
+b) reactive programming (FutureBuilder will take care of updating the view on data arrival)
+Example:
+>>>
+    FutureBuilder<String>(
+        future: _fetchNetworkCall, // async work
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+           switch (snapshot.connectionState) {
+             case ConnectionState.waiting: return Text('Loading....');
+             default:
+               if (snapshot.hasError)
+                  return Text('Error: ${snapshot.error}');
+               else
+              return Text('Result: ${snapshot.data}');
+            }
+         },
+        )
+Performance impact:
+
+I just looked into the FutureBuilder code to understand the performance impact of using this.
+
+> FutureBuilder is just a StatefulWidget whose state variable is _snapshot
+> Intial state is _snapshot = AsyncSnapshot<T>.withData(ConnectionState.none, widget.initialData);
+> It is subscribing to future which we send in constructor and updating the state based on that.
+>>>  
+widget.future.then<void>((T data) {
+      if (_activeCallbackIdentity == callbackIdentity) {
+    setState(() {
+      _snapshot = AsyncSnapshot<T>.withData(ConnectionState.done, data);
+     });
+   }
+  }, onError: (Object error) {
+  if (_activeCallbackIdentity == callbackIdentity) {
+    setState(() {
+      _snapshot = AsyncSnapshot<T>.withError(ConnectionState.done, error);
+    });
+   }
+  });
+> So the FutureBuilder is a wrapper/boilerplate of what we do typically. So there should not be any performance impact.
 
 
 
