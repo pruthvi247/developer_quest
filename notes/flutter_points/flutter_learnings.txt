@@ -817,12 +817,12 @@ Example:
         )
 Performance impact:
 
-I just looked into the FutureBuilder code to understand the performance impact of using this.
+looking into the FutureBuilder code to understand the performance impact of using this.
 
 > FutureBuilder is just a StatefulWidget whose state variable is _snapshot
 > Intial state is _snapshot = AsyncSnapshot<T>.withData(ConnectionState.none, widget.initialData);
 > It is subscribing to future which we send in constructor and updating the state based on that.
->>>  
+>>> // _subscribe(){  
 widget.future.then<void>((T data) {
       if (_activeCallbackIdentity == callbackIdentity) {
     setState(() {
@@ -836,97 +836,273 @@ widget.future.then<void>((T data) {
     });
    }
   });
+
 > So the FutureBuilder is a wrapper/boilerplate of what we do typically. So there should not be any performance impact.
 
 
+[source : https://www.filledstacks.com/snippet/dependency-injection-in-flutter/]
+Get_it : dependency injection:
+-----------------------------
 
 
+> In Flutter, the default way to provide object/services to widgets is through InheritedWidgets. If you want a widget or it's model to have access to a service, the widget has to be a child of the inherited widget. This causes unneccessary nesting.
+That's where get it comes in. An IoC that allows you to register your class types and request it from anywhere you have access to the container. Sounds better? Let's set it up.
+Implementation
 
+In your pubspec add the dependency for get_it.
+  ...
 
+  # dependency injection
+  get_it: ^1.0.3
 
+  ...
+In your lib folder create a new file called service_locator.dart. Import get_it and create a new instance of getIt called locator. We'll use everything in the global scope so we can just import the file and have access to the locator.
+Create a new function called setupLocator where we will register our services and models.
+import 'package:get_it/get_it.dart';
 
+GetIt locator = GetIt();
 
+void setupLocator() {
+}
+In the main.dart file call setupLocator before we run the app.
+import 'service_locator.dart';
 
+void main() {
+  setupLocator();
+  runApp(MyApp());
+}
+Setup:
 
+In the lib folder create a new folder called services. Under that folder create two new files, login_service.dart and user_service.dart
+Login Service
+class LoginService {
+    String loginToken = "my_login_token";
+}
+User Service:
+class UserService {
+    String userName = "filledstacks";
+}
+Using get_it, class types can be registered in two ways.
+Factory: When you request an instance of the type from the service provider you'll get a new instance everytime. Good for registering ViewModels that need to run the same logic on start or that has to be new when the view is opened.
+Singleton: Singletons can be registered in two ways. Provide an implementation upon registration or provide a lamda that will be invoked the first time your instance is requested (LazySingleton). The Locator keeps a single instance of your registered type and will always return you that instance.
+Registering types:
+
+Go to your service locator and import the two new services. We'll register the UserService as a singleton, and the LoginService as a Factory.
+import './services/user_service.dart';
+import './services/login_service.dart';
+
+...
+
+void setupLocator() {
+  locator.registerSingleton(UserService());
+  locator.registerFactory<LoginService>(() => LoginService());
+}
+Now wherever you need the service you'll import the service_locator.dart file and request the type like below.
+import 'package:my_project/service_locator.dart';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+...
+
+var userService = locator<UserService>();
+
+...
+You don't need to wrap any widgets to inherit anything, or need the context anywhere. All you do is import the service_locator file and use the locator to resolve your type. This means that in places without the context you'll still be able to inject the correct services and values, even if the app's UI structure changes.
+
+
+
+[source : https://medium.com/flutter-community/flutter-statemanagement-with-provider-ee251bbc5ac1]
+
+Providers:
+---------
+Provider exposes a few kinds of provider for different types of objects 
+
+provider: the most basic form of provider.it takes a value and expose it, whatever the value is.
+
+ListenableProvider: Aprovider specific for listenable object.Lisenable will listen the object and ask widgets which depends on it to rebuild whenever the listener is called.
+
+ChangeNotifireProvider: A specification of listenable Provider for changenotifier.Itwill automatically call change notifier.dispose when needed.
+
+ValueListenableProvider: listen to a valueListenable and only expose ValueListenable.value.
+
+StreamProvider: Listen to stream and expose the latest value emitted
+[source : https://medium.com/flutterdevs/flutter-performance-optimization-17c99bb31553]
+
+When to use isolates/threads ?
+> There are a few situations where isolates can be very handy.
+	1)Let say you want to execute a network call and you want to process that data that you just received . and that data contains about million records that alone will hang your UI.
+	2)You have some image processing tasks that you want to do on-device these kinds of tasks are highly computational as they have to deal with lots of number crunching operations which may lead to frozen UI or legginess in UI.
+
+> Languages like JAVA and C++ Share Their heap memory with threads, but in case of flutter, every isolate has its own memory and works independently. As it has its own private space this memory doesn’t require locking, as if a thread finishes its task it already means that the thread has finished utilizing its memory space and then that memory can go for garbage collection.
+
+> To maintain these benefits flutter has a separate memory for every isolate(Flutter way of multi-threading) that’s why they are called isolate 
+
+> Using compute we can do the same task which isolates does but in a more cleaner and abstract way. Let’s take a look at the flutter compute function.
+Syntax:
+>> var getData = await compute(function,parameter);
+
+Compute function takes two parameters :
+1) A future or a function but that must be static (as in dart threads does not share memory so they are class level members not object level).
+2) Argument to pass into the function, To send multiple arguments you can pass it as a map(as it only supports single argument).compute function returns a Future which if you want can store into a variable and can provide it into a future builder.
+
+>>> import 'dart:io';
+
+import 'package:flutter/material.dart';
+
+class With10SecondDelay extends StatelessWidget {
+  runningFunction() {
+    int sum = 0;
+    for (int i = 1; i <= 10; i++) {
+      sleep(Duration(seconds: 1));
+      print(i);
+      sum += i;
+    }
+    return "total sum is $sum";
+  }
+
+  pauseFunction() {
+    //pause function is not async
+    print(runningFunction());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    pauseFunction();
+    return Material(
+      child: Center(
+        child: Center(
+          child: Text(
+            "Tnx for waiting 10 seconds : check console for response",
+            style: TextStyle(
+              fontSize: 50,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+> In the above code pausefunction() is called just below the build method which pauses the execution of code for 10 seconds. And because of that when you try to navigate to this page from a previous one there will be a delay of ten seconds before our page gets pushed on to the widget tree.
+We can try to resolve this issue by using async.
+>>  pauseFunction() async {
+    //pause function is async
+    print(runningFunction());
+  }
+
+> As you can see now we have declared our pause function as async even doing this will not help
+As async in dart is basically puts our code in ideal until there is something to compute so it seems to us that dart is executing these on a different thread but actually it’s just waiting for some event to occur in that async function.
+
+> Let’s solve the above issue using compute: 
+
+>> import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+class ComputeWith10SecondDelay extends StatelessWidget {
+  static Future<String> runningFunction(String str) async {
+    int sum = 0;
+    for (int i = 1; i <= 10; i++) {
+      await Future.delayed(Duration(seconds: 1));
+      print(i);
+      sum += i;
+    }
+    return "Sum is : " + sum.toString() + str;
+  }
+
+  pauseFunction() async {
+    print(await compute(runningFunction,
+        " This is an argument")); //storing data of copute result
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    pauseFunction();
+
+    return Material(
+      child: Center(
+        child: Center(
+          child: Text(
+            "Wow , it saved my 10 seconds : check console for response",
+            style: TextStyle(
+              fontSize: 50,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+> In the above code, we basically passed our function in compute() function and that creates a separate isolate to handle the task and our main UI will still run without any delay (check the debug console for response ).
+Summary:
+> Dart is by default executes all its code on a single-threaded.
+> Every function and every async-await calls work only on the main thread(until and unless specified).
+> We can create multiple threads using compute( Future function/normal function, argument).
+> You can use compute for executing network calls, performing number-crunching calculations, image processing, etc.
+
+[source : https://stackoverflow.com/questions/57335980/changenotifierprovider-vs-changenotifierprovider-value#:~:text=Use%20ValueNotifier%20if%20you%20need,when%20notifyListeners()%20is%20called.&text=So%20Flatter%20recycles%20the%20same,Provider%20with%20the%20create%20function.]
+
+
+Let's take this in steps.
+
+What is ChangeNotifier?
+A class that extends ChangeNotifier can call notifyListeners() any time data in that class has been updated and you want to let a listener know about that update. This is often done in a view model to notify the UI to rebuild the layout based on the new data.
+
+Here is an example:
+
+class MyChangeNotifier extends ChangeNotifier {
+  int _counter = 0;
+  int get counter => _counter;
+
+  void increment() {
+    _counter++;
+    notifyListeners();
+  }
+}
+I wrote more about this in A beginner’s guide to architecting a Flutter app.
+
+What is ChangeNotifierProvider?
+ChangeNotifierProvider is one of many types of providers in the Provider package. If you already have a ChangeNotifier class (like the one above), then you can use ChangeNotifierProvider to provide it to the place you need it in the UI layout.
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<MyChangeNotifier>(        // define it
+      create: (context) => MyChangeNotifier(),              // create it
+      child: MaterialApp(
+        ...
+
+          child: Consumer<MyChangeNotifier>(                // get it
+            builder: (context, myChangeNotifier, child) {
+              ...
+                  myChangeNotifier.increment();             // use it
+Note in particular that a new instance of the MyChangeNotifier class was created in this line:
+
+create: (context) => MyChangeNotifier(),
+This is done one time when the widget is first built, and not on subsequent rebuilds.
+
+What is ChangeNotifierProvider.value for then?
+Use ChangeNotifierProvider.value if you have already created an instance of the ChangeNotifier class. This type of situation might be happen if you had initialized your ChangeNotifier class in the initState() method of your StatefulWidget's State class.
+
+In that case, you wouldn't want to create a whole new instance of your ChangeNotifier because you would be wasting any initialization work that you had already done. Using the ChangeNotifierProvider.value constructor allows you to provide your pre-created ChangeNotifier value.
+
+class _MyWidgeState extends State<MyWidge> {
+
+  MyChangeNotifier myChangeNotifier;
+
+  @override
+  void initState() {
+    myChangeNotifier = MyChangeNotifier();
+    myChangeNotifier.doSomeInitializationWork();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<MyChangeNotifier>.value(
+      value: myChangeNotifier,                           // <-- important part
+      child: ... 
+Take special note that there isn't a create parameter here, but a value parameter. That's where you pass in your ChangeNotifier class instance. Again, don't try to create a new instance there.
 
 
 
