@@ -55,7 +55,11 @@ The ability to combine programs like this can be extremely useful. But the real 
 
 > Simplicity plus transparency lowers costs, reduces everybody's stress, and frees people to concentrate on new problems rather than cleaning up after old mistakes.
 
+[source: https://stackoverflow.com/questions/16956810/how-do-i-find-all-files-containing-specific-text-on-linux]
 
+find files with text:
+
+>> grep -rnw '/path/to/somewhere/' -e 'pattern'
 
 
 

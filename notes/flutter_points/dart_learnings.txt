@@ -407,7 +407,99 @@ void main(){
 print(Days.monday.index) //->0
 }
 
+Null aware operators:
+--------------------
+> [source : https://medium.com/@thinkdigitalsoftware/null-aware-operators-in-dart-53ffb8ae80bb]
+> [source : https://stackoverflow.com/questions/17006664/what-is-the-dart-null-checking-idiom-or-best-practice]
+> [source: https://medium.com/flutter-community/simple-and-bug-free-code-with-dart-operators-2e81211cecfe]
 
+> x=y ??Z; // assign y to x, unless y is null, other wise assign z
 
+> x ??= y ; // assign y to x if x is null
 
+> x?.foo() // call foo() only if x is not null
 
+> ??
+Use ?? when you want to evaluate and return an expression IFF another expression resolves to null.
+eg  :exp ?? otherExp; is similar to ((x) => x == null ? otherExp : x)(exp)
+
+> ??=
+Use ??= when you want to assign a value to an object IFF that object is null. Otherwise, return the object.
+obj ??= value
+
+> ?.
+Use ?. when you want to call a method/getter on an object IFF that object is not null (otherwise, return null).
+obj?.method()
+
+> You can chain ?. calls, for example:
+obj?.child?.child?.getter
+
+> ?…
+Dart 2.3 brings in a spread operator (…) and with it comes a new null aware operator, ?... !
+Placing ... before an expression inside a collection literal unpacks the result of the expression and inserts its elements directly inside the new collection.
+ eg : List lowerNumbers = [1, 2, 3, 4, 5];
+List upperNumbers = [6, 7, 8, 9, 10];
+List numbers = […lowerNumbers?…upperNumbers];
+
+[source : https://bezkoder.com/dart-flutter-convert-object-to-json-string/#DartFlutter_convert_List_to_JSON_string]
+
+Dart/Flutter convert List of objects to JSON string:
+---------------------------------------------------
+class Tag {
+  String name;
+  int quantity;
+
+  Tag(this.name, this.quantity);
+
+  Map toJson() => {
+        'name': name,
+        'quantity': quantity,
+      };
+}
+
+> Now everything becomes simple with jsonEncode() function.
+
+import 'dart:convert';
+
+main() {
+  List<Tag> tags = [Tag('tagA', 3), Tag('tagB', 6), Tag('tagC', 8)];
+  String jsonTags = jsonEncode(tags);
+  print(jsonTags);
+}
+
+Enum utils:
+----------
+> enum CarType {
+  sedan,
+  suv,
+  truck
+}
+void main(){
+  String enumToString(Object o) => o.toString().split('.').last;
+ 
+  print(CarType.values[1]);
+  print(CarType);
+  print(enumToString(CarType.values[1]));
+}
+>> 
+import 'package:flutter/foundation.dart';
+enum Day {
+  monday, tuesday, wednesday, thursday, friday, saturday, sunday
+}
+print(describeEnum(day.MONDAY));
+
+on keyword:
+[source: https://medium.com/flutter-community/https-medium-com-shubhamhackzz-dart-for-flutter-mixins-in-dart-f8bb10a3d341#:~:text=The%20keyword%20on%20is%20used,mixin%20using%20the%20mixin%20keyword.]
+>>> 
+class A {}
+
+class B{}
+
+mixin X on A{}
+
+mixin Y on B {} 
+
+class P extends A with X {} //satisfies condition as it extends A
+class Q extends B with Y {} //satisfies condition as it extends B
+
+> In the above code we are restricting mixins Xand Y to be only used by the classes which either implements or extends A and B respectively.

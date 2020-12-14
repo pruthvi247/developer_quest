@@ -1104,9 +1104,191 @@ class _MyWidgeState extends State<MyWidge> {
       child: ... 
 Take special note that there isn't a create parameter here, but a value parameter. That's where you pass in your ChangeNotifier class instance. Again, don't try to create a new instance there.
 
+[source : https://stackoverflow.com/questions/53294006/how-to-create-a-custom-appbar-widget]
+
+Custorm app bar- solutions form stactoverflow:
 
 
+solution1: 
+>>
+import 'package:flutter/material.dart';
 
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
+    CustomAppBar({Key key}) : preferredSize = Size.fromHeight(kToolbarHeight), super(key: key);
 
+    @override
+    final Size preferredSize; // default is 56.0
 
+    @override
+    _CustomAppBarState createState() => _CustomAppBarState();
+}
 
+class _CustomAppBarState extends State<CustomAppBar>{
+
+    @override
+    Widget build(BuildContext context) {
+        return AppBar( title: Text("Sample App Bar") );
+    }
+}
+
+Solution2:
+>>>
+
+class AppBars extends AppBar {
+  AppBars():super(
+    iconTheme: IconThemeData(
+      color: Colors.black, //change your color here
+    ),
+    backgroundColor: Colors.white,
+    title: Text(
+      "this is app bar",
+      style: TextStyle(color: Color(Constant.colorBlack)),
+    ),
+    elevation: 0.0,
+    automaticallyImplyLeading: false,
+    actions: <Widget>[
+      IconButton(
+        icon: Icon(Icons.notifications),
+        onPressed: () => null,
+      ),
+      IconButton(
+        icon: Icon(Icons.person),
+        onPressed: () => null,
+      ),
+    ],
+  );
+} 
+
+[source : https://stackoverflow.com/questions/49356664/how-to-override-the-back-button-in-flutter]
+
+Show alert dialog when back button is pressed:
+>>>
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) :super(key: key);
+
+  final String title;
+
+  @override
+  State<StatefulWidget> createState() => new _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit an App'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('No'),
+          ),
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text('Yes'),
+          ),
+        ],
+      ),
+    )) ?? false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new WillPopScope(
+      onWillPop: _onWillPop,
+      child: new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Home Page"),
+        ),
+        body: new Center(
+          child: new Text("Home Page"),
+        ),
+      ),
+    );
+  }
+}
+
+[source: https://stackoverflow.com/questions/52088889/can-someone-explain-to-me-what-the-builder-class-does-in-flutter#:~:text=According%20to%20the%20official%20flutter,possible%20thing%20of%20that%20kind.]
+
+> The purpose of the Builder class is simply to build and return child widgets. How is that different from any other widget? Aha! The Builder class allows you to pass a specific context object down to its children. The Builder class is basically your own build function that you setup.
+
+Why would I need to pass a specific context object? Lets take a look at an example:
+
+Lets say that we want to add a new SnackBar widget to its new Scaffold parent widget that is being returned:
+
+>>> 
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Builder(
+      builder: (BuildContext context) {
+        return FloatingActionButton(onPressed: () {
+          Scaffold.of(context).showSnackBar(
+                new SnackBar(
+                  content: new Text('SnackBar'),
+                ),
+              );
+      },
+    ),
+  );
+}
+
+colon after the constructor:
+--------------------------
+
+> The part after : is called "initializer list. It is a ,-separated list of expressions that can access constructor parameters and can assign to instance fields, even final instance fields. This is handy to initialize final fields with calculated values.
+
+The initializer list is also used to call other constructors like : ..., super('foo').
+
+Since about Dart version 1.24 the initializer list also supports assert(...) which is handy to check parameter values.
+
+The initializer list can't read from this because the super constructors need to be completed before access to this is valid, but it can assign to this.xxx.
+
+This also means the initializer list is executed before the constructor body. Also the initializer lists of all superclasses are executed before any of the contructor bodies are executed.
+
+notification listner and scroll controller:
+-----------------------------------------
+[source: https://stackoverflow.com/questions/48035594/flutter-notificationlistener-with-scrollnotification-vs-scrollcontroller]
+
+> If you're using NestedScrollView with nested scrollers, using a scrollController on the inner scrollers will break the link with NestedScrollView meaning NestedScrollView will no longer control the complete scrolling experience. To get information about the scroll positions of the inner scrollers in this case you would use a NotificationListener with ScrollNotification.
+> To use a ScrollController you should use a Stateful widget, so that it can be properly dispose.
+> NotificationListener is just another widget, so yo don't need to create a Stateful widget.
+> You cannot change the scroll position from a NotificationListener. It is read only.
+> If you want to change the scroll position, you are going to need a ScrollController (jumpTo / animateTo).
+
+>>> notification listner example:
+
+NotificationListener<ScrollNotification>(
+  child: ListView.builder(
+    itemCount: 10
+    itemBuilder: (BuildContext context, int index) {
+      return Text('Item $index');
+    },
+  ),
+  onNotification: (ScrollNotification scrollInfo) {
+    if (scrollInfo.metrics.pixels ==
+        scrollInfo.metrics.maxScrollExtent) {
+      onLoadMore();
+    }
+  },
+);
+
+Downgrade flutter sdk:
+[source: https://stackoverflow.com/questions/49468321/how-to-downgrade-flutter-sdk-dart-1-x] 
+> Flutter is versioned using git. Changing the Flutter version is as simple as changing git branch.
+
+There are 2 different ways:
+
+flutter channel <branch> (example: flutter channel stable)
+This command is used to change between branches – usually stable/dev/beta/master. We can also put a specific commit id from git.
+
+flutter version <version> (example: flutter version v1.2.1)
+This command will use a specific version number. You can have the list of the available version numbers using flutter version or here
+
+After this, run any Flutter command (such as flutter doctor), and Flutter will take care of downloading/compiling everything required to run this version.

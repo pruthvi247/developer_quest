@@ -1,0 +1,15 @@
+[source : https://andrious.medium.com/declare-flutter-final-a3a05a34963d]
+>> use final/constant to variable declerations
+>> use const to Text and icon widgets
+eg : >>> runApp(const MyApp());
+     >>> const MyHomePage(title: 'Flutter Demo Home Page')
+     >>> const Text("");
+     >>> const Icon(Icons.add),
+> Even a whole class can be constant! Unchanging. You do this by giving the class a ‘constant constructor.’ You do that by putting the const keyword before the constructor name. This means, however, all instance fields if any in this class are declared final. If you can manage that for your classes, your app’s that much faster.
+eg: >> class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key key, this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State createState() => _MyHomePageState();
+}

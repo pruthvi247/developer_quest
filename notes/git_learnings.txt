@@ -48,6 +48,7 @@ git push <remote-name> <branch-name> (git push -u origin master)
 > lists all branches including the remote branches
 git branch -a
 > git branch <name> (creating branch name)
+  git checkout -b myFeature dev (creating new branch from old branch, we should be in the dev branch if we want to creat myFeature branch from dev branch)
   git  branch  <branch _name>  <commit id> (creating branch form commit id)
 > git branch -m [old_name] [new_name] (re naming branch)
 > git branch -d <branch name> (deleting a branch)
