@@ -503,3 +503,22 @@ class P extends A with X {} //satisfies condition as it extends A
 class Q extends B with Y {} //satisfies condition as it extends B
 
 > In the above code we are restricting mixins Xand Y to be only used by the classes which either implements or extends A and B respectively.
+
+[source : https://stackoverflow.com/questions/38908285/add-methods-or-values-to-enum-in-dart]
+Enum:
+
+enum CodeVerifyFlow{
+  SignUp, Recovery, Settings
+}
+
+extension CatExtension on CodeVerifyFlow {
+  String get name {
+    return ["sign_up", "recovery", "settings"][this.index];
+  }
+}
+
+// use it like
+CodeVerifyFlow.SignUp.name
+
+
+

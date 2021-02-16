@@ -1,3 +1,5 @@
+[Source: https://github.com/sigmavirus24/python-interview-questions]
+
 [source: https://www.geeksforgeeks.org/internal-working-of-python/]
 
 Q: How does Python execute code?
@@ -232,3 +234,67 @@ class Myclass
 Q: How do I return multiple values from a function?
 ---------------------------------------------------
 [Source : https://stackoverflow.com/questions/354883/how-do-i-return-multiple-values-from-a-function]
+
+Method1 :
+>>> def get_image_data(filename):
+    [snip]
+    return size, (format, version, compression), (width,height)
+
+size, type, dimensions = get_image_data(x)
+
+method2: Return dict
+>>> def g(x):
+  y0 = x + 1
+  y1 = x * 3
+  y2 = y0 ** y3
+  return {'y0':y0, 'y1':y1 ,'y2':y2 }
+
+Swapping two variables:
+>>> x = 10
+y = 5
+ 
+# Code to swap 'x' and 'y'
+ 
+# x now becomes 15
+x = x + y
+ 
+# y becomes 10
+y = x - y
+ 
+# x becomes 5
+x = x - y
+print("After Swapping: x =", x, " y =", y)
+ 
+
+Reference counting:
+Reference counting is a simple technique in which objects are deallocated when there is no reference to them in a program.
+
+Every variable in Python is a reference (a pointer) to an object and not the actual value itself
+>>> import sys
+sys.getrefcount(object)
+
+Q: Do functions (or methods) return something even if there isn't a return statement? If so, what do they return?
+
+>>>def my_func1():
+  print "Hello World"
+  return None ## This tells that the function is indeed meant to return a value for later use,
+
+def my_func2():
+  print "Hello World"
+  return    ## This is used for the same reason as break in loops.
+
+def my_func3():
+  print "Hello World" ## This will also return None, but that value is not meant to be used or caught. 
+
+> On the actual behavior, there is no difference. They all return None
+
+Q: How would you count the lines in a file? How would you do it if the file was too big to hold in memory?
+maybe it could be useful to read the file block-wise and then count the \n characters in each block.
+>>> def blocks(files, size=65536):
+    while True:
+        b = files.read(size)
+        if not b: break
+        yield b
+
+with open("file", "r",encoding="utf-8",errors='ignore') as f:
+    print (sum(bl.count("\n") for bl in blocks(f)))
