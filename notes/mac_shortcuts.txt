@@ -1,4 +1,10 @@
 > To get cpu temperature:
 		>> sudo powermetrics --samplers smc |grep -i "CPU die temperature"
 		>> sudo powermetrics --samplers smc -i1 -n1
+[source : https://superuser.com/questions/718600/keyboard-shortcut-to-maximize-current-window-application-in-osx]
 
+Command-M :Minimize the active window to the Dock
+Command-Option-M :Minimize all windows of the active application to the Dock
+(Setup is required) :Maximize the active window
+> control + command + F  goes to full screen 
+> mac short cut cheat sheet: https://support.apple.com/en-gb/HT201236

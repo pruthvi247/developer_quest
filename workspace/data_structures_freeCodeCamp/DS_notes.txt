@@ -90,6 +90,53 @@ Why use a linked list over an array? Well a linked list has an advantage that ar
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+STACKS :
+
+> code : [source: https://github.com/williamfiset/data-structures/tree/master/com/williamfiset/datastructures/stack]
+> A stack is a one eneded linear data structure which models a real world stack by having two primary operations,namely push and pop
+when and where is a stack used
+> Used by undo mechanisms in text editors.
+> used in compiler sysntax checking for matching brackets and braces
+> can be used to model a pile of books or plates:
+> Used behind the scenes to support recursion by keeping track of previous funtion calls.
+> Can be used to do a Depth First Search  on a graph
+
+Queues:
+
+> A queue is linear data structure which models real world queues by having two primary operation, namely enqueue and dequeue
+
+when and where is queue is used:
+
+> Any waiting line models as queue.
+> Can be used to efficiently keep track of the x most recently added elements.
+> Web server request management where you want first come first serve.
+> Breadth first search graph traversal.
+
+
+Priority Queue:
+
+> A priority queue is an abstract data type that operates similar to a normal queue except that each element has a certain priority.The priority of the elements in the priority queue determine the order in which elements are removed from the PQ.
+
+Note : PQ only supports comparable data, meaning the data inserted into the priority queue must be able to be ordered in some way either from least to greates or greatest to least. This is so that we are able to assign relative priorities to each element
+
+Heap:
+> Aheap is a tree based DS that statisfies the heap invariant- also called heap property: If A is a parent node of B then A is ordered with respect to B for all nodes A,Bin the heap. Two types of heaps, max heap and min heaps.Every node in heap is binary which means every node has two children.And heaps can also have two or more children which is called bionomial heaps. All heaps must be trees, which mean it should not be in cycles like one child has two parent nodes.
+
+When and where PQ is used:
+> used in cetain implementations of Dijkstra shortest path algo
+> Anytime you need the dynamically fetch the next best or next worst element.
+> Used in Huffman coding(Which is often used for lossless data compression).
+> Best First Search algorithms such as A* use PQs to continously grab next most promising node.
+> Used by Minimum spanning Tree - mst algo
+
+
+
+
+
+
+
+
+
 
 
 
