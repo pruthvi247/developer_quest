@@ -244,6 +244,8 @@ Unpacking:
 >>> x,y = counts
 >>> x
 'apples'
+>>> y
+'oranges'
 
 
 Python for loop:
@@ -271,6 +273,101 @@ Iterator protocol in python:
 
 > generators are iterators
 > we can loop over generators
+[source : https://livecodestream.dev/post/how-to-use-generator-and-yield-in-python/]
+Work with large datasets or files using Python generators:
+
+> In difference to a return, yield will pause the function by saving all its states and will later continue from that point on successive calls. In both cases, the expression will be returned to the callers execution.
+> When a function contains yield, Python will automatically (and behind the scenes) implement an iterator applying all the required methods like __iter__() and __next__() for us, so we don’t need to worry about any of it.
+> there are even easier and more interesting ways to implement generators by defining a generator expression (also called a generator comprehension) which has a syntax that looks very much like list comprehensions.
+> 
+def csv_reader(file_name):
+    for row in open(file_name, "r"):
+        yield row
+or we can read csv like below
+
+> csv_gen = (row for row in open(file_name))
+
+> Using yield will result in a generator object
+> Using return will result in the first line of the file only.
+>>>
+def infinite_sequence():
+    num = 0
+    while True:
+        yield num
+        num += 1
+for i in infinite_sequence():
+    print(i, end=" ")
+
+or you can also call like this 
+>> gen = infinite_sequence()
+
+When the Python yield statement is hit, the program suspends the function execution and returns the yielded value to the caller. When the function gets suspended, the state of that function is saved, this includes data like any variable bindings, the instruction pointer, the internal stack, and any exception handling. When the generator is once again called, the state is restored and the function continues from the last yield statement it hit, like if the previous yield wouldn’t have been called and the function wouldn’t have been suspended.
+
+>>> def multiple_yield():
+...     value = "I'm here for the first time"
+...     yield value
+...     value = "My Second time here"
+...     yield value
+...
+>>> multi_gen = multiple_yield()
+>>> print(next(multi_gen))
+I'm here for the first time
+>>> print(next(multi_gen))
+My Second time here
+>>> print(next(multi_gen))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+
+Send() in generators:
+def isPrime(n):
+    if n < 2 or n % 1 > 0:
+        return False
+    elif n == 2 or n == 3:
+        return True
+    for x in range(2, int(n**0.5) + 1):
+        if n % x == 0:
+            return False
+    return True
+##### send method will not work here
+def getPrimes():
+    value = 0
+    while True:
+        if isPrime(value):
+            yield value
+        value += 1
+#### send method will work here as we are reading value using yield
+def getPrimes():
+    value = 0
+    while True:
+        if isPrime(value):
+            i = yield value
+            if i is not None:
+                value = i
+        value += 1
+
+prime_gen = getPrimes()
+print(next(prime_gen))
+print(prime_gen.send(1000))
+print(next(prime_gen))
+###############
+## reading csv input and pass as parater to test
+
+input_file_name = '/Users/pruthvikumar/Documents/workspace/a1m/pod-test-suite/pod_user_service_suite/data/booking_service_test_cases.csv'
+
+# input_validation.validate_input_csv_format(input_df)
+def csv_reader(file_name):
+    for row in open(file_name, "r"):
+        yield row
+csv_gen = (row for row in open(input_file_name))
+csv_gen1 = csv_reader(input_file_name)
+
+@pytest.mark.parametrize("input_value", csv_gen)
+@pytest.mark.parametrize("input_value1", csv_gen1)
+def test_sample(input_value,input_value1):
+    print(type(input_value))
+    print(input_value)
+    # print(input_value[0])
+    # assert True
 
 
 iterators vs iterables:
@@ -336,7 +433,7 @@ https://www.youtube.com/watch?v=uPpaeHPjDoI&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOI
 
 class employee:
 	'''description of your class- doc string'''
-	def __init_(self,enam,eno):
+	def __init__(self,enam,eno):
 		self.ename=name
 		self.eno=eno
 	def info(self)
@@ -363,7 +460,7 @@ self variable:
 
 class employee:
 	'''description of your class- doc string'''
-	def __init_(self,enam,eno):
+	def __init__(self,enam,eno):
 		self.ename=name
 		self.eno=eno
 	def info(self):
@@ -393,7 +490,7 @@ f1= outer -> for outer funtion we are giving another name
 funtion decorators:
 ------------------
 
-decorator(input funtion):
+decorator(input function):
 	retrun "output funtion_with extended funtionality"
 
 
@@ -460,6 +557,11 @@ Generator expressions:
 ---------------------
 
 > If you are making a list to loop over it exactly once, use a generator expression instead for a list comprehension
+>>> gen = (i for i in range(1, 4))
+>>> for i in gen: print i
+
+for item in function_that_returns_a_generator(param1, param2):
+    print item
 
 Do's and dont's:
 ---------------
@@ -2190,6 +2292,35 @@ A counter is a container that stores elements as dictionary keys, and their coun
 Counter({2: 4, 3: 4, 1: 3, 4: 2, 5: 1})
 
 > static vs class methods -> [source : https://www.geeksforgeeks.org/class-method-vs-static-method-python/]
+	> We generally use class method to create factory methods. Factory methods return class object ( similar to a constructor ) for different use cases.
+	> We generally use static methods to create utility functions.
+>>>
+from datetime import date
+   
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+       
+    # a class method to create a Person object by birth year.
+    @classmethod
+    def fromBirthYear(cls, name, year):
+        return cls(name, date.today().year - year)
+       
+    # a static method to check if a Person is adult or not.
+    @staticmethod
+    def isAdult(age):
+        return age > 18
+   
+person1 = Person('mayank', 21)
+person2 = Person.fromBirthYear('mayank', 1996)
+   
+print (person1.age)
+print (person2.age)
+   
+# print the result
+print (Person.isAdult(22))
+
 
 > Descriptors in python [source : https://www.geeksforgeeks.org/descriptor-in-python/]
 	Descriptors are like setters and getters in other lanquages
@@ -2439,4 +2570,98 @@ print (S.name)
 # Access using getattr() 
 print ("The Student DOB using getattr() is : ",end ="") 
 print (getattr(S,'DOB')) 
+[source: https://towardsdatascience.com/why-decorators-in-python-are-pure-genius-1e812949a81e]
+
+>> import time
+def measuretime(func):
+    def wrapper():
+        starttime = time.perf_counter()
+        func()
+        endtime = time.perf_counter()
+        print(f"Time needed: {endtime - starttime} seconds")
+    return wrapper
+@measuretime
+def wastetime():
+    sum([i**2 for i in range(1000000)])
+wastetime()
+
+Slow down code using decorators:
+> Sometimes you don’t want to execute code immediately but wait a while. That’s where a slow-down decorator comes in handy:
+
+>>
+import time
+def sleep(func):
+    def wrapper():
+        time.sleep(300)
+        return func()
+    return wrapper
+@sleep
+def wakeup():
+    print("Get up! Your break is over.")
+wakeup()
+
+Setters and getters using @property:
+>>>
+class Geeks:
+     def __init__(self):
+          self._age = 0
+       
+     # using property decorator
+     # a getter function
+     @property
+     def age(self):
+         print("getter method called")
+         return self._age
+       
+     # a setter function
+     @age.setter
+     def age(self, a):
+         if(a < 18):
+            raise ValueError("Sorry you age is below eligibility criteria")
+         print("setter method called")
+         self._age = a
+  
+mark = Geeks()
+  
+mark.age = 19
+  
+print(mark.age)
+
+with statement in Python:
+
+> with statement in Python is used in exception handling to make the code cleaner and much more readable. It simplifies the management of common resources like file streams
+>>>
+# file handling
+  
+# 1) without using with statement
+file = open('file_path', 'w')
+file.write('hello world !')
+file.close()
+  
+# 2) without using with statement
+file = open('file_path', 'w')
+try:
+    file.write('hello world')
+finally:
+    file.close()
+ 
+
+# using with statement
+with open('file_path', 'w') as file:
+    file.write('hello world !')
+
+> Notice that unlike the first two implementations, there is no need to call file.close() when using with statement. The with statement itself ensures proper acquisition and release of resources. An exception during the file.write() call in the first implementation can prevent the file from closing properly which may introduce several bugs in the code,
+
+How do I catch multiple exceptions in one line (except block):
+>  try:
+    may_raise_specific_errors():
+except (SpecificErrorOne, SpecificErrorTwo) as error:
+    handle(error) # might log or have some other default behavior...
+> if one of the exceptions has to be handled differently, then put it into its own except clause as shown in the code given below :
+>  try:
+    client_obj.get_url(url)
+except (URLError, ValueError):
+    client_obj.remove_url(url)
+except SocketTimeout:
+    client_obj.handle_url_timeout(url)
 

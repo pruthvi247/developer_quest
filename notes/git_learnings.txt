@@ -24,6 +24,20 @@ A file in the working tree of a Git repository can have different states. These 
 
 $ git checkout feature
 $ git merge master
+[source: https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging]
+> To create a new branch and switch to it at the same time, you can run the git checkout command with the -b switch:
+>> git checkout -b iss53
+This is shorthand for:
+
+$ git branch iss53
+$ git checkout iss53
+
+You can run your tests, make sure the hotfix is what you want, and finally merge the hotfix branch back into your master branch to deploy to production. You do this with the git merge command:
+
+$ git checkout master
+$ git merge hotfix
+
+It’s worth noting here that the work you did in your hotfix branch is not contained in the files in your iss53 branch. If you need to pull it in, you can merge your master branch into your iss53 branch by running git merge master, or you can wait to integrate those changes until you decide to pull the iss53 branch back into master later.
 
 
 > You decide to run git rebase dev from your feature branch to get up-to-date with dev.
@@ -38,7 +52,7 @@ However when you run the rebase command, there are some conflicts between the ch
 > git log
 > git show (command to see the changes of a commit)
 > git checkout (command to reset a tracked file (a file that was once staged or committed) to its latest staged or commit state. The command removes the changes of the file in the working tree. This command cannot be applied to files which are not yet staged or committed)
-> git checkout -b branch_name (switching new branch)
+> git checkout -b branch_name (creating and switching new branch)
 >git remote add upstream git@gitlab.spire2grow.com:core-prototypestagcloud-feedback-engine.git
 > git remote -v
 > git pull upstream branchname

@@ -115,4 +115,121 @@ Services:
 			- '9000:80'
 
 
+Q: How to check docker image details?
+> docker inspect <imagename or image id>
+
+Q: How to get the details of each layer of docker image ?
+> docker history <image name/id> or docker history <image name/id> --no-trunc
+
+Q How to remove dangling images ?
+> docker image prune
+
+Q How to run container in interactive and daemon mode ?
+> docker run -itd --name <container name> <image name>
+-it for interactive and tty
+-d for daemon/detached mode
+
+Q How to check details of container ?
+> docker inspect <container id>
+
+Q How to find the size of container writable layer ?
+> docker ps -as
+
+Q How to check logs of a container ?
+> docker logs <container name/id>
+> for live stream of logs- docker logs -f <container id/name>
+
+> docker logs are not stored inside the container.
+
+Q Is there any way to restart containers if host machine of docker engine restarts
+> docker run -itd --restart-always --name <Container name> <Image name>
+
+Q Is there a way to clean up the containers created by developers 
+> Start a container with remove flag
+> docker -itd --rm --name <Container name> <Image name>
+Q Can we use restart and rm flag at same time while starting the container
+> No, Conflicts occur
+
+Name space : Name spaces are responsible for isolation between the containers. Type of name spaces are PID, user,filesystem ...
+Cgroup : Cgroup is responsible for resource management or resource utilisation/limitation in each container. It manages CPU, memory, network,Block I/O 
+UnionFS : Union File System is responsible for creating docker image layer,this file sytem is responsible for reusing the same image for different containers
+
+Volumes vs Bind Mounts
+
+With Bind Mount, a file or directory on the host machine is mounted into a container. The file or directory is referenced by its full or relative path on the host machine.
+With Volume, a new directory is created within Docker's storage directory on the host machine, and Docker manages that directory's content.
+
+Bind mounts
+
+Available since the early days of Docker. Bind mounts have limited functionality compared to volumes. When you use a bind mount, a file or directory on the host machine is mounted into a container. The file or directory is referenced by its full path on the host machine. The file or directory does not need to exist on the Docker host already. It is created on demand if it does not yet exist. Bind mounts are very performant, but they rely on the host machine’s filesystem having a specific directory structure available. If you are developing new Docker applications, consider using named volumes instead. You can’t use Docker CLI commands to directly manage bind mounts.
+
+Bind mounts: A bind mount is a file or folder stored anywhere on the container host filesystem, mounted into a running container. The main difference a bind mount has from a volume is that since it can exist anywhere on the host filesystem, processes outside of Docker can also modify it.
+
+Volumes: Volumes are the preferred way to store persistent data Docker containers create or use. The host filesystem also stores volumes, similar to bind mounts. However, Docker completely manages them and stores them under C:\ProgramData\docker\volumes by default.
+
+Q: Can we talk to docker daemon from inside a docker container ?
+> If we can mount /var/run/docker.sock file the we can do it
+eg : docker run -itd -v /var/run/docker.sock:/var/run/docker.sock --name <Container name> <Image>
+
+> Now we can do all the docker operations from inside the container
+
+Q: docker stop vs docker kill
+> docker stop will look for any existing request and stop, docker kill will abruplty stops the container even if requests are in pending state
+
+Q: Is it possible to copy a file in to the containers that is few running and few stopped with out starting the container ?
+> docker cp secret.cong <Container name>:/home/destination/folder
+> After we start the container we will be able to see the file inside the container
+
+Q: Docker Arg instruction
+> 
+ARG VERSION=latest
+FROM busybox:$VERSION
+
+> docker build -t <image-name>:<tag> --build-arg <key1>=<value1> --build-arg <key2>=<value2> .
+
+
+Difference Between ENV and ARG
+It is evident from the above that ARG instruction can only be accessible during build time and not available when we are running the container. It can be passed with the build command with the flag --build-arg.
+ENV instruction is available during build time and also when running the container with the flag --env. But, we can’t pass ENV instruction while building the image.
+
+WORKDIR:
+
+The WORKDIR command is used to define the working directory of a Docker container at any given time. The command is specified in the Dockerfile.
+
+Any RUN, CMD, ADD, COPY, or ENTRYPOINT command will be executed in the specified working directory.
+>>>>
+FROM ubuntu:latest
+WORKDIR /my-work-dir
+RUN echo "work directory 1" > file1.txt
+WORKDIR /my-work-dir-2
+RUN echo "work directory 2" > file2.txt
+
+>> sudo docker build -t workdir-demo .
+>> sudo docker run -it workdir-demo bash 
+>> pwd  -> o/p -> /my-work-dir-2
+
+RUN vs CMD vs ENTRYPOINT :
+
+RUN apt-get -y install firefox
+CMD echo "GeeksforGeeks"
+ENTRYPOINT echo "GeeksforGeeks"
+
+Both the above commands outputs “GeeksforGeeks”. The shell form of execution commands is generally used for RUN commands.
+
+> When you use a RUN command in your dockerfile, it always creates a new intermediate image layer on top of the previous ones. That’s why it is always recommended chaining all the RUN commands together.
+
+> A CMD command is used to set a default command that gets executed once you run the Docker Container. In case you provide a command with the Docker run command, the CMD arguments get ignored from the dockerfile. In the case of multiple CMD commands, only the last one gets executed.
+
+CMD ["python3", "app.py"]
+
+If we use additional arguments along with the docker run command such as “bash”, it will simple open the bash and not echo anything.
+
+> An ENTRYPOINT command, unlike CMD, does not ignore additional parameters that you specify in your Docker run command.
+
+Consider the example below:
+
+ENTRYPOINT ["echo", "Geeksforgeeks "]
+CMD ["Docker Tutorials"]
+
+
 

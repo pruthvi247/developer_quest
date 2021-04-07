@@ -200,7 +200,7 @@ Hybrid Inheritance:
 ====== generators lec 22====
 ================================================================
 
-> generator: to generate a sequence of values using yield keyword
+> generator: to generate a sequence of values using yield keyw:qord
 
 
 

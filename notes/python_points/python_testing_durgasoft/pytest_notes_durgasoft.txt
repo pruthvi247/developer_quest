@@ -30,7 +30,7 @@ Limitations of unit test:
 
 How to implement setup and teardown in pytests:
 -----------------------------------------------
-
+> Fixtures are functions, which will run before each test function to which it is applied. Fixtures are used to feed some data to the tests such as database connections, URLs to test and some sort of input data. Therefore, instead of running the same code for every test, we can attach fixture function to the tests and it will run and return the data to the test before executing each test.
 > By using decorator @pytest.fixture()
 
 eg :
@@ -112,7 +112,37 @@ test_method2
 .method level teardown
 class level teardown
 
+another example: 
 
+import pytest
+
+
+@pytest.yield_fixture(autouse=True,scope='module')
+# @pytest.yield_fixture(scope='module')
+def setupandteardownClass():
+        print('class level setup')
+        yield
+        print('class level teardown')
+
+
+# @pytest.yield_fixture(autouse=True,scope='function')
+@pytest.yield_fixture(scope='function')
+def setupandteardownmethod():
+        print('method level setup')
+        yield
+        print('method level teardown')
+
+
+# def test_method1(setupandteardownClass,setupandteardownmethod):
+#         print('test_method1')
+#
+#
+# def test_method2(setupandteardownmethod):
+#         print('test_method2')
+
+
+def test_method3():
+        print('test_method2')
 
 > If we need to use setup and teardown for all the modules then copying the same setup fixtures in all the module is redundant, instead we can use confest.py
 
