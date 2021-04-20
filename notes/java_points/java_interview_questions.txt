@@ -1,0 +1,53 @@
+[Source: https://www.indiabix.com/technical/core-java/4]
+
+> Can a source file contain more than one class declaration?
+Yes a single source file can contain any number of Class declarations but only one of the class can be declared as public.
+> Can a class be declared as protected?
+The protected access modifier cannot be applied to class and interfaces. Methods, fields can be declared protected, however methods and fields in a interface cannot be declared protected.
+> What is the access scope of a protected method?
+A protected method can be accessed by the classes within the same package or by the subclasses of the class in any package.
+> What is the impact of declaring a method as final?
+A method declared as final can't be overridden. A sub-class can't have the same method signature with a different implementation.
+> I don't want my class to be inherited by any other class. What should i do?
+You should declared your class as final. But you can't define your class as final, if it is an abstract class. A class declared as final can't be extended by any other class.
+> How is final different from finally and finalize()?
+final is a modifier which can be applied to a class or a method or a variable. final class can't be inherited, final method can't be overridden and final variable can't be changed.
+
+finally is an exception handling code section which gets executed whether an exception is raised or not by the try block code segment.
+
+finalize() is a method of Object class which will be executed by the JVM just before garbage collecting object to give a final chance for resource releasing activity.
+
+> Abstract classes example:
+abstract class Animal {
+  public abstract void animalSound();
+  public void sleep() {
+    System.out.println("Zzz");
+  }
+}
+Animal myObj = new Animal(); // will generate an error
+
+// Subclass (inherit from Animal)
+class Pig extends Animal {
+  public void animalSound() {
+    // The body of animalSound() is provided here
+    System.out.println("The pig says: wee wee");
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    Pig myPig = new Pig(); // Create a Pig object
+    myPig.animalSound();
+    myPig.sleep();
+  }
+}
+> Can a Class extend more than one Class?
+Not possible. A Class can extend only one class but can implement any number of Interfaces.
+> What restrictions are placed on method overloading?
+Two methods may not have the same name and argument list but different return types.
+> What do you understand by private, protected and public?
+These are accessibility modifiers. Private is the most restrictive, while public is the least restrictive. There is no real difference between protected and the default type (also known as package protected) within the context of the same package, however the protected keyword allows visibility to a derived class in a different package.
+> What is the diffrence between inner class and nested class?
+When a class is defined within a scope od another class, then it becomes inner class. If the access modifier of the inner class is static, then it becomes nested class.
+> Can a method be overloaded based on different return type but same argument type ?
+No, because the methods can be called without using their return type in which case there is ambiquity for the compiler.

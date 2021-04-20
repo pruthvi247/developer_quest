@@ -99,6 +99,7 @@ Changing, Replacing, and Copying Text
 	2dd			deletes two lines from the cursor position
 	CTRL-R 			(keeping CTRL key pressed while hitting R) a few times to redo the commands (undo the undo's).
 	P			To put last deleted/copied(yy) line
+	nyy			Copy required text, n-> number of lines
 	r			Replace a character under the cursor
 	cw			to replace all the characters of the word from cursor position to end of the word
 	c$			same operation as above, it will replace all the words from the cursor position to end of the line
