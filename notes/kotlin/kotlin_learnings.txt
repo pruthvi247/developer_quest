@@ -1,0 +1,24 @@
+[source : udemy : lec 18 : kotlin for java developers]
+Variable declerations in Kotlin:
+> val -> final in java,Immutable
+ val number =25 // kotlin will take int
+ val num:Int // we are assigning data type , we can also do val num:Short = 25
+ num=15
+
+> var values are mutable
+>>  var num:Int
+    num=15
+    num = 1
+
+type aliases:
+
+> another name for existing data type
+>> public actual typealias StringBuilder = java.lang.StringBuilder (inbuilt type alias which is calling java string builder)
+
+> type aliases should be declared at the top of calss eg : typealias EmployeeSet = Set<Employee>
+> if you want to use type aliases out side the file we have to import it
+
+
+> == is for structure equality (equals method in java)
+> === checks for reference equality (both point to same address)
+

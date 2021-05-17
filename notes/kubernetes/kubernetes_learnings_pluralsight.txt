@@ -1,0 +1,73 @@
+kuber api-server: The job of the component is to accept commands that view or change the sate of the cluster, including launching pods
+
+> kubectl will talk to kube api server
+> kube-apiserver also authenticates incoming requests, determines whether they are authorized and valid, and manages admission control
+> Any change or query to cluster should be addressed to kube api server
+
+ETCD:
+> Data base to the kubernetes,Its job is to reliably store the state of the cluster.This includes all the cluster configuration data and more dynamic information,such as what nodes are part of the cluster, what pods should be running and where they shuld be running
+kube scheduler:
+> is reponsible for scheduling pods onto the nodes.To do that it eveluates the requiremnets of each individual pod and selects which node is most suitable.But it doesn't do the work of actually launching pods onto nodes.Another system of kube is responsible for launching pod.
+> kube scheduler knows the state of all nodes and obeys constraints that we define.(eg: you can set a constraint that certains pods can run only on nodes that has certain memory)
+
+Kube controller manager:
+> It continuously monitors the state of cluster through kube-apiserver,when ecer the current state of the cluster doesn't match the desired state, kube-controller-manager will attempt to make changes to achieve the desired state.Its called controller because many kubenetes objects are maintained by loops of code called controllers.Some kinds of controllers have system-level responsibilities eg: Node controllers job is to monitor and respond when a node is offline, kube-cloud-manager manages controllers that interact with underlying cloud proviers.
+
+Kubelet:
+> kubelet will be run on each node of the cluster.kubelet can be thought like a kubernetes agent on each node.when kube-api-server wants to start a pod on a node it connects to thata node's kubelet.kubelet uses the container runtime to start the pod and monitor its life cycle, including readiness and liveness probes and reports back to kube-apiserver.
+
+Kube proxy:
+> kube-proxy job is to maintain network connectivity among the pods in a cluster,it does so by using firewall and capabilities of IP tables,which are build into the linux kernel.
+
+masater node components -> kube-api-server, etcd,kube-scheduler,kube-controller-manager,kube-cloud-manager
+node components -> kubelet,kube-proxy
+
+There are different ways to create a deployment:
+
+1> Kubectl apply -f [deployment_yaml]
+
+2> kubectl run [Deployment_NAME]\
+	--image [Image]:[TAG] \
+	--replicas 3 \
+	--labels [KEY]=[VALUE] \
+	--port 8080 \
+	--generator deployement/apps.v1 \
+	--save-config
+
+
+> User kubectl to instpect your deployment $kubectl get deployment [deployment_name]
+
+> copy deplyment to a file:
+$ kubectl get deployment [deployment_name] -o yaml > filename.yaml
+
+> scaling a deplyment manually
+$ kubectl scale deployment [deployment_name] -replicas=5
+> Autoscakubg a deployment:
+$ kubectl autoscale deployment [deployment_name] --min==5 --max=15 --cpu-percent=75
+
+> few of many ways to updatae a deployment 
+1) $kubectl apply -f [updated_deployment_file]
+2) $kubectl edit deployment/[deployment_name]
+
+> Rolling back a deployment:
+$ kubectl rollout undo deployemnt [deployment_name]
+> roll out to specific version : kubectl rollout undo deployement [deployment_name] --to-revision=2
+> roll out to history when you are not sure of the changes we can inspect the rollout history using kube ctl rollout history command:
+$ kubectl rollout history deployment [deployment_name] --revision=2
+
+> when you edit a deployment, your action will normally triggers an automatic rollout. if you want to controll or pause a deployment 
+$kubectl rollout pause deployment [deployment_name]
+
+$ kubectl rollout resume deployment [deployment_name]
+
+$ kubectl rollout status deployment [deployment_name]
+
+$ kubectl delete deployment [deployment_name]
+
+Job controller:
+> Job controller will take care of finishing the job and updating the status even if there is a failure.
+> job controller schedules a pod for the job on a node,and job controller monitors the pod.
+> Two main ways to define a job 1) parallel 2) non-parallel
+
+
+

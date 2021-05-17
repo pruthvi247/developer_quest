@@ -520,5 +520,40 @@ extension CatExtension on CodeVerifyFlow {
 // use it like
 CodeVerifyFlow.SignUp.name
 
+[source: https://jelenaaa.medium.com/catching-exceptions-in-flutter-dart-e777d4050ff6]
+Catching exceptions:
 
+> When using try/catch there is a difference when using await or not in front of your async function. If you do not wait your async function to be finished, catch section will not be called when an exception is fired inside you async method.
+
+>> void main() {
+  try {
+    catchMeIfYouCan();
+  } catch (e) {
+    print(e.toString());
+  }
+}
+Future<void> catchMeIfYouCan() async {
+  await Future.delayed(Duration(seconds: 1), () {
+    throw Exception('did you?');
+  });
+}
+output: Uncaught Error: Exception: did you?
+> But, if you add await in front of the catchMeIfYouCan() method call:
+
+void main() async {
+  try {
+    await catchMeIfYouCan();
+  } catch (e) {
+    print(e.toString());
+  }
+}
+> exception will be caught
+
+If you do not wanna wait for your async function to finish in order to be able to proceed with your program execution, but still be able to catch errors inside it, you can use .catchError() callback like this:
+>>
+void main() {
+  catchMeIfYouCan().onError((e, _) {
+    print(e.toString());
+  });
+}
 
