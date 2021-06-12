@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: myapp-deployment
+  labels:
+    app: nginx
+    env: production
+spec:
+  type: NodePort
+  ports:
+   - targetPort: 80
+     port: 80
+     nodePort: 30008 ## mapping port of the node to pod
+  selector:
+   app: nginx ### labels form deployement or from pod
+   env: production
+
+## In this service definition file we are mapping machine port to pod port to access the url from external system
+## But in real time ther will not be only one pod running, we will have multiple pods running for high availability
+## In this case kubernetes service (same definition file) will take care of mapping the port to all the pods running in machine
+## Service will act as the loadbalancer as well, when service looks for the label it will find all the pods running with the label
+  ### so service will forward the request for all the pods based on random algorithm and session affinity =yes
+
+# what heppens if the pods are distributed across the nodes??
+## when we create a service it is applicable to all the nodes, that is we can access all the pods using same port
+## single pod on single node, multiple pods on single node, multiple pods on multiple nodes are taken care by service-definition.yaml
+## curl http://192.168.1.2:30008
+## curl http://192.168.1.3:30008
+## curl http://192.168.1.4:30008
+    
