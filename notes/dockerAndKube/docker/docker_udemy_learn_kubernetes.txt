@@ -1,0 +1,86 @@
+[source : Kubernetes for the Absolute Beginners - Hands-on -  udemy]
+
+> kubectl get pods -o wide -> give extra info about the pod
+
+section 6:
+
+api version table:
+
+Pod		V1
+Service 	V1
+Replica set 	apps/V1
+Deployment  	apps/v1
+
+Commands:
+> kubectl get pods
+> kubectl describe pod <pod-name>
+
+> kubectl run redis --image=redis123 --dry-run=client -0 yaml > pod.yaml -> It will create a pod yaml file which we can use to apply > kubectl apply -f pod.yaml
+
+Controllers:
+Replication Controller:
+
+> Repication controller and repliation set serve the same purpose but they are not same
+> Replica set is recomended
+>> kubectl get replicationcontroller
+>> kubectl create -f replicaset-definition.yml
+>> kubectl get replicaset
+
+> replica set is a process monitoring pods, labels can help in filtering when using replica set(match lables)
+
+>> kubectl replace -f replicaset-definition.yaml - >> we can update replica set in file and replace it or we can do it as below
+or
+>> kubectl edit replicaset <replicaset name>
+or
+>> kubectl scale --replicas=6 -f replicaset-definition.yaml
+or 
+>> kubectl scale -- replicas=6 replicaset myapp-replicaset (This is the metadata name given in file definition)
+
+To delete replica set : kubectl delete replicaset <replicaset name>
+
+>> kubectl get all -> gets all the objects create in cluster
+
+deployments:
+> kubectl get deployments
+> kubectl describe deployments
+> kubectl rollout status deployment/<name of deployment>
+> kubectl roolout history deployment/<name of deployment>
+
+Deployment strategy:
+> Rolling update(default)
+>> kubectl rollout undo deployment/<name of deployment
+Command summary:
+
+Create		kubectl create -f deployment-definition.yml
+get		kubectl get deployments
+Update		kubectl apply -f deployment-definition.yml
+		kubectl set image deployment/<name of deployment> nginix=nginx:1.9.1
+status		kubectl rollout status deployment/<name of deployment>
+		kubectl rollout history deployment/<name of deployment>
+Rollback 	kubectl rollout undo deployment/<name of deployment>
+delete		kubectl delete deployment <name of deployment>
+
+>> to record release version history - kubectl create -f deployment-defination.yml --record
+>> kubectl edit deployment <name of deployment> --record
+
+
+docker desktop get ip address In case you are not using minikube:
+>> kubectl get nodes -o yaml 
+
+sec -8:
+
+
+service types:
+> NodePort
+> ClusterIP
+> LoadBalancer
+
+NodePort:
+> nodeport is the port of the machine pod is running
+> pod (target port and ip) -> service (port and ip) -> vm(nodeport and ip)
+
+
+
+
+
+
