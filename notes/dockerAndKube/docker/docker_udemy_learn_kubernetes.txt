@@ -80,6 +80,145 @@ NodePort:
 > pod (target port and ip) -> service (port and ip) -> vm(nodeport and ip)
 
 
+>> kubectl get ep -> will fetch end points
+or
+>> kubectl describe svc <service name> -> will give all details of service along with endpoints
+
+Docker commands:
+
+docker run -d --name=<naming container> -p 5000:80 --link <property name used in app>:<property related container name> <image name>
+
+|-> in the above command if an application is dependent on redis/db any other container , we can link the container to the application container with link option, links concepts are depricated and may be remove in future, we have advanced ways to link containers
+
+[Source: https://stackoverflow.com/questions/41509439/whats-the-difference-between-clusterip-nodeport-and-loadbalancer-service-types]
+clusterIP : IP accessible inside cluster (across nodes within d cluster).
+nodeA : pod1 => clusterIP1, pod2 => clusterIP2
+nodeB : pod3 => clusterIP3.
+pod3 can talk to pod1 via their clusterIP network.
+
+nodeport : to make pods accessible from outside the cluster via nodeIP:nodeport, it will create/keep clusterIP above as its clusterIP network.
+nodeA => nodeIPA : nodeportX
+nodeB => nodeIPB : nodeportX
+you might access service on pod1 either via nodeIPA:nodeportX OR nodeIPB:nodeportX. Either way will work because kube-proxy (which is installed in each node) will receive your request and distribute it [redirect it(iptables term)] across nodes using clusterIP network.
+
+Load balancer
+basically just putting LB in front, so that inbound traffic is distributed to nodeIPA:nodeportX and nodeIPB:nodeportX then continue with the process flow number 2 above.:w
+
+
+Kubectl format output:
+> The default output format for all kubectl commands is human readable plain -text format
+
+>> kubectl <command> <type> <name> -o <output_format>
+
+>> kubectl create namespace test-123 00dry-run -o json
+>> kubectl get pods -o json
+
+> formats supported: json,name,wide,yaml
+
+
+
+Kubesystem namespace:
+
+> 'kube-system' is the name space created by kuberentes for its pods and for its internal purpose like networking..
+
+> 'kube-public' this is where resources made available to all users are created
+
+Change default name space :
+
+>> kubectl config set-context $(kubectl config current context) --namespace=<your name space>
+
+>> kubectl get pods --all-namespaces -> to list spots of all pods
+
+> --dry-run=client -> this will not create the resource, instead tell you whether the rewource can be created
+> -o yaml -> will out put the resource definition in yaml format on the screen
+
+>> kubectl run nginx --image=nginx --dry-run=client -o yaml
+>> kubectl create deployment --image=nginx nginx --dry-run -o yaml
+>> kubectl create deployment nginx --image=nginx --replicas=4
+>> kubectl scale deployment ngnix --replicas=4
+
+Save definition to yaml:
+
+> kubectl create deployment nginx --image=nginx --dry-run=client -o yaml > nginx-deployment.yaml
+[source : https://acloud.guru/forums/kubernetes-deep-dive/discussion/-LnP3BE6elqHLTtzm5OS/What%20is%20the%20difference%20between%20kubectl%20run%20and%20kubectl%20create%3F#:~:text=kubectl%20create%20is%20used%20to,pods%20as%20per%20version%201.18.]
+> kubectl create is used to create variety of objects other than pods and kubectl run is used to create only pods as per version 1.1.8
+
+The fundamental question is how to apply all of the K8s objects into the k8s cluster. There are several ways to do this job.
+
+Using Generators (Run, Expose)
+Using Imperative way (Create)
+Using Declarative way (Apply)
+All of the above ways have a different purpose and simplicity. For instance, If you want to check quickly whether the container is working as you desired then you might use Generators .
+
+If you want to version control the k8s object then it's better to use declarative way which helps us to determine the accuracy of data in k8s objects.
+
+[source : https://stackoverflow.com/questions/47369351/kubectl-apply-vs-kubectl-create]
+
+Imperative Management:
+kubectl create is what we call Imperative Management. On this approach you tell the Kubernetes API what you want to create, replace or delete, not how you want your K8s cluster world to look like.
+
+Declarative Management:
+kubectl apply is part of the Declarative Management approach, where changes that you may have applied to a live object (i.e. through scale) are "maintained" even if you apply other changes to the object.
+
+## These are imperative commands :
+kubectl run = kubectl create deployment
+## These are imperative object config:
+kubectl create -f your-object-config.yaml
+
+kubectl delete -f your-object-config.yaml
+
+kubectl replace -f your-object-config.yaml
+##These are declarative object config
+kubectl diff -f configs/
+
+kubectl apply -f configs/
+
+[Source : https://medium.com/@atharvac.cloud/kubernetes-deep-dive-part-3-generators-for-quick-poc-6cac698f08eb]
+Imperative approach:
+
+> By default kubectl run creates k8s deployment object, we can also create other objects such as pod,job and cronjob.The kind of object to create can be defined using generators
+
+> As the name suggests, Generators are used to define what object to generate. You can use — generator option in kubectl run to create different types of objects
+
+>> kubectl run nginx --image=nginx:latest --generator=run-pod/v1 --limts="cpu=200m,memory=512Mi" 
+
+> You don’t need to specify generators every time in kubectl run. Instead you can just specify restart policy. K8s will make an intelligent call to determine which object to create.
+>> kubectl run buysbox --image=busybox:latest --rm -it --restart=Never
+pod "buysbox" created
+
+List of shorthands:
+a] Deployment: Don’t specify the flag
+b] Pod : — restart=Never
+c] Job: — restart=OnFailure
+c] CronJob: — restart=OnFailure — schedule=<some cron expression>
+
+> K8s provides a way to convert kubectl run command configuration into yaml file.It can be done using two simple flags. — dry-run -o yaml.
+>> kubectl run buysbox --image=busybox:latest --rm -it --restart=Never --dry-run -o yaml > busybox.yaml
+
+> The kubectl create command creates a new resource. So, if the command is run again it will throw an error as resource names should be unique in a namespace
+> The kubectl apply command applies the configuration to a resource. If the resource is not there then it will be created. The kubectl apply command can be run the second time as it simply applies the configuration as shown below
+
+#####
+If you simply want to test your command, use the --dry-run=client option.This will not create the resource,instead,tell you whether the resource can be created and if your command is right
+
+-o yaml : This will output the resource definition in yaml format on screen
+
+Imperative commands examples:
+
+Create an Nginx pod:
+>> kubectl run nginx --image=nginx
+
+Generate pod manifest file:
+>> kubectl run nginx --image=nginx --dry-run=client -o yaml (pod will not be created, it will create a file)
+
+Deployment:
+Create a deployment:
+>> kubectl create deployment --image=nginx nginx
+Generate deployment yaml:
+>> kubectl create deployment --image=nginx nginx --dry-run -o yaml
+
+Another way to do this to save the yaml definition to a file
+>> kubectl create deployment nginx --image=nginx--dry-run=client -o yaml > nginx-deployment.yaml
 
 
 

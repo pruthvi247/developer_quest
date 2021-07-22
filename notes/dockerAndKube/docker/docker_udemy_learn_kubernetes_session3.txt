@@ -1,0 +1,396 @@
+[source : certified kubernetes application by mumshad mannambeth]
+
+Docker:
+
+> docker ps -a -> list all containers including the ones that is stopped
+> cmd -> command that is executed when container is ready
+>> docker run <image> <command> -> command passed while running will over ride the cmd present in image file
+
+Two ways of specifying a cmd:
+
+> CMD command param1
+> CMD ["command","param1"]
+
+FROM Ubuntu
+CMD sleep 10
+
+passing arguments from command while running:
+
+> entry point will take inputs from command line
+eg :
+dockerfile:
+FROM Ubuntu
+
+ENTRYPOINT["sleep"]
+
+>> docker run ubuntu-sleeper 10 -> sleep 10 command will be executed after container startup
+we can not pass arguments if we are using CMD, when using CMD, command line arguments will be replaced completely,where as in entry point command line params will get appended.
+
+How to pass default option to entry point:
+
+FROM Ubuntu
+
+ENTRYPOINT["sleep"]
+CMD["5"]
+
+>> docker run ubuntu-sleeper 
+Command at startup : sleep 5 -> will be executed at time of startup
+
+What if we want to over ride the entry point command:
+
+>> docker run --entrypoint <entrypoint command >ubuntu-sleeper 10
+-> command at startup : <entrypoint command> 10
+
+Commands and arguments :
+> This session we will discuss on passing arguments to docker file from k8s pod file
+
+command : docker run --name ubuntu-sleeper ubuntu-sleeper 10
+
+pod-definition.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper-pod
+spec:
+  template:
+    # This is the pod template
+    spec:
+      containers:
+      - name: ubuntu-sleeper
+        image: ubuntu-sleeper
+	args: ["10"]
+        command: ["<entrypoint command>"]
+
+Note: "args" property in pod file will replace cmd command in docker file
+      "command" property in pod file will replace entry point command in docker file
+
+Note: We can not edit specifications of an existing POD other than the below
+> spec.containers[*].image
+> spec.initContainers[*].image
+> spec.activeDeadlineSeconds
+> spec.tolerations
+ example of properties we can not edit
+> environment variables,service accounts,resource limits of a running pod
+
+Setting env variable in K8s:
+
+>> docker run -e APP_COLOR=Pink simple-webapp-color
+
+pod-definition.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-webapp-color
+spec:
+  containers:
+  - name: simple-webapp-color
+    image: simple-webapp-color
+    env:
+    - name: App_color
+      value: pink
+Different ways of setting env variables in kubernetes:
+Plain Key Value:
+env:
+    - name: App_color
+      value: pink
+
+ConfigMap:
+env:
+    - name: App_color
+      valueFrom:
+	  configMapKeyRef:
+
+Secrets:
+env:
+    - name: App_color
+      valueFrom:
+	  secretKeyRef:
+
+
+ConfigMaps:
+> when a pod is created, we inject config map into the pod so the key-value pair are availbale as env varibales for the application hosted inside the container
+Two phases of config map:
+> create a config map
+> inject into the pod
+Two ways of creating config map:
+> imperative way -> kubectl create configmap
+>> kubect create configmap <config-name> --from-literal=<config key>=<config-value>
+>> kubectl crete configmap app-config --from-literal=App_color=blue --from-literalA=App_mod=prod
+>> kubect create configmap <config-name> --from-file=<path to file>
+>> kubect create configmap <config-name> --from-file=app_config.properties
+
+> declerative way -> kubectl crete -f 
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+
+  # file-like keys
+  game.properties: |
+    enemy.types=aliens,monsters
+    player.maximum-lives=5    
+  user-interface.properties: |
+    color.good=purple
+    color.bad=yellow
+
+configmaps in pods:
+
+pod-definition.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-webapp-color
+spec:
+  containers:
+  - name: simple-webapp-color
+    image: simple-webapp-color
+    envFrom:
+	- configMapRef:
+		name: app-config
+
+config-map.yaml
+apiVersion: v1
+kind: configMap
+metadata:
+   name:app-cofing ### same name is given in pod definition file
+data:
+   App_color:blue
+   App_mode: prod
+
+Specifying values using volumes:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dapi-test-pod
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "ls /etc/config/" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        # Provide the name of the ConfigMap containing the files you want
+        # to add to the container
+        name: special-config
+
+
+
+>> kubectl explain pods --recursive | grep envFrom 
+
+Secrets:
+> create secret
+> inject Secret
+
+Two ways:
+impereative and declerative
+
+imperative:
+
+> kubectl create secret generic <secret-name> --from-literal=<key>=<value> --from-literal=<key>=<value>
+
+Note: almost sysntax and properties of secrets and config maps are same,
+> when specifying values to secrets  we have to give values in base64 format - echo -n "password" | base64
+
+How kube handles secrets:
+> A secret is only sent to a node if a pod on that node requires it
+> Kubelet stores the secret into a tmps so that the secret is not written to disk storage
+> once the pod that depends on the secret is deleted,kubelet will delete its local copy of secret data as well
+> having said that there are better ways of handling sensitive data like passwords in kubernets,such as using tools like helm secrets,Hashicrop vault.
+
+Docker security:
+
+> if we dont want to run docker image as root, we can specify user id
+>> docker run --user=1000 ubuntu
+
+> we can also specify user in docker image
+
+FROM ubuntu
+
+USER 1000
+
+> Docker leverages linux capability to control user permissions,if we want extra permission to the user specified in image we can give access
+>> docker run --cap-add KILL ubuntu -> user will have access to kill process on host machine from docker
+
+Kubernetes security context:
+> we can have sercurity at container or at pod level, if we configure it at pod level, same sucurity will be applicable to all the containers in pod
+> If we configure both in container and pod, settings of container will override the settings of pod
+
+>> setting security at pod level
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security-context-demo
+spec:
+  securityContext:
+    runAsUser: 1000 <-
+    runAsGroup: 3000<-
+    fsGroup: 2000
+  containers:
+  - name: sec-ctx-demo
+    image: busybox
+    command: [ "sh", "-c", "sleep 1h" ]
+    securityContext:
+      allowPrivilegeEscalation: false
+>> setting security at container level (move security context form uder spec to under containers section)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security-context-demo
+spec:
+  containers:
+  - name: sec-ctx-demo
+    image: busybox
+    command: [ "sh", "-c", "sleep 1h" ]
+    securityContext:
+      securityContext:
+      runAsUser: 1000
+      runAsGroup: 3000
+      fsGroup: 2000
+      capabilities:
+          add: ["KILL"]
+##Note: Capabilites are only supported at container level and not at the pod level
+
+
+Service Accounts:
+
+>> kubectl create serviceaccount <service-account-name>
+>> kubectl get serviceaccount
+>> kubectl describe serviceaccount <service-account-name>
+>> kubectl describe secret <service-account-token-kbbdm>
+
+Taints and toleratoins:
+
+>> kubectl taint nodes node-name key=value:taint-effect
+>> kubectl taint nodes node1 app=blue:NoSchedule
+3 types of taint effects:
+> Noschedule
+> preferNoSchedule
+> NoExecute
+
+> spec:
+    tolerations:
+    - key:"app"
+      operator:"Equal"
+      value:"blue"
+      effect:"Noschedule"
+
+> kubectl describe node <node-name> | grep -i taint -> to get all the taints of a node
+
+How to remove a taint of a node:
+> add "-" at the end 
+
+>> kubectl taint node master node-role.kubernetes.io/master:NoSchedule-
+
+Node selectors:
+
+Labling nodes:
+> kubectl label nodes <node-name> <label-key>=<label-value>
+
+Node Affinity:
+> In note selector we can only give one selection criteria, to over come this limitation we have node affinity,where we can customize the node affinity conditions.
+
+Get labels of node:
+>> kubectl get nodes node01 --show-labels
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,117 @@
+[source: https://www.udemy.com/course/certified-kubernetes-application-developer/]
+
+Session 4:
+
+Multi container:
+Three patters in multi container concept:
+> sidecar pattern
+> Adapter pattern
+> Ambassador pattern
+
+Section 5:
+
+observability - readiness and liveness
+
+Readiness probe:
+>
+readinessprobe:
+	httpGet:
+		path: /api/ready
+		port: 8080
+	initialDelaySeconds:10
+	periodSeconds: 5
+	failuerThreshold: 8
+>
+readinessprobe:
+	tcpSocket:
+		port:3306
+>
+readinessprobe:
+	exec:
+	   command:
+		- cat
+		- /app/is_ready
+Liveness probe:
+
+> syntax is same as readiness probe, we just have to put "livenessProbe" instead of "readinessProbe"
+
+Container Logging:
+
+> run docker in detach mode : docker run -d <image-name>
+> docker logs -f <continer_id>
+> kubectl logs -f <pod id> -> if only one container
+> kubectl logs -f <pod-id> <continer-name> -> if there are multiple containers and we want to see logs of particular container
+
+To list the container in pod:
+
+>> kubectl logs <pod-id> -c
+
+Monitoring kubernetes Clusters:
+> metric server - in memory server to collect metrics of kubernetes
+> cAdvisor running inside kubectl,is responsible for retreiving performance metrics of pod and exposing them through metrics api to metric server
+> After installing metric server 
+>> kubectl top node -> will give the memory consumption of all nodes
+>> kubectl top pod -> to get perf metrics of pod
+
+
+session 6 : POD Design
+
+> kubectl get pods --selector app=App1
+> kubectl get pods --show-labels
+> kubectl get pods -l env=dev
+> kubectl get pods -l env=dev --no-headers | wc -l
+> kubectl get all -l env=prod --no-headers -> to get all objects not just pods with particular label
+
+Rollout and versioning
+---------------------
+> deployment creates a rollout, every deployment creates a rivision where we can rollback if needed
+>> kubectl rollout status deployment/myapp-deployment
+
+To get the history of deployments:
+>> kubectl rollout history deployment/myapp-deployment
+
+Deployment strategy:
+> rolling update-(default and preferable)
+> recreate
+
+Rollback:
+> kubectl rollout undo <deployment-name>
+> when we upgrade a deployment,kubernets will create a new replica set under the hood and kill pods in old replica set
+>> kubectl get replicasets -> we can track the roll back and upgrades
+
+summarize commands:
+
+Create	- kubectl create -f deployment deployment-definition.yaml
+get 	- kuectl get deployments
+update	- kubectl apply -f deployment-definition.yaml
+status	- kubectl rollout status deployment/<deployment-name>
+	- kubectl rollout history deployment/<deployment-name>
+rollback- kubectl rollout undo deployment/<deployment-name>
+
+Updates and rollback in deployements:
+-------------------------------
+>> kuectl edit deployments. <deployment-name> --record
+>> kubectl rollout history deployment <deployment-name>
+>> kubectl rollout history deployment <deployment-name> --revision=3
+
+Jobs in kubernetes:
+-----------------
+> cron jobs can be scheduled
+> in jobs definition we have completion parameter which is used to bring the pods and run those many pods,if completion value is 3 then kubenetes will start pods untill it reaches 3 succuessful jobs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
