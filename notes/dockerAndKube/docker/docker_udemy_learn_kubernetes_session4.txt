@@ -100,6 +100,193 @@ Jobs in kubernetes:
 > in jobs definition we have completion parameter which is used to bring the pods and run those many pods,if completion value is 3 then kubenetes will start pods untill it reaches 3 succuessful jobs
 
 
+Session 7 - Services and Networking
+[good read : https://www.bmc.com/blogs/kubernetes-services]
+> kubernetes service is an object just like pods, replica set or Deployments that we work with.One of its use case is to listen to a port on the node and forward request on that port to a pod on the node running web app.This type of servie is known as node port service.There are other kinds of services as well
+
+Types of services:
+1> Node port service
+2> ClusterIp - In this case the service creates a virtual IP inside the cluster to enable communication between different services such as a set of front-end to back-end servers
+3> LoadBalancer - It provisions a load balancer for our application in suported cloud provider
+
+>>>
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+    type: NodePort
+    app: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
+      nodePort: 30008
+  selector:
+      app:myapp
+      type:mytype
+
+>> kubectl create -f service-definition.yml
+>> kubectl get svc or kubectl get services
+
+Services- clusterIp
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+    type: NodePort
+    app: MyApp
+  ports:
+    - port: 80
+      targetPort: 9376
+  selector:
+      app:myapp
+      type:mytype
+
+There are two ways to create service:
+1.Create a yaml manifest for a service
+2.Use the "kubectl expose" command
+
+>> kubectl expose deployment simple-web-deployment --name=my-web-service --target-port=8080 --type=NodePort --port=8080 --dry-run=client -o yaml > svc.yml
+
+Kubectl expose:
+	Takes a replication controller,service,replica set or pod and expose it as a new kubernetes service.Expose command allows users to create the service from the command line directly
+
+Ingress networking:
+
+[good read: https://thenewstack.io/why-do-you-need-istio-when-you-already-have-kubernetes/,https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0]
+
+> kubectl get deployments.apps --all-namespaces
+> kubectl get ingress --all-namespaces
+> kubectl -n <name-space> describe ingress <ingress name>
+
+> Why ingress when we have services ?? we can redirect traffic based on path using ingress
+> Ingress can only be used to redirect traffic between kubernetes pods only, where as Istio is used to redirect traffic between the services outside the kubernetes, like between DB and kube services.
+
+Network policies:
+
+> to controll certain apps to connected to authorised apps
+> ingress - input traffic, egress - outgoing traffic
+ 
+section8:
+State Persistence:
+
+Persistent volume :
+Persistent volume claims, normal volume mounting is at pod level, if there are many pods then user have to configure them in each pod to mount, Peristet volume is helpful when trying to manage volume in a centralized way
+
+Modes in PV :
+> ReadOnlyMany
+> ReadWriteOnce
+> ReadWriteMany
+>>>> pv-definition.yml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0003
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /tmp
+    server: 172.17.0.2
+
+> persistence volumes and persistent volume claims are two different objects in kubernetes.A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes. A PersistentVolumeClaim (PVC) is a request for storage by a user. It is similar to a Pod. Pods consume node resources and PVCs consume PV resources.
+
+>>> pvc-definition.yml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 8Gi
+  storageClassName: slow
+  selector:
+    matchLabels:
+      release: "stable"
+    matchExpressions:
+      - {key: environment, operator: In, values: [dev]}
+
+Binding of pv and pvc is based on:
+> Sufficient capacity
+> Access Modes
+> Volume Modes
+> Storage Class
+> Selector
+>> kubectl get persistentvolumeclaim
+>> kubectl delete persistentvolumeclaim myclaim
+
+> Once you create a PVC use it in a pod definition file by specifying the pvc claim name under persistentVolumClaim Sectionin the volume section like this:
+
+>>> pod-definition.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+    - name: myfrontend
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: myclaim
+
+
+> kubectl get pod webapp -o yaml > pod-def.yml
+
+To take help from kubernetes:
+> kubectl explain persistentvolume --recursive
+
+Storage classes:
+> With storage classes, you can define a provisional such as google storage that can automatically provision storage on google cloud and attach that to parts when a claim is made.This is called dynamic provision of volumes.If we use storage class we need not create PV as storage class takes care of creating persistent volumes (PV)
+
+Stateful Sets:
+
+> with deployements we can not gaurantee the order of pods starting, all pods may come up at the same time. With stateful sets, pods are created in sequential order afterh the first part is deployed,it must be in a running an dready state before the next part is deployed.Stateful sets assign a unique original index to each part, a number starting from zero for the first and increase by 1, in deployments pods get random names and after restart pod name changes
+
+Headless service:
+> A headless service is creaed like a normal service, but it does not have an app of its own, like a cluster IP for a normal service, it does not perform any load balancing, All it does is create a DNS entries for each pod using the port name and a subdomain so that external services can access it, eg: if you want to connect to only mysql master but not slaves, creat mysql pods using stateful sets and assign a headless service, so that application can connect to mysql master.
+
+
+Storate in stateful:
+
+> PV and PVC works fine for pods.What about deployments and statefulsets ??
+eg : if you createa mysql set up an give pvc, all master and slave nodes(pods) use the same mount
+What if you want each pod to use its own volume ?? each pod needs its own local storage
+
+> to achieve this we add volumeClaimTemplate section in stteful set definition
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
