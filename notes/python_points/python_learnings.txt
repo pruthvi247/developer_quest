@@ -2664,4 +2664,194 @@ except (URLError, ValueError):
     client_obj.remove_url(url)
 except SocketTimeout:
     client_obj.handle_url_timeout(url)
+[source : https://medium.com/swlh/understand-pythons-iterators-and-iterables-and-create-custom-iterators-633939eed3e7]
+
+> Iterables are objects that can be iterated in iterations.In python,many basic data structures like strings and list are iterables,
+> iterators are objects that produce a data value at a time using the __next__() method.
+>>>
+>>> number_iterator = iter([1, 2, 3])
+>>> type(number_iterator)
+<class 'list_iterator'>
+>>> next(number_iterator)
+1
+>>> next(number_iterator)
+2
+>>> next(number_iterator)
+3
+
+Relationships between iterators and iterables:
+> one thing to note is that iterators are iterables, and thus using the iterator in for loop will still work.However, the opposite is not always true. for exampple , iterables like strings and list are not iterators susch that they dont have the next() method
+
+>>> 'abc'.__next__()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'str' object has no attribute '__next__'
+
+>>> [1, 2, 3].__next__()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'list' object has no attribute '__next__'
+
+
+From the below example, we use the same iterable (i.e., a list) in two for loops without any errors. By contrast, the iterator can be used just once, as completing the first for loop has already made the iterator iterate all elements such that no more elements to be iterated.
+
+# use iterables in for-loops for multiple times
+>>> number_iterable = [1, 2, 3]
+>>> for i in number_iterable:
+...     print(i)
+... 
+1
+2
+3
+>>> for i in number_iterable:
+...     print(i)
+... 
+1
+2
+3
+# use iterators in for-loops for multiple times
+>>> number_iterator = iter([1, 2, 3])
+>>> for i in number_iterator:
+...     print(i)
+... 
+1
+2
+3
+>>> for i in number_iterator:
+...     print(i)
+...
+# nothing is printed
+
+Creating custom iterator:
+
+class PerfectSquare:
+    def __init__(self, limit):
+        self.limit = limit
+        self.n = 1
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.n < self.limit:
+            square = self.n * self.n
+            self.n += 1
+            return square
+        else:
+            raise StopIteration
+            
+perfect_square_iterator = iter(PerfectSquare(4))
+print(perfect_square_iterator.__next__())
+# Print 1
+print(perfect_square_iterator.__next__())
+# Print 4
+print(perfect_square_iterator.__next__())
+# Print 9
+print(perfect_square_iterator.__next__())
+# Raise StopIteration
+
+class PerfectSquare:
+    def __init__(self, limit):
+        self.limit = limit
+        self.n = 1
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.n < self.limit:
+            square = self.n * self.n
+            self.n += 1
+            return square
+        else:
+            raise StopIteration
+            
+perfect_square_iterator = iter(PerfectSquare(4))
+print(perfect_square_iterator.__next__())
+# Print 1
+print(perfect_square_iterator.__next__())
+# Print 4
+print(perfect_square_iterator.__next__())
+# Print 9
+print(perfect_square_iterator.__next__())
+# Raise StopIteration
+
+[source: https://betterprogramming.pub/the-5-most-useful-introspection-functions-in-python-7084e3bf9f01]
+
+hasattr():
+
+Sometimes, before we access an object’s attribute, we may want to check if it has the attribute. We don’t want to see the following error.
+
+>>> class Fruit:
+...     pass
+... 
+>>> Fruit().tasty
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'Fruit' object has no attribute 'tasty'
+To prevent that from happening, we can check if the object has such an attribute before we access it by using the hasattr() function.
+>>> class Fruit:
+...     tasty = True
+... 
+>>> fruit = Fruit()
+>>> if hasattr(fruit, 'tasty'):
+...     print('The fruit is tasty')
+... else:
+...     print('The fruit is not tasty')
+... 
+The fruit is tasty
+
+> Notice it or not, but we can actually use the dir() function to achieve the same result.
+If you recall, the dir() function returns the available attributes and methods to a given object, such that we can directly compare if an attribute is one of the returned list’s items. The updated code is shown below with the modified portion in bold.
+>>> class Fruit:
+...     tasty = True
+... 
+>>> fruit = Fruit()
+>>> if 'tasty' in dir(fruit):
+...     print('The fruit is tasty')
+... else:
+...     print('The fruit is not tasty')
+... 
+The fruit is tasty
+
+Iterator vs Generator:
+[Source: https://stackoverflow.com/questions/2776829/difference-between-pythons-generators-and-iterators]
+
+iterator is a more general concept: any object whose class has a __next__ method (next in Python 2) and an __iter__ method that does return self.
+
+Every generator is an iterator, but not vice versa. A generator is built by calling a function that has one or more yield expressions (yield statements, in Python 2.5 and earlier), and is an object that meets the previous paragraph's definition of an iterator.
+
+You may want to use a custom iterator, rather than a generator, when you need a class with somewhat complex state-maintaining behavior, or want to expose other methods besides __next__ (and __iter__ and __init__). Most often, a generator (sometimes, for sufficiently simple needs, a generator expression) is sufficient, and it's simpler to code because state maintenance (within reasonable limits) is basically "done for you" by the frame getting suspended and resumed.
+
+For example, a generator such as:
+
+def squares(start, stop):
+    for i in range(start, stop):
+        yield i * i
+
+generator = squares(a, b)
+or the equivalent generator expression (genexp)
+
+generator = (i*i for i in range(a, b))
+would take more code to build as a custom iterator:
+
+class Squares(object):
+    def __init__(self, start, stop):
+       self.start = start
+       self.stop = stop
+    def __iter__(self): return self
+    def __next__(self): # next in Python 2
+       if self.start >= self.stop:
+           raise StopIteration
+       current = self.start * self.start
+       self.start += 1
+       return current
+
+iterator = Squares(a, b)
+But, of course, with class Squares you could easily offer extra methods, i.e.
+
+    def current(self):
+       return self.start
+
+
 
