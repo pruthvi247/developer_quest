@@ -1,0 +1,2 @@
+[pluralsight: building end to end machine learning work flows with kubeflow - abhishek kumar]
+

@@ -19,4 +19,9 @@ Another crazy thing you can do with Flutter Outline is if you have multiple chil
 
 > shortcut help page : Ctrl+Shift+A (WE HAVE to type the short cut we nee eg: extract widget)
 
+[source : https://alirizareisoglu.medium.com/vscode-tips-tricks-for-flutter-projects-7263782bc080]
 
+Code tree structure:
+
+To implement, simply go to VSCode settings and search for
+Dart:Preview Flutter Ui Guides

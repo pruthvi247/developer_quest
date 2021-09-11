@@ -1,0 +1,53 @@
+[source: https://betterprogramming.pub/15-useful-vscode-shortcuts-to-boost-your-productivity-415de3cb1910]
+
+Open the palette to search for a file:
+> cmd +P
+
+Add cursors to all matching selections:
+> CMD + SHIFT +L
+
+Add cursor to next matching selection:
+> CMD +D
+
+Undo last cursor operation:
+> CMD + U
+
+Select current line:
+> CMD + L
+
+Go to a specific Line:
+> CTRL +G
+
+Close all open editor tabs
+> CMD +K+W
+
+Toggle block comment:
+> SHIFT + OPTION + A
+
+Fold code block:
+> CMD + OPTION + [
+unfold:
+> CMD + OPTION + ]
+
+Move line up or down:
+> OPTIION + UP/DOWN
+
+open integrated terminal:'
+> CTRL + `
+
+Split editor view:
+CMD +\
+
+Format document:
+> SHIFT + OPTION+ F
+
+Duplicate selection up or down
+> OPTION + SHIFT +UP/DOWN
+
+Toggle side bar:
+> CMD + B
+
+
+
+
+

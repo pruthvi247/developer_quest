@@ -1,0 +1,1194 @@
+[source : https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/]
+[source : https://github.com/kodekloudhub/certified-kubernetes-administrator-course]
+
+how to set a prticular name space as default 
+> kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+> kubectl get pods --all-namespaces
+
+Service types in k8's
+
+> Nodeport
+> ClusterIP
+> LoadBalancer
+
+[source: https://rtfm.co.ua/en/kubernetes-clusterip-vs-nodeport-vs-loadbalancer-services-and-ingress-an-overview-with-examples/]
+
+ClusterIP: the default type, will create a Service resource with an IP address from the cluster’s pool, such a Service will be available from within the cluster only (or with kube-proxy)
+
+NodePort: will open a TCP port on each WorkerNode EС2, “behind it” automatically will create a ClusterIP Service and will route traffic from this TCP port on an ЕС2 to this ClusterIP – such a service will be accessible from the world (obviously, if an EC2 has a public IP), or within a VPC
+
+LoadBalancer: will create an   external Load Balancer (AWS Classic LB), “behind it” automatically will create a NodePort, then ClusterIP and in this way will route traffic from the Load Balancer to a pod in a cluster
+ExternalName: something like a DNS-proxy – in response to such a Service will return a record taken via CNAME of the record specified in the externalName
+
+So, the ClusterIP:
+
+will provide access to an application within a Kubernetes cluster but without access from the world
+will use an IP from the cluster’s IP-pool and will be accessible via a DNS-name in the cluster’s scope,
+
+NodePort
+Now, let’s take a closer look an the NodePort Service type.
+
+With this type, Kubernetes will open a TCP port on every WorkerNode and then via kube-proxy working on all nodes will proxy requests from this TCP port to a pod on this node.
+
+So, the NodePort type is:
+
+tied to a specific host like ЕС2
+if the host isn’t available from the world – then such a Service will not provide external access to pods
+will use an IP from a provider’s pool, for example, AWS VPC CIDR
+will provide access to pods only on the same Worker Node
+
+LoadBalancer
+The most used Service type.
+
+In case of AWS – will create an AWS Load Balancer, by default Classic type, which will proxy traffic to all ЕС2 instances of the TargetGroup tied to this Load Balancer, and then via  NodePort Service – to all the pods.
+
+So, the LoadBalancer Service type:
+
+will provide external access to pods
+will provide a basic load-balancing to pods on different EC2
+will give an ability to terminate SSL/TLS sessions
+doesn’t support level-7 routing
+
+ExternalName
+Another Service type is the ExternalName, which will redirect a request to a domain specified in its externalName parameter:
+
+
+Ingress
+Actually, the Ingress isn’t a dedicated Service – it just describes a set of rules for the Kubernetes Ingress Controller to create a Load Balancer, its Listeners, and routing rules for them.
+
+
+> A service does not link straight to pods.when kubernetes processes a service description, and if the service selector matches a pod label, kubernetes will automatically create an endpoints object with the same name as the service, which stores the pod's IP address and port.Consequently, when service receives a request,its proxy will redirect it to one of those IP's and ports
+
+Imperative commands:
+
+create objects
+> kubectl run --image=nginx nginx
+> kubectl create deployment --image=ngnix ngnix
+> kubectl expose deployment nginx --port 80
+> kubectl create -f nginx.yaml
+update objects
+> kubectl edit deployment nginx
+> kubectl scale deployment nginx --replicas=5
+> kubectl set image deployment nginx nginx=nginx:1.18
+> kubectl replace -f nginx.yaml
+> kubectl delete -f nginx.yaml
+> kubectl replace --force -f ng.yaml
+
+Declarative:
+
+> kubectl apply -f ng-def.yaml
+
+root@controlplane:~# kubectl run nginx-pod --image=nginx:alpine
+pod/nginx-pod created
+root@controlplane:~# kubectl run redis  --image=redis:alpine --labels=tier=db
+pod/redis created
+root@controlplane:~# kubectl expose pod redis --name=redis-service --port=6379 --target-port=6379
+service/redis-service exposed
+root@controlplane:~# kubectl create deployment webapp --image=kodekloud/webapp-color --replicas=3
+deployment.apps/webapp created
+kubectl run httpd --image=httpd:alpine --port=80 --expose
+
+> when we execute apply command in kubectl it validates current local file, last applied configuration, live object cofiguration
+and takes action accordingly
+
+> kubectl create or run command will not store lastapplied configuraion only apply command store last applied configuration
+> kubectl get pods --show-labels 
+
+Extract the pod definition in yaml 
+> kubectl get pod <pod-name> -o yaml > pod-def.yaml
+
+> 
+A DaemonSet ensures that all (or some) Nodes run a copy of a Pod. As nodes are added to the cluster, Pods are added to them. As nodes are removed from the cluster, those Pods are garbage collected. Deleting a DaemonSet will clean up the Pods it created.
+>
+> kubectl get daemonsets
+
+> kubectl describe daemonsets <daemonset commands>
+
+
+
+
+
+
+
+> kubectl get pods -l  env=dev --no-headers | wc -l
+
+
+
+Taint and tolerance:
+
+Anology : taint is mosquito reppalent, tolerance is a mosquito is tolerant enough to approach a tainter pod
+
+Three kinds of taints:
+> No schedule
+> PreferNoSchedule
+> NoExecute
+
+
+> kubectl taint nodes node-name key=value:tain-effect
+> kubectl taint nodes node1 app=blue:NoSchedule
+
+Tolerations to pod example for above taint:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  tolerations:
+  - key: "app"
+    operator: "Equal"
+    value: "blue"
+    effect: "NoSchedule"
+
+> Note: Taints and tolerations doesnt tell a pod to go to particular node, instead it tell the node to only execpt pods with particular taint.
+So if there are three nodes and 1 out of three nodes has a taint and one pod has the toleration, there is no gaurantee that the tolerated pod will go to the node which is tainted, it can also get deployed to other nodes since they dont have any taint. If we want a pod to go to particular node then that can be achieved by using node affinity
+
+> By default a taint is applied on master node we can see the taint by
+>> kubectl describe node kubemaster | grep Taint
+
+>> kubectl explain pod --recursive
+
+Node Affinity:
+Node affinity types:
+> requiredDuringSchedulingIgnoredDuringExecution
+> preferredDuringSchedulingIgnoredDuringExecution
+> requiredDuringSchedulingRequiredDuringExecution (proposed,not released)
+
+> Default deployment strategy  is rolling updates
+
+kubectl create -f dep-def.yaml
+kubectl get deployments
+kubectl apply -f dep-def.yaml
+kubectl set image deployment/myapp-deployment ngnix=nginx:1.9.1
+kubectl rollout status deployment/myapp-deployment
+kubectl rollout history deployment/myapp-deployment
+kubectl rollout undo deployment/myapp-deployment
+
+docker cmd,entry point:
+
+FROM Ubuntu
+
+ENTRYPOINT["sleep"]
+
+CMD ["5"]
+
+> docker run ubuntu-sleeper 10 ## CMD [5] is the default parameter, if we pass cmd from command line it will get replaced
+> docker run ubuntu-sleeper ## here default value 5 will be taken
+> docker run --entrypoint sleep2.0 ubuntu-sleeper 10 ### this will replace the ENTRYPOINT["sleep"] -> ENTRYPOINT["sleep2.0"]
+
+Kubernetes pod definition for above use case:
+
+apiversion: v1
+kind: Pod
+metadata:
+ name: ubuntu-sleeper-pod
+spec:
+ containers:
+  - name: ubuntu-sleeper
+    image: ubuntu-sleeper
+    command: ["sleep2.0"]
+    args:["10"]
+
+
+
+How to pass command line argument to kubectl create command:
+
+[link: https://stackoverflow.com/questions/60449786/how-to-pass-command-line-argument-to-kubectl-create-command]
+
+ENV variables in kubernetes:
+
+> docker run -e APP_COLOR=pink simple-webapp-color
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: simple-webapp-color
+spec:
+  containers:
+  - name: simple-webapp-color
+    image: simple-webapp-color
+    ports:
+      - containerPort:8080
+    env:
+      - name: APP_COLOR
+        value: pink
+
+> kubectl create cm webapp-config-map --from-literal=APP_COLOR=dark-blue
+
+Steps to setup metric server:
+> git clone https://github.com/kodekloudhub/kubernetes-metrics-server.git
+> kubectl create -f .
+
+>kubectl rollout status deployment/myapp-deployment
+>kubectl describe deployment myapp-deployment
+> kubectl rollout undo deployment/myapp-deployment
+
+
+config Map:
+
+kubectl create configmap <config-name> --from-literal=<key>=<value>
+
+kubectl create configmap app-config --from-literal=APP_COLOR=blue
+
+kubectl create configmap app-config --from-file=app_config.properties
+
+
+Secrets:
+
+> kubectl create secret generic <secret-name> --from-literal=<key>=<value>
+
+> kubectl create secret generic app-secret --from-literal=DB_HOST=mysql --from-literal=DB_Password=paswrd
+
+> kubeclt create secret generic <secret-name> --from-file=app_secret.properties
+
+echo -n "abc" | base64
+echo -n "cGFzc3dvcmQ=" | base64 --decode
+
+> once the pod that depends on the secret is deleted,kubelet will delete its local copy of the secret data as well
+> A secret is only sent to a node if pod on that node requires it.
+> kubelet stores the secret into a tmpfs so that the secret is not written to disk storage
+> 
+kubectl scale deployment.apps <deployment-name> replicas=3 --current-replicas=2
+
+There are 3 common patterns when it comes to designing multi container pods, 
+> sidecar pattern
+> Adapter pattern
+> Ambassador
+
+Init containers:
+
+> In a multi container pod, each container is expected to run a process that stays alive as long as pod lifecycle.for eample in the web application and logging agent, both the containers are expected to stay alive at all time. The process running in the log agent container is expected to stay alive as long as the web application is running.If any of them fails pod restarts
+
+> But at times you may want to run a process that runs to competion in a container. For example a process that pulls a code or binary from a repository that will be used by the main web application.That is a task that will be run only one time when the pod is first created.Or a process that waits for an external service or database to be up before the actual application starts.That's where initcontainers comes in
+
+> you can configure multiple such initcontainers as well, like how we did for multicontainers.In that case each init container is run one at a time in sequential order.
+
+> If a pod goes doen and the time it waits for a pod to come back online is known as the pod eviction timeout and is set on the control manager with a default value of five minutes
+
+> If a node goes down and doesnt come back for more than 5 min then the pods of that nodes are moved to other nodes, that said if there is a taint set and no replicas for a pod, then it can not go to any other pod and the pod will not be vailable, on solution to this is to drain node before killing the node so that pods from that node will get asaigned to another node
+> When we drain the node the pods are gracefully terminated from the node that ther are on and recreated on another, the node in which we are draining is mared as unschedulable. meaning no pods can be scheduled on this node untill we specifically remove the restriction. 
+
+
+
+> kubectl drain node-1
+> kubectl uncordon node-1
+> kubectl cordon node-1
+
+kubectl drain node01 --ignore-daemonsets
+kubectl drain node01 --ignore-daemonsets --force
+
+upgrading cluster:
+
+On the controlplane node, run the command run the following commands:
+
+apt update
+This will update the package lists from the software repository.
+
+apt install kubeadm=1.20.0-00
+This will install the kubeadm version 1.20
+
+kubeadm upgrade apply v1.20.0
+This will upgrade kubernetes controlplane. Note that this can take a few minutes.
+
+apt install kubelet=1.20.0-00 This will update the kubelet with the version 1.20.
+
+You may need to restart kubelet after it has been upgraded.
+Run: systemctl restart kubelet
+
+Backup and restore:
+
+> etcdctl is a command line client for etcd
+
+To take a snapshot of etcd,use:
+> etcdctl snapshot save -h
+
+Tor restore the snapshot :
+> etcdctl snapshot restore -h
+> ETCDCTL_API=3 etcdctl snapshot save --help
+>>
+ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 \
+--cacert=/etc/kubernetes/pki/etcd/ca.crt \
+--cert=/etc/kubernetes/pki/etcd/server.crt \
+--key=/etc/kubernetes/pki/etcd/server.key \
+snapshot save /opt/snapshot-pre-boot.db
+
+# in above commadn we need not pass endpoint if etcd is installed in same node
+
+Restore:
+
+
+>  ETCDCTL_API=3 etcdctl  --data-dir /var/lib/etcd-from-backup \
+snapshot restore /opt/snapshot-pre-boot.db
+
+
+Security
+-------
+security primitives:
+
+Authentication:
+
+> As all requests go through kubeapi server, kubeapiserver will authenticate request before processing the request
+different mechanisms
+	Static password file
+	static token file
+	certificates
+	identity services
+TLS certificates:
+
+> cat /etc/kubernetes/manifests/kube-apiserver.yaml
+> /etc/kubernetes/manifests/etcd.yaml
+
+What is the Common Name (CN) configured on the Kube API Server Certificate?
+> openssl x509 -in file-path.crt -text -noout
+> openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text
+
+What is the name of the CA who issued the Kube API Server Certificate?
+> openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text
+
+What is the Common Name (CN) configured on the ETCD Server certificate?
+> openssl x509 -in /etc/kubernetes/pki/etcd/server.crt -text
+
+How long, from the issued date, is the Root CA Certificate valid for?
+> openssl x509 -in /etc/kubernetes/pki/ca.crt -text
+
+csr- certificatesigningrequest
+
+> kubectl get cst
+> kubect certificate approve <name>
+> kubectl get csr <name> -o yaml
+> kubectl certificate deny <name>
+> all certificate related operations are carried out by controll managers
+
+csr yaml:
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: akshay
+spec:
+  groups:
+  - system:authenticated
+  request: LS0YkpQZDhIRGFuWHM3bnFoenVvTnZLbWhwL2twZUVvaHd5MFRVMAo5bzdvcjJWb1hWZTVyUnNoMms4dzV2TlVPL3BBdEk4VkRydUhCYzRxaHM3MDI1ZTZTUXFDeHUyOHNhTDh1blJQCkR6V2ZsNVpLcTVpdlJNeFQrcUo0UGpBL2pHV2d6QVliL1hDQXRrRVJyNlMwak9XaEw1Q0ErVU1BQmd5a1c5emQKTmlXbnJZUEdqVWh1WjZBeWJ1VzMxMjRqdlFvbndRRUprNEdoayt2SU53SURBUUFCb0FBd0RRWUpLb1pJaHZjTgpBUUVMQlFBRGdnRUJBQi94dDZ2d2EweWZHZFpKZ1k2ZDRUZEFtN2ZiTHRqUE15OHByTi9WZEdxN25oVDNUUE5zCjEwRFFaVGN6T21hTjVTZmpTaVAvaDRZQzQ0QjhFMll5Szg4Z2lDaUVEWDNlaDFYZnB3bnlJMVBDVE1mYys3cWUKMkJZTGJWSitRY040MDU4YituK24wMy9oVkN4L1VRRFhvc2w4Z2hOaHhGck9zRUtuVExiWHRsK29jQ0RtN3I3UwpUYTFkbWtFWCtWUnFJYXFGSDd1dDJveHgxcHdCdnJEeGUvV2cybXNqdHJZUXJ3eDJmQnErQ2Z1dm1sVS9rME4rCml3MEFjbVJsMy9veTdqR3ptMXdqdTJvNG4zSDNKQ25SbE41SnIyQkZTcFVQU3dCL1lUZ1ZobHVMNmwwRERxS3MKNTdYcEYxcjZWdmJmbTRldkhDNnJCSnNiZmI2ZU1KejZPMUU9Ci0tLS0tRU5EIENFUlRJRklDQVRFIFJFUVVFU1QtLS0tLQo=
+  signerName: kubernetes.io/kube-apiserver-client
+  usages:
+  - client auth
+
+how to check csr request yaml:
+> kubectl get csr agent-smith -o yaml
+
+> kubectl delete csr agent-smith
+
+
+Kubeconfig:
+
+> kubectl config view --kubeconfig=my-custom-config
+
+To know current context:
+> kubectl config --kubeconfig=/root/my-kube-config current-context
+
+To set new context:
+> kubectl config --kubeconfig=/root/my-kube-config use-context research
+
+
+how to change default kube config file to admin.conf ??
+
+kubectl uses ~/.kube/config as the default configuration file. So you could just copy your admin.conf over it.
+
+API Groups:
+
+/version - get the version of cluster
+/metrics - to get metrics of cluster
+/healthz - health of the cluster
+/logs - are used for integrating with third party applicatoins
+
+/api and /apis :
+
+core -/api -> namespaces,pods,rc,events,endpoints,nodes,bindings,PV,PVC,configmaps,secrets,services
+named - /apis -> /apps /extensions , /networking.k8s.io , /storage.k8s.io, /authentication.k8s.io, /certificates.k8s.io
+
+named - /apis - /apps - /vi -> /deployments, /replicasets, /statefulsets (resources: list,get,create,delete,update,watch)
+named - /apis - /networking.k8.io - /v1 -> /networkpolicies 
+named - /apis - /certificates.k8.io -v1 -> /certificatessigningrequests
+
+kube proxy != kubectl proxy
+
+kube proxy: It is used to enable connectivitiy between pods and services accross different nodes in cluster 
+
+kubectl proxy: It is a http proxy service created by kubectl to access kube api server (kuctl command will internally invoke kubectlproxy and get the configs from kubeconfig and invoke kubeapi server, this is why we are not passing the keys/credentials when we execute the command)
+
+Authorizations:
+
+Authorization mechanisms:
+
+> Node based auth
+> Attribute based aut
+> Role based auth
+> Webhook
+>> two other modes: AlwaysAllow,AlwaysDeny
+
+> NBAC: Node authorizer handles the requests coming from kubelet to kube api server (system.node group)
+> ABAC: user or a group of users with a set of permissions, we can achieve this by creating policy json file and pass that file to apiserver , this is difficult to manage as we need to edit files everytime and restart apiserver, to over come this we have RBAC
+
+> webhook : used when we want to outsource authorization,(opne policy agent tool)
+
+
+RBAC: 
+
+> kubectl get roles
+> kubectl get rolebindings
+> kubectl describe role developer
+> kubectl describe rolebindings devuser-developer-binding
+
+To check if you have access: 
+
+> kubectl auth can-i create deployments
+> kubectl auth can-i delete nodes
+
+if you  are admin you can check for others:
+> kubectl auth can-i create deployments --as dev-user
+> kubectl auth can-i create pods --as dev-user
+> kubectl auth can-i create pods --as dev-user --namespace test
+
+
+>>>
+To create a Role:- kubectl create role developer --namespace=default --verb=list,create --resource=pods
+To create a RoleBinding:- kubectl create rolebinding dev-user-binding --namespace=default --role=developer --user=dev-user
+OR
+
+
+
+Solution manifest file to create a role and rolebinding in the default namespace:
+
+imperative way
+To create a Role:- kubectl create role developer --namespace=default --verb=list,create --resource=pods
+To create a RoleBinding:- kubectl create rolebinding dev-user-binding --namespace=default --role=developer --user=dev-user
+
+Declerative way:
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: developer
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "create"]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: dev-user-binding
+subjects:
+- kind: User
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+>>>>>>>>..
+
+
+Solution manifest file to create a role and rolebinding in the blue namespace:
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: blue
+  name: deploy-role
+rules:
+- apiGroups: ["apps", "extensions"]
+  resources: ["deployments"]
+  verbs: ["create"]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: dev-user-deploy-binding
+  namespace: blue
+subjects:
+- kind: User
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: deploy-role
+  apiGroup: rbac.authorization.k8s.io
+
+>>>>>>>>>>>>
+
+Cluster roles and role bindings:
+
+> when we need roles at cluster leverl like for particular node, they are cluster scoped,
+
+> nodes, persistent volumes , cluster roles, clusterrolebindings,certificatesigningrequests,
+
+> mubectl api-resources --namespaced =true
+> kubectl api-resources --namespaced = false
+
+> Run the command: kubectl get clusterroles --no-headers | wc -l or kubectl get clusterroles --no-headers -o json | jq '.items | length'
+
+> Run the command: kubectl get clusterrolebindings --no-headers | wc -l or kubectl get clusterrolebindings --no-headers -o json | jq '.items | length'
+
+> kubectl describe clusterrolebindings <rolebinding>
+
+A new user michelle joined the team. She will be focusing on the nodes in the cluster. Create the required ClusterRoles and ClusterRoleBindings so she gets access to the nodes.
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: node-admin
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: michelle-binding
+subjects:
+- kind: User
+  name: michelle
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: node-admin
+  apiGroup: rbac.authorization.k8s.io
+
+
+
+> michelle's responsibilities are growing and now she will be responsible for storage as well. Create the required ClusterRoles and ClusterRoleBindings to allow her access to Storage.
+Get the API groups and resource names from command kubectl api-resources. Use the given spec:
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: storage-admin
+rules:
+- apiGroups: [""]
+  resources: ["persistentvolumes"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+- apiGroups: ["storage.k8s.io"]
+  resources: ["storageclasses"]
+  verbs: ["get", "watch", "list", "create", "delete"]
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: michelle-storage-admin
+subjects:
+- kind: User
+  name: michelle
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: storage-admin
+  apiGroup: rbac.authorization.k8s.io
+
+Service Accounts
+---------------
+
+Two type of accounts in k8s
+> user account
+> service account
+
+> kubectl create serviceaccount <account name>
+> kubectl get serviceaccount
+when we create a service account, a token is created automatically and the same token needs to be used for authenticating when communicating to apiserver
+The token is stored in secret object
+
+> For every name space created  in k8, a default service account will be created
+
+> We can not edit the service account of a pod, we must delete and recreate a pod, in case of deployment we can edit ,as any changes to deployment will create a new rollout.
+
+> we can set "automountServiceAccountToken" to false if we dont want to create a default service account
+> kubectl create serviceaccount dashboard-sa
+
+>>
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: dashboard-sa # Name is case sensitive
+  namespace: default
+roleRef:
+  kind: Role #this must be Role or ClusterRole
+  name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+~                                       
+>>>
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  verbs:
+  - get
+  - watch
+  - list
+
+
+
+>>>>> adding service account to deployment
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-dashboard
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: web-dashboard
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: web-dashboard
+    spec:
+      serviceAccountName: dashboard-sa
+      containers:
+      - image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard
+        imagePullPolicy: Always
+        name: web-dashboard
+        ports:
+        - containerPort: 8080
+          protocol: TCP                          
+
+
+Image security
+-------------
+
+image: docker.io/nginx/ngnix
+
+docker.io -> registry
+ngnix -> user/account
+ngnix -> image/repository
+
+> docker login private-registry.io
+
+> docker run private-registry.io/app/internal-app
+
+How to provide docker registry credentials to kubernetes
+
+> kubectl create secret docker-registry regcred --docker-server=xxx --docker-username=xxx --docker-password=xxx --docker-email =xxx
+
+>>>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: private-reg
+spec:
+  containers:
+  - name: private-reg-container
+    image: <your-private-image>
+  imagePullSecrets:
+  - name: regcred
+
+
+Storage
+------
+
+> docker volume create data_volume
+>> above command will create a folder under /var/lib/docker/volumes
+
+>docker run -v data_volume:/var/lib/mysql mysql
+
+from the above command the data writter in /var/lib/mysql is writter in /var/lib/docker/volumes of host machine
+
+> suppose say we did not create a docker volume and execute this
+> docker run -v data_volume2:/var/lib/mysql - > docker will create a volume and stores the data - volume mount
+> docker run -v /data/<external-file-location>:/var/lib/mysql mysql -> bind mount
+
+> volume mount,mounts a volume form volume directory of docker, and bind mount,mounts a directory from any location to docker host
+
+> using -v is old, new way is to use --mount
+
+>> docker ru --mount type=bind, source=/data/mysql,target=/var/lib/mysql mysql
+
+> who is responsible for doing all the data management and createing layered architechture , its the storage drivers
+> 
+
+Volume drivers:
+
+> local, Azure file storage,convoy,digitalocean blockstorage, gce-docker,netapp ...
+
+rexray driver used to get volume from aws,s3
+
+> docker run -it --name mysql --volume-driver rexray/ebs --mount src=ebs-vol, target = /var/lib/mysql mysql
+
+Container storage interface:
+
+> similar to csi (container storage interface),there is cni (container network interface), cri (container runtime interface)(rkt,cri-o)
+
+
+Volumes in k8 vs persistence volumesin k8:
+
+> volumes: we provide volume configuration in pod definition file, it becomes dificult to configure volumes for every pod, this is when persistence volume helps
+> A persistence volume is a cluster wide pool of volumes configured by admin to be used by user for applications  on the cluster, user can select storage for the pool using persistent volume claims.
+
+pesistence volume def yaml:
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0003
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /tmp
+    server: 172.17.0.2
+
+
+> kubectl create -f pv-def.yaml
+> kubectl get persistentvolume
+
+Persistenct volume claims:
+
+> It is a one to one relation between pv and pvc, once map pvc with pv, no other claim can use the pv
+
+> 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 8Gi
+  storageClassName: slow
+  selector:
+    matchLabels:
+      release: "stable"
+    matchExpressions:
+      - {key: environment, operator: In, values: [dev]}
+
+Claims As Volumes:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+    - name: myfrontend
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: myclaim
+
+>>>>>>>>>>>>>>>. pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pod
+  name: webapp
+spec:
+  containers:
+  - image: kodekloud/event-simulator
+    name: event-simulator
+    env:
+    - name: LOG_HANDLERS
+      value: file
+    volumeMounts:
+    - mountPath: /log
+      name: log-volume
+  volumes:
+  - name: log-volume
+    persistentVolumeClaim:
+      claimName: claim-log-1
+
+>>>>>>>>>>>>>>.pv.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-log
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /pv/log
+
+>>>>>>>>>>>>. pvc.yaml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim-log-1
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Mi
+~                      
+
+Storage classes:
+
+> Before creating persistence volumes in kubernetes , folder should be created (cloud), so everytime we create a PV we have to create a storage in cloud(gcp,aws) so to automate this we have storage classes to provision volumes
+
+> If we define storage classes we dont need pv,storage classes creates the required pv internally
+
+> kubectl get sc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

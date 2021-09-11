@@ -2854,4 +2854,32 @@ But, of course, with class Squares you could easily offer extra methods, i.e.
        return self.start
 
 
+[source : https://betterprogramming.pub/using-generators-in-python-the-why-the-what-and-the-when-e7d33c0b606]
+nomal way : 
+import csv
+def read_csv_from_regular_fn():
+    with open('large_dataset.csv', 'r') as f:
+        reader = csv.reader(f)
+        return [row for row in reader]
 
+result_1 = read_csv_from_regular_fn() 
+using generators:
+import csv
+def read_csv_from_generator_fn():
+    with open('large_dataset.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            yield row
+
+# To get the same output as result_1,
+# We generate a list using our newly created Generator function:
+result_2 = [row for row in read_csv_from_generator_fn()]
+
+old way :
+nums_list_comprehension = [i * i for i in range(100_000_000)]
+sum(nums_list_comprehension) # 333333328333333350000000
+
+using generators:
+nums_generator = (i * i for i in range(100_000_000))
+# <generator object <genexpr> at 0x106ecc580>
+sum(nums_generator) # 333333328333333350000000
