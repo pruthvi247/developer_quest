@@ -59,6 +59,22 @@ False (int capacity is 256 anything greater than 256 will create different objec
 >>> x is y
 False (no object reuse concept in float, same with complex types)
 
+> is will return True if two variables point to the same object, == if the objects referred to by the variables are equal.
+
+>>> a = [1, 2, 3]
+>>> b = a
+>>> b is a 
+True
+>>> b == a
+True
+
+# Make a new copy of list `a` via the slice operator, 
+# and assign it to variable `b`
+>>> b = a[:] 
+>>> b is a
+False
+>>> b == a
+True
 ==================================================================================
 Link : https://www.youtube.com/watch?v=8SdPW2NA1vI&list=PLd3UqWTnYXOnkicyzePnIg8rc2qEXgjiF&index=9
 ==================================================================================
@@ -96,6 +112,16 @@ True   # a and b refer to the same object!
 4434330504   
 
 subtle difference behind the operators. The + operator calls the __add__ magic method (these are methods automatically called instead of having to be explicitly invoked), which does not modify either arguments. Hence, the expression L + [4] creates a new object with the value [1, 2, 3, 4], which L on the left hand side now refers to. On the other hand, the += operator calls __iadd__ that modifies the arguments in place.
+
+> Python operations like += or *= are also inplace operations.
+
+> x = x + y is not inplace. x += y is inplace
+
+> Definition - In-place operation is an operation that changes directly the content of a given linear algebra, vector, matrices(Tensor) without making a copy. The operators which helps to do the operation is called in-place operator.
+
+>> a+= b is equivalent to a= operator.iadd(a, b)
+
+a =operator.iadd(1, 3);
 
 ================Type system=================
 
@@ -166,7 +192,7 @@ Set{}:
 > s.remove(20) -> applicable
 > set is growable
 
->> bytes is immutable byte array is mutable
+>> bytes is immutable ,byte array is mutable
 
 forzenset:
 ---------
@@ -226,7 +252,7 @@ https://www.youtube.com/watch?v=JYuE8ZiDPl4
 
 
 
->>> num =[]1,2,3,4,5] - > list
+>>> num =[1,2,3,4,5] - > list
 >>> squares = (n**2 for n in numbers) - > generators
  > generators are lazy
  > tuple(squares)
@@ -236,7 +262,7 @@ Containment checking:
 >>> 9 in squares
 True
 >>> 9 in squares
-False
+False ### generators can be only read once
 
 Unpacking:
 ---------
@@ -524,8 +550,6 @@ Definitions:
 > list comprehension : for making a new list from an iterable
 > generator : for making a "lazy"(pause-able) iterable
 > generator expression : used to make a generator
-
-
 
 Turning lis into list:
 --------------------
@@ -959,9 +983,11 @@ Class methods don’t need self as an argument, but they do need a parameter cal
 ====== advanced python types of variales and methods - lec 3====
 
 https://www.youtube.com/watch?v=rGU9DJ4TNLw&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=3
+
 ================================================================
 
-
+> purpose of constructor is to declare and initialize variables
+> __init__()
 > constructor will be executed only once, where as method can be called any number of times.
  
 3 types of variables:
@@ -1010,6 +1036,7 @@ Places we can declare instance variable:
 
 s1 = Sturdent('ravi',1234)
 s2 = Student('madhu',1235)
+s1.info(50)
 s1.marks()
 
 > if we declare a variable inside a method it is called local variable,but if we declare it with self.variable, then its called instance variable
@@ -1215,8 +1242,6 @@ Inner class:
 		def __init__(self):
 			self.name='Durga'
 			self.dob = self.DOB()
-
-
 		def display(self):
 			print(self.name)
 			self.dob.display()
@@ -1409,7 +1434,8 @@ Class Test :
 https://www.youtube.com/watch?v=rVoMkLHyOI4&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=13
 ================================================================
 
-
+> 
+Overloading occurs when two or more methods in one class have the same method name but different parameters. Overriding occurs when two methods have the same method name and parameters but different return types
 java : method over loading
 
 m1(int a)
@@ -1425,6 +1451,47 @@ Methods with variable length args :
 >> sum(10)
 >> sum (10,30)
 >> sum (3+4+56 )
+[link: https://inblog.in/Method-Overloading-and-Method-Overriding-in-Python-6PapPZvyTf]
+class OverloadDemo:
+   def multiply(self,a,b):
+       print(a*b)
+   def multiply(self,a,b,c):
+       print(a*b*c)
+m=OverloadDemo()
+m.multiply(5,10)  ### type error 
+m.multiply(5,2,6)
+
+> In Python, whenever a method having same name and arguments is used in both derived class as well as in base or super class then the method used in derived class is said to override the method described in base class. Whenever the overridden method is called, it always invokes the method defined in derived class. The method used in base class gets hidden. 
+
+>>>
+class methodOverride1:                          
+    def display(self):
+        print("method invoked from base class")
+
+class methodOverride2(methodOverride1):
+    def display(self):
+        print("method invoked from derived class")
+
+ob=methodOverride2()
+ob.display()
+
+> In order to access the overridden methods in Python we have to use super().
+>>>
+class methodOverride1:                          
+    def display(self):
+        print("method invoked from base class")
+
+class methodOverride2(methodOverride1):
+    def display(self):
+        print("method invoked from derived class")
+        super().display()
+
+ob=methodOverride2()
+ob.display()
+
+o/p :
+method invoked from derived class
+method invoked from base class
 
 > for constructor also we can follow the same way
 >> class Test:
@@ -1447,17 +1514,10 @@ Type of association: Composition is a strong Association whereas Aggregation is 
 ======types of inheritance lec 15====
 https://www.youtube.com/watch?v=jjTys6DKhrw&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=15
 ================================================================
-
-
 composition and aggregation:
 
 > composition -> strong relation(is-a) (two entities are highly dependent on each other.)
 > aggregation -> weak relation(Has-a) (two entities can survive individually)
-
-
-
-
-
 
 Types of inheritance:
 --------------------
@@ -1468,13 +1528,10 @@ Multiple Inheritance
 Hybrid Inheritance
 Cyclic Inheritance(not supported in most of the language along with python)
 
-
-
 Single Inheritance:
 -------------------
 > single parent
 > single child
-
 
 class p:
 	def m1(self):
@@ -1500,13 +1557,9 @@ class A(C):
 	def m3(self):
 		print("second level")
 
-
-
 Hierarchical inheritance:
 ------------------------
 > one parent but multiple childs at same level
-
-
 
 class P:
 	def m1(self):
@@ -1518,15 +1571,11 @@ class C2(P):
 	def m3(self):
 		print("second child at same level")
 
-
-
- 
 Multiple Inheritance:
 --------------------
 > multiple parents but single child
 > method resolution algorithm is used to resolve dependencies(Diamond problem )
 > method resolution is based on order of parents
-
 
 class P1:
 	def m1(self):
@@ -1559,8 +1608,6 @@ Hybrid Inheritance:
 ======super() Method lec 17====
 https://www.youtube.com/watch?v=XxFBPU4vT1g&list=PLd3UqWTnYXOkzPunQOObl4m_7i6aOIoQD&index=17
 ================================================================
-
-
 > from child class by using super() we cannot call parent class instance variables we should use self only.
 > from child class by using super() we can call parent class call static variable
 
@@ -1573,7 +1620,7 @@ Class Person:
 
 Class Student:
 	def __init__(self,name,age,rollno,marks):
-		super().__init__(age,rollno) # initialized by parent constructor
+		super().__init__(name,age) # initialized by parent constructor
 		self.rollno = rollno
 		self.marks = marks
 
@@ -1714,13 +1761,6 @@ i/p function	--------------> |	Decorator		|	------------>o/p function(more enhan
 >> while True:
 	print(next(g)) # generator will retrun element when ever required (called), not all element are stored in memory
 
-
-
-
-
-
-
-
 =================================================================
 https://codesachin.wordpress.com/2016/06/09/the-magic-behind-attribute-access-in-python/
 =================================================================
@@ -1740,7 +1780,7 @@ The __dict__ attribute:
 {'y': 5}
 Notice how 'x' is not in c.__dict__. The reason for this is simple enough. While y was defined for the object c, x was defined for its class (C). Therefore, it will appear in the __dict__ of C. In fact, C‘s __dict__ contains a lot of other keys too (including '__dict__'): 
 
-
+[reference: https://medium.com/@er.26yashiagarwal/python-descriptors-and-properties-48865cb1525e]
 
 Descriptors:
 
@@ -1885,7 +1925,12 @@ https://medium.com/fintechexplained/top-python-tips-tricks-dd996b807865
 =================================================================
 
 > python tips and triks : above link is really good
+> https://medium.com/fintechexplained/everything-about-python-from-beginner-to-advance-level-227d52ef32d2
 
+reverse a string :
+stringname[stringlength::-1] # method 1 
+stringname[::-1] # method2
+> The slice statement means start at string length, end at position 0, move with the step -1 (or one step backward).
 
 =================================================================
 https://www.geeksforgeeks.org/python-subprocess-module-to-execute-programs-written-in-different-languages/
@@ -1897,8 +1942,14 @@ https://www.geeksforgeeks.org/python-subprocess-module-to-execute-programs-writt
 https://www.geeksforgeeks.org/python-lambda-anonymous-functions-filter-map-reduce/
 =================================================================
 
-lambda arguments: expression
+> Single expression anonymous function.
+> It is an inline function.
+my_lambda = lambda x,y,z : x - 100 + y - z
+Syntax:
 
+variable = lambda arguments: expression
+
+> Lambda functions can be passed as arguments to other functions.
 > This function can have any number of arguments but only one expression, which is evaluated and returned.
 > One is free to use lambda functions wherever function objects are required.
 > You need to keep in your knowledge that lambda functions are syntactically restricted to a single expression.
@@ -1909,8 +1960,7 @@ lambda arguments: expression
 =================================================================
 https://www.youtube.com/watch?v=LhadeL7_EIU
 =================================================================
-> 
-
+> tutorial about cpython internals and source code
 =================================================================
 https://stackoverflow.com/questions/22171558/what-does-enumerate-mean/22171593
 =================================================================
@@ -2064,9 +2114,6 @@ AttributeError: GfG instance has no attribute 'motto'
 
 RESULT : Conventional method takes less time than getattr(), but when default values have to be used in case of missing attributes, getattr() is a good choice.
 
->>>>>>
-
-
 =================================================================
 https://towardsdatascience.com/memory-management-in-python-6bea0c8aecc9
 =================================================================
@@ -2131,6 +2178,11 @@ csv_gen = (row for row in open(file_name)) - > called as generator comprehension
 
 csv_gen = [row for row in open(file_name)]-> list comprehension difference is sqare brackets
 
+[link: https://stackoverflow.com/questions/47789/generator-expressions-vs-list-comprehensions]
+
+>  list comprehensions are better when you want to iterate over something multiple times
+> use a generator expression if all you're doing is iterating once
+
 Generating an infinite sequence:
 def infinite_sequence():
     num = 0
@@ -2153,7 +2205,7 @@ StopIteration: is a natural exception that’s raised to signal the end of an it
 ...     except StopIteration:
 ...         break
 ...     print(letter)
-
+[link : https://stackoverflow.com/questions/19302530/python-generator-send-function-purpose]
 Using Advanced Generator Methods:
 
 .send():
@@ -2197,6 +2249,31 @@ Using Advanced Generator Methods:
 How to Use .close() :
 
 As its name implies, .close() allows you to stop a generator. This can be especially handy when controlling an infinite sequence generator. Let’s update the code above by changing .throw() to .close() to stop the iteration:
+>>>
+def infinite_palindromes():
+    num = 0
+    while True:
+        if is_palindrome(num):
+            i = (yield num)
+            if i is not None:
+                num = i
+        num += 1
+>>>
+pal_gen = infinite_palindromes()
+for i in pal_gen:
+    print(i)
+    digits = len(str(i))
+    if digits == 5:
+        pal_gen.throw(ValueError("We don't like large palindromes"))
+    pal_gen.send(10 ** (digits))
+>>>
+pal_gen = infinite_palindromes()
+for i in pal_gen:
+    print(i)
+    digits = len(str(i))
+    if digits == 5:
+        pal_gen.close()
+    pal_gen.send(10 ** (digits))
 
 =================================================================
 https://medium.com/@jasonrigden/a-guide-to-python-itertools-82e5a306cdf8
@@ -2209,10 +2286,54 @@ https://medium.com/@jasonrigden/a-guide-to-python-itertools-82e5a306cdf8
 for memory management this video is good
 
 > Memory can be stored on either a stack (for static memory allocation) or a heap (for dynamic memory allocation)
+[link : https://stackoverflow.com/questions/1136826/what-does-sys-intern-do-and-when-should-it-be-used]
+sys.inter():
 
+the sys.intern function is intended to be used for performance optimization.
+
+The sys.intern function maintains a table of interned strings. When you attempt to intern a string, the function looks it up in the table
+
+> If the string does not exists (hasn't been interned yet) the function saves it in the table and returns it from the interned strings table.
+
+>>> import sys
+>>> a = sys.intern('why do pangolins dream of quiche')
+>>> b = sys.intern('why do pangolins dream of quiche')
+
+>>> b is a
+True
+If we create the same string without using intern, we end up with two different string objects that have the same value.
+
+>>> c = 'why do pangolins dream of quiche'
+>>> c is a
+False
+>>> c is b
+False
+
+[link : https://stackoverflow.com/questions/327223/memory-efficient-alternatives-to-python-dictionaries]
+a small example for searching tuples with list comprehensions:
+>>> b = [(1,2,3),(1,2,5),(3,4,6)]
+>>> search = (1,2)
+>>> [a[2] for a in b if a[:2] == search]
+[3, 5]
 
 argparser :
 [link : https://levelup.gitconnected.com/the-easy-guide-to-python-command-line-arguments-96b4607baea1]
+import argparse
+
+parser = argparse.ArgumentParser(description='A tutorial of argparse!')
+
+args = parser.parse_args()
+
+>>>argparser_2.py
+import argparse
+
+parser = argparse.ArgumentParser(description='A tutorial of argparse!')
+parser.add_argument("--a", default=1, type=int, help="This is the 'a' variable")
+parser.add_argument("--name", required=True, type=str, help="Your name")
+
+args = parser.parse_args()
+
+>>> python3 argparse_2.py --a=5 --name="someName"
 
 
 ================================================
@@ -2225,7 +2346,51 @@ python collections:
 > default dict
 > deque
 
+lst = [1, 2, 3, 3, 2, 1, 1, 1, 2, 2, 3, 1, 2, 1, 1]
+counter = Counter(lst)
 
+>>> print(counter) -> Counter({1: 7, 2: 5, 3: 3})
+
+> You can access any counter item with its key as shown below
+lst = [1, 2, 3, 3, 2, 1, 1, 1, 2, 2, 3, 1, 2, 1, 1]
+counter = Counter(lst)
+print(counter[1])
+
+Default dict:
+The defaultdict works exactly like a regular python dictionary, with the added bonus that when you try to access a non-existent key, it won’t throw an error.
+
+from collections import defaultdict
+
+names_dict = defaultdict(int)
+names_dict["Bob"] = 1
+names_dict["Katie"] = 2
+sara_number = names_dict["Sara"]
+print(names_dict)
+
+Deque:
+> The collections library’s deque implements an optimized version of queue functionality. A key feature of that implementation is that the queue size is maintained — i.e if you set the max size of the queue to be 10, then the deque will add and remove elements according to the FIFO principle to maintain the max size of 10
+
+>>>
+from collections import deque
+
+my_queue = deque(maxlen=10)
+
+for i in range(10):
+    my_queue.append(i+1)
+
+print(my_queue)
+
+Named tuple:
+> When you create a regular tuple in Python, its elements are generic and unnamed. This forces you to remember the exact index of each tuple element. The namedtuple is the solution to this problem
+
+>>>
+Person = namedtuple('Person', 'name age job')
+
+Mike = Person(name='Mike', age=30, job='Data Scientist')
+Kate = Person(name="Kate", age=28, job='Project Manager')
+
+print(Mike)
+print(Kate)
 ================================================
 underscores
 ================================================
@@ -2242,14 +2407,22 @@ underscores
 ======================================================
 https://realpython.com/python-type-checking/?source=post_page-----ce917d0705b5----------------------
 ======================================================
+>>> pip install mypy
+# headlines.py
 
+def headline(text: str, align: bool = True) -> str:
+    if align:
+        return f"{text.title()}\n{'-' * len(text)}"
+    else:
+        return f" {text.title()} ".center(50, "o")
 
-
-
-
-
-
-
+print(headline("python type checking"))
+print(headline("use mypy", align="center"))
+>>>
+mypy headlines.py
+headlines.py:10: error: Argument "align" to "headline" has incompatible
+                        type "str"; expected "bool"
+ 
 =================================================================
 random
 =================================================================
@@ -2258,6 +2431,7 @@ random
 >>> floats = [4.0, 5.0, 6.0]
 >>> zipped = zip(integers, letters, floats)  # Three input iterables
 >>> list(zipped)
+>>> [(1, 'a', 4.0), (2, 'b', 5.0), (3, 'c', 6.0)]
 
 [link:https://medium.com/better-programming/20-python-snippets-you-should-learn-today-8328e26ff124]
 
@@ -2327,10 +2501,52 @@ print (Person.isAdult(22))
 
 > @property  uses python descriptors underneath
 
+class Alphabet: 
+    def __init__(self, value): 
+        self._value = value 
+            
+    # getting the values     
+    @property
+    def value(self): 
+        print('Getting value') 
+        return self._value 
+            
+    # setting the values     
+    @value.setter 
+    def value(self, value): 
+        print('Setting value to ' + value) 
+        self._value = value 
+            
+    # deleting the values 
+    @value.deleter 
+    def value(self): 
+        print('Deleting value') 
+        del self._value 
+    
+    
+# passing the value 
+x = Alphabet('Peter') 
+print(x.value) 
+    
+x.value = 'Diesel'
+    
+del x.value 
+
 > Metaclass : [source: https://www.python-course.eu/python3_metaclasses.php]
 
-> import modules : [source ; https://medium.com/python-features/what-happens-behind-the-scenes-when-we-import-a-module-in-python-2775da153790#:~:text=When%20the%20interpreter%20executes%20the,interpreter%20is%20being%20run%20interactively.]
+> import modules : [source : https://medium.com/python-features/what-happens-behind-the-scenes-when-we-import-a-module-in-python-2775da153790#:~:text=When%20the%20interpreter%20executes%20the,interpreter%20is%20being%20run%20interactively.]
 
+> When the interpreter executes the import statement, it searches for mod.py in a list of directories gathered from the following sources:
+The directory from where the input script was run or the current directory if the interpreter is being run interactively.
+The list of directories contained in the PYTHONPATH environment variable, if it is set. (The format for PYTHONPATH is OS-dependent but should mimic the PATH environment variable.)
+An installation-dependent list of directories configured at the time Python is installed.
+
+> There is actually one additional option: we can put the module file in any directory of your choice and then modify sys.path at run-time so that it contains that directory. For example, in this case, we could put mod.py in directory /home/sarah/ and then issue the following statements:
+>>> sys.path.append(r'/home/sarah/')
+> Once module has been imported, we can determine the location where it was found with the module’s __file__ attribute:
+>>> import mod
+>>> mod.__file__
+'/home/sarah/mod.py'
 
 > python modules as singleton : [https://stackoverflow.com/questions/10936709/why-does-a-python-module-act-like-a-singleton]
 
