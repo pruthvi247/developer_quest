@@ -232,4 +232,36 @@ ENTRYPOINT ["echo", "Geeksforgeeks "]
 CMD ["Docker Tutorials"]
 
 
+docker cmd,entry point:
 
+FROM Ubuntu
+
+ENTRYPOINT["sleep"]
+
+CMD ["5"]
+
+> docker run ubuntu-sleeper 10 ## CMD [5] is the default parameter, if we pass cmd from command line it will get replaced
+> docker run ubuntu-sleeper ## here default value 5 will be taken
+> docker run --entrypoint sleep2.0 ubuntu-sleeper 10 ### this will replace the ENTRYPOINT["sleep"] -> ENTRYPOINT["sleep2.0"]
+
+passing env variables:
+docker run -e APP_COLOR=pink simple-webapp-color
+
+
+Storage: 
+> docker volume create data_volume
+>> above command will create a folder under /var/lib/docker/volumes
+
+>docker run -v data_volume:/var/lib/mysql mysql
+
+from the above command the data writter in /var/lib/mysql is writter in /var/lib/docker/volumes of host machine
+
+> suppose say we did not create a docker volume and execute this
+> docker run -v data_volume2:/var/lib/mysql - > docker will create a volume and stores the data - volume mount
+> docker run -v /data/<external-file-location>:/var/lib/mysql mysql -> bind mount
+
+> volume mount,mounts a volume form volume directory of docker, and bind mount,mounts a directory from any location to docker host
+
+> using -v is old, new way is to use --mount
+
+>> docker ru --mount type=bind, source=/data/mysql,target=/var/lib/mysql mysql

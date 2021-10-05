@@ -8,3 +8,10 @@ The managers path book:
 
 > The most mundane work can turn into a source of pride when you understand how it contributes to the overall success of the company.
 
+> Individuals and interactions over processes and tools
+
+> Working software over comprehensive documentation
+
+> Customer collaboration over contract negotiation
+
+> Responding to change over following a plan

@@ -1,0 +1,137 @@
+[source : https://towardsdatascience.com/top-3-python-functions-you-dont-know-about-probably-978f4be1e6d]
+
+map()
+The map() function takes in another function as a parameter, alongside an array of some sort. The idea is to apply a function (the one passed in as an argument) to every item in the array.
+eg:
+def num_func(x):
+	return x**2/2
+
+data =[1,3,5,6,2,3,8,9,4]
+list(map(num_func,data))
+
+filter():
+> As the name suggests the idea is to keep in array only the items that satisfy a certain condition.Just like with map(), we can declare the function beforehand, and then pass it to filter() alongside the list of iterables.
+
+def more_than_15(x):
+	return x>15
+
+
+data =[1,3,56,23,8,9,4]
+list(filter(more_than_15,data))
+
+Reduce():
+
+> Now reduce() is a bit different than the previous two. To start out, we have to import it from the functools module. The main idea behind this is that it will apply a given function to the array of items and will return a single value as a result.The last part is crucial — reduce() won’t return an array of items, it always returns a single value.
+
+from functools import reduce
+
+def add_numbers(a,b):
+	return a+b
+
+data = [5,10,1218,25]
+
+reduce(add_numbers,data)
+o/p: 70
+
+steps how reduce is executed:
+
+5 gets added to 10, results in 15
+15 gets added to 12, results in 27
+27 gets added to 18, results in 45
+45 gets added to 25, results in 70
+
+[source: https://www.geeksforgeeks.org/difference-between-multithreading-vs-multiprocessing-in-python/]
+Multithreading for IO-bound tasks. Multiprocessing for CPU-bound tasks.
+
+
+
+[source: http://blog.shenwei.me/python-multiprocessing-pool-difference-between-map-apply-map_async-apply_async/]
+# map
+results = pool.map(worker, [1, 2, 3])
+
+# apply
+for x, y in [[1, 1], [2, 2]]:
+    results.append(pool.apply(worker, (x, y)))
+
+def collect_result(result):
+    results.append(result)
+
+# map_async
+pool.map_async(worker, jobs, callback=collect_result)
+
+# apply_async
+for x, y in [[1, 1], [2, 2]]:
+    pool.apply_async(worker, (x, y), callback=collect_result)
+
+Note that map and map_async are called for a list of jobs in one time, but apply and apply_async  can only called for one job. However, apply_async execute a job in background therefore in parallel. See examples:
+
+Range vs xrange:
+In Python 2.x:
+
+range creates a list, so if you do range(1, 10000000) it creates a list in memory with 9999999 elements.
+
+xrange is a sequence object that evaluates lazily.
+
+In Python 3:
+
+range does the equivalent of Python 2's xrange. To get the list, you have to explicitly use list(range(...)).
+xrange no longer exists.
+
+
+
+
+[source: https://www.freecodecamp.org/news/build-your-first-python-package/]
+
+How to set up setup.py
+Within the base-verysimplemodule folder (and in the same directory as our module verysimplemodule ), we need to add a setup.py file. This file is essential if you intend to build the actual module in question.
+
+
+>>>
+from setuptools import setup, find_packages
+
+VERSION = '0.0.1' 
+DESCRIPTION = 'My first Python package'
+LONG_DESCRIPTION = 'My first Python package with a slightly longer description'
+
+# Setting up
+setup(
+       # the name must match the folder name 'verysimplemodule'
+        name="verysimplemodule", 
+        version=VERSION,
+        author="Jason Dsouza",
+        author_email="<youremail@email.com>",
+        description=DESCRIPTION,
+        long_description=LONG_DESCRIPTION,
+        packages=find_packages(),
+        install_requires=[], # add any additional packages that 
+        # needs to be installed along with your package. Eg: 'caer'
+        
+        keywords=['python', 'first package'],
+        classifiers= [
+            "Development Status :: 3 - Alpha",
+            "Intended Audience :: Education",
+            "Programming Language :: Python :: 2",
+            "Programming Language :: Python :: 3",
+            "Operating System :: MacOS :: MacOS X",
+            "Operating System :: Microsoft :: Windows",
+        ]
+)
+
+> With that done, all we have to do next is run the following command in the same directory as base-verysimplemodule:
+>>> python setup.py sdist bdist_wheel
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

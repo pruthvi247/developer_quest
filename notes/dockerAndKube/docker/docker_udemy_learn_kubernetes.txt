@@ -110,7 +110,7 @@ Kubectl format output:
 
 >> kubectl <command> <type> <name> -o <output_format>
 
->> kubectl create namespace test-123 00dry-run -o json
+>> kubectl create namespace test-123 --dry-run -o json
 >> kubectl get pods -o json
 
 > formats supported: json,name,wide,yaml
