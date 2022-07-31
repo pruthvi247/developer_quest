@@ -28,7 +28,23 @@ Find:
 >> find / -type -d -name "proxychains"
 
 >> find / -type -d -perm 756
->> find . -type -f -size 1033c
+```bash
+find / -size +250MB
+```
+Other units include:
+
+-   `G`: GigaBytes.
+-   `M`: MegaBytes.
+-   `K`: KiloBytes
+-   `b` : bytes.
+### How to search files by modification time
+
+```bash
+find /path -name "*.txt" -mtime -10 
+```
+-   **-mtime +10** means you are looking for a file modified 10 days ago.
+-   **-mtime -10** means less than 10 days.
+-   **-mtime 10** If you skip + or – it means exactly 10 days.
 
 >> find . -type -f -size 1033c ! -executable | xargs file
 
