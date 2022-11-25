@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "9437e834f881e198",
+        "id": "41f284e6e6950050",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "notes/flutter_points/flutter_codewithAdrea.md",
+            "file": "notes/flutter_points/flutter_articles/blogs/addpostframecallback.md",
             "mode": "source",
             "source": false
           }
@@ -61,7 +61,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 327.5107650756836
   },
   "right": {
     "id": "8384ec5e0e475033",
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/flutter_points/flutter_codewithAdrea.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/addpostframecallback.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/flutter_points/flutter_codewithAdrea.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/addpostframecallback.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/flutter_points/flutter_codewithAdrea.md"
+                "file": "notes/flutter_points/flutter_articles/blogs/addpostframecallback.md"
               }
             }
           }
@@ -128,8 +128,12 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "9437e834f881e198",
+  "active": "41f284e6e6950050",
   "lastOpenFiles": [
+    "notes/flutter_points/flutter_articles/blogs/alfianlosari_com_Building_Places_Location_Search_Map_View_Flutter.pdf",
+    "notes/flutter_points/flutter_articles/blogs/addpostframecallback.md",
+    "notes/flutter_points/flutter_in_action.md",
+    "notes/flutter_points/flutter_codewithAdrea.md",
     "notes/flutter_points/dart_learnings.md",
     "notes/unix_learnings/linux_essentials_for_hackers.md"
   ]

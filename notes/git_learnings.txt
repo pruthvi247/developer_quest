@@ -228,4 +228,14 @@ $ git stash clear
 *Note that this operation may be unrecoverable.
 > Delete a single stash entry:
 $ git stash drop stash@{2}
+ ##### Adding more changes to your last commit
 
+> git add <newfile>
+
+>  git commit --amend or git commit --amend --no-edit (Amending a Commit Without Changing Its Message)
+
+> git push -f origin <some_branch>
+
+Just Editing a Commit Message :
+
+> git commit --amend -m "Your new commit message"
