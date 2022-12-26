@@ -1,0 +1,150 @@
+{
+  "main": {
+    "id": "11098bef9f3fa07d",
+    "type": "split",
+    "children": [
+      {
+        "id": "5e48fc99c23f5a59",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "41f284e6e6950050",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/unix_learnings/AWK/AWK.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "aa568d89e0a5dfd2",
+    "type": "split",
+    "children": [
+      {
+        "id": "17c5f6dad7fb7261",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1ef2f318f4b0208c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "b37d0f0cbe791c0d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "29f7316a3e461919",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 327.5107650756836
+  },
+  "right": {
+    "id": "8384ec5e0e475033",
+    "type": "split",
+    "children": [
+      {
+        "id": "16fba368b88ba67d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8629c599f3e9ca5e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "notes/unix_learnings/AWK/AWK.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "f1ab9c6e2354f083",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "notes/unix_learnings/AWK/AWK.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "c5eac1c73f7a8ac4",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "6e1f037154608972",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "notes/unix_learnings/AWK/AWK.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "41f284e6e6950050",
+  "lastOpenFiles": [
+    "notes/unix_learnings/AWK/Slides for Awk- Hack the planet['s text].pdf",
+    "notes/unix_learnings/AWK/AWK.md",
+    "notes/flutter_points/flutter_articles/blogs/addpostframecallback.md",
+    "notes/flutter_points/flutter_articles/blogs/alfianlosari_com_Building_Places_Location_Search_Map_View_Flutter.pdf",
+    "notes/flutter_points/flutter_in_action.md",
+    "notes/flutter_points/flutter_codewithAdrea.md",
+    "notes/flutter_points/dart_learnings.md",
+    "notes/unix_learnings/linux_essentials_for_hackers.md"
+  ]
+}
