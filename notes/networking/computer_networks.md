@@ -372,52 +372,22 @@ Three forms of NAT:
 SSID - service set identifier
 	
 
+OSI Model:
+[byebytego](https://www.youtube.com/watch?v=0y6FtKsg6J4)
 
 
+![[Screenshot 2022-12-26 at 2.28.10 PM.png]]
 
 
+![[Screenshot 2022-12-26 at 2.28.28 PM.png]]
+
+![[Screenshot 2022-12-26 at 2.27.20 PM.png]]
 
 
-
-
-
-
-
-
-
-
-
-
+![[Screenshot 2022-12-26 at 2.28.52 PM.png]]
 
  
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![[Screenshot 2022-12-26 at 2.29.02 PM.png]]
 
 
 
