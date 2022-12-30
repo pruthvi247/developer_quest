@@ -7,3 +7,5 @@
 
 
 [source : https://dev.to/inakiarroyo/the-builder-pattern-in-dart-efg,https://dev.to/jvarness/the-builder-pattern-in-java-and-dart-cascades-5l7,https://medium.com/flutter-community/flutter-design-patterns-18-builder-cdc90b222724]
+
+FYI,The Builder pattern allows you to build objects rather than construct them.  When used as **verbs**, **build** means to form (something) by combining materials or parts, whereas **construct** means to build or form (something) by assembling parts.

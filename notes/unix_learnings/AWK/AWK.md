@@ -9,3 +9,8 @@ Running an awk program
 - some_command | awk ‘program’ 
 - #!/usr/bin/env awk -f 
 - ./script.awk *.log
+
+
+#####  Other good resources:
+https://www.linode.com/docs/guides/introduction-to-awk/
+https://linuxhandbook.com/awk-command-tutorial/

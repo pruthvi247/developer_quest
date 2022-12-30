@@ -73,56 +73,75 @@ $ netstat -nat | awk '{print $6}' | sort | uniq -c | sort -rn
 [https://vimtricks.com/p/50-useful-vim-commands/]
 Here are 50 useful Vim commands that work in normal mode. Many of these can be combined and modified to produce dozens more. Use these as inspiration for your own repeatable workflows. In no particular order:
 
-gg Move to the first line of the file
-G Move to the last line
-gg=G Reindent the whole file
-gv Reselect the last visual selection
-`< Jump to beginning of last visual selection
-`> Jump to end of last visual selection
-^ Move to first non-blank character of the line
-g_ Move the last non-blank character of the line (but you remove trailing whitespace, right)
-g_lD Delete all the trailing whitespace on the line
-ea Append to the end of the current word
-gf Jump to the file name under the cursor
-xp Swap character forward
-Xp Swap character backward
-yyp Duplicate the current line
-yapP Duplicate the current paragraph
-dat Delete around an HTML tag, including the tag
-dit Delete inside an HTML tag, excluding the tag
-w Move one word to the right
-b Move one word to the left
-dd Delete the current line
-zc Close current fold
-zo Open current fold
-za Toggle current fold
-zi Toggle folding entirely
-<< Outdent current line
->> Indent current line
-z= Show spelling corrections
-zg Add to spelling dictionary
-zw Remove from spelling dictionary
-~ Toggle case of current character
-gUw Uppercase until end of word (u for lower, ~ to toggle)
-gUiw Uppercase entire word (u for lower, ~ to toggle)
-gUU Uppercase entire line
-gu$ Lowercase until the end of the line
-da" Delete the next double-quoted string
-+ Move to the first non-whitespace character of the next line
-S Delete current line and go into insert mode
-I insert at the beginning of the line
-ci" Change what’s inside the next double-quoted string
-ca{ Change inside the curly braces (try [, (, etc.)
-vaw Visually select word
-dap Delete the whole paragraph
-r Replace a character
-`[ Jump to beginning of last yanked text
-`] Jump to end of last yanked text
-g; Jump to the last change you made
-g, Jump back forward through the change list
-& Repeat last substitution on current line
-g& Repeat last substitution on all lines
-ZZ Save the current file and close it
+
+
+| Shortcut      | Description |
+| ----------- | ----------- |
+| gg     | Move to the first line of the file|
+| G     | Move to the last line|
+| gg=G    | Reindent the whole file|
+| gv     | Reselect the last visual selection|
+| g_     | Move the last non-blank character of the line (but you remove trailing whitespace, right)|
+| ^     | Move to first non-blank character of the line|
+| g_lD     | Delete all the trailing whitespace on the line|
+| ea     | Append to the end of the current word|
+| gf     | Jump to the file name under the cursor|
+| xp     | Swap character forward|
+| Xp     | Swap character backward|
+| yyp     | Duplicate the current line|
+| yapP     | Duplicate the current paragraph|
+| dat     | Delete around an HTML tag, including the tag|
+| dit     | Delete inside an HTML tag, excluding the tag|
+| w     | Move one word to the right|
+| b     | Move one word to the left|
+| dd     | Delete the current line|
+| zc     | Close current fold|
+| zo     | Open current fold|
+| za     | Toggle current fold|
+| zi     | Toggle folding entirely|
+| z=     | Show spelling corrections|
+| >>     | Indent current line|
+| <<     | Outdent current line|
+| zg     | Add to spelling dictionary|
+| zw     | Remove from spelling dictionary|
+| ~     | Toggle case of current character|
+| gUw     | Uppercase until end of word (u for lower, ~ to toggle)|
+| gUiw     | Uppercase entire word (u for lower, ~ to toggle)|
+| gUU     | Uppercase entire line|
+| gu$     | Lowercase until the end of the line|
+| da"     | Delete the next double-quoted string|
+| +     | Move to the first non-whitespace character of the next line|
+| S     | Delete current line and go into insert mode|
+| I     | Insert at the beginning of the line|
+| ci"     | Change what's inside the next double-quoted string|
+| ca{     | Change inside the curly braces (try \[, (, etc.) |
+| Vaw     | Visually select word|
+|dap      | Delete the whole paragraph|
+|r      |Replace a character |
+|`\[      |Jump to beginning of last yanked text |
+|`\]      |Jump to the end of last yanked text |
+|g;      |Jump to the last change you made |
+|g,     |Jump back forward through the change list |
+|&      |Repeat last substitution on current lines |
+|g&      |Repeat last substitution on all lines |
+|ZZ      |Save current file and close it |
+#### [special shell variables](https://www.bogotobogo.com/Linux/linux_shell_programming_tutorial3_special_variables.php)
+
+These are special shell variables which are set internally by the shell and which are available to the user:
+
+
+| Variable      | Description |
+| ----------- | ----------- |
+|$0      | The filename of the current script.|
+|$n      | These variables correspond to the arguments with which a script was invoked. Here n is a positive decimal number corresponding to the position of an argument (the first argument is $1, the second argument is $2, and so on).|
+|  $\$      | The process ID of the current shell. For shell scripts, this is the process ID under which they are executing.|
+|$#      | The number of arguments supplied to a script.|
+|$@      | All the arguments are individually double quoted. If a script receives two arguments, $@ is equivalent to $1 $2.|
+|$*      | All the arguments are double quoted. If a script receives two arguments, $* is equivalent to $1 $2.|
+|$?      | The exit status of the last command executed.|
+|$!      | The process ID of the last background command.|
+|$_      | The last argument of the previous command.|
+
 
 
 

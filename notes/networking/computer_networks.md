@@ -390,8 +390,13 @@ OSI Model:
 ![[Screenshot 2022-12-26 at 2.29.02 PM.png]]
 
 
+[source- css tricks](https://css-tricks.com/computer-science-unleashed-chapter-1-connections/)
 
+link layer enables directly connected computers to exchange messages inside frames. The **internet layer**, also known as the **network layer**, specifies how to transmit these messages between computers that are _not_ directly connected. The trick is to equip some computers, called **routers**, with multiple network interfaces. All computers in a network are then linked to at least one router, and all routers are linked to at least one other router. When a router receives a message at one of its network interfaces, it can forward it to another router through a different network interface.
 
+The Internet Protocol sets the rules on how location addresses work–that’s why they’re called **IP addresses**. Computers can only send or receive IP packets after they get an IP address. Permission to use a group of IP addresses is first granted to an organization. These addresses are then assigned to computers which are directly or indirectly associated with the organization.
+
+computers on the Internet can exchange information—such as ICMP messages—in IP packet payloads. However, the true power of the Internet is unleashed when applications, not computers, start using IP packet payloads to send each other data. This requires extra information to be included in the IP packets so that a computer can handle multiple streams of data for the different applications it runs. This extra information is described by the **transport layer**, which includes the famous TCP and UDP protocols.
 
 
 
