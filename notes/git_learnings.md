@@ -239,3 +239,22 @@ $ git stash drop stash@{2}
 Just Editing a Commit Message :
 
 > git commit --amend -m "Your new commit message"
+
+#### [Git merge vs Rebase](https://blog.bytebytego.com/i/99358794/git-merge-vs-git-rebase-what-are-the-differences)
+
+**Git Merge**  
+This creates a new commit G’ in the main branch. G’ ties the histories of both main and feature branches.  
+  
+Git merge is **non-destructive**. Neither the main nor the feature branch is changed.  
+  
+**Git Rebase**  
+Git rebase moves the feature branch histories to the head of the main branch. It creates new commits E’, F’, and G’ for each commit in the feature branch.  
+  
+The benefit of rebase is that it has **linear commit history.**  
+  
+Rebase can be dangerous if “the golden rule of git rebase” is not followed.
+
+![[Pasted image 20230201122545.png]]
+
+
+
