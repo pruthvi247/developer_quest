@@ -85,3 +85,20 @@ Only the cool kids use this one.
 -   Mac: `Cmd + J` for terminal, `Cmd + 1` for code
 					or
 - ctrl + ~
+
+
+
+[Vandad Nahavandipoor-vscode-hack](https://twitter.com/vandadnp/status/1594903766418997250?s=20)
+
+
+VSCode generate not only your constructor but add required keywords to the params!
+
+**settings.json**
+
+```json
+"quickfix.add.required": true
+"quickfix.add.required.multi": true
+"quickfix.create.constructorForFinalFields": true
+```
+
+![[Pasted image 20230403173658.png]]

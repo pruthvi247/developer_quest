@@ -4,28 +4,28 @@
     "type": "split",
     "children": [
       {
-        "id": "b97aada0fd1189ff",
+        "id": "5a0a2dd56905d2b9",
         "type": "tabs",
         "children": [
           {
-            "id": "39063c52683e4bae",
+            "id": "2601b915100d10c4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/git_learnings.md",
+                "file": "notes/shortcuts/vs_code_shotcuts.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "2b0820f0440c9d16",
+            "id": "9f9668ce70e736ef",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
                 "mode": "source",
                 "source": false
               }
@@ -82,7 +82,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 359.5
+    "width": 359.5,
+    "collapsed": true
   },
   "right": {
     "id": "8384ec5e0e475033",
@@ -98,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md"
+                "file": "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md"
               }
             }
           }
@@ -147,7 +148,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -159,17 +161,29 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2b0820f0440c9d16",
+  "active": "9f9668ce70e736ef",
   "lastOpenFiles": [
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135644.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135213.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135150.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135127.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135057.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135043.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135007.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404134944.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404134824.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404134805.png",
+    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404134744.png",
+    "notes/shortcuts/vs_code_shotcuts.md",
+    "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
+    "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
+    "notes/flutter_points/flutter_articles/blogs/philip-hracek- mythical-designer-developer.md",
     "notes/git_learnings.md",
-    "notes/images/Pasted image 20230201122545.png",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md",
+    "Untitled.md",
     "workspace/design_patterns/programs/dart_implementations/abstract_factory_pattern/medium_com_Flutter_Design_Patterns_11_Abstract_Factory.pdf",
     "workspace/design_patterns/programs/java_implementations/adapter_pattern/baeldung_com_Adapter_Pattern_Java.pdf",
-    "notes/flutter_points/flutter_articles/flutter_misc/images/Pasted image 20230111074759.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Dev Tools.md",
-    "notes/flutter_points/flutter_articles/codepen/images/Pasted image 20230111095453.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/images/Pasted image 20230111084247.png",
-    "notes/flutter_points/dart_learnings.md",
-    "notes/maths/MathConcepts.md"
+    "notes/flutter_points/flutter_articles/flutter_misc/Dev Tools.md"
   ]
 }

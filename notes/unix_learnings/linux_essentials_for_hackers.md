@@ -50,6 +50,24 @@ find /path -name "*.txt" -mtime -10
 
 >> find / -user <username> -group <groupname> -size 33c
 
+>> find . -not -type f
+
+The -newer option in the find command searches for files that are modified after the last modification of the given file
+>> find [path] -newer [reference_file]
+
+To search for files that were accessed a few minutes ago, you can use the -amin argument. This argument will accept the number of minutes (n) and finds all the files that are accessed n minutes ago.
+
+>> find . -amin -30
+
+To search only for the empty directories, you can combine the -empty option with the -type option:
+>> find . -type d -empty
+
+For example, let's assume you want to search the files whose names start with the letter w. You can use the below command to do that:
+
+>> find . -regex "./w.*"
+
+
+
 Shells :
 > user can change the default shell that needs to be used
 > chsh -> command will help to change the default shell for a user
