@@ -11,11 +11,9 @@
             "id": "2601b915100d10c4",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "notes/shortcuts/vs_code_shotcuts.md",
-                "mode": "source",
-                "source": false
+                "file": "notes/flutter_points/flutter_articles/issues_solutions/EnablethePushNotificationserviceforyouriOS app.pdf"
               }
             }
           },
@@ -30,9 +28,18 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "3e1b61d37922637a",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "notes/unix_learnings/AWK/Slides-Awk-Hack-the-planet.pdf"
+              }
+            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -77,13 +84,20 @@
               "type": "starred",
               "state": {}
             }
+          },
+          {
+            "id": "34fb4d747ce794d0",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 359.5,
-    "collapsed": true
+    "width": 359.5
   },
   "right": {
     "id": "8384ec5e0e475033",
@@ -99,7 +113,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
+                "file": "notes/flutter_points/flutter_articles/issues_solutions/EnablethePushNotificationserviceforyouriOS app.pdf",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +130,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
+                "file": "notes/flutter_points/flutter_articles/issues_solutions/EnablethePushNotificationserviceforyouriOS app.pdf",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +153,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md"
+                "file": "notes/flutter_points/flutter_articles/issues_solutions/EnablethePushNotificationserviceforyouriOS app.pdf"
               }
             }
           }
@@ -161,8 +175,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9f9668ce70e736ef",
+  "active": "1ef2f318f4b0208c",
   "lastOpenFiles": [
+    "notes/dockerAndKube/kubernetes/cka/kubernetes-cka-networking.pdf",
+    "notes/dockerAndKube/kubernetes/cka/Ingress.pdf",
+    "notes/dockerAndKube/kubernetes/screen_shots/Screenshot 2021-09-08 at 7.48.14 AM.png",
+    "notes/dockerAndKube/kubernetes/screen_shots/BGv4C.png",
+    "notes/shortcuts/vs_code_shotcuts.md",
+    "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
+    "notes/unix_learnings/AWK/Slides-Awk-Hack-the-planet.pdf",
+    "notes/unix_learnings/AWK/AWK.md",
+    "notes/unix_learnings/unix_learnings.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Diving-into-riverpod-remirousselet.md",
     "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135644.png",
     "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135213.png",
     "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135150.png",
@@ -171,11 +195,6 @@
     "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135043.png",
     "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404135007.png",
     "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404134944.png",
-    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404134824.png",
-    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404134805.png",
-    "notes/flutter_points/flutter_articles/blogs/images/Pasted image 20230404134744.png",
-    "notes/shortcuts/vs_code_shotcuts.md",
-    "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
     "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
     "notes/flutter_points/flutter_articles/blogs/philip-hracek- mythical-designer-developer.md",
     "notes/git_learnings.md",
