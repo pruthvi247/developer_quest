@@ -145,6 +145,8 @@ These are special shell variables which are set internally by the shell and whic
 
 
 
+[image source](https://blog.bytebytego.com/p/ep63-linux-file-system-explained)
 
+![[Pasted image 20230611100330.png]]
 
 
