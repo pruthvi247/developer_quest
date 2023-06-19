@@ -4,15 +4,19 @@
     "type": "split",
     "children": [
       {
-        "id": "f7a2df2de986e61e",
+        "id": "5800382c5e2af934",
         "type": "tabs",
         "children": [
           {
-            "id": "233536bd49ee4805",
+            "id": "25e821e6292defee",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -89,6 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,6 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +132,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md"
+              }
             }
           }
         ],
@@ -147,11 +155,24 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "233536bd49ee4805",
+  "active": "25e821e6292defee",
   "lastOpenFiles": [
+    "notes/dockerAndKube/kubernetes/k8s-begginners/images/Pasted image 20230616125028.png",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/images/Pasted image 20230616113452.png",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/images/Pasted image 20230616112633.png",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/images/Pasted image 20230616111003.png",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/images",
+    "notes/networking/osimodel.md",
+    "notes/networking/images/Pasted image 20230616105135.png",
+    "notes/networking/images/Pasted image 20230616100715.png",
+    "notes/networking/images/Pasted image 20230616100225.png",
+    "notes/networking/images",
+    "notes/networking/computer_networks.md",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/5-pods.md",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/1-Introduction.md",
     "notes/flutter_points/flutter_articles/blogs/Animation-deep-dive.md",
     "notes/flutter_points/flutter_articles/flutter_misc/Dev Tools.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/1-Introduction.md",
     "notes/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
     "notes/dockerAndKube/kubernetes/k8s-begginners/annotations-plugin-settings.md",
     "notes/flutter_points/flutter_articles/blogs/images/1_y4Pbt8ehWTAEfL9_M8Aoog.gif",
@@ -167,21 +188,13 @@
     "Pasted image 20230204115732.png.md",
     "workspace/design_patterns/programs/dart_implementations/abstract_factory_pattern/Abstract-Factory-BuildingTheme.pdf",
     "workspace/design_patterns/programs/java_implementations/adapter_pattern/images/Pasted image 20230204115732 1.png",
-    "workspace/design_patterns/programs/java_implementations/adapter_pattern/images/Pasted image 20230204115732.png",
     "workspace/design_patterns/programs/java_implementations/adapter_pattern/images",
     "workspace/design_patterns/programs/java_implementations/abstract_factory_pattern/stackabuse_com_Creational_Design_Patterns_Java.pdf",
-    "workspace/design_patterns/programs/java_implementations/adapter_pattern/baeldung_com_Adapter_Pattern_Java.pdf",
-    "workspace/design_patterns/programs/dart_implementations/abstract_factory_pattern/medium_com_Flutter_Design_Patterns_11_Abstract_Factory.pdf",
     "workspace/design_patterns/programs/dart_implementations/builder_pattern/builder_pattern_notes.md",
     "notes/git_learnings.md",
     "notes/unix_learnings/sed/Visual_Guide_sed.md",
-    "notes/unix_learnings/sed/images/Pasted image 20230611104139.png",
-    "notes/unix_learnings/sed/images/Pasted image 20230611103943.png",
     "notes/unix_learnings/unix_learnings.md",
     "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
-    "notes/unix_learnings/sed/images/Pasted image 20230611103400.png",
-    "notes/unix_learnings/sed/images/Pasted image 20230611102953.png",
-    "notes/unix_learnings/images/Pasted image 20230611100330.png",
     "notes/shortcuts/vs_code_shotcuts.md",
     "notes/unix_learnings/AWK/AWK.md",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Diving-into-riverpod-remirousselet.md",
