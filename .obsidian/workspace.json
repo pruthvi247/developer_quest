@@ -1,39 +1,62 @@
 {
   "main": {
-    "id": "11098bef9f3fa07d",
+    "id": "cc62bad8d65ee5cd",
     "type": "split",
     "children": [
       {
-        "id": "5800382c5e2af934",
-        "type": "tabs",
+        "id": "aae3b99815fa7fa2",
+        "type": "split",
         "children": [
           {
-            "id": "25e821e6292defee",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
-                "mode": "source",
-                "source": false
+            "id": "13992074a4750a18",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "54977eb3e2a6c8e7",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "notes/dockerAndKube/kubernetes/cka/cka-notes/1-Architecture.md",
+                    "mode": "source",
+                    "source": false
+                  }
+                }
               }
-            }
+            ]
+          },
+          {
+            "id": "664dda7af0e8f8bd",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "1dadb7e310645606",
+                "type": "leaf",
+                "state": {
+                  "type": "pdf",
+                  "state": {
+                    "file": "notes/dockerAndKube/kubernetes/cka/Kubernetes-CKA-Core-Concepts.pdf"
+                  }
+                }
+              }
+            ]
           }
-        ]
+        ],
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "aa568d89e0a5dfd2",
+    "id": "f84b511c848ae068",
     "type": "split",
     "children": [
       {
-        "id": "17c5f6dad7fb7261",
+        "id": "c7689af9ebdf46a8",
         "type": "tabs",
         "children": [
           {
-            "id": "1ef2f318f4b0208c",
+            "id": "7ed38db13feae60d",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -43,7 +66,7 @@
             }
           },
           {
-            "id": "b37d0f0cbe791c0d",
+            "id": "b35489a06b925ed5",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -58,15 +81,7 @@
             }
           },
           {
-            "id": "29f7316a3e461919",
-            "type": "leaf",
-            "state": {
-              "type": "starred",
-              "state": {}
-            }
-          },
-          {
-            "id": "34fb4d747ce794d0",
+            "id": "5fc4c687379657ec",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -77,23 +92,24 @@
       }
     ],
     "direction": "horizontal",
-    "width": 359.5
+    "width": 300,
+    "collapsed": true
   },
   "right": {
-    "id": "8384ec5e0e475033",
+    "id": "05d70312eebde015",
     "type": "split",
     "children": [
       {
-        "id": "16fba368b88ba67d",
+        "id": "07097246482939f7",
         "type": "tabs",
         "children": [
           {
-            "id": "8629c599f3e9ca5e",
+            "id": "cae814e18f6ba514",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
+                "file": "notes/dockerAndKube/kubernetes/cka/cka-notes/1-Architecture.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,19 +121,19 @@
             }
           },
           {
-            "id": "f1ab9c6e2354f083",
+            "id": "fff1bf22c4437d50",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
+                "file": "notes/dockerAndKube/kubernetes/cka/cka-notes/1-Architecture.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "c5eac1c73f7a8ac4",
+            "id": "6b94dbbdf3fcada8",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -128,17 +144,16 @@
             }
           },
           {
-            "id": "6e1f037154608972",
+            "id": "1a119c2cbe2885de",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md"
+                "file": "notes/dockerAndKube/kubernetes/cka/cka-notes/1-Architecture.md"
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -155,52 +170,52 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "25e821e6292defee",
+  "active": "54977eb3e2a6c8e7",
   "lastOpenFiles": [
-    "notes/dockerAndKube/kubernetes/k8s-begginners/images/Pasted image 20230616125028.png",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/images/Pasted image 20230616113452.png",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/images/Pasted image 20230616112633.png",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/images/Pasted image 20230616111003.png",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/images",
-    "notes/networking/osimodel.md",
-    "notes/networking/images/Pasted image 20230616105135.png",
-    "notes/networking/images/Pasted image 20230616100715.png",
-    "notes/networking/images/Pasted image 20230616100225.png",
-    "notes/networking/images",
-    "notes/networking/computer_networks.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/5-pods.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/1-Introduction.md",
-    "notes/flutter_points/flutter_articles/blogs/Animation-deep-dive.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Dev Tools.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/annotations-plugin-settings.md",
-    "notes/flutter_points/flutter_articles/blogs/images/1_y4Pbt8ehWTAEfL9_M8Aoog.gif",
-    "notes/flutter_points/flutter_articles/blogs/images/1_-T1fn-7fK2OU-z711XG_8A.gif",
-    "notes/articles/dart_solid_principles/dart_solid_principles.pdf",
-    "Untitled.md",
+    "notes/dockerAndKube/kubernetes/cka/Kubernetes-CKA-Core-Concepts.pdf",
+    "notes/dockerAndKube/kubernetes/cka/cka-notes/1-Architecture.md",
+    "notes/dockerAndKube/kubernetes/cka/cka-notes",
     "notes/dockerAndKube/kubernetes/examples/voting-app/Readme.md",
-    "notes/articles/misc_articles/cloudnative.jpg",
-    "notes/dockerAndKube/kubernetes/cka/Ingress.pdf",
+    "notes/dockerAndKube/kubernetes/cka/practice-examples",
     "notes/dockerAndKube/kubernetes/cka/kubernetes-cka-networking.pdf",
-    "workspace/design_patterns/programs/java_implementations/adapter_pattern/FlutterDesignPatterns-Adapter.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners",
-    "Pasted image 20230204115732.png.md",
-    "workspace/design_patterns/programs/dart_implementations/abstract_factory_pattern/Abstract-Factory-BuildingTheme.pdf",
+    "notes/dockerAndKube/kubernetes/cka/kubernetes-Core-concepts-2.pdf",
+    "notes/dockerAndKube/kubernetes/cka/kubernetes-services-updated.pdf",
+    "notes/dockerAndKube/kubernetes/cka/kuberneters-Core-concepts-2.pdf",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
+    "notes/networking/osimodel.md",
+    "notes/networking/computer_networks.md",
+    "workspace/misc/asci_art.py",
+    "workspace/misc",
+    "workspace/design_patterns/programs/python_implementations/builder_pattern/builder_pattern_notes.md",
+    "workspace/design_patterns/programs/java_implementations/builder_pattern/builder_pattern_notes.md",
     "workspace/design_patterns/programs/java_implementations/adapter_pattern/images/Pasted image 20230204115732 1.png",
-    "workspace/design_patterns/programs/java_implementations/adapter_pattern/images",
-    "workspace/design_patterns/programs/java_implementations/abstract_factory_pattern/stackabuse_com_Creational_Design_Patterns_Java.pdf",
+    "workspace/design_patterns/programs/java_implementations/adapter_pattern/FlutterDesignPatterns-Adapter.md",
     "workspace/design_patterns/programs/dart_implementations/builder_pattern/builder_pattern_notes.md",
-    "notes/git_learnings.md",
-    "notes/unix_learnings/sed/Visual_Guide_sed.md",
     "notes/unix_learnings/unix_learnings.md",
-    "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
-    "notes/shortcuts/vs_code_shotcuts.md",
+    "notes/unix_learnings/sed/images/Pasted image 20230611104139.png",
+    "notes/unix_learnings/sed/images/Pasted image 20230611103943.png",
+    "notes/unix_learnings/sed/images/Pasted image 20230611103400.png",
+    "notes/unix_learnings/sed/images/Pasted image 20230611102953.png",
+    "notes/unix_learnings/sed/Visual_Guide_sed.md",
+    "notes/unix_learnings/linux_essentials_for_hackers.md",
+    "notes/unix_learnings/images/Pasted image 20230611100330.png",
     "notes/unix_learnings/AWK/AWK.md",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Diving-into-riverpod-remirousselet.md",
+    "notes/shortcuts/images/Pasted image 20230403173658.png",
+    "notes/shortcuts/images/1_x5sLfCWFDQncjUHMleBXIA.gif",
+    "notes/shortcuts/images/1_Z70jxpqDWsR8k_QaivzLvQ.gif",
+    "notes/shortcuts/images/1_Xws0GwbHeJux8Uwh17SMSQ.gif",
+    "notes/shortcuts/vs_code_shotcuts.md",
+    "notes/shortcuts/shortcuts.md",
+    "notes/shortcuts/mac_shortcuts.md",
+    "notes/shortcuts/iterm2.md",
+    "notes/maths/MathConcepts.md",
+    "notes/git_learnings.md",
+    "notes/flutter_points/flutter_in_action.md",
+    "notes/flutter_points/flutter_codewithAdrea.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Dev Tools.md",
     "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
-    "notes/flutter_points/flutter_articles/blogs/philip-hracek- mythical-designer-developer.md",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
-    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md"
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Diving-into-riverpod-remirousselet.md",
+    "notes/flutter_points/flutter_articles/blogs/philip-hracek- mythical-designer-developer.md"
   ]
 }
