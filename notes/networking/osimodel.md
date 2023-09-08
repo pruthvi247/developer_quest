@@ -55,6 +55,24 @@ How do the OSI model layers map to a Linux server implementation? The diagram be
 
 ![[Pasted image 20230616105135.png]]
 
+OSI model [redit](https://www.reddit.com/r/explainlikeimfive/comments/jmg1x/eli5_can_someone_explain_the_osi_model_like_i_am_5/)
+I'll give it a shot. I'm pretty sure that if I mess this up someone will be along to correct me. :)
+
+Layer 1 - Physical: The wires connecting all the telephones together in your neighbourhood.
+
+Layer 2 - Data Link: The phone numbers for everyone in your neighbourhood
+
+Layer 3 - Network: The address book your mom has with your neighbours names and their phone numbers.
+
+Layer 4 - Transport: The telephone company.
+
+Layer 5 - Session: The telephone company's equipment that makes the phone ring when someone calls and ends the call when everyone hangs up the phone.
+
+Layer 6 - Presentation: The telephone in your house.
+
+Layer 7 - Application: The microphone and speaker on the telephone that let you hear the other person and let them hear you talking.
+
+
 
 
 

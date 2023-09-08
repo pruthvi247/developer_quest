@@ -399,6 +399,9 @@ The Internet Protocol sets the rules on how location addresses work–that’s w
 computers on the Internet can exchange information—such as ICMP messages—in IP packet payloads. However, the true power of the Internet is unleashed when applications, not computers, start using IP packet payloads to send each other data. This requires extra information to be included in the IP packets so that a computer can handle multiple streams of data for the different applications it runs. This extra information is described by the **transport layer**, which includes the famous TCP and UDP protocols.
 
 
+![[Pasted image 20230816094302.png]]
+
+
 
 
 
