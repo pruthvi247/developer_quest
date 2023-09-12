@@ -189,6 +189,12 @@ Move Up/Downto select the columns of text in the lines you want to comment.
 Then hit Shift+i and type the text you want to insert.
 Then hit Esc, wait 1 second and the inserted text will appear on every line.
 
+# [copy selected lines to clipboard in vim](https://stackoverflow.com/questions/9166328/how-to-copy-selected-lines-to-clipboard-in-vim)
+Answer: 
+`SHIFT+V` puts you in select lines mode. Then `"+y ` yanks the currently selected lines to the `+` register which is the clipboard. There are [quite a few](http://vimdoc.sourceforge.net/htmldoc/change.html#registers) different registers, for different purposes. See the section on `selection and drop registers` for details on the differences between `*` and `+` registers on Windows and Linux. Note that there is only a distinction between "* and "+ for X11 systems. Under MS-Windows, use of "* and "+ is actually synonymous and refers to the gui-clipboard. So, on windows `*` (sharp) register can be used as well: "*y
+
+
+
 
 
 

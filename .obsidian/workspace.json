@@ -4,59 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "0505e0f6b61580f7",
-        "type": "split",
+        "id": "4ad11c911fca15e1",
+        "type": "tabs",
         "children": [
           {
-            "id": "65de0c4bc9b99392",
-            "type": "tabs",
-            "dimension": 47.86931818181818,
-            "children": [
-              {
-                "id": "c85c9df8b913c0fe",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "notes/dockerAndKube/docker/DockerimagesForDebugging-martinheinz.md",
-                    "mode": "source",
-                    "source": false
-                  }
-                }
-              },
-              {
-                "id": "4928c0a0385d08a9",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "notes/dockerAndKube/kubernetes/cka/2-Core-Concepts.md",
-                    "mode": "source",
-                    "source": false
-                  }
-                }
+            "id": "c5cf658514a8bada",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
+                "mode": "source",
+                "source": false
               }
-            ]
-          },
-          {
-            "id": "044d86c245c58e39",
-            "type": "tabs",
-            "dimension": 52.13068181818182,
-            "children": [
-              {
-                "id": "fd7b677a6fbfe9a3",
-                "type": "leaf",
-                "state": {
-                  "type": "pdf",
-                  "state": {
-                    "file": "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/4-CKALogging-Monitoring.pdf"
-                  }
-                }
-              }
-            ]
+            }
           }
-        ],
-        "direction": "horizontal"
+        ]
       }
     ],
     "direction": "vertical"
@@ -122,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/dockerAndKube/docker/DockerimagesForDebugging-martinheinz.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/dockerAndKube/docker/DockerimagesForDebugging-martinheinz.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/dockerAndKube/docker/DockerimagesForDebugging-martinheinz.md"
+                "file": "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md"
               }
             }
           }
@@ -183,28 +146,40 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c85c9df8b913c0fe",
+  "active": "7ed38db13feae60d",
   "lastOpenFiles": [
+    "notes/flutter_points/flutter_shortcuts.md",
+    "notes/flutter_points/flutter_learnings.md",
+    "notes/flutter_points/flutter_learnings_1.md",
+    "notes/flutter_points/flutter_issues.md",
+    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md",
+    "notes/flutter_points/flutter_articles/blogs/greg_Notification_Android_iOS_Flutter.pdf",
+    "notes/flutter_points/flutter_articles/blogs/philip-hracek- mythical-designer-developer.md",
     "notes/dockerAndKube/kubernetes/cka/5-Application-lifecycle-management.md",
-    "notes/dockerAndKube/docker/DockerimagesForDebugging-martinheinz.md",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230908133108.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230908133037.png",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/5-CKA-Application-Lifecycle-Management.pdf",
+    "notes/shortcuts/shortcuts.md.md",
+    "notes/unix_learnings/unix_learnings.md",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912202016.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912201921.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912201559.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912180459.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912175341.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/configmap-diagram.gif",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912175353.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912124708.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912124539.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912124513.png",
+    "Pasted image 20230912124418.png.md",
+    "notes/networking/osimodel.md",
+    "notes/networking/computer_networks.md",
     "notes/dockerAndKube/kubernetes/cka/4-logging-monitoring.md",
+    "notes/dockerAndKube/docker/DockerimagesForDebugging-martinheinz.md",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/4-CKALogging-Monitoring.pdf",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-Kubernetescheduling.pdf",
     "notes/dockerAndKube/kubernetes/cka/3-Scheduling.md",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230906215139.png",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-StaticPods.pdf",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230906215035.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230906214920.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230906214806.png",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-Networking.pdf",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230906213455.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230905200700.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230905200650.png",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-taints-tolerations.pdf",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230905191636.png",
     "notes/dockerAndKube/kubernetes/cka/2-Core-Concepts.md",
     "notes/dockerAndKube/kubernetes/examples/voting-app/Readme.md",
     "notes/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
@@ -216,20 +191,8 @@
     "README.md",
     "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/2-kubernetes-cka-networking.pdf",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/2-Kubernetes-CKA-Core-Concepts.pdf",
     "notes/dockerAndKube/kubernetes/cka/1-Architecture.md",
-    "notes/networking/computer_networks.md",
     "notes/dockerAndKube/kubernetes/k8s-begginners/5-pods.md",
-    "notes/networking/osimodel.md",
-    "notes/networking/osimodel.md",
-    "notes/dockerAndKube/kubernetes/cka/cka-notes/1-Architecture.md",
-    "workspace/design_patterns/programs/python_implementations/builder_pattern/builder_pattern_notes.md",
-    "workspace/design_patterns/programs/java_implementations/builder_pattern/builder_pattern_notes.md",
-    "workspace/design_patterns/programs/java_implementations/adapter_pattern/FlutterDesignPatterns-Adapter.md",
-    "workspace/design_patterns/programs/dart_implementations/builder_pattern/builder_pattern_notes.md",
-    "notes/unix_learnings/unix_learnings.md",
-    "notes/unix_learnings/sed/Visual_Guide_sed.md",
-    "notes/unix_learnings/linux_essentials_for_hackers.md",
-    "notes/unix_learnings/AWK/AWK.md"
+    "notes/dockerAndKube/kubernetes/cka/cka-notes/1-Architecture.md"
   ]
 }
