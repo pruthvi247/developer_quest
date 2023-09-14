@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: nginx
+    env: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      env: production 
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: nginx
+        env: production
+    spec:
+      containers:
+        - name: nginx-controller
+          image: nginx

@@ -1,0 +1,158 @@
+[source: https://medium.com/fintechexplained/top-python-tips-tricks-dd996b807865]
+Note: This article we coulnt convert to pdf so copy pasted the content
+Top Python Tips & Tricks:
+
+1. Unpacking Array Items
+first_name, last_name = ['Farhad', 'Malik']
+print(first_name) #It will print Farhad
+print(last_name) #It will print Malik
+
+
+2. Swapping Variables
+first_name, last_name = ['Farhad', 'Malik']
+last_name, first_name = first_name, last_name
+print(first_name) #It will print Malik
+print(last_name) #It will print Farhad
+
+3. Profile And Stats Of Your Code
+import cProfile, pstats, StringIO 
+pr = cProfile.Profile() 
+pr.enable() 
+# ... do something ... pr.disable() 
+s = StringIO.StringIO()
+ps = pstats.Stats(pr, stream=s).sort_stats(‘cumulative’) 
+ps.print_stats() 
+print s.getvalue()
+
+4. Repeat String
+'A'*3 will repeat A three times:  AAA
+Python Is A Great Language
+
+5. Slicing
+y = 'Abc'
+y[:2] = ab
+y[1:] = bc
+y[:-2] = a
+y[-2:] = bc
+
+6. Reversing
+x = 'abc'
+x = x[::-1]
+
+7. Negative Index
+If you want to start from the last character then use negative index.
+y = 'abc'
+print(y[-1]) # will return c
+
+8. Intersect Sets
+To get what’s common in two sets
+a = {1,2,3}
+b = {3,4,5}
+c = a.intersection(b)
+
+9. Difference In Sets
+To retrieve the difference between two sets:
+a = {1,2,3}
+b = {3,4,5}
+c = a.difference(b)
+
+
+10. Union Of Collections
+To get a distinct combined set of two sets
+a = {1,2,3}
+b = {3,4,5}
+c = a.union(b)
+
+11. Optional Arguments
+We can pass in optional arguments by providing a default value to an argument:
+def my_new_function(my_value='hello'):
+  print(my_value)
+#Calling
+my_new_function() => prints hello
+my_new_function('test') => prints test
+
+12. Unknown Arguments Using *arguments
+If your function can take in any number of arguments then add a * in front of the parameter name:
+def myfunc(*arguments):
+ for a in arguments:
+   print a
+myfunc(a)
+myfunc(a,b)
+myfunc(a,b,c)
+
+13. Dictionary As Arguments Using **arguments
+It allows you to pass varying number of keyword arguments to a function.
+You can also pass in dictionary values as keyword arguments:
+def myfunc(**arguments):
+  return arguments['key']
+
+14. Function With Multiple Outputs
+If a function is required to return multiple values then:
+resultA, resultB = get_result()
+get_result() can return ('a', 1) which is a tuple
+
+
+15. One Liner For Loops
+[Variable] AggregateFunction([Value] for [item] in [collection])
+
+16. Combining Lists Using Zip
+Takes multiple collections and returns a new collection.
+The new collection contains items where each item contains one element from each input collection.
+It allows us to transverse multiple collections at the same time
+name = 'farhad'
+suffix = [1,2,3,4,5,6]
+zip(name, suffix)
+--> returns (f,1),(a,2),(r,3),(h,4),(a,5),(d,6)
+
+17. Free up Memory
+Manual garbage collection can be performed on timely or event based mechanism.
+import gc
+collected_objects = gc.collect()
+
+18. Using Decorators
+Decorators can add functionality to code. They are essentially functions that call other objects/functions. They are callable functions — therefore they return the object to be called later when the decorated function is invoked.
+Think of decorates that enable aspect-oriented programming
+We can wrap a class/function and then a specific code will be executed any time the function is called.
+This example is illustrating how you can print function name. This is just an example code to demonstrate how you can call a decorater. You can use decorators to call your loggers, perform security operations etc.
+def my_logger(function):
+   
+    @functools.wraps(function)
+    def logger(*args, **kwargs):
+        print(function.__name__)
+        return function(*args, **kwargs)
+    return logger
+Now use it in your functions:
+@my_logger
+def hi():
+  print 'hi'
+@my_logger
+def bye(a):
+  print 'bye' + a
+
+19. Unzipping
+name = 'farhad'
+suffix = [1,2,3,4,5,6]
+result = zip(name, suffix)
+--> returns (f,1),(a,2),(r,3),(h,4),(a,5),(d,6)
+unzipped = zip(*result)
+
+20. Joining Collection
+name = ["FinTech", "Explained"] 
+print(" ".join(name))
+21. Memory Footprint Of An Object
+import sys 
+x = 'farhadmalik'
+print(sys.getsizeof(x))
+
+22. Print Current Directory
+import os
+print(os.getcwd())
+
+23. Print Imported Modules
+import sys
+imported_modules = [m.__name__ for m in sys.modules.values() if m]
+24. Get Current Process Id
+import os
+
+os.getpid()
+

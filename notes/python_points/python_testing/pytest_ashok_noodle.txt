@@ -1,0 +1,819 @@
+Original page: Pytest basics
+
+    Installation
+    Code examples
+    Execution
+    Create your first test
+    Group multiple tests in a class
+    Specifying tests / selecting tests
+    Modifying Python traceback printing
+    Asserts
+    Assertions about expected exceptions
+    Fixtures
+    conftest.py: sharing fixture functions
+    Fixture scope
+    Fixture teardown
+    Factories as fixtures
+    Parametrizing fixtures
+    All combinations of multiple parametrized arguments
+    Apply indirect parametrization on particular arguments
+    Automatic grouping of tests by fixture instances
+    Autouse fixtures
+    Overriding fixtures on various levels
+    Marking test functions with attributes
+    Registering marks
+    Raising errors on unknown marks
+    Skip and xfail: dealing with tests that cannot succeed
+    XFail: mark test functions as expected to fail
+    Skip/xfail with parametrize
+    Generating parameters combinations, depending on command line
+    Set marks or test ID for individual parametrized test
+    Parametrizing conditional raising
+    Request fixture
+    References
+
+
+Installation
+​ $ pip3 install -U virtualenv
+​ $ python3 -m virtualenv venv
+​ $ source venv/bin/activate
+​ $ pip install pytest
+ 
+ ​$ ​​pytest​​ ​​--help​
+   usage: pytest [options] [file_or_dir] [file_or_dir] [...]
+Code examples
+
+https://bitbucket.org/noodleai/pytest-tutorial/src/master/
+Execution
+$ ​​pytest​​ ​file_path/test_file.py::test_method_name
+
+More details at under How to execute tests section: Automation Framework
+Create your first test
+
+Create a simple test function with just four lines of code:
+def increment(x):
+    return x + 1
+ 
+def test_answer():
+    assert increment(3) == 5
+
+
+$ pytest
+=========================== test session starts ============================
+platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y
+cachedir: $PYTHON_PREFIX/.pytest_cache
+rootdir: $REGENDOC_TMPDIR
+collected 1 item
+ 
+test_sample.py F                                                     [100%]
+ 
+================================= FAILURES =================================
+_______________________________ test_answer ________________________________
+ 
+    def test_answer():
+>       assert increment(3) == 5
+E       assert 4 == 5
+E        +  where 4 = increment(3)
+ 
+test_sample.py:6: AssertionError
+============================ 1 failed in 0.12s =============================
+
+This test returns a failure report because func(3) does not return 5.
+Group multiple tests in a class
+class TestClass:
+    def test_one(self):
+        x = "this"
+        assert "h" in x
+ 
+    def test_two(self):
+        x = "hello"
+        assert hasattr(x, "check")
+
+
+Specifying tests / selecting tests
+
+Pytest supports several ways to run and select tests from the command-line.
+
+Run tests in a module
+
+pytest test_mod.py
+
+Run tests in a directory
+
+pytest testing/
+
+Run tests by keyword expressions
+
+pytest -k "MyClass and not method"
+
+This will run tests which contain names that match the given string expression, which can include Python operators that use filenames, class names and function names as variables. The example above will run TestMyClass.test_something but not TestMyClass.test_method_simple.
+
+Run tests by node ids
+
+Each collected test is assigned a unique nodeid which consist of the module filename followed by specifiers like class names, function names and parameters from parametrization, separated by :: characters.
+
+To run a specific test within a module:
+
+pytest test_mod.py::test_func
+
+Another example specifying a test method in the command line:
+
+pytest test_mod.py::TestClass::test_method
+
+Run tests by marker expressions
+
+pytest -m slow
+
+Will run all tests which are decorated with the @pytest.mark.slow decorator.
+
+
+Modifying Python traceback printing
+# examples of traceback and error reporting
+ 
+pytest --showlocals # show local variables in tracebacks
+pytest -l           # show local variables (shortcut)
+ 
+pytest --tb=auto    # (default) 'long' tracebacks for the first and last
+                     # entry, but 'short' style for the other entries
+pytest --tb=long    # exhaustive, informative traceback formatting
+pytest --tb=short   # shorter traceback format
+pytest --tb=line    # only one line per failure
+pytest --tb=native  # Python standard library formatting
+pytest --tb=no      # no traceback at all
+
+
+Test status examples
+@pytest.fixture
+def error_fixture():
+    assert 0
+ 
+def test_ok():
+    print("ok")
+ 
+def test_fail():
+    assert 0
+ 
+def test_error(error_fixture):
+    pass
+ 
+def test_skip():
+    pytest.skip("skipping this test")
+ 
+def test_xfail():
+    pytest.xfail("xfailing this test")
+ 
+@pytest.mark.xfail(reason="always xfail")
+def test_xpass():
+    pass
+
+
+Asserts
+Using assert
+assert <expression>
+ 
+assert a == b
+assert a <= b
+assert some_boolean
+Assertions about expected exceptions
+
+In order to write assertions about raised exceptions, you can use pytest.raises as a context manager like this:
+def test_zero_division():
+    with pytest.raises(ZeroDivisionError):
+        1 / 0
+ 
+# if you need to have access to the actual exception info you may use:
+ 
+def test_recursion_depth():
+    with pytest.raises(RuntimeError) as excinfo:
+        def f():
+            f()
+        f()
+    assert "maximum recursion" in str(excinfo.value)
+Fixtures
+
+The purpose of test fixtures is to provide a fixed baseline upon which tests can reliably and repeatedly execute.
+
+pytest --fixtures   # shows builtin and custom fixtures
+
+@pytest.fixture
+def five():
+    return 5
+ 
+def test_five(five):
+    assert five == 5
+conftest.py: sharing fixture functions
+
+If during implementing your tests you realize that you want to use a fixture function from multiple test files you can move it to a conftest.py file. You don’t need to import the fixture you want to use in a test, it automatically gets discovered by pytest.
+
+The discovery of fixture functions starts at
+
+    test classes
+    then test modules
+    then conftest.py files
+    then builtin fixtures
+    finally third party plugins
+
+Fixture scope
+# fixtures documentation order example
+order = []
+ 
+@pytest.fixture(scope="session")
+def s1():
+    order.append("s1")
+ 
+@pytest.fixture(scope="module")
+def m1():
+    order.append("m1")
+ 
+@pytest.fixture
+def f1(f3):
+    order.append("f1")
+ 
+@pytest.fixture
+def f3():
+    order.append("f3")
+ 
+@pytest.fixture(autouse=True)
+def a1():
+    order.append("a1")
+ 
+@pytest.fixture
+def f2():
+    order.append("f2")
+ 
+def test_order(f1, m1, f2, s1):
+    assert order == ["s1", "m1", "a1", "f3", "f1", "f2"]
+
+The fixtures requested by test_order will be instantiated in the following order:
+
+    s1: is the highest-scoped fixture (session).
+    m1: is the second highest-scoped fixture (module).
+    a1: is a function-scoped autouse fixture: it will be instantiated before other fixtures within the same scope.
+    f3: is a function-scoped fixture, required by f1: it needs to be instantiated at this point
+    f1: is the first function-scoped fixture in test_order parameter list.
+    f2: is the last function-scoped fixture in test_order parameter list.
+
+Fixture teardown
+
+pytest supports execution of fixture specific finalization code when the fixture goes out of scope. By using a yield statement instead of return, all the code after the yield statement serves as the teardown code:
+@pytest.fixture(scope='module')
+def connection():
+    connection = pyodbc.connect('connection_string')
+    yield connection
+    connection.close()
+
+
+Factories as fixtures
+
+The “factory as fixture” pattern can help in situations where the result of a fixture is needed multiple times in a single test. Instead of returning data directly, the fixture instead returns a function which generates the data. This function can then be called multiple times in the test.
+@pytest.fixture
+def make_customer_record():
+    created_records = []
+ 
+    def _make_customer_record(name):
+        record = models.Customer(name=name, orders=[])
+        created_records.append(record)
+        return record
+ 
+    yield _make_customer_record
+ 
+    for record in created_records:
+        record.destroy()
+ 
+def test_customer_records(make_customer_record):
+    customer_1 = make_customer_record("Lisa")
+    customer_2 = make_customer_record("Mike")
+    customer_3 = make_customer_record("Meredith")
+
+
+Parametrizing fixtures
+
+Fixture functions can be parametrized in which case they will be called multiple times, each time executing the set of dependent tests, i. e. the tests that depend on this fixture. Test functions usually do not need to be aware of their re-running. 
+@pytest.fixture(scope="module", params=["smtp.gmail.com", "mail.python.org"])
+def smtp_connection(request):
+    smtp_connection = smtplib.SMTP(request.param, 587, timeout=5)
+    yield smtp_connection
+    print("finalizing {}".format(smtp_connection))
+    smtp_connection.close()
+
+pytest will build a string that is the test ID for each fixture value in a parameterized fixture, e.g. test_ehlo[smtp.gmail.com] and test_ehlo[mail.python.org] in the above examples. 
+All combinations of multiple parametrized arguments
+
+To get all combinations of multiple parametrized arguments you can stack parametrize decorators:
+@pytest.mark.parametrize("x", [0, 1])
+@pytest.mark.parametrize("y", [2, 3])
+def test_foo(x, y):
+    pass
+
+This will run the test with the arguments set to x=0/y=2, x=1/y=2, x=0/y=3, and x=1/y=3 exhausting parameters in the order of the decorators.
+Apply indirect parametrization on particular arguments
+
+Very often parametrization uses more than one argument name. There is opportunity to apply indirect parameter on particular arguments. It can be done by passing list or tuple of arguments’ names to indirect. In the example below there is a function test_indirect which uses two fixtures: x and y. Here we give to indirect the list, which contains the name of the fixture x. The indirect parameter will be applied to this argument only, and the value a will be passed to respective fixture function:
+# content of test_indirect_list.py
+ 
+import pytest
+ 
+ 
+@pytest.fixture(scope="function")
+def x(request):
+    return request.param * 3
+ 
+ 
+@pytest.fixture(scope="function")
+def y(request):
+    return request.param * 2
+ 
+ 
+@pytest.mark.parametrize("x, y", [("a", "b")], indirect=["y"])
+def test_indirect(x, y):
+    assert x == "aaa"
+    assert y == "b"
+
+
+Automatic grouping of tests by fixture instances
+@pytest.fixture(scope="module", params=["mod1", "mod2"])
+def modarg(request):
+    param = request.param
+    print("  SETUP modarg", param)
+    yield param
+    print("  TEARDOWN modarg", param)
+ 
+@pytest.fixture(scope="function", params=[1, 2])
+def otherarg(request):
+    param = request.param
+    print("  SETUP otherarg", param)
+    yield param
+    print("  TEARDOWN otherarg", param)
+ 
+def test_0(otherarg):
+    print("  RUN test0 with otherarg", otherarg)
+ 
+def test_1(modarg):
+    print("  RUN test1 with modarg", modarg)
+ 
+def test_2(otherarg, modarg):
+    print("  RUN test2 with otherarg {} and modarg {}".format(otherarg, modarg))
+$ pytest -v -s test_module.py
+=========================== test session starts ============================
+platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y -- $PYTHON_PREFIX/bin/python
+cachedir: $PYTHON_PREFIX/.pytest_cache
+rootdir: $REGENDOC_TMPDIR
+collecting ... collected 8 items
+ 
+test_module.py::test_0[1]   SETUP otherarg 1
+  RUN test0 with otherarg 1
+PASSED  TEARDOWN otherarg 1
+ 
+test_module.py::test_0[2]   SETUP otherarg 2
+  RUN test0 with otherarg 2
+PASSED  TEARDOWN otherarg 2
+ 
+test_module.py::test_1[mod1]   SETUP modarg mod1
+  RUN test1 with modarg mod1
+PASSED
+test_module.py::test_2[mod1-1]   SETUP otherarg 1
+  RUN test2 with otherarg 1 and modarg mod1
+PASSED  TEARDOWN otherarg 1
+ 
+test_module.py::test_2[mod1-2]   SETUP otherarg 2
+  RUN test2 with otherarg 2 and modarg mod1
+PASSED  TEARDOWN otherarg 2
+ 
+test_module.py::test_1[mod2]   TEARDOWN modarg mod1
+  SETUP modarg mod2
+  RUN test1 with modarg mod2
+PASSED
+test_module.py::test_2[mod2-1]   SETUP otherarg 1
+  RUN test2 with otherarg 1 and modarg mod2
+PASSED  TEARDOWN otherarg 1
+ 
+test_module.py::test_2[mod2-2]   SETUP otherarg 2
+  RUN test2 with otherarg 2 and modarg mod2
+PASSED  TEARDOWN otherarg 2
+  TEARDOWN modarg mod2
+ 
+ 
+============================ 8 passed in 0.12s =============================
+
+
+Autouse fixtures
+@pytest.fixture(scope='function', autouse=True)
+def log_test_state(request):
+    """"Logs tests name at start and end of each tests function"""
+    log.info("Test '{}' STARTED\n".format(request.node.nodeid))
+    yield
+    log.info("Test '{}' COMPLETED\n".format(request.node.nodeid))
+
+Here is how autouse fixtures work in other scopes:
+
+    autouse fixtures obey the scope= keyword-argument: if an autouse fixture has scope='session' it will only be run once, no matter where it is defined. scope='class' means it will be run once per class, etc.
+    if an autouse fixture is defined in a test module, all its test functions automatically use it.
+    if an autouse fixture is defined in a conftest.py file then all tests in all test modules below its directory will invoke the fixture.
+    lastly, and please use that with care: if you define an autouse fixture in a plugin, it will be invoked for all tests in all projects where the plugin is installed. This can be useful if a fixture only anyway works in the presence of certain settings e. g. in the ini-file. Such a global fixture should always quickly determine if it should do any work and avoid otherwise expensive imports or computation.
+
+Overriding fixtures on various levels
+# override a fixture on a folder (conftest) level
+ 
+tests/
+    __init__.py
+ 
+    conftest.py
+        # content of tests/conftest.py
+        import pytest
+ 
+        @pytest.fixture
+        def username():
+            return 'username'
+ 
+    test_something.py
+        # content of tests/test_something.py
+        def test_username(username):
+            assert username == 'username'
+ 
+    subfolder/
+        __init__.py
+ 
+        conftest.py
+            # content of tests/subfolder/conftest.py
+            import pytest
+ 
+            @pytest.fixture
+            def username(username):
+                return 'overridden-' + username
+ 
+        test_something.py
+            # content of tests/subfolder/test_something.py
+            def test_username(username):
+                assert username == 'overridden-username'
+# override a fixture on a test module level
+ 
+tests/
+    __init__.py
+ 
+    conftest.py
+        # content of tests/conftest.py
+        import pytest
+ 
+        @pytest.fixture
+        def username():
+            return 'username'
+ 
+    test_something.py
+        # content of tests/test_something.py
+        import pytest
+ 
+        @pytest.fixture
+        def username(username):
+            return 'overridden-' + username
+ 
+        def test_username(username):
+            assert username == 'overridden-username'
+ 
+    test_something_else.py
+        # content of tests/test_something_else.py
+        import pytest
+ 
+        @pytest.fixture
+        def username(username):
+            return 'overridden-else-' + username
+ 
+        def test_username(username):
+            assert username == 'overridden-else-username'
+# override a fixture with direct test parametrization
+ 
+tests/
+    __init__.py
+ 
+    conftest.py
+        # content of tests/conftest.py
+        import pytest
+ 
+        @pytest.fixture
+        def username():
+            return 'username'
+ 
+        @pytest.fixture
+        def other_username(username):
+            return 'other-' + username
+ 
+    test_something.py
+        # content of tests/test_something.py
+        import pytest
+ 
+        @pytest.mark.parametrize('username', ['directly-overridden-username'])
+        def test_username(username):
+            assert username == 'directly-overridden-username'
+ 
+        @pytest.mark.parametrize('username', ['directly-overridden-username-other'])
+        def test_username_other(other_username):
+            assert other_username == 'other-directly-overridden-username-other'
+Marking test functions with attributes
+
+By using the pytest.mark helper you can easily set metadata on your test functions. There are some builtin markers, for example:
+
+    skip - always skip a test function
+    skipif - skip a test function if a certain condition is met
+    xfail - produce an “expected failure” outcome if a certain condition is met
+    parametrize to perform multiple calls to the same test function.
+
+Registering marks
+
+You can register custom marks in your pytest.ini file like this:
+markers =
+    smoke: ​         smoke/sanity​ ​test​s, it contains UI, API, DQ sanity tests
+    api:            api tests
+    ui:             ui tests
+    dq:             data quality tests
+    etl:            ai pipelines tests
+    perf:           perf tests
+    regression:     regression
+Raising errors on unknown marks
+
+You can enforce this validation in your project by adding --strict-markers to addopts in your pytest.ini:
+
+https://bitbucket.org/noodleai/automation/src/master/pytest.ini
+
+
+Skip and xfail: dealing with tests that cannot succeed
+
+
+# Skipping test functions
+ 
+# skip with reason
+@pytest.mark.skip(reason="no way of currently testing this")
+def test_the_unknown():
+    pass
+ 
+# skip programmatically
+def test_function():
+    if not valid_config():
+        pytest.skip("unsupported configuration")
+ 
+# skip the whole module using allow_module_level=True
+def test_function():
+    if not sys.platform.startswith("win"):
+        pytest.skip("skipping windows-only tests", allow_module_level=True)
+ 
+# skip something conditionally using skipif
+@pytest.mark.skipif(sys.version_info < (3, 6), reason="requires python3.6 or higher")
+def test_function():
+ 
+# skip all test functions of a class
+@pytest.mark.skipif(sys.platform == "win32", reason="does not run on windows")
+class TestPosixCalls:
+    def test_function(self):
+        "will not be setup or run under 'win32' platform"
+ 
+# skip all test functions of a module using either of below examples
+pytestmark = pytest.mark.skip("all tests still WIP")
+pytestmark = pytest.mark.skipif(sys.platform == "win32", reason="does not run on windows")
+
+
+XFail: mark test functions as expected to fail
+
+You can use the xfail marker to indicate that you expect a test to fail:
+@pytest.mark.xfail
+def test_function():
+    ...
+ 
+def test_function():
+    if not valid_config():
+        pytest.xfail("failing configuration (but should work)")
+ 
+@pytest.mark.xfail(sys.version_info >= (3, 6), reason="python3.6 api changes")
+def test_function():
+    ...
+ 
+@pytest.mark.xfail(raises=RuntimeError)
+def test_function():
+    ...
+ 
+@pytest.mark.xfail(run=False)
+def test_function():
+    ...
+import pytest
+ 
+xfail = pytest.mark.xfail
+ 
+@xfail
+def test_hello():
+    assert 0
+ 
+@xfail(run=False)
+def test_hello2():
+    assert 0
+ 
+@xfail("hasattr(os, 'sep')")
+def test_hello3():
+    assert 0
+ 
+@xfail(reason="bug 110")
+def test_hello4():
+    assert 0
+ 
+@xfail('pytest.__version__[0] != "17"')
+def test_hello5():
+    assert 0
+ 
+def test_hello6():
+    pytest.xfail("reason")
+ 
+@xfail(raises=IndexError)
+def test_hello7():
+    x = []
+    x[1] = 1
+
+Running it with the report-on-xfail option gives this output:
+$ pytest -rx xfail_demo.py
+=========================== test session starts ============================
+platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y
+cachedir: $PYTHON_PREFIX/.pytest_cache
+rootdir: $REGENDOC_TMPDIR/example
+collected 7 items
+ 
+xfail_demo.py xxxxxxx                                                [100%]
+ 
+========================= short test summary info ==========================
+XFAIL xfail_demo.py::test_hello
+XFAIL xfail_demo.py::test_hello2
+  reason: [NOTRUN]
+XFAIL xfail_demo.py::test_hello3
+  condition: hasattr(os, 'sep')
+XFAIL xfail_demo.py::test_hello4
+  bug 110
+XFAIL xfail_demo.py::test_hello5
+  condition: pytest.__version__[0] != "17"
+XFAIL xfail_demo.py::test_hello6
+  reason: reason
+XFAIL xfail_demo.py::test_hello7
+============================ 7 xfailed in 0.12s ============================
+Skip/xfail with parametrize
+@pytest.mark.parametrize(
+    ("n", "expected"),
+    [
+        (1, 2),
+        pytest.param(1, 0, marks=pytest.mark.xfail),
+        pytest.param(1, 3, marks=pytest.mark.xfail(reason="some bug")),
+        (2, 3),
+        (3, 4),
+        (4, 5),
+        pytest.param(
+            10, 11, marks=pytest.mark.skipif(sys.version_info >= (3, 0), reason="py2k")
+        ),
+    ],
+)
+def test_increment(n, expected):
+    assert n + 1 == expected
+
+
+Generating parameters combinations, depending on command line
+
+Let’s say we want to execute a test with different computation parameters and the parameter range shall be determined by a command line argument. Let’s first write a simple (do-nothing) computation test:
+# content of test_compute.py
+ 
+def test_compute(param1):
+    assert param1 < 4
+Now we add a test configuration like this:
+ 
+# content of conftest.py
+ 
+def pytest_addoption(parser):
+    parser.addoption("--all", action="store_true", help="run all combinations")
+ 
+def pytest_generate_tests(metafunc):
+    if "param1" in metafunc.fixturenames:
+        if metafunc.config.getoption("all"):
+            end = 5
+        else:
+            end = 2
+        metafunc.parametrize("param1", range(end))
+
+
+This means that we only run 2 tests if we do not pass --all:
+$ pytest -q test_compute.py
+..                                                                   [100%]
+2 passed in 0.01s
+We run only two computations, so we see two dots. let’s run the full monty:
+ 
+$ pytest -q --all
+....F                                                                [100%]
+================================= FAILURES =================================
+_____________________________ test_compute[4] ______________________________
+ 
+param1 = 4
+ 
+    def test_compute(param1):
+>       assert param1 < 4
+E       assert 4 < 4
+ 
+test_compute.py:4: AssertionError
+1 failed, 4 passed in 0.02s
+
+As expected when running the full range of param1 values we’ll get an error on the last one.
+Set marks or test ID for individual parametrized test
+
+Use pytest.param to apply marks or set test ID to individual parametrized test. For example:
+# content of test_pytest_param_example.py
+import pytest
+ 
+ 
+@pytest.mark.parametrize(
+    "test_input,expected",
+    [
+        ("3+5", 8),
+        pytest.param("1+7", 8, marks=pytest.mark.smoke),
+        pytest.param("2+4", 6, marks=pytest.mark.smoke, id="basic_2+4"),
+        pytest.param(
+            "6*9", 42, marks=[pytest.mark.smoke, pytest.mark.regression, pytest.mark.xfail], id="basic_6*9"
+        ),
+    ],
+)
+def test_eval(test_input, expected):
+    assert eval(test_input) == expected
+
+In this example, we have 4 parametrized tests. Except for the first test, we mark the rest three parametrized tests with the custom marker basic, and for the fourth test we also use the built-in mark xfail to indicate this test is expected to fail. For explicitness, we set test ids for some tests.
+
+Then run pytest with verbose mode and with only the smoke marker:
+$ pytest -v -m smoke
+=========================== test session starts ============================
+platform linux -- Python 3.x.y, pytest-5.x.y, py-1.x.y, pluggy-0.x.y -- $PYTHON_PREFIX/bin/python
+cachedir: $PYTHON_PREFIX/.pytest_cache
+rootdir: $REGENDOC_TMPDIR
+collecting ... collected 18 items / 15 deselected / 3 selected
+ 
+test_pytest_param_example.py::test_eval[1+7-8] PASSED                [ 33%]
+test_pytest_param_example.py::test_eval[basic_2+4] PASSED            [ 66%]
+test_pytest_param_example.py::test_eval[basic_6*9] XFAIL             [100%]
+ 
+=============== 2 passed, 15 deselected, 1 xfailed in 0.12s ================
+Parametrizing conditional raising
+
+Use pytest.raises() with the pytest.mark.parametrize decorator to write parametrized tests in which some tests raise exceptions and others do not.
+
+It is helpful to define a no-op context manager does_not_raise to serve as a complement to raises. For example:
+from contextlib import contextmanager
+import pytest
+ 
+@contextmanager
+def does_not_raise():
+    yield
+ 
+@pytest.mark.parametrize(
+    "example_input,expectation",
+    [
+        (3, does_not_raise()),
+        (2, does_not_raise()),
+        (1, does_not_raise()),
+        (0, pytest.raises(ZeroDivisionError)),
+    ],
+)
+ 
+def test_division(example_input, expectation):
+    """Test how much I know division."""
+    with expectation:
+        assert (6 / example_input) is not None
+
+In the example above, the first three test cases should run unexceptionally, while the fourth should raise ZeroDivisionError.
+
+
+Request fixture
+
+The request fixture is a special fixture providing information of the requesting test function. A request object gives access to the requesting test context and has an optional param attribute in case the fixture is parametrized indirectly.
+fixturename = None	fixture for which this request is being performed
+scope = None	Scope string, one of “function”, “class”, “module”, “session”
+fixturenames	names of all active fixtures in this request
+node	underlying collection node (depends on current request scope)
+config	the pytest config object associated with this request
+fspath	the file system path of the test module which collected this test
+session	pytest session object
+getfixturevalue(argname)	
+
+Dynamically run a named fixture function.
+
+Declaring fixtures via function argument is recommended where possible.
+
+But if you can only decide whether to use another fixture at test setup time, you may use this function to retrieve it inside a fixture or test function body.
+# examples from automation framework of request.config, request.node.fspath and request.node
+ 
+@pytest.fixture(scope='module', autouse=True)
+def config(request):
+    env = (request.config.getoption("--env")).lower()
+    try:
+        match = re.search(r"(.*\/apps\/.+?\/).*", request.node.fspath.strpath).groups()[0]
+        with open(match + "config.json") as fp:
+            ...
+ 
+@pytest.fixture(scope='function', autouse=True)
+def log_test_state(request):
+    """"Logs tests name at start and end of each tests function"""
+    log.info("Test '{}' STARTED\n".format(request.node.nodeid))
+
+
+More details: Request
+
+
+References
+
+https://docs.pytest.org/en/latest/contents.html
+
+https://docs.pytest.org/en/latest/reference.html

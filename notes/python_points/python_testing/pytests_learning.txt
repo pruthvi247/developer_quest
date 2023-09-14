@@ -1,0 +1,379 @@
+> Execute the test function with “quiet” reporting mode: pytest -q test_sysexit.py
+		
+> pytest will run all files of the form test_*.py or *_test.py in the current directory and its subdirectories.
+> Note: Yes we can explicitly ask pytest to pick testlogin.py and logintest.py
+>> py.test tests_directory/logintest.py
+
+> if you invoke pytest with --ignore=tests/foobar/test_foobar_03.py --ignore=tests/hello/, you will see that pytest only collects test-modules, which do not match the patterns specified
+
+> The --ignore-glob option allows to ignore test file paths based on Unix shell-style wildcards. If you want to exclude test-modules that end with _01.py, execute pytest with --ignore-glob='*_01.py'.
+
+> Tests can individually be deselected during collection by passing the --deselect=item option. For example, say tests/foobar/test_foobar_01.py contains test_a and test_b. You can run all of the tests within tests/ except for tests/foobar/test_foobar_01.py::test_a by invoking pytest with --deselect tests/foobar/test_foobar_01.py::test_a. pytest allows multiple --deselect options.
+
+> It is possible to add your own detailed explanations by implementing the pytest_assertrepr_compare hook
+
+Running pytest can result in six different exit codes:
+
+Exit code 0:	All tests were collected and passed successfully
+Exit code 1:	Tests were collected and run but some of the tests failed
+Exit code 2:	Test execution was interrupted by the user
+Exit code 3:	Internal error happened while executing tests
+Exit code 4:	pytest command line usage error
+Exit code 5:	No tests were collected
+
+> Run tests by keyword expressions
+
+pytest -k "MyClass and not method"
+
+This will run tests which contain names that match the given string expression, which can include Python operators that use filenames, class names and function names as variables. The example above will run TestMyClass.test_something but not TestMyClass.test_method_simple.
+ 
+> To run a specific test within a module:
+
+pytest test_mod.py::test_func
+Another example specifying a test method in the command line:
+
+pytest test_mod.py::TestClass::test_method
+
+> Run tests by marker expressions : pytest -m slow
+
+>
+pytest --showlocals # show local variables in tracebacks
+pytest -l           # show local variables (shortcut)
+
+pytest --tb=auto    # (default) 'long' tracebacks for the first and last
+                     # entry, but 'short' style for the other entries
+pytest --tb=long    # exhaustive, informative traceback formatting
+pytest --tb=short   # shorter traceback format
+pytest --tb=line    # only one line per failure
+pytest --tb=native  # Python standard library formatting
+pytest --tb=no      # no traceback at all
+--full-trace causes very long traces to be printed on error (longer than --tb=long).
+
+> -r flag can be used to display a “short test summary info” 
+> for example to only see failed and skipped tests, you can execute: pytest -rfs
+> Profiling test execution duration
+To get a list of the slowest 10 test durations: pytest --durations=10
+
+Creating resultlog format files: 
+-------------------------------
+> pytest --resultlog=path
+> pytest --pastebin=failed,pytest --pastebin=all
+
+pytest.mark:
+-----------
+> By using the pytest.mark helper you can easily set metadata on your test functions
+> @pytest.mark.skip(reason="no way of currently testing this")
+> @pytest.mark.skipif(sys.version_info < (3, 6), reason="requires python3.6 or higher")
+
+XFail: mark test functions as expected to fail
+> @pytest.mark.xfail
+def test_function():
+    ...
+Note that no other code is executed after pytest.xfail
+
+@pytest.mark.parametrize: parametrizing test functions :
+eg:
+def get_data():
+    dict = {}
+    dict['Capital'] = "London"
+    dict['Food'] = "Fish&Chips"
+    dict['2012'] = "Olympics"
+    return dict.values()
+
+@pytest.mark.parametrize("value", get_data())
+def test_sample(value):
+    logger.debug("Reading input test case csv >>>>>>>>>: {}".format("dummy")) # doesnot work, pytest has different logging frame work
+    print(f'input params given from function : {value}')
+    print(f'input params given from function : {type(value)}')
+
+
+> @pytest.mark.dependency(depends=['test_copy_files']) - runs only if "test_copy_files" test passes
+
+To read args passed in command line:
+
+@pytest.fixture()
+def hdfsPort(pytestconfig):
+
+    return pytestconfig.getoption("hdfsPort")
+
+
+Note : there should be a conftes.py file to read and parse properties
+
+conftest.py
+
+def pytest_addoption(parser):
+	parser.addoption("--hdfsPort", action="store", default=8020)
+
+
+command to run tests : pytest -q -s -x --hdfsPort=<hdfs_port>
+
+
+
+[source : https://www.guru99.com/pytest-tutorial.html]
+
+> pytest will run all files of the form test_*.py or *_test.py in the current directory and its subdirectories.
+> Note: Yes we can explicitly ask pytest to pick testlogin.py and logintest.py
+>> py.test tests_directory/logintest.py
+
+See some examples of valid and invalid pytest test methods
+
+def test_file1_method1(): - valid
+def testfile1_method1(): - valid
+def file1_method1(): - invalid	
+
+Note: Even if we explicitly mention file1_method1() pytest will not run this method.
+
+Run a subset of Entire Test with PyTest
+Sometimes we don't want to run the entire test suite. Pytest allows us to run specific tests. We can do it in 2 ways
+
+	> Grouping of test names by substring matching
+	> Grouping of tests by markers
+
+def test_file2_method1():
+	x=5
+	y=6
+	assert x+1 == y,"test failed"
+	assert x == y,"test failed because x=" + str(x) + " y=" + str(y)
+def test_file2_method2():
+	x=5
+	y=6
+	assert x+1 == y,"test failed"
+
+>> py.test -k method1 -v  ### runs test which has "method1" in method name
+
+Option 2) Run tests by markers
+
+Pytest allows us to set various attributes for the test methods using pytest markers, @pytest.mark . To use markers in the test file, we need to import pytest on the test files.
+
+Here we will apply different marker names to test methods and run specific tests based on marker names. We can define the markers on each test names by using
+
+@pytest.mark.<name>.			
+We are defining markers set1 and set2 on the test methods, and we will run the test using the marker names. Update the test files with the following code
+
+test_sample1.py
+
+import pytest
+@pytest.mark.set1
+def test_file1_method1():
+    x = 5
+    y = 6
+    assert x + 1 == y, "test failed"
+    assert x == y, "test failed because x=" + str(x) + " y=" + str(y)
+
+
+@pytest.mark.set2
+@pytest.mark.set3
+def test_file1_method2():
+    x = 5
+    y = 6
+    assert x + 1 == y, "test failed"
+
+>> py.test -m set3
+
+Run Tests in Parallel with Pytest
+>> pip install pytest-xdist
+
+>> py.test -n 4
+-n <num> runs the tests by using multiple workers. In the above command, there will be 4 workers to run the test.
+
+>>  py.test -m set1 -n 3
+
+Pytest Fixtures
+Fixtures are used when we want to run some code before every test method. So instead of repeating the same code in every test we define fixtures. Usually, fixtures are used to initialize database connections, pass the base , etc
+
+import pytest
+
+@pytest.fixture
+def supply_AA_BB_CC():
+    aa = 25
+    bb = 35
+    cc = 45
+    return [aa, bb, cc]
+
+
+def test_comparewithAA(supply_AA_BB_CC):
+    zz = 35
+    assert supply_AA_BB_CC[0] == zz, "aa and zz comparison failed"
+
+
+def test_comparewithBB(supply_AA_BB_CC):
+    zz = 35
+    assert supply_AA_BB_CC[1] == zz, "bb and zz comparison failed"
+
+
+def test_comparewithCC(supply_AA_BB_CC):
+    zz = 35
+    assert supply_AA_BB_CC[2] == zz, "cc and zz comparison failed"
+
+The fixture method has a scope only within that test file it is defined. If we try to access the fixture in some other test file , we will get an error saying fixture 'supply_AA_BB_CC' not found for the test methods in other files.
+
+To use the same fixture against multiple test files, we will create fixture methods in a file called conftest.py.
+
+Let's see this by the below PyTest example. Create 3 files conftest.py, test_basic_fixture.py, test_basic_fixture2.py with the following code
+
+conftest.py
+
+import pytest
+@pytest.fixture
+def supply_AA_BB_CC():
+	aa=25
+	bb =35
+	cc=45
+	return [aa,bb,cc]
+
+> pytest will look for the fixture in the test file first and if not found it will look in the conftest.py
+
+How to implement setup and teardown in pytests:
+-----------------------------------------------
+> Fixtures are functions, which will run before each test function to which it is applied. Fixtures are used to feed some data to the tests such as database connections, URLs to test and some sort of input data. Therefore, instead of running the same code for every test, we can attach fixture function to the tests and it will run and return the data to the test before executing each test.
+> By using decorator @pytest.fixture()
+
+eg :
+import pytest
+118
+119
+120 @pytest.yield_fixture(autouse=True,scope='module')
+121 # @pytest.yield_fixture(scope='module')
+122 def setupandteardownClass():
+123         print('class level setup')
+124         yield
+125         print('class level teardown')
+126
+127
+128 # @pytest.yield_fixture(autouse=True,scope='function')
+129 @pytest.yield_fixture(scope='function')
+130 def setupandteardownmethod():
+131         print('method level setup')
+132         yield
+133         print('method level teardown')
+134
+135
+136 # def test_method1(setupandteardownClass,setupandteardo    wnmethod):
+#         print('test_method1')
+138 #
+139 #
+140 # def test_method2(setupandteardownmethod):
+141 #         print('test_method2')
+142
+143
+144 def test_method3():
+145         print('test_method2')
+146
+147 > If we need to use setup and teardown for all the modu    les then copying the same setup fixtures in all the mod    ule is redundant, instead we can use confest.py
+
+###############
+## reading csv input and pass as parater to test
+
+input_file_name = '/Users/pruthvikumar/Documents/workspace/a1m/pod-test-suite/pod_user_service_suite/data/booking_service_test_cases.csv'
+def csv_reader(file_name):
+    for row in open(file_name, "r"):
+        yield row
+csv_gen = (row for row in open(input_file_name))
+csv_gen1 = csv_reader(input_file_name)
+
+@pytest.mark.parametrize("input_value", csv_gen)
+@pytest.mark.parametrize("input_value1", csv_gen1)
+def test_sample(input_value,input_value1):
+    print(type(input_value))
+    print(input_value)
+    # print(input_value[0])
+    # assert True
+
+scope of fixture:
+function: Run once per test
+class: Run once per class of tests
+module: Run once per module
+session: Run once per session
+
+function < class <module<session.
+
+>>
+import pytest
+@pytest.mark.skip
+def test_add_1():
+	assert 100+200 == 400,"failed"
+
+@pytest.mark.skip
+def test_add_2():
+	assert 100+200 == 300,"failed"
+
+@pytest.mark.xfail
+def test_add_3():
+	assert 15+13 == 28,"failed"
+
+@pytest.mark.xfail
+def test_add_4():
+	assert 15+13 == 100,"failed"
+
+def test_add_5():
+	assert 3+2 == 5,"failed"
+
+def test_add_6():
+	assert 3+2 == 6,"failed"
+
+>  py.test test_addition.py -v 
+test_addition.py::test_add_1 SKIPPED
+test_addition.py::test_add_2 SKIPPED
+test_addition.py::test_add_3 XPASS
+test_addition.py::test_add_4 xfail
+test_addition.py::test_add_5 PASSED
+test_addition.py::test_add_6 FAILED
+
+Pass a parameter to a fixture function : 
+
+import pytest
+
+class MyTester:
+    def __init__(self, x):
+        self.x = x
+
+    def dothis(self):
+        assert self.x
+        # assert True
+
+@pytest.fixture
+def tester(tester_arg):
+    """Create tester object"""
+    return MyTester(tester_arg)
+
+
+class TestIt:
+    @pytest.mark.parametrize('tester_arg', [True, False])
+    def test_tc1(self, tester):
+       tester.dothis()
+       assert True
+>>>>>> above problem can also be solved in different way given below (supported in latest version) recomended
+@pytest.fixture
+def tester(request):
+    """Create tester object"""
+    return MyTester(request.param)
+
+
+class TestIt:
+    @pytest.mark.parametrize('tester', [['var1', 'var2']], indirect=True)
+    def test_tc1(self, tester):
+       tester.dothis()
+       assert 1
+
+Cheatsheet to run pytest with different options
+# keyword expressions 
+# Run all tests with some string ‘validate’ in the name
+pytest -k “validate”
+# Exclude tests with ‘db’ in name but include 'validate'
+pytest -k “validate and not db” 
+#Run all test files inside a folder demo_tests
+pytest demo_tests/
+# Run a single method test_method of a test class TestClassDemo 
+pytest demo_tests/test_example.py::TestClassDemo::test_method
+# Run a single test class named TestClassDemo 
+pytest demo_tests/test_example.py::TestClassDemo
+# Run a single test function named test_sum
+pytest demo_tests/test_example.py::test_sum
+# Run tests in verbose mode: 
+pytest -v demo_tests/
+# Run tests including print statements: 
+pytest -s demo_tests/
+# Only run tests that failed during the last run 
+pytest — lf
+
+

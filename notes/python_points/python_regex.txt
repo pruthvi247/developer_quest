@@ -1,0 +1,190 @@
+[source: https://realpython.com/regex-python/]
+
+>>> s = 'foo123bar'
+>>> '123' in s
+True
+>>> s = 'foo123bar'
+>>> s.find('123')
+3
+>>> s.index('123')
+3
+
+>>> s = 'foo123bar'
+>>> re.search('[0-9][0-9][0-9]', s)
+
+>  The dot (.) metacharacter matches any character except a newline
+>>> s = 'foo123bar'
+>>> re.search('1.3', s)
+.	 Matches any single character except newline
+
+^	 Anchors a match at the start of a string
+	 Complements a character class
+
+$	Anchors a match at the end of a string
+
+*	Matches zero or more repetitions
+
++	Matches one or more repetitions
+
+?	Matches zero or one repetition
+	Specifies the non-greedy versions of *, +, and ?
+	Introduces a lookahead or lookbehind assertion
+	Creates a named group
+
+{}	Matches an explicitly specified number of repetitions
+
+\	Escapes a metacharacter of its special meaning
+	Introduces a special character class
+	Introduces a grouping backreference
+
+[]	Specifies a character class- Specifies a specific set of characters to match.
+
+|	Designates alternation
+
+()	Creates a group
+
+:
+#
+=
+!	Designate a specialized group
+
+<>	Creates a named group
+
+>>> re.search('ba[artz]', 'foobarqux')
+
+	The metacharacter sequence [artz] matches any single 'a', 'r', 't', or 'z' character
+
+>>> re.search('[a-z]', 'FOObar')
+	[a-z] matches any lowercase alphabetic character between 'a' and 'z', inclusive
+>>> re.search('[a-z]', 'FOObar')
+<re.Match object; span=(3, 4), match='b'>
+>>> re.search('[a-z][a-z]', 'FOObar')
+<re.Match object; span=(3, 5), match='ba'>
+
+>>> re.search('[0-9][0-9]', 'foo123bar')
+<_sre.SRE_Match object; span=(3, 5), match='12'>
+	> In this case, [0-9][0-9] matches a sequence of two digits. The first portion of the string 'foo123bar' that matches is '12'.
+
+Hexa decimal:
+
+>>> re.search('[0-9a-fA-f]', '--- a0 ---')
+<_sre.SRE_Match object; span=(4, 5), match='a'>
+	> [0-9a-fA-F] matches the first hexadecimal digit character in the search string, 'a'.
+
+
+NOTE: re.search() scans the search string from left to right, and as soon as it locates a match for <regex>, it stops scanning and returns the match.
+
+>>> re.search('[^0-9]', '12345foo')
+<_sre.SRE_Match object; span=(5, 6), match='f'>
+		> it matches any character that isn’t in the set. In the following example, [^0-9] matches any character that isn’t a digit
+
+dot(.): The . metacharacter matches any single character except a newline:
+
+>>> re.search('foo.bar', 'fooxbar')
+<_sre.SRE_Match object; span=(0, 7), match='fooxbar'>
+
+>>> print(re.search('foo.bar', 'foobar'))
+None
+
+\w matches any alphanumeric word character. Word characters are uppercase and lowercase letters, digits, and the underscore (_) character, so \w is essentially shorthand for [a-zA-Z0-9_]:
+
+>>> re.search('\w', '#(.a$@&')
+<_sre.SRE_Match object; span=(3, 4), match='a'>
+>>> re.search('[a-zA-Z0-9_]', '#(.a$@&')
+<_sre.SRE_Match object; span=(3, 4), match='a'>
+
+> \W is the opposite. It matches any non-word character and is equivalent to [^a-zA-Z0-9_]:
+
+>>> re.search('\W', 'a_1*3Qb')
+<_sre.SRE_Match object; span=(3, 4), match='*'>
+>>> re.search('[^a-zA-Z0-9_]', 'a_1*3Qb')
+<_sre.SRE_Match object; span=(3, 4), match='*'>
+
+decimal :
+>>> re.search('\d', 'abc4def')
+<_sre.SRE_Match object; span=(3, 4), match='4'>
+
+>>> re.search('\D', '234Q678')
+<_sre.SRE_Match object; span=(3, 4), match='Q'>
+
+	> \d matches any decimal digit character. \D is the opposite. It matches any character that isn’t a decimal digit:
+
+\s matches any whitespace character
+\S is the opposite of \s. It matches any character that isn’t whitespace
+
+>>> re.search('[\d\w\s]', '---3---')
+<_sre.SRE_Match object; span=(3, 4), match='3'>
+>>> re.search('[\d\w\s]', '---a---')
+<_sre.SRE_Match object; span=(3, 4), match='a'>
+>>> re.search('[\d\w\s]', '--- ---')
+<_sre.SRE_Match object; span=(3, 4), match=' '>
+
+> in this case, [\d\w\s] matches any digit, word, or whitespace character. And since \w includes \d, the same character class could also be expressed slightly shorter as [\w\s].
+
+
+Anchors (^ , \A):
+
+>>> re.search('^foo', 'foobar')
+<_sre.SRE_Match object; span=(0, 3), match='foo'>
+>>> print(re.search('^foo', 'barfoo'))
+None
+
+	> When the regex parser encounters ^ or \A, the parser’s current position must be at the beginning of the search string for it to find a match.
+
+$ or \Z : at the end of the search string 
+
+>>> re.search('bar$', 'foobar')
+<_sre.SRE_Match object; span=(3, 6), match='bar'>
+>>> print(re.search('bar$', 'barfoo'))
+None
+
+Quantifiers(*):
+> Matches zero or more repetitions of the preceding regex.
+
++ : Matches one or more repetitions of the preceding regex.
+
+>>> print(re.search('foo-+bar', 'foobar'))              # Zero dashes
+None
+>>> re.search('foo-+bar', 'foo-bar')                    # One dash
+<_sre.SRE_Match object; span=(0, 7), match='foo-bar'>
+>>> re.search('foo-+bar', 'foo--bar')                   # Two dashes
+<_sre.SRE_Match object; span=(0, 8), match='foo--bar'>
+
+? : Matches zero or one repetitions of the preceding regex.
+
+{m} : Matches exactly m repetitions of the preceding regex.
+
+>>> print(re.search('x-{3}x', 'x--x'))                # Two dashes
+None
+
+>>> re.search('x-{3}x', 'x---x')                      # Three dashes
+<_sre.SRE_Match object; span=(0, 5), match='x---x'>
+
+Treating a Group as a Unit:
+
+>>> re.search('(bar)+', 'foo bar baz')
+<_sre.SRE_Match object; span=(4, 7), match='bar'>
+>>> re.search('(bar)+', 'foo barbar baz')
+<_sre.SRE_Match object; span=(4, 10), match='barbar'>
+>>> re.search('(bar)+', 'foo barbarbarbar baz')
+<_sre.SRE_Match object; span=(4, 16), match='barbarbarbar'>
+
+Here’s a breakdown of the difference between the two regexes with and without grouping parentheses:
+
+bar+	 >The + metacharacter applies only to the character 'r'.	'bar'
+									'barr'
+									'barrr'
+
+(bar)+   > The + metacharacter applies to the entire string 'bar'.   	'bar'
+									'barbar'
+									'barbarbar'
+
+> The regex (ba[rz]){2,4}(qux)? matches 2 to 4 occurrences of either 'bar' or 'baz', optionally followed by 'qux'
+
+>>> re.search('(ba[rz]){2,4}(qux)?', 'bazbarbazqux')
+<_sre.SRE_Match object; span=(0, 12), match='bazbarbazqux'>
+>>> re.search('(ba[rz]){2,4}(qux)?', 'barbar')
+<_sre.SRE_Match object; span=(0, 6), match='barbar'>
+
+
+ 

@@ -125,7 +125,7 @@ class ExampleStateWithoutSingleton extends ExampleStateBase {
 
 
 
->> will be writing a singleton_main.dart module where all the above initiallized classes are used
+>> you can find singleton_main.dart in example programs where all the above initiallized classes are used
 
 
 

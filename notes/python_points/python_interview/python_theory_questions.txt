@@ -1,0 +1,300 @@
+[Source: https://github.com/sigmavirus24/python-interview-questions]
+
+[source: https://www.geeksforgeeks.org/internal-working-of-python/]
+
+Q: How does Python execute code?
+--------------------------------
+
+> Python doesn’t convert its code into machine code, something that hardware can understand. It actually converts it into something called byte code. So within python, compilation happens, but it’s just not into a machine language. It is into byte code and this byte code can’t be understood by CPU. So we need actually an interpreter called the python virtual machine. The python virtual machine executes the byte codes.
+The Python interpreter performs following tasks to execute a Python program :
+
+Step 1 : The interpreter reads a python code or instruction. Then it verifies that the instruction is well formatted, i.e. it checks the syntax of each line.If it encounters any error, it immediately halts the translation and shows an error message.
+Step 2 : If there is no error, i.e. if the python instruction or code is well formatted then the interpreter translates it into its equivalent form in intermediate language called “Byte code”.Thus, after successful execution of Python script or code, it is completely translated into Byte code.
+Step 3 : Byte code is sent to the Python Virtual Machine(PVM).Here again the byte code is executed on PVM.If an error occurs during this execution then the execution is halted with an error message.
+Note: byte code file is .pyc file
+[Source : https://www.quora.com/How-does-Python-execute-code]
+
+The steps are as follows :
+
+The update time of the script is compared with the update time of a .pyc file of the same name in the appropriate directory (for python3 this is in the __pycache__ directory). If the .pyc file exists and is more recent than the .py file , go directly to step 5.
+The .py file is then parsed into a AST (Abstract Syntax Tree) - which describes in an internal format how how each element Python script relates to each other element (which expression is part of which function/method for instance. Syntax Errors are raised at this stage as needed.
+The AST is then processed into Python Byte code - which is a high level stack based set of Opcodes for a Python Virtual Machine.
+Assuming that the Default options are in place - the Python Byte code is written to the Byte code cache directory ( __pycache__ directory) as .pyc files
+The Byte code is pass to a Virtual machine within the Python Executable - Essentially the Virtual machine is a large loop which takes the OP codes one at at time and executes them. Most of those Op Codes result in a result being place on the internal stack, for the next OP code to operate on. Run-time Errors are raised at this stage when encountered.
+When the program encounters the end of the set of Op codes, it will exit the Python Virtual Machine; and thereby exit the Python Executable.
+===================================================================================================================
+
+Q: python bindings, how does it work?
+------------------------------------
+> Python bindings allow you to call functions and pass data from Python to C or C++, letting you take advantage of the strengths of both languages.Let's say you create a C library to post stuff to stackoverflow. Now you want to be able to use the same library from Python. In this case, you will write Python bindings for your library.C-python interpreter is written in C
+
+Q:What is a list comprehension? Why would you use one?
+-----------------------------------------------------
+> say you have a list of integers and you only want the numbers that are even.we could solve this 
+>>> 
+integers = range(0, 10)  
+even = [] 
+for i in integers:     
+    if i % 2 == 0:         
+        even.append(i)  
+>>> even 
+>>> [0, 2, 4, 6, 8]
+
+python way :filter()
+
+even = filter(lambda x: x % 2 == 0, integers)
+Python has list comprehensions, so the above could also be written as:
+> even = [x for x in integers if x % 2 == 0]
+
+Map
+Map applies a function to every element in a list. Unlike filter, it leaves the number of elements in the list unchanged.
+>> integers = range(0, 10)
+list(map(lambda x: x * x, integers))
+>>> [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+And as a list comprehension:
+>>> integers = range(0, 10)
+[x * x for x in integers]
+>>> [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+Reduce:
+So far we’ve looked at functions that both consume and return lists. There are also numerous functions that consume a list but return a single value.
+
+from functools import reduce
+integers = range(1, 10)  
+reduce(lambda x, y: x * y, integers)  
+>>> 362880
+
+we can't use list comprehension. List comprehensions always returns iterables, not single values.
+
+The all() and any() functions are good examples of how functions that take an iterator can be combined with list comprehensions. To check for even numbers in a list:
+>>>
+integers = range(1, 10)
+any(x % 2 == 0 for x in integers)   
+>>> True
+all(x % 2 == 0 for x in integers)   
+>>> False
+
+Q: What is a generator? What can it be used for?
+-----------------------------------------------
+[source : https://www.programiz.com/python-programming/generator]
+
+>A normal function to return a sequence will create the entire sequence in memory before returning the result. This is an overkill, if the number of items in the sequence is very large.Gerenerators are memory efficient
+
+Generator implementation of such sequences is memory friendly and is preferred since it only produces one item at a time.
+
+> There is a lot of work in building an iterator in Python. We have to implement a class with __iter__() and __next__() method, keep track of internal states, and raise StopIteration when there are no values to be returned.
+
+>>> 
+class PowTwo:
+    """Class to implement an iterator
+    of powers of two"""
+
+    def __init__(self, max=0):
+        self.max = max
+
+    def __iter__(self):
+        self.n = 0
+        return self
+
+    def __next__(self):
+        if self.n <= self.max:
+            result = 2 ** self.n
+            self.n += 1
+            return result
+        else:
+            raise StopIteration
+
+
+# create an object
+numbers = PowTwo(3)
+
+# create an iterable from the object
+i = iter(numbers)
+
+# Using next to get to the next iterator element
+print(next(i))
+print(next(i))
+print(next(i))
+print(next(i))
+print(next(i))
+
+output:
+1
+2
+4
+8
+Traceback (most recent call last):
+  File "/home/bsoyuj/Desktop/Untitled-1.py", line 32, in <module>
+    print(next(i))
+  File "<string>", line 18, in __next__
+    raise StopIteration
+StopIteration
+
+> better to use forloop to iterate.
+> This is both lengthy and counterintuitive. Generator comes to the rescue in such situations.
+
+Python generators are a simple way of creating iterators. All the work we mentioned above are automatically handled by generators in Python.
+
+> It is fairly simple to create a generator in Python. It is as easy as defining a normal function, but with a yield statement instead of a return statement.
+
+If a function contains at least one yield statement (it may contain other yield or return statements), it becomes a generator function. Both yield and return will return some value from a function.
+
+The difference is that while a return statement terminates a function entirely, yield statement pauses the function saving all its states and later continues from there on successive calls.
+>>>
+# A simple generator function
+def my_gen():
+    n = 1
+    print('This is printed first')
+    # Generator function contains yield statements
+    yield n
+
+    n += 1
+    print('This is printed second')
+    yield n
+
+    n += 1
+    print('This is printed at last')
+    yield n
+
+output:
+>>> # It returns an object but does not start execution immediately.
+>>> a = my_gen()
+
+>>> # We can iterate through the items using next().
+>>> next(a)
+This is printed first
+1
+>>> # Once the function yields, the function is paused and the control is transferred to the caller.
+
+>>> # Local variables and theirs states are remembered between successive calls.
+>>> next(a)
+This is printed second
+2
+
+>>> next(a)
+This is printed at last
+3
+
+>>> # Finally, when the function terminates, StopIteration is raised automatically on further calls.
+>>> next(a)
+Traceback (most recent call last):
+...
+StopIteration
+>>> next(a)
+Traceback (most recent call last):
+...
+StopIteration
+
+> To restart the process we need to create another generator object using something like a = my_gen().
+
+Python Generators with a Loop:
+>>>
+def rev_str(my_str):
+    length = len(my_str)
+    for i in range(length - 1, -1, -1):
+        yield my_str[i]
+
+
+# For loop to reverse the string
+for char in rev_str("hello"):
+    print(char)
+
+
+Inheritance:
+-----------
+Inheritance is the capability of one class to derive or inherit the properties from another class.
+
+__init__ method:
+"__init__" is a reseved method in python classes. It is called as a constructor in object oriented terminology. This method is called when an object is created from a class and it allows the class to initialize the attributes of the class.
+
+self:
+The word 'self' is used to represent the instance of a class. By using the "self" keyword we access the attributes and methods of the class in python.
+
+Q:What happens if you have an error in an init statement:
+---------------------------------------------------------
+
+>Not only is the object not initialized properly, with no exception handler and have no instance, at all
+[source: https://stackoverflow.com/questions/20059766/handle-exception-in-init]
+It is perfectly fine to raise an exception in __init__. You would then wrap the object initiation/creation call with try/except and react to the exception.
+
+>>>
+import sys, os, traceback
+
+class Myclass
+    def __init__(self, path):
+        self._path = path
+
+        """Risky Code"""
+        try:
+            os.mkdir(path) 
+        except:
+            traceback.print_exc(file = sys.stdout)
+
+Q: How do I return multiple values from a function?
+---------------------------------------------------
+[Source : https://stackoverflow.com/questions/354883/how-do-i-return-multiple-values-from-a-function]
+
+Method1 :
+>>> def get_image_data(filename):
+    [snip]
+    return size, (format, version, compression), (width,height)
+
+size, type, dimensions = get_image_data(x)
+
+method2: Return dict
+>>> def g(x):
+  y0 = x + 1
+  y1 = x * 3
+  y2 = y0 ** y3
+  return {'y0':y0, 'y1':y1 ,'y2':y2 }
+
+Swapping two variables:
+>>> x = 10
+y = 5
+ 
+# Code to swap 'x' and 'y'
+ 
+# x now becomes 15
+x = x + y
+ 
+# y becomes 10
+y = x - y
+ 
+# x becomes 5
+x = x - y
+print("After Swapping: x =", x, " y =", y)
+ 
+
+Reference counting:
+Reference counting is a simple technique in which objects are deallocated when there is no reference to them in a program.
+
+Every variable in Python is a reference (a pointer) to an object and not the actual value itself
+>>> import sys
+sys.getrefcount(object)
+
+Q: Do functions (or methods) return something even if there isn't a return statement? If so, what do they return?
+
+>>>def my_func1():
+  print "Hello World"
+  return None ## This tells that the function is indeed meant to return a value for later use,
+
+def my_func2():
+  print "Hello World"
+  return    ## This is used for the same reason as break in loops.
+
+def my_func3():
+  print "Hello World" ## This will also return None, but that value is not meant to be used or caught. 
+
+> On the actual behavior, there is no difference. They all return None
+
+Q: How would you count the lines in a file? How would you do it if the file was too big to hold in memory?
+maybe it could be useful to read the file block-wise and then count the \n characters in each block.
+>>> def blocks(files, size=65536):
+    while True:
+        b = files.read(size)
+        if not b: break
+        yield b
+
+with open("file", "r",encoding="utf-8",errors='ignore') as f:
+    print (sum(bl.count("\n") for bl in blocks(f)))

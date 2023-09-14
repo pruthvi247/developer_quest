@@ -1,0 +1,58 @@
+shortcuts:
+
+> [ESC] enter 70a*[ESC],you will see 70 asterisks appended
+> [ESC] 'o' to enter line below, 'O' enter line above the cursor
+
+Running UNIX shell commands from vi
+You can run UNIX commands and see their output without leaving vi. You can also insert the output of a UNIX command into the file you that are editing.
+
+To run a single UNIX command use the command:
+
+   :!UNIX_command
+You can start a shell from within vi and use it as you would your usual UNIX environment, then exit the shell and return to vi
+
+To start up a shell enter the command:
+
+   :sh
+The type of shell that is started is determined by the $SHELL variable. You can specify that some other shell is to be started by setting the vi shell option
+
+Return to using vi by entering the command exit or Ctrl-D
+
+To insert the output from a UNIX command into a file, immediately after the cursor:
+
+   :r!command
+For example, this facility would be very useful if you were using vi to document a UNIX command and you wanted to include examples of the output from this command.
+
+> moving to the beginning or end or line -> 0(zero) or | - beginning of the file
+
+b- move back to beginnig of word
+w- move forward to beginning of word
+ctrl-f scroll forward
+ctrl-b scroll backward
+ctrl-d scrolls half page forward
+ctrl-u scrolls half page backward
+> '$' end of the file
+ctrl-g shows the line number
+40G - Goes to line number 40
+:40 - ex mode goes to line number 40
+ctrl-r redo your undone actions
+u - undo
+10u - reverses your last 10 editing actions
+r-Replaces the current character at the cursor with the new one
+R-Replaces a set of characters with a new set of characters
+s- Substitute the current character with the supplied text
+S- Substitute the current line with the supplied text
+example: 
+Vi is a link of ex
+ s one[Esc]
+vi is one link of ex
+example2:
+vi is one link of ex, just an example text line
+ R simple[Esc] ->(replaces example to simple if cursor id at exple)
+vi is one link of ex, just an simple text line
+
+
+> :56,59s/number/winner - > replaces pattern 'number' to winner occuring in between line number 56 to 59
+> :1,$s/unsigned//g - > deletes unsigned everywhere from begining to end
+> 1.$s/pattern1/pattern2/gc -> interative substitution, promts user for confirmation
+

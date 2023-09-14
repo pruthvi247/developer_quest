@@ -1,0 +1,15 @@
+Regression testing covers the unchanged parts of software to discover whether newly added features have affected the existing functionality. QA engineers check all features regardless of what part of the code has changed.
+
+
+Why is it important? Software is a complex system. Take a component out or add a new one, and you can’t be certain how it reacts. It is like playing Jenga. You reconstruct a tower, and the tower remains stable until it’s not. Players have to check the tower after every iteration. The balance changes every time, so even the elements no one has touched yet are affected. It works the same way in software development. When to perform regression testing? After enhancing software with new features. After making code changes due to the updated requirements. After fixing bugs.
+
+When to perform regression testing? After enhancing software with new features. After making code changes due to the updated requirements. After fixing bugs.
+
+QA team runs smoke tests every time they get a new software build. Simply put, it takes place after every time developers change code and convert it into an updated application. Smoke testing means can reject a badly broken build or pass it for further check.
+
+Why is it important? Smoke and regression testing are different links of the same chain of the quality verification process. Smoke tests help to make sure that critical app features work as expected. Otherwise, there is no need to proceed to more complicated checkup. Smoke testing makes it possible to detect serious bugs at the earliest stages, reject the build, and send code to rework. The QA team doesn’t risk losing time for long and complicated testing of software that is knowingly broken. To continue playing Jenga, players need to make sure that the tower is still standing.
+
+When to perform smoke testing? After developers add new features to existing functionality. When there is a fresh software build, either new or slightly changed.
+
+> Smoke testing checks if the software build is stable and can be used by the QA team for further testing. Regression testing checks for any small changes in the code and whether any other existing functionalities are affected due to the newly developed code
+Smoke Testing is the Surface Level Testing to verify stability of system.Regression Testing is the Deep Level Testing to verify the rationality of system.

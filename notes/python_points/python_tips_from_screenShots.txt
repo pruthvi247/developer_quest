@@ -1,0 +1,99 @@
+Example 1 :
+making a list and immediately looping ?
+
+> new_list =[]
+for item in old_list:
+	new_list.append(operation(item))
+   some_result = some_operation(new_list)
+
+Recomended:
+
+some_result = some_operation(
+	operation(item)
+        for item in old_list 
+)
+
+Example 2 :
+
+Think lazy:
+previous = readings[0]
+
+for current in readings[1:]:
+	differences.append(current-previous)
+	previous = current
+
+Recomended:
+def with_previous(iterable):
+	"""Yield (previous,current) tuples,starting with second"""
+    iterator = iter(iterable)
+    previous = next(iterator)
+    for item in iterator:
+	yield previous,item
+        previous = item
+from some_module import with_previous
+differences = []
+for previous,current in with_previous(readings):
+	differences.append(current - previous)
+
+[source: https://stackoverflow.com/questions/1011938/loop-that-also-accesses-previous-and-next-values]
+from itertools import tee, islice, chain, izip
+
+def previous_and_next(some_iterable):
+    prevs, items, nexts = tee(some_iterable, 3)
+    prevs = chain([None], prevs)
+    nexts = chain(islice(nexts, 1, None), [None])
+    return izip(prevs, items, nexts)
+
+mylist = ['banana', 'orange', 'apple', 'kiwi', 'tomato']
+
+for previous, item, nxt in previous_and_next(mylist):
+    print "Item is now", item, "next is", nxt, "previous is", previous
+ >>>>>>>>>>>>> or <<<<<<<<<<<<<<<
+foo = somevalue
+previous = next_ = None
+l = len(objects)
+for index, obj in enumerate(objects):
+    if obj == foo:
+        if index > 0:
+            previous = objects[index - 1]
+        if index < (l - 1):
+            next_ = objects[index + 1]
+
+Example 3:
+Not filtering or changing anythin
+new_lsit=[item for n in old_list]
+
+recomended
+new_list = list(old_list)
+
+Remember : 
+> use comprehensions for turning one iterable into another
+> Use generators when you will be looping over your new iterable only onie time
+> Break comprehension and generator expressions over multiple lines to improve readability
+
+Looping Deeply:
+
+new_list = []
+for inner_list in outer_list:
+	for item in inner_list:
+		new_list.append(item)
+Recomended:
+new_list =[item
+	   for inner_list in outer_list
+	   for item in inner_list
+]
+
+Example 4 :
+
+For i,line in enumerate(log_file):
+	if i >= 10;
+	   break
+        print(line)
+Recomended:
+from itertools import islice
+
+first_ten_line = islice(log_file,10)
+for ine in first_ten_lines:
+	print(line)
+
+

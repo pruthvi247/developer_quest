@@ -1,0 +1,425 @@
+method overloading vs method overriding:
+
+Method Overloading:
+Method Overloading is a Compile time polymorphism.The overloaded methods must differ in the type and/ or number of their parameters.Overloaded may have different return types.Constructors can also be overloaded.
+> eg:
+class MotorBike{
+
+    private String startMethod = "Kick";
+
+    public void start(){
+        System.out.println(startMethod + " starting ....");
+    }
+
+    public void start(String method){
+        this.startMethod = method;
+        System.out.println(startMethod + " starting ....");
+    }
+}
+
+public class DemoApp{
+    public static void main(String[] arg){
+        MotorBike motorBike = new MotorBike();
+        motorBike.start();
+        motorBike.start("Self"); 
+    }
+}
+
+Method Overriding:
+Method Overriding is a Run time polymorphism. In method overriding, derived class provides the specific implementation of the method that is already provided by the base class or parent class.They have same method signature in sub classes with different method body
+Eg: 
+class MotorBike{
+
+    public void start(){
+        System.out.println("Please use kick paddle to start");
+    }
+}
+
+class SelfStartMotorBike extends MotorBike {
+
+    //redefine the method body
+    public void start(){
+        System.out.println("Please use self start button to start");
+    }
+}
+
+public class DemoApp {
+    public static void main(String[] arg){
+        SelfStartMotorBike motorBike = new SelfStartMotorBike();
+        motorBike.start();
+    }
+}
+
+Anonymus classes: 
+
+interface Age
+{
+    int x = 21;
+    void getAge();
+}
+class AnonymousDemo
+{
+    public static void main(String[] args) {
+  
+        // Myclass is hidden inner class of Age interface
+        // whose name is not written but an object to it 
+        // is created.
+        Age oj1 = new Age() {
+            @Override
+            public void getAge() {
+                 // printing  age
+                System.out.print("Age is "+x);
+            }
+        };
+        oj1.getAge();
+    }
+}
+Ternary operator: 
+num1 = 10;
+num2 = 20;
+
+res=(num1>num2) ? (num1+num2):(num1-num2)
+
+Since num1<num2, 
+the second operation is performed
+res = num1-num2 = -10
+
+Multithreading: 
+ A thread is a so called lightweight process. It has its own call stack, but can access shared data of other threads in the same process. Every thread has its own memory cache. If a thread reads shared data, it stores this data in its own memory cache.
+
+A thread can re-read the shared data.A Java application runs by default in one process. Within a Java application you work with several threads to achieve parallel processing or asynchronous behavior.
+
+Synchronized: 
+	 the synchronized keyword for the definition of a method. This would ensure that only one thread can enter this method at the same time. Another thread which is calling this method would wait until the first thread leaves this method.You can also use the synchronized keyword to protect blocks of code within a method. This block is guarded by a key, which can be either a string or an object. This key is called the lock.
+>>>>>
+import java.util.ArrayList;
+import java.util.List;
+
+public class CrawledSites {
+    private List<String> crawledSites = new ArrayList<String>();
+    private List<String> linkedSites = new ArrayList<String>();
+
+    public void add(String site) {
+        synchronized (this) {
+            if (!crawledSites.contains(site)) {
+                linkedSites.add(site);
+            }
+        }
+    }
+
+    /**
+     * Get next site to crawl. Can return null (if nothing to crawl)
+     */
+    public String next() {
+        if (linkedSites.size() == 0) {
+            return null;
+        }
+        synchronized (this) {
+            // Need to check again if size has changed
+            if (linkedSites.size() > 0) {
+                String s = linkedSites.get(0);
+                linkedSites.remove(0);
+                crawledSites.add(s);
+                return s;
+            }
+            return null;
+        }
+    }
+
+}
+
+Threads in java: 
+
+The base means for concurrency is the java.lang.Threads class. A Thread executes an object of type java.lang.Runnable.
+
+Runnable is an interface with defines the run() method. This method is called by the Thread object and contains the work which should be done. Therefore the Runnable is the task to perform. The Thread is the worker who is doing this task.
+
+The following demonstrates a task (Runnable) which counts the sum of a given range of numbers. Create a new Java project called de.vogella.concurrency.threads for the example code of this section
+
+>>>
+
+/**
+ * MyRunnable will count the sum of the number from 1 to the parameter
+ * countUntil and then write the result to the console.
+ * <p>
+ * MyRunnable is the task which will be performed
+ *
+ * @author Lars Vogel
+ *
+ */
+public class MyRunnable implements Runnable {
+    private final long countUntil;
+
+    MyRunnable(long countUntil) {
+        this.countUntil = countUntil;
+    }
+
+    @Override
+    public void run() {
+        long sum = 0;
+        for (long i = 1; i < countUntil; i++) {
+            sum += i;
+        }
+        System.out.println(sum);
+    }
+}
+The following example demonstrates the usage of the Thread and the Runnable class.
+>>>>
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // We will store the threads so that we can check if they are done
+        List<Thread> threads = new ArrayList<Thread>();
+        // We will create 500 threads
+        for (int i = 0; i < 500; i++) {
+            Runnable task = new MyRunnable(10000000L + i);
+            Thread worker = new Thread(task);
+            // We can set the name of the thread
+            worker.setName(String.valueOf(i));
+            // Start the thread, never call method run() direct
+            worker.start();
+            // Remember the thread for later usage
+            threads.add(worker);
+        }
+        int running = 0;
+        do {
+            running = 0;
+            for (Thread thread : threads) {
+                if (thread.isAlive()) {
+                    running++;
+                }
+            }
+            System.out.println("We have " + running + " running threads. ");
+        } while (running > 0);
+
+    }
+}
+
+Creating a new thread causes some performance overhead.
+
+Too many threads can lead to reduced performance, as the CPU needs to switch between these threads.
+
+You cannot easily control the number of threads, therefore you may run into out of memory errors due to too many threads.
+
+The `java.util.concurrent` package offers improved support for concurrency compared to the direct usage of `Threads`.
+This package is described in the next section.
+
+Executors example:
+>>>
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Main {
+    private static final int NTHREDS = 10;
+
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
+        for (int i = 0; i < 500; i++) {
+            Runnable worker = new MyRunnable(10000000L + i);
+            executor.execute(worker);
+        }
+        // This will make the executor accept no new threads
+        // and finish all existing threads in the queue
+        executor.shutdown();
+        // Wait until all threads are finish
+        executor.awaitTermination();
+        System.out.println("Finished all threads");
+    }
+}
+[Source: https://dzone.com/articles/java-thread-tutorial-creating-threads-and-multithr]
+
+How to Create a Java Thread
+Java lets you create a thread one of two ways:
+
+By implementing the Runnableinterface.
+By extending the Thread.
+Let's look at how both ways help in implementing the Java thread.
+
+Runnable Interface
+The easiest way to create a thread is to create a class that implements the Runnable interface.
+
+To implement Runnable interface, a class need only implement a single method called run( ), which is declared like this:
+public void run( )
+
+Inside run( ), we will define the code that constitutes the new thread. Example:
+
+>>>
+public class MyClass implements Runnable {
+public void run(){
+System.out.println("MyClass running");
+   } 
+}
+
+To execute the run() method by a thread, pass an instance of MyClass to a Thread in its constructor (A constructor in Java is a block of code similar to a method that's called when an instance of an object is created). Here is how that is done:
+>> Thread t1 = new Thread(new MyClass ());
+t1.start();
+
+When the thread is started it will call the run() method of the MyClass instance instead of executing its own run() method. The above example would print out the text "MyClass running ".
+
+Extending Java Thread
+The second way to create a thread is to create a new class that extends Thread, then override the run() method and then to create an instance of that class. The run() method is what is executed by the thread after you call start(). Here is an example of creating a Java Thread subclass:
+>> public class MyClass extends Thread {
+     public void run(){
+     System.out.println("MyClass running");
+   }
+}
+To create and start the above thread:
+>> MyClass t1 = new MyClass ();
+T1.start();
+
+Creating Multiple Threads:
+>>>
+class MyThread implements Runnable {
+String name;
+Thread t;
+    MyThread String thread){
+    name = threadname; 
+    t = new Thread(this, name);
+System.out.println("New thread: " + t);
+t.start();
+}
+
+
+public void run() {
+ try {
+     for(int i = 5; i > 0; i--) {
+     System.out.println(name + ": " + i);
+      Thread.sleep(1000);
+}
+}catch (InterruptedException e) {
+     System.out.println(name + "Interrupted");
+}
+     System.out.println(name + " exiting.");
+}
+}
+
+class MultiThread {
+public static void main(String args[]) {
+     new MyThread("One");
+     new MyThread("Two");
+     new NewThread("Three");
+try {
+     Thread.sleep(10000);
+} catch (InterruptedException e) {
+      System.out.println("Main thread Interrupted");
+}
+      System.out.println("Main thread exiting.");
+      }
+}
+
+Variable Arguments (Varargs) in Java:
+A variable-length argument is specified by three periods(…). For Example,
+
+public static void fun(int ... a) 
+{
+   // method body
+} 
+Specifying two varargs in a single method:
+void method(String... gfg, int... q)
+{
+    // Compile time error as there are two
+    // varargs
+}
+Specifying varargs as the first parameter of method instead of last one:
+void method(int... gfg, String q)
+{
+    // Compile time error as vararg appear
+    // before normal argument
+}
+static void fun2(String str, int ...a)
+    {
+        System.out.println("String: " + str);
+        System.out.println("Number of arguments is: "+ a.length);
+  
+        // using for each loop to display contents of a
+        for (int i: a)
+            System.out.print(i + " ");
+  
+        System.out.println();
+    }//// works fine
+
+Exception handling: 
+try {
+
+    // execute code that may throw 1 of the 3 exceptions below.
+
+} catch(SQLException | IOException e) {
+    logger.log(e);
+
+} catch(Exception e) {
+    logger.severe(e);
+}
+
+>>>
+/ A Simple Java program to show multiple
+// type parameters in Java Generics
+  
+// We use < > to specify Parameter type
+class Test<T, U>
+{
+    T obj1;  // An object of type T
+    U obj2;  // An object of type U
+  
+    // constructor
+    Test(T obj1, U obj2)
+    {
+        this.obj1 = obj1;
+        this.obj2 = obj2;
+    }
+  
+    // To print objects of T and U
+    public void print()
+    {
+        System.out.println(obj1);
+        System.out.println(obj2);
+    }
+}
+  
+// Driver class to test above
+class Main
+{
+    public static void main (String[] args)
+    {
+        Test <String, Integer> obj =
+            new Test<String, Integer>("GfG", 15);
+  
+        obj.print();
+    }
+}
+>>>>>>>>
+
+Generic Functions:
+We can also write generic functions that can be called with different types of arguments based on the type of arguments passed to generic method, the compiler handles each method.
+
+
+// A Simple Java program to show working of user defined
+// Generic functions
+   
+class Test
+{
+    // A Generic method example
+    static <T> void genericDisplay (T element)
+    {
+        System.out.println(element.getClass().getName() +
+                           " = " + element);
+    }
+   
+    // Driver method
+    public static void main(String[] args)
+    {
+         // Calling generic method with Integer argument
+        genericDisplay(11);
+   
+        // Calling generic method with String argument
+        genericDisplay("GeeksForGeeks");
+   
+        // Calling generic method with double argument
+        genericDisplay(1.0);
+    }
+}
+
+> the primary difference between a vector and an ArrayList is that a Vector is synchronized and an ArrayList is non-synchronized
+> The major difference between Stack memory and heap memory is that the stack is used to store the order of method execution and local variables while the heap memory stores the objects and it uses dynamic memory allocation and deallocation

@@ -1,0 +1,37 @@
+[source : https://www.youtube.com/watch?v=mXGcBvWYl-U]
+
+performance testing: 
+	is defined as is checking weather the application under test satisfies required benchmarks on both load and stress
+
+Load testing: Load testing is testing to see whether the system or application under test is able to handle the required number of concurrent users accesses on webserver with out failure
+
+Stress testing : stress testing is testing to see how the web server copes up with high load and limited resources that is under constrained conditions,Here we can determine what the maximum load is that the web server can handle
+
+Elements in jmeter:
+> Test Plan : contains one or more elements like theread group, smaplers, listeners,configuration
+> Thread group : each thread simulates each user - 100 threads means 100 users
+> samplers: type of request (http, ftp,jdbc,smtp ...)
+> listners: listeners show the results of test execution.They can show results in different formats - Graph,tree,log,table.
+> configuration: It basically sets up defaults and variables for later used by sampler
+	> csv data set config
+	> Http cookie manager
+	> Login config Element
+	> Http Request Defaults
+	> Ftp request defaults
+Thread properties:
+> rampup
+> loopcount
+> no of threads
+
+> Ramp-up Period - The time frame (in seconds) for all requests to start. All the threads specified in the Number of Threads input will start within Ramp-up period.
+
+100 threads and 100 seconds ramp-up: each second JMeter will start 1 Thread until all threads are started by the time the 100 seconds are up.
+
+100 threads and 50 seconds ramp-up: each second 2 Threads are started.
+
+100 threads and 200 seconds ramp-up: every 2 seconds, 1 Thread is started.
+
+Jmeter Assertion:
+Thread Group -> Add -> Assertions -> Response Assertion
+
+

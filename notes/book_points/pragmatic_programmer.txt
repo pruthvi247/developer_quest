@@ -1,0 +1,130 @@
+[source : https://hackernoon.com/65-key-takeaways-from-the-pragmatic-programmer-from-journeyman-to-master-1b4n32cy]
+
+
+> To be a pragmatic programmer, be: "Early adopter/fast adapter", "Inquisitive", "Critical thinker", "Realistic", "Jack of all trades". In short "Care about your craft". Page xviii
+> What distinguishes a pragmatic programmer? The attitude to thinking beyond the immediate problem and take the context into account. Also, they are accountable for everything they do. Page 1
+> How does a pragmatic programmer take responsibility? Providing options and not making excuses. Page 3
+> Software can rot, the most important factor that affects this is the people's psychology around a project. Page 4
+> Don't leave tech debt unfixed. Fix stuff as soon as they pop-up or at least plan to address it later. Page 5
+> To make positive change, be proactive so you become a Catalyst for Change. Page 8
+> "Constantly review what's happening around you, not just what you are doing". Page 9
+> Make sure you involve users in the trade-offs to identify the real constraints of the project and prioritize accordingly. Page 10
+> Code can never be perfect. "Great software today is often preferable to perfect software tomorrow". Page 11
+> "Knowledge and expertise are your most important professional assets". "Unfortunately, they're expiring assets". Page 12
+> "Think critically about what you read and hear. You need to ensure that the knowledge in your portfolio is accurate". Page 16
+> Be an effective communicator and think about your audience before delivering the message and be timely when delivering the message. Page 19
+> Avoid duplication by having a clear design in mind when tackling a problem. Also, constantly communicate with your peers is key. Page 32
+> When evaluating using third party libraries, evaluate if they impose any unwanted restrictions on you. Page 39
+> If you want to cheaply evaluate a risky decision, prototypes are a great tool. Page 53
+> Prototypes aren't only to explore features, they can serve to explore architectures, third-party components or UI changes. Page 54
+> Get familiar with the domain language and use it in your programs. Page 58
+> When doing estimations, ask yourself about the context in which this estimate will be used. Do you need a high-level estimate for roadmap planning? Do you need a more precise number for your current sprint?. Page 64
+> A good way to estimate something is to ask someone who has done it before. Page 65
+> Often the only way to truly determine the timetable for a project is by gaining experience on that project. Page 68
+> When asked for an estimate, answering "I'll get back to you" will help you slow down the process, apply several decomposition techniques (more detail in the book) and provide a better answer. Page 69
+> Consider using plain text as a format to represent knowledge given its simplicity, longevity, and ease of use. Page 74
+> When debugging, get into the right mindset first. Turn off your ego, any pressure you have from the project you're currently working on and get comfortable. Also, don't panic. Try to discover the root cause instead of just fixing the symptoms. Page 91
+> While eliminating possible causes of a bug, recognize that if you change something and the system stopped working, that something is probably the reason why. Page 96
+> Don't assume some function is not related to a bug, prove it, run it with the data that's causing the problem. Page 97
+> If the bug took a long time to fix, ask yourself what you can do to fix it next time easier. Page 98
+> "You can't write perfect software". Page 107
+> When your program detects that it entered a state that shouldn't have happened, crash. It's much better to crash than continue running with a corrupted state. Page 121
+> "Exceptions should rarely be part of a program's normal flow; they should be reserved for unexpected events". Page 126
+> A routine that allocates resources should ideally also free them. Page 131
+> When asking an object for a particular service, we'd like the service to be performed on our behalf. Do not rely on third-party objects to be returned. Otherwise, you're increasing the coupling of your code to another module. Page 139
+> Given the frequency at which business needs can change, it's best to add support for dynamic behavior through configuration at runtime. Page 144
+> Coding isn't mechanical, there are decisions made every minute. Page 171
+> Don't rely on your programs working by coincidence, be aware of what you're doing and do your coding with a plan in mind. Page 175
+> "Don't let existing code dictate future code". Page 176
+> Be pragmatic when choosing your algorithm. The fastest one isn't always the best one. Page 182
+> Code needs to evolve. Software is more like gardening than to construction. Page 184
+> Refactor early and refactor often. Also, keep track of the things that need to be refactored. Page 186
+> "Don't try to refactor and add functionality at the same time". Page 186
+> Before refactoring, make sure you have good tests. Also, do your refactoring in short small steps. Page 186
+> Built testability into your software from the beginning and test each piece thoroughly before integrating them. Page 189
+> If you use a tool to generate code for you, understand everything it produces so you can control your application. Page 199
+> Software requirements are generally hard to identify. They're usually buried beneath layers of assumptions, misconceptions, and politics. Page 202
+> "It's important to discover the underlying reason why users do a particular thing, rather than just the way they currently do it". Page 203
+> A simple technique for getting inside your user's requirements is to become a user. Spend some time with them in their actual working environment. Page 203
+> "Requirements are not architecture, they are not design or user interface. They are needs.". Page 208
+> To ensure consistent communication with other stakeholders, maintain a project glossary. Page 210
+> When solving though problems, first identify the constraints placed on you and the degree of freedom you have. Challenge any preconceived notions and evaluate whether or not they are hard/absolute constraints or just preconceived notions. Page 213
+> When faced with a tough problem, enumerate all the possible solutions you can think of. If you want to dismiss an option, think clearly about the reasons why. Page 213
+> When faced with a problem that seems harder than it should be, ask yourself these questions: "Is there an easier way?", "Are you trying to solve the right problem, or have you been distracted by a peripheral technicality?", "Why is this thing a problem?", "What is it that's making it so hard to solve?", "Does it have to be done this way?", "Does it have to be done at all?" Page 214
+> Don't obsess over creating software specifications. Often, it's only during coding that certain options become apparent. Page 218
+> "As soon as you have more than one person working on a project, you need to establish some rules and delegate parts of the project accordingly." Page 223
+> Quality is a team effort, not a single developer effort. Page 224
+> Your team is a single entity that needs to communicate clearly with the rest of the world. Create a personality for it and generate a positive reputation. Page 225
+> Organize your team around functionality, not job function. Page 227
+> Automate every task everything you can, avoid manual procedures at all cost. Page 231
+> Pragmatic programmers test their code early, often and automatically. Page 237
+> Failing to meet usability criteria is just as a bug as dividing by zero. Page 241
+> The data you use for testing has a huge impact on giving you confidence. Don't blindly trust code coverage. Page 245
+> If a bug slips through the net of existing tests, you need to add a new test to trap it next time. Page 246
+> "In general, comments should discuss why something is done, its purpose and goal". Also, it's a good way to document why decisions were made and what other alternatives were discarded. Page 249
+> "The success of a project is measured by how well it meets the expectations of your users.". Page 255
+> "Work with your users so that their understanding of what you'll be delTo be a pragmatic programmer, be: "Early adopter/fast adapter", "Inquisitive", "Critical thinker", "Realistic", "Jack of all trades". In short "Care about your craft". Page xviii
+> What distinguishes a pragmatic programmer? The attitude to thinking beyond the immediate problem and take the context into account. Also, they are accountable for everything they do. Page 1
+> How does a pragmatic programmer take responsibility? Providing options and not making excuses. Page 3
+> Software can rot, the most important factor that affects this is the people's psychology around a project. Page 4
+> Don't leave tech debt unfixed. Fix stuff as soon as they pop-up or at least plan to address it later. Page 5
+> To make positive change, be proactive so you become a Catalyst for Change. Page 8
+> "Constantly review what's happening around you, not just what you are doing". Page 9
+> Make sure you involve users in the trade-offs to identify the real constraints of the project and prioritize accordingly. Page 10
+> Code can never be perfect. "Great software today is often preferable to perfect software tomorrow". Page 11
+> "Knowledge and expertise are your most important professional assets". "Unfortunately, they're expiring assets". Page 12
+> "Think critically about what you read and hear. You need to ensure that the knowledge in your portfolio is accurate". Page 16
+> Be an effective communicator and think about your audience before delivering the message and be timely when delivering the message. Page 19
+> Avoid duplication by having a clear design in mind when tackling a problem. Also, constantly communicate with your peers is key. Page 32
+> When evaluating using third party libraries, evaluate if they impose any unwanted restrictions on you. Page 39
+> If you want to cheaply evaluate a risky decision, prototypes are a great tool. Page 53
+> Prototypes aren't only to explore features, they can serve to explore architectures, third-party components or UI changes. Page 54
+> Get familiar with the domain language and use it in your programs. Page 58
+> When doing estimations, ask yourself about the context in which this estimate will be used. Do you need a high-level estimate for roadmap planning? Do you need a more precise number for your current sprint?. Page 64
+> A good way to estimate something is to ask someone who has done it before. Page 65
+> Often the only way to truly determine the timetable for a project is by gaining experience on that project. Page 68
+> When asked for an estimate, answering "I'll get back to you" will help you slow down the process, apply several decomposition techniques (more detail in the book) and provide a better answer. Page 69
+> Consider using plain text as a format to represent knowledge given its simplicity, longevity, and ease of use. Page 74
+> When debugging, get into the right mindset first. Turn off your ego, any pressure you have from the project you're currently working on and get comfortable. Also, don't panic. Try to discover the root cause instead of just fixing the symptoms. Page 91
+> While eliminating possible causes of a bug, recognize that if you change something and the system stopped working, that something is probably the reason why. Page 96
+> Don't assume some function is not related to a bug, prove it, run it with the data that's causing the problem. Page 97
+> If the bug took a long time to fix, ask yourself what you can do to fix it next time easier. Page 98
+> "You can't write perfect software". Page 107
+> When your program detects that it entered a state that shouldn't have happened, crash. It's much better to crash than continue running with a corrupted state. Page 121
+> "Exceptions should rarely be part of a program's normal flow; they should be reserved for unexpected events". Page 126
+> A routine that allocates resources should ideally also free them. Page 131
+> When asking an object for a particular service, we'd like the service to be performed on our behalf. Do not rely on third-party objects to be returned. Otherwise, you're increasing the coupling of your code to another module. Page 139
+> Given the frequency at which business needs can change, it's best to add support for dynamic behavior through configuration at runtime. Page 144
+> Coding isn't mechanical, there are decisions made every minute. Page 171
+> Don't rely on your programs working by coincidence, be aware of what you're doing and do your coding with a plan in mind. Page 175
+> "Don't let existing code dictate future code". Page 176
+> Be pragmatic when choosing your algorithm. The fastest one isn't always the best one. Page 182
+> Code needs to evolve. Software is more like gardening than to construction. Page 184
+> Refactor early and refactor often. Also, keep track of the things that need to be refactored. Page 186
+> "Don't try to refactor and add functionality at the same time". Page 186
+> Before refactoring, make sure you have good tests. Also, do your refactoring in short small steps. Page 186
+> Built testability into your software from the beginning and test each piece thoroughly before integrating them. Page 189
+> If you use a tool to generate code for you, understand everything it produces so you can control your application. Page 199
+> Software requirements are generally hard to identify. They're usually buried beneath layers of assumptions, misconceptions, and politics. Page 202
+> "It's important to discover the underlying reason why users do a particular thing, rather than just the way they currently do it". Page 203
+> A simple technique for getting inside your user's requirements is to become a user. Spend some time with them in their actual working environment. Page 203
+> "Requirements are not architecture, they are not design or user interface. They are needs.". Page 208
+> To ensure consistent communication with other stakeholders, maintain a project glossary. Page 210
+> When solving though problems, first identify the constraints placed on you and the degree of freedom you have. Challenge any preconceived notions and evaluate whether or not they are hard/absolute constraints or just preconceived notions. Page 213
+> When faced with a tough problem, enumerate all the possible solutions you can think of. If you want to dismiss an option, think clearly about the reasons why. Page 213
+> When faced with a problem that seems harder than it should be, ask yourself these questions: "Is there an easier way?", "Are you trying to solve the right problem, or have you been distracted by a peripheral technicality?", "Why is this thing a problem?", "What is it that's making it so hard to solve?", "Does it have to be done this way?", "Does it have to be done at all?" Page 214
+> Don't obsess over creating software specifications. Often, it's only during coding that certain options become apparent. Page 218
+> "As soon as you have more than one person working on a project, you need to establish some rules and delegate parts of the project accordingly." Page 223
+> Quality is a team effort, not a single developer effort. Page 224
+> Your team is a single entity that needs to communicate clearly with the rest of the world. Create a personality for it and generate a positive reputation. Page 225
+> Organize your team around functionality, not job function. Page 227
+> Automate every task everything you can, avoid manual procedures at all cost. Page 231
+> Pragmatic programmers test their code early, often and automatically. Page 237
+> Failing to meet usability criteria is just as a bug as dividing by zero. Page 241
+> The data you use for testing has a huge impact on giving you confidence. Don't blindly trust code coverage. Page 245
+> If a bug slips through the net of existing tests, you need to add a new test to trap it next time. Page 246
+> "In general, comments should discuss why something is done, its purpose and goal". Also, it's a good way to document why decisions were made and what other alternatives were discarded. Page 249
+> "The success of a project is measured by how well it meets the expectations of your users.". Page 255
+> "Work with your users so that their understanding of what you'll be delivering is accurate.". Page 256
+> Go the extra mile to surprise your users, try to delight them. Page 256ivering is accurate.". Page 256
+Go the extra mile to surprise your users, try to delight them. Page 256

@@ -40,9 +40,9 @@ def delete(self):
 
 Class methods
 --------------------------
-Class methods are the third and final OOP method type to know. Class methods know about their class. They can’t access specific instance data, but they can call other static methods.
+Class methods are the third and final OOP method type to know. Class methods know about their class. They can t access specific instance data, but they can call other static methods.
 
-Class methods don’t need self as an argument, but they do need a parameter called cls. This stands for class, and like self, gets automatically passed in by Python.
+Class methods don t need self as an argument, but they do need a parameter called cls. This stands for class, and like self, gets automatically passed in by Python.
 ================================================================
 ====== advanced python types of variales and methods - lec 3====
 ================================================================
@@ -68,7 +68,7 @@ Class methods don’t need self as an argument, but they do need a parameter calle
 	def findAverage():
 	print("inside static level method"))
 --we can directly call static level method with class name eg: Student.findAverage() or s1.findAverage()
--- if we dont use @staticmethod annotation(decorator in python) then we should call the method using class name,if we use @staticmethod we can call using object variable
+-- if we use @staticmethod annotation(decorator in python) then we should call the method using class name,if we dont use @staticmethod we can call using object variable
 
 
 ================================================================
@@ -125,7 +125,40 @@ we can call either by using object refernce or by using class name.
 ================================================================
 Inner class:
 > with out existing one type of object if there is no chance of existing another type of object then we should go for inner classes.
-
+>>>
+# create a Color class
+class Color:
+    
+  # constructor method
+  def __init__(self):
+    # object attributes
+    self.name = 'Green'
+    self.lg = self.Lightgreen()
+    
+  def show(self):
+    print("Name:", self.name)
+    
+  # create Lightgreen class
+  class Lightgreen:
+     def __init__(self):
+        self.name = 'Light Green'
+        self.code = '024avc'
+    
+     def display(self):
+        print("Name:", self.name)
+        print("Code:", self.code)
+# create Color class object
+outer = Color()
+  
+# method calling
+outer.show()
+  
+# create a Lightgreen 
+# inner class object
+g = outer.lg
+  
+# inner class method calling
+g.display()
 ================================================================
 ======operator over loading part1 lec 12====
 ================================================================
@@ -200,7 +233,7 @@ Hybrid Inheritance:
 ====== generators lec 22====
 ================================================================
 
-> generator: to generate a sequence of values using yield keyword
+> generator: to generate a sequence of values using yield keyw:qord
 
 
 

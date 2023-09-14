@@ -10,3 +10,199 @@
 > The primary purpose of the Factory Method design pattern is to separate product construction code from the code that actually uses that product. As a result, when you need to add new concrete product, only a new creator subclass should be created which overrides the factory method.(refer blog as they have given uml diagram)
 
 >> ***** As mentioned before, the factory method does not have to create a new instance of the object every single time. So if you want to save some system resources and reuse the already existing object instead of rebuilding it, implementing the Factory Method could be a way to go, e.g. by introducing a caching layer or storage which keeps the track of already created objects and returns the requested object when calling the factory method on a specific creator subclass.
+
+[source: https://dash-overflow.net/articles/factory/]
+
+It’s also likely that you’ve seen the keyword used for deserialization like so:
+>>>
+    class SomeClass {
+      SomeClass({this.property});
+      factory SomeClass.fromMap(Map<String, Object> map) {
+        return SomeClass(
+          property: map['property'] as int,
+        );
+      }
+      final int property;
+    }
+
+But this code may leave you with an unanswered question:
+Can’t I use a static method?
+
+After all, you could replace the previous code with:
+>>>
+    class SomeClass {
+      SomeClass({this.property});
+      static SomeClass fromMap(Map<String, Object> map) {
+        return SomeClass(
+          property: map['property'] as int,
+        );
+      }
+      final int property;
+    }
+
+This syntax behaves strictly the same as the previous snippet.
+So you may be wondering why do we even have that keyword.
+
+So let’s review together what that factory keyword does that a static method can’t do.
+This won’t be a list of all the features of factory, only the differences with static.
+
+While static methods are very powerful, they require a name.
+
+This is fine when you want to write a fromJson or similar. But what if you want the behavior of that static method to be the “default constructor”?
+
+Well, you can’t with a static method. But you can with a factory constructor:
+>>>
+    class Example {
+      factory Example() {
+        // TODO: return an `Example` instance somehow
+      }
+    }
+
+This can increase the readability quite a bit as you don’t need to give a meaningless name to the constructor.
+
+The difference in verbosity between a static method and a named factory constructor when instantiating a simple class is negligible.
+
+But things can get very different when you are trying to instantiate a complex class, such as:
+>>>
+    class ComplexClass<Value, Notifier extends ValueNotifier<Value>> {
+    }
+
+If we wanted to make a factory using a static method for this class, then we would have to duplicate the generic parameters:
+>>>
+    class ComplexClass<Value, Notifier extends ValueNotifier<Value>> {
+      static ComplexClass<Value, Notifier> someFactory<ComplexClass<Value, Notifier extends ValueNotifier<Value>>() {
+        // TODO: return a ComplexClass instance
+      }
+    }
+
+That’s quite verbose, and the meaningful information are lost in the sea of duplicates.
+
+Using the factory keyword remove all of this redundancy:
+>>>
+    class ComplexClass<Value, Notifier extends ValueNotifier<Value>> {
+      factory ComplexClass.someFactory() {
+        // TODO: return a ComplexClass instance
+      }
+    }
+
+That’s a lot better!
+
+When a class in Dart doesn’t define a constructor, an implicit default empty constructor is added.
+
+As such:
+>>
+    class Example {}
+
+is identical to:
+>>
+    class Example {
+      Example();
+    }
+
+But if you add a named constructor like so:
+>>>
+    class Example {
+      Example.named();
+    }
+
+Then that default empty constructor is no-longer added.
+
+As opposed to static methods, factory constructors preserve this behavior:
+>>>
+    class Factory {
+      factory Factory.myFactory() {
+        // TODO:
+      }
+    }
+    class Static {
+      static Static myFactory() {
+        // TODO:
+      }
+    }
+    void main() {
+      Factory(); // ERROR no default constructor
+      Static(); // OK, likely a mistake
+    }
+
+Going further in the reduction of boilerplate, the factory keyword has an extra syntax sugar.
+
+You see, a common use-case for the factory design pattern is to simply redirect to another constructor, without doing any extra work:
+>>>
+    abstract class Example {
+      factory Example() {
+        return _ExampleImpl();
+      }
+    }
+    class _ExampleImpl implements Example {}
+
+That works fine with simple constructors, but doesn’t scale well with more complex examples:
+>>>
+    abstract class Person {
+      factory Person(String name, {int age, Gender gender}) {
+        return _PersonImpl(name, age: age, gender: gender);
+      }
+    }
+
+Having to pass all the parameters to the constructor can be tedious.
+
+Using factory, Dart offers a way to reduce all of this redundancy:
+>>>
+    abstract class Person {
+      factory Person(String name, {int age, Gender gender}) = _PersonImpl;
+    }
+
+This is strictly identical to the previous snippet, where all the parameters from the factory constructor are forwarded to _PersonImpl.
+
+It is worth noting that we can use this syntax to redirect to any constructor, not just the default one:
+>>>
+    abstract class Example {
+      factory Example() = _ExampleImpl.namedConstructor;
+    }
+    class _ExampleImpl implements Example {
+      _ExampleImpl.namedConstructor();
+    }
+
+As an expension to the previous features, using the short-hand for redirecting to a different constructor it is possible to have “const factories”:
+>>>
+    abstract class Example {
+      // Using both the `const` and `factory` keywords together
+      const factory Example() = _ExampleImpl;
+    }
+    class _ExampleImpl implements Example {
+      const _ExampleImpl();
+    }
+    void main() {
+      const Example(); // OK
+    }
+
+Combined with the fact that factory constructors can be unnamed, this covers the entire spectrum of the features a constructor can have.
+
+In the history of Dart, there was a time when we were required to use the new keyword to instantiate a class.
+
+One major difference between static and factory was that a static method didn’t need that new but a factory did:
+>>>
+    class Example {
+      factory Example.factoryConstructor() {
+        // TODO: return an `Example` instance somehow
+      }
+      static Example staticMethod() {
+        // TODO: return an `Example` instance somehow
+      }
+    }
+    void main() {
+      new Example.factoryConstructor(); // OK
+      Example.staticMethod(); // we can't use `new` here
+    }
+
+What’s the point you may ask? Isn’t it just adding boilerplate?
+Well, one of the main benefits of this is, it hides the fact that the constructor is a factory.
+
+Assume that you are developing a package:
+Between two versions of your package, you will likely do some refactoring. One typical refactoring you may want to do is replace a constructor with a factory (or vice-versa).
+
+The problem is, if you used a static method to do so, that would be a breaking change, as people would need to change their code between Example() and new Example().
+
+That’s not the worse breaking change ever, but not having to deal with that by using factory helps.
+
+it is possible to use static methods to implement the factory design pattern.
+On the other hand, using factory supports more usages and can reduce the boilerplate.

@@ -1,0 +1,97 @@
+[source: kodekloud cka]
+
+Networking
+----------
+networking prerequisites:
+## pls refer to the pdf in the same direcory for better understanding of networking.
+
+> Switching can only enable communication with in network (same network).
+> To communicate between the netowork(inter network) we use router.
+> If network is a room, gateway is the door to the outside world.System should know where the door is(ip routing table)
+> ip route add 192.168.2.0./24 via 192.168.1.1 (router ip)
+> ip route add default via 192.168.2.1 or ip route add 0.0.0.0 via 192.168.1.1
+
+nslookup - to query a hostname from dns server, ns look up doesnot look in local /etc/resolv.conf, it searched in public DNS server
+dig is another tool similar to nslookup
+
+Network namespaces:
+> Network namespaces are used by containers to implement network isolation.If host is your house then namespaces are rooms with in the house.
+> cat /etc/network/interface -> give the physical network interface
+
+> to get ports : netstat -nplt
+Q: Deploy weave-net networking solution to the cluster.
+
+
+
+Replace the default IP address and subnet of weave-net to the 10.50.0.0/16. Please check the official weave installation and configuration guide which is available at the top right panel.
+Answer:
+> By default, the range of IP addresses and the subnet used by weave-net is 10.32.0.0/12 and it's overlapping with the host system IP addresses.
+To know the host system IP address by running ip a
+
+>>> ip a | grep eth0
+
+> If we deploy a weave manifest file directly without changing the default IP addresses it will overlap with the host system IP addresses and as a result, it's weave pods will go into an Error or CrashLoopBackOff state.
+So we need to change the default IP address by adding &env.IPALLOC_RANGE=10.50.0.0/16 option at the end of the manifest file. It should be look like as follows :-
+>>> kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')&env.IPALLOC_RANGE=10.50.0.0/16"
+
+
+then run the kubectl get pods -n kube-system to see the status of weave-net pods.
+Note :- 10.40.56.3 IP address is used here as an example. It may be different in your assigned lab.
+
+
+> to get the network solution used in cluster : ls /etc/cni/net.d/
+
+> Identify the name of the bridge network/interface created by weave on each node - ifconfig (weave will be present)
+
+> What is the default gateway configured on the PODs scheduled on node01? - kubectl exec -it <> -- sh and ip r (we can see the default)
+
+>>  iptables -L -t nat | grep <service name>
+
+Q: What is the IP Range configured for the services within the cluster?
+A: cat /etc/kubernetes/manifests/kube-apiserver.yaml | grep cluster-ip-range
+
+Q: What type of proxy is the kube-proxy configured to use?
+A: kubectl logs <kube-proxy-pod-name> -n kube-system
+Q: How does this Kubernetes cluster ensure that a kube-proxy pod runs on all nodes in the cluster?
+A: kubectl get ds -n kube-system
+
+Ingress:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
