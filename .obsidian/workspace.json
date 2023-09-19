@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "3280216cc41ac067",
+        "id": "2fe5bc06d0015ad5",
         "type": "tabs",
-        "dimension": 54.86725663716814,
+        "dimension": 34.61962513781698,
         "children": [
           {
-            "id": "62453403c245c1ed",
+            "id": "16e24ecfedf16410",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/cka/7-Security.md",
+                "file": "notes/dockerAndKube/kubernetes/cka/9-Networking.md",
                 "mode": "source",
                 "source": false
               }
@@ -23,31 +23,32 @@
         ]
       },
       {
-        "id": "ba4a31b135a16427",
+        "id": "2a5dcae426d53186",
         "type": "tabs",
-        "dimension": 45.13274336283185,
+        "dimension": 65.38037486218302,
         "children": [
           {
-            "id": "9c7b260910b6cd48",
+            "id": "4fad116339c2f6ee",
             "type": "leaf",
             "state": {
               "type": "pdf",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/7-CKA-Networking.pdf"
+                "file": "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/9-CKA-Networking-v1.2.pdf"
               }
             }
           },
           {
-            "id": "963e5c24dee3be65",
+            "id": "d79b7eda4fae8d85",
             "type": "leaf",
             "state": {
               "type": "pdf",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/7-CKA-Security.pdf"
+                "file": "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/9-CKA-Ingress.pdf"
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -97,8 +98,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 342.5026054382324,
-    "collapsed": true
+    "width": 342.5026054382324
   },
   "right": {
     "id": "05d70312eebde015",
@@ -114,7 +114,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/cka/7-Security.md",
+                "file": "notes/dockerAndKube/kubernetes/cka/9-Networking.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/cka/7-Security.md",
+                "file": "notes/dockerAndKube/kubernetes/cka/9-Networking.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -154,7 +154,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/dockerAndKube/kubernetes/cka/7-Security.md"
+                "file": "notes/dockerAndKube/kubernetes/cka/9-Networking.md"
               }
             }
           },
@@ -185,29 +185,36 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "62453403c245c1ed",
+  "active": "16e24ecfedf16410",
   "lastOpenFiles": [
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916221209.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916221143.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916220731.png",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/7-CKA-Networking.pdf",
+    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/10-CKA-k8-design-Install-v1.4.pdf",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919113002.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919110855.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919110828.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919104032.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919103803.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919101747.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919095316.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919095216.png",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919095128.png",
+    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/9-CKA-Ingress.pdf",
+    "notes/dockerAndKube/kubernetes/cka/9-Networking.md",
+    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230918134028.png",
+    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/9-CKA-Networking-v1.2.pdf",
+    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/8-CKA-Storage.pdf",
+    "notes/dockerAndKube/kubernetes/cka/8-Storage.md",
+    "notes/dockerAndKube/kubernetes/cka/3-Scheduling.md",
+    "notes/dockerAndKube/kubernetes/cka/2-Core-Concepts.md",
+    "notes/dockerAndKube/kubernetes/cka/1-Architecture.md",
+    "notes/dockerAndKube/kubernetes/cka/0-QuickNotes.md",
     "notes/dockerAndKube/kubernetes/cka/7-Security.md",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916220650.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916220645.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916215714.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916215659.png",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/7-CKA-Security.pdf",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916215217.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916212058.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916211955.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230916205955.png",
+    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/7-CKA-Networking.pdf",
     "Attachments",
     "notes/dockerAndKube/kubernetes/cka/6-Cluster-Maintenance.md",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/6-CKA-Cluster-Maintenance-v1.2.pdf",
-    "notes/dockerAndKube/kubernetes/cka/3-Scheduling.md",
     "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
     "notes/dockerAndKube/kubernetes/cka/5-Application-lifecycle-management.md",
-    "notes/dockerAndKube/kubernetes/cka/2-Core-Concepts.md",
     "notes/UI-Blogs/10-css-tips.md",
     "notes/UI-Blogs",
     "notes/flutter_points/flutter_shortcuts.md",
@@ -225,13 +232,6 @@
     "notes/networking/computer_networks.md",
     "notes/dockerAndKube/kubernetes/cka/4-logging-monitoring.md",
     "notes/dockerAndKube/docker/DockerimagesForDebugging-martinheinz.md",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/4-CKALogging-Monitoring.pdf",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-Kubernetescheduling.pdf",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-StaticPods.pdf",
-    "notes/dockerAndKube/kubernetes/examples/voting-app/Readme.md",
-    "notes/dockerAndKube/kubernetes/ckad/ckad_1.md",
-    "notes/git_learnings.md",
-    "notes/dockerAndKube/docker/Blog-dockert-tips.md",
-    "2023-08-30.md"
+    "notes/dockerAndKube/kubernetes/examples/voting-app/Readme.md"
   ]
 }
