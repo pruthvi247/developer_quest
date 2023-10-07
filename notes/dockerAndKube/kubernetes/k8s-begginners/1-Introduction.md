@@ -28,4 +28,6 @@ kubelet is the agent that runs on each node in the cluster. The agent is respons
 
 **kube** command line tool or kubectl or kube control as it is also called. The kube control tool is used to deploy and manage applications on a kubernetes cluster, to get cluster information, get the status of nodes in the cluster and many other things.
 
+[Image Source](https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb699e33c-9d2c-453e-bf76-ea1732761701_1463x1536.jpeg?utm_source=substack&utm_medium=email)
 
+![[Pasted image 20230924112905.png]]

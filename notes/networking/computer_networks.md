@@ -75,12 +75,12 @@ Layer 3 - Network layer
 	Rout-update packets(path determinaion) - RIP,ospf,eigrp etc..
 Layer 3 devices : Routers and multilayer switches,ipv4,ipv6
 
-Layer 4 - Data link layer:
+Layer 2 - Data link layer:
 
 > The switching layer
-> Ensures that messages are delivered to the proper deviec on a LAN using hardware addresses
+> Ensures that messages are delivered to the proper device on a LAN using hardware addresses
 	> mac address
-	> only concerened with local delivery of frames on the same network
+	> only concerned with local delivery of frames on the same network
 > Responsible for packaging the data into frames for the physical layer
 
 Datalink layer has two layers
@@ -139,17 +139,17 @@ Dynamic host configuration protocol
 port : 67,68 Transport layer protocol : UDP
 
 > protocol that automatically assigns ip address configuration to devices on a network
-	> ip address
-	> subnet mask
-	> Default Gateway
-	> DNS server
+	- ip address
+	- subnet mask
+	- Default Gateway
+	- DNS server
 
 Network Time Protocol - NTP
 port: 123 Transport Layer Protocol : TCP
 
 > This protocol automatically synchronizes a system's time with a network time server
-	>Important for time-dependent network applications and protocols
-	>Authentication will oftern fail if time isn't properly synchronized between devices
+	- Important for time-dependent network applications and protocols
+	- Authentication will oftern fail if time isn't properly synchronized between devices
 
 Simple Network Management Protocol -SNMP
 port: 161 Transport Layer Protocol: TCP
@@ -211,8 +211,8 @@ Trivial File Transfer Protocol - TFTP
 Port: 69 Transport Layer Protocol: UDP
 
 > A bare-bones version of FTP user for simple downloads
-	>Doesnt support authentication
-	>Doesnt support directory navigation
+	-  Doesnt support authentication
+	- Doesnt support directory navigation
 > often used to transfer software images for routers and switches during upgrades
 
 Email Protocols:

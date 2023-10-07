@@ -52,8 +52,6 @@ Toggle side bar:
 > Quickly create multiple cursors to change multiple sections of code
 -   Mac: `Cmd + Opt + Arrow Up / Arrow Down`
 ![[1_Xws0GwbHeJux8Uwh17SMSQ.gif]]
-
-
 ### select next
 > select the next occurrence of whatever you have currently selected
 
@@ -102,3 +100,4 @@ VSCode generate not only your constructor but add required keywords to the param
 ```
 
 ![[Pasted image 20230403173658.png]]
+
