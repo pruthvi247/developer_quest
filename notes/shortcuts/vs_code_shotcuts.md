@@ -100,4 +100,84 @@ VSCode generate not only your constructor but add required keywords to the param
 ```
 
 ![[Pasted image 20230403173658.png]]
+[Freecodecampm-video-Source](https://www.freecodecamp.org/news/increase-your-vs-code-productivity/)
+Go to file. - command+P
+Find in files - command+shift+P
+Toggle Terminal - ctrl + `
+open file side by side : opt + click
+Go to symbol: cmd+shift+O
+Find and replace: 
+Three ways
+Inline: cmd + F
+- **search bar** we can exclude and include folders/files
+- we can also right click on the folder  and select `find in folder` option
+- **open search editor** will open new tab and gives more context
 
+**Multicursor editing**
+> cmd+ F and enter search term and option+return
+
+**peek definition**
+Shows function definition below the method
+
+## Refactoring
+- Find all finds in comments also
+- Find all references will not check in comments
+- **Rename symbol** changes name across all file system(to update name of class or function- short cut -f2)
+- 
+open side bar - cmd+shift+E
+close/open side bar - cmd + B
+
+
+
+### List of extensions
+#### HTML
+- code peek
+- html end tag label
+- npm
+- gitignore
+- npm intellisense
+- version lens
+- import cost
+#### Javascript
+- jsDoc
+- javascript code snippets
+- path intellisense
+- Turbo console Log
+- javascript Booster
+- auto imports
+- code navigation + rename
+- update imports on move
+- code actions on save
+- ESLint
+- cmd + t -> symbols acros workspace
+- cmd+shit+o -> symbol in current file
+- settings.json-> editor.codeActionsOn save-> source.organizeimports
+-
+#### Vue.js
+- vetur
+- vue vscode snippets
+- vs code Extension Pack
+#### Tailwind
+- Tailwind css intellisense
+- Taiwind Docs
+- Headwind
+#### MarkDown
+- markdown preview github styling
+- markdown all in one
+- markdown lint
+
+VS Code Settings
+- renderIndentGuides
+- LineHeight
+- BreadCrumbs
+- Theme - one dark pro
+- settings -> cmd +,
+- 
+
+> move in to editor area -> we can move terminal to tab editor
+
+#### Multiple projects in vs code
+- Add folder to workspace
+- Project Manager -> extension
+- Peacock -> Extension
+- 

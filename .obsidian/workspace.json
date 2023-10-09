@@ -4,40 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "665d0aa0b8cd7624",
+        "id": "9a9b7907081d974a",
         "type": "tabs",
         "children": [
           {
-            "id": "32c8d71b205e6bf2",
+            "id": "a139354e58b8d8e9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "notes/shortcuts/vs_code_shotcuts.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "a4dbb4fc8b177b08",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/networking/osimodel.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "c66aa7e950052eb4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/networking/computer_networks.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 216.51103591918945
+    "width": 216.51103591918945,
+    "collapsed": true
   },
   "right": {
     "id": "05d70312eebde015",
@@ -180,12 +157,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "32c8d71b205e6bf2",
+  "active": "a139354e58b8d8e9",
   "lastOpenFiles": [
-    "notes/networking/lost-in-network.md",
-    "notes/networking/osimodel.md",
-    "notes/networking/Attachments/Pasted image 20231006104059.png",
     "notes/networking/computer_networks.md",
+    "notes/networking/Attachments/protocols-8-in-1.gif",
+    "notes/flutter_points/flutter_articles/blogs/images/1_-T1fn-7fK2OU-z711XG_8A.gif",
+    "notes/flutter_points/flutter_articles/blogs/Attachments/Pasted image 20231008085419.png",
+    "notes/networking/osimodel.md",
+    "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
+    "notes/flutter_points/flutter_articles/blogs/Attachments",
+    "notes/shortcuts/vs_code_shotcuts.md",
+    "notes/networking/lost-in-network.md",
+    "notes/networking/Attachments/Pasted image 20231006104059.png",
     "notes/networking/Attachments/Pasted image 20231006103158.png",
     "notes/networking/base-64-working.md",
     "notes/networking/Attachments/Pasted image 20231005101528.png",
@@ -200,13 +183,10 @@
     "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
     "notes/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
     "notes/dockerAndKube/kubernetes/k8s-begginners/1-Introduction.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/Attachments/Pasted image 20230924112905.png",
     "notes/dockerAndKube/kubernetes/k8s-begginners/Attachments",
     "notes/dockerAndKube/kubernetes/ckad/ckad_1.md",
     "notes/dockerAndKube/kubernetes/cka/9-Networking.md",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/10-CKA-k8-design-Install-v1.4.pdf",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919113002.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230919110855.png",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/9-CKA-Ingress.pdf",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/9-CKA-Networking-v1.2.pdf",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/8-CKA-Storage.pdf",
@@ -217,15 +197,12 @@
     "notes/dockerAndKube/kubernetes/cka/0-QuickNotes.md",
     "notes/dockerAndKube/kubernetes/cka/7-Security.md",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/7-CKA-Security.pdf",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/7-CKA-Networking.pdf",
     "notes/dockerAndKube/kubernetes/cka/6-Cluster-Maintenance.md",
     "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
     "notes/dockerAndKube/kubernetes/cka/5-Application-lifecycle-management.md",
     "notes/UI-Blogs/10-css-tips.md",
     "notes/flutter_points/flutter_shortcuts.md",
     "notes/flutter_points/flutter_learnings.md",
-    "notes/flutter_points/flutter_learnings_1.md",
-    "notes/flutter_points/flutter_issues.md",
-    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md"
+    "notes/flutter_points/flutter_learnings_1.md"
   ]
 }

@@ -76,3 +76,4 @@ Layer 7 - Application: The microphone and speaker on the telephone that let you 
 
 
 
+![[protocols-8-in-1.gif]]
