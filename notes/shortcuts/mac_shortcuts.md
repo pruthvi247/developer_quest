@@ -12,7 +12,9 @@ Command-Option-M :Minimize all windows of the active application to the Dock
 
 Send screen shot with out saving : ctrl + command + shift + 4
 
-
+Toggle use keyboard shortcuts to zoom under settings> accessibility> zoom
+and press `cmd+option+8` to zoom where cursor is
+if you select picture in picture option , zoom will be where ever to move cursor
 
 First, select the keyword, then press - command+E
 First, select the keyword, then press - ⌘ + G

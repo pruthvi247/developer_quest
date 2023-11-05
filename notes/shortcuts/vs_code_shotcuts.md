@@ -47,6 +47,12 @@ Duplicate selection up or down
 Toggle side bar:
 > CMD + B
 
+### Integrated Terminal
+- Navigate between terminals in a group by focusing the previous pane, ⌥⌘←, or the next pane, ⌥⌘→.
+- To toggle the terminal panel, use the ⌃` keyboard shortcut.
+- To create a new terminal, use the ⌃⇧` keyboard shortcut.
+- The integrated terminal has find functionality that can be triggered with ⌘F.
+- `Cmd + J` for terminal to hide or open
 [source](https://betterprogramming.pub/vs-code-shortcuts-to-code-like-youre-playing-a-piano-e5db7b272d1)
 ### Multiple Cursors
 > Quickly create multiple cursors to change multiple sections of code
@@ -102,8 +108,7 @@ VSCode generate not only your constructor but add required keywords to the param
 ![[Pasted image 20230403173658.png]]
 [Freecodecampm-video-Source](https://www.freecodecamp.org/news/increase-your-vs-code-productivity/)
 Go to file. - command+P
-Find in files - command+shift+P
-Toggle Terminal - ctrl + `
+Find in files - command+shift+P`
 open file side by side : opt + click
 Go to symbol: cmd+shift+O
 Find and replace: 
@@ -138,6 +143,7 @@ close/open side bar - cmd + B
 - npm intellisense
 - version lens
 - import cost
+- One Monokai Theme
 #### Javascript
 - jsDoc
 - javascript code snippets
@@ -165,7 +171,20 @@ close/open side bar - cmd + B
 - markdown preview github styling
 - markdown all in one
 - markdown lint
-
+#### Flutter
+- Flutter
+- Dart
+- Awesome flutter snippets
+- Flutter widget snippets
+- Flutter code select
+- Pubspec Assist
+- version Lens
+- tabout
+- explorer exclude
+- ToDo Tree
+- code spell checker
+- Bracket Pair Colorizer
+- 
 VS Code Settings
 - renderIndentGuides
 - LineHeight
