@@ -4,22 +4,33 @@
     "type": "split",
     "children": [
       {
-        "id": "73f5215957154dd7",
+        "id": "72bca06c54a9c2eb",
         "type": "tabs",
         "children": [
           {
-            "id": "650813642fc7afbb",
+            "id": "5869d6be51ee537a",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "notes/unix_learnings/Attachments/Pasted image 20231112100234.png"
+              }
+            }
+          },
+          {
+            "id": "8a53d9a8e6839b7e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/css-flex-responsive-layouts.md",
+                "file": "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +59,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "data_structures_free",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -69,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 377.51103591918945
+    "width": 377.51103591918945,
+    "collapsed": true
   },
   "right": {
     "id": "05d70312eebde015",
@@ -85,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/css-flex-responsive-layouts.md",
+                "file": "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/css-flex-responsive-layouts.md",
+                "file": "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/css-flex-responsive-layouts.md"
+                "file": "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md"
               }
             }
           },
@@ -156,19 +168,35 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "650813642fc7afbb",
+  "active": "8a53d9a8e6839b7e",
   "lastOpenFiles": [
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113211322.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113211255.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113210924.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113210451.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113210021.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113205757.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113205540.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113205407.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113205205.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Screenshot 2023-11-13 at 8.49.43 PM.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113204147.png",
     "notes/UI-Blogs/css-blogs/css-media-queries.md",
+    "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
+    "notes/UI-Blogs/css-blogs/10-css-tips.md",
     "notes/UI-Blogs/css-blogs/css-flex-responsive-layouts.md",
+    "notes/UI-Blogs/css-blogs/css-keyframe-css-transition.md",
+    "notes/unix_learnings/log-processing-commands.md",
+    "notes/unix_learnings/linux_essentials_for_hackers.md",
+    "notes/unix_learnings/Attachments",
+    "workspace/data_structures_freeCodeCamp/Readme.md",
+    "workspace/data_structures_freeCodeCamp/ds_docs/~$Queue.pptx",
+    "workspace/data_structures_freeCodeCamp/ds_docs/~$PriorityQueue.pptx",
+    "notes/maths/MathConcepts.md",
     "notes/Testing/Testing-Types.md",
-    "notes/Testing/Attachments/Pasted image 20231104102938.png",
     "notes/Testing/Attachments",
     "notes/Testing",
-    "notes/UI-Blogs/css-blogs/css-keyframe-css-transition.md",
     "notes/maths/measurement-conversions.md",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231026142029.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231026135434.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231026135028.png",
     "notes/UI-Blogs/css-blogs/Attachments",
     "notes/flutter_points/flutter_articles/blogs/FlutterTips-Tricks-FlutterCon23.pdf",
     "notes/flutter_points/flutter_articles/blogs/override-methods-flutter.md",
@@ -179,30 +207,14 @@
     "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md",
     "notes/shortcuts/mac_shortcuts.md",
     "notes/networking/computer_networks.md",
-    "notes/networking/Attachments/protocols-8-in-1.gif",
-    "notes/flutter_points/flutter_articles/blogs/images/1_-T1fn-7fK2OU-z711XG_8A.gif",
-    "notes/flutter_points/flutter_articles/blogs/Attachments/Pasted image 20231008085419.png",
     "notes/networking/osimodel.md",
     "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
     "notes/flutter_points/flutter_articles/blogs/Attachments",
     "notes/networking/lost-in-network.md",
-    "notes/networking/Attachments/Pasted image 20231006104059.png",
-    "notes/networking/Attachments/Pasted image 20231006103158.png",
     "notes/networking/base-64-working.md",
-    "notes/networking/Attachments/Pasted image 20231005101528.png",
     "notes/networking/Attachments",
     "`.md",
     "notes/dockerAndKube/kubernetes/metaleap-k8s-troubleshooting.pdf",
-    "notes/dockerAndKube/kubernetes/Bookmarks-k8.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/1-Introduction.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/Attachments",
-    "notes/dockerAndKube/kubernetes/ckad/ckad_1.md",
-    "notes/dockerAndKube/kubernetes/cka/9-Networking.md",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/10-CKA-k8-design-Install-v1.4.pdf",
-    "notes/dockerAndKube/kubernetes/cka/8-Storage.md",
-    "notes/dockerAndKube/kubernetes/cka/3-Scheduling.md",
-    "notes/dockerAndKube/kubernetes/cka/2-Core-Concepts.md"
+    "notes/dockerAndKube/kubernetes/Bookmarks-k8.md"
   ]
 }

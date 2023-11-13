@@ -172,8 +172,8 @@ How to add a group and a user to group:
 
 	CURL:
 
-	> curl -o <path/to/saveoutput> http://hoopapp-inc.com
-	> curl -o <downloadfileas> <downloadable link>
+	> curl -o ``<path/to/saveoutput>`` http://hoopapp-inc.com
+	> curl -o ``<downloadfileas> <downloadable link>``
 	Dowload file with its original name
 
 	> curl -O <link addres>
@@ -232,6 +232,10 @@ How to add a group and a user to group:
 	> Fail2Ban is an intrusion prevention freamework written in python that protects linux systems and servers form brute-force attacks.
 	> It allows you to monitor the strength and frequency of attacks
 	> Fail2Ban can be setup to block IP address automatically based on specific parameters.
+
+
+
+
 
 
 
