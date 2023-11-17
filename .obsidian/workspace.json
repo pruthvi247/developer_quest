@@ -4,33 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "72bca06c54a9c2eb",
+        "id": "710a2eefbf6e4bef",
         "type": "tabs",
         "children": [
           {
-            "id": "5869d6be51ee537a",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "notes/unix_learnings/Attachments/Pasted image 20231112100234.png"
-              }
-            }
-          },
-          {
-            "id": "8a53d9a8e6839b7e",
+            "id": "0445e425ab0ae2ef",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
+                "file": "notes/flutter_points/Isolates-dart.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -80,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 377.51103591918945,
-    "collapsed": true
+    "width": 377.51103591918945
   },
   "right": {
     "id": "05d70312eebde015",
@@ -97,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
+                "file": "notes/flutter_points/Isolates-dart.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
+                "file": "notes/flutter_points/Isolates-dart.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md"
+                "file": "notes/flutter_points/Isolates-dart.md"
               }
             }
           },
@@ -168,21 +156,25 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8a53d9a8e6839b7e",
+  "active": "0445e425ab0ae2ef",
   "lastOpenFiles": [
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113211322.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113211255.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113210924.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113210451.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113210021.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113205757.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113205540.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113205407.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113205205.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Screenshot 2023-11-13 at 8.49.43 PM.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113204147.png",
-    "notes/UI-Blogs/css-blogs/css-media-queries.md",
+    "notes/flutter_points/Attachments/Pasted image 20231116081736.png",
+    "notes/flutter_points/Attachments",
+    "notes/UI-Blogs/css-blogs/josh-comeau-css-keyframes.md",
+    "notes/flutter_points/Isolates-dart.md",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231116004144.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231116004019.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231116003950.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231116003221.png",
+    "notes/UI-Blogs/css-blogs/josh-comeau-css-transitions.md",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231115214353.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231115174925.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231115174620.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231115174541.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231115174237.png",
     "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231113211322.png",
+    "notes/UI-Blogs/css-blogs/css-media-queries.md",
     "notes/UI-Blogs/css-blogs/10-css-tips.md",
     "notes/UI-Blogs/css-blogs/css-flex-responsive-layouts.md",
     "notes/UI-Blogs/css-blogs/css-keyframe-css-transition.md",
@@ -211,10 +203,6 @@
     "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
     "notes/flutter_points/flutter_articles/blogs/Attachments",
     "notes/networking/lost-in-network.md",
-    "notes/networking/base-64-working.md",
-    "notes/networking/Attachments",
-    "`.md",
-    "notes/dockerAndKube/kubernetes/metaleap-k8s-troubleshooting.pdf",
-    "notes/dockerAndKube/kubernetes/Bookmarks-k8.md"
+    "notes/networking/Attachments"
   ]
 }
