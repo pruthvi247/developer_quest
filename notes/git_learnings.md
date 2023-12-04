@@ -258,3 +258,8 @@ Rebase can be dangerous if “the golden rule of git rebase” is not followed.
 
 
 
+Add all but not few files
+
+```
+git add --all -- ':!js-learnings/HTML-CSS-Responsive-Udemy/0-all-design-guidelines.pdf' ':!js-learnings/HTML-CSS-Responsive-Udemy/0-theory-lectures-v2-SMALLER.pdf'
+```
