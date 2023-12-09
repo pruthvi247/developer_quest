@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "432f2c3d20951773",
+        "id": "b2b353d27f2c7ed2",
         "type": "tabs",
         "children": [
           {
-            "id": "5d01767a1f0efc27",
+            "id": "c7cf21998d1f05d4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/flutter_misc/widget_from_scratch-suragh.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "data_structures_free",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/flutter_misc/widget_from_scratch-suragh.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/flutter_misc/widget_from_scratch-suragh.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/flutter_misc/widget_from_scratch-suragh.md"
+                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md"
               }
             }
           },
@@ -157,25 +157,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "5d01767a1f0efc27",
+  "active": "c7cf21998d1f05d4",
   "lastOpenFiles": [
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231204152356.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments",
     "notes/flutter_points/flutter_articles/flutter_misc/widget_from_scratch-suragh.md",
-    "notes/flutter_points/flutter_articles/Attachments/Pasted image 20231204151245.png",
-    "notes/flutter_points/flutter_articles/Attachments/Pasted image 20231204151227.png",
-    "notes/flutter_points/flutter_articles/Attachments/Pasted image 20231204151212.png",
-    "notes/flutter_points/flutter_articles/Attachments/1_Zcp_3UYKiU1iHip2nriwAA.gif",
-    "notes/flutter_points/flutter_articles/Attachments/Pasted image 20231204150857.png",
-    "notes/flutter_points/flutter_articles/Attachments/Pasted image 20231204150408.png",
-    "notes/flutter_points/flutter_articles/Attachments/slider-custom-widget.gif",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231209181936.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231209181857.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Text-rendering-flutter.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205202802.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205200420.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205200207.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205200053.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205195930.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205195847.png",
+    "notes/shortcuts/vs_code_shotcuts.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231204193042.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231204192920.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments",
     "notes/flutter_points/flutter_articles/Attachments",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/weather-app-suragh-minimal-state.md",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments/1_nSdPlHjtHTOXcuemb73FkA.gif",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments/Pasted image 20231121085552.png",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments/Pasted image 20231121085538.png",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments",
     "notes/flutter_points/flutter_articles/blogs/codingwithjoe_buildingForms_flutter.pdf",
     "notes/flutter_points/flutter_articles/blogs/greg_Notification_Android_iOS_Flutter.pdf",
@@ -200,10 +201,8 @@
     "notes/unix_learnings/log-processing-commands.md",
     "notes/unix_learnings/linux_essentials_for_hackers.md",
     "notes/unix_learnings/Attachments",
-    "workspace/data_structures_freeCodeCamp/Readme.md",
     "workspace/data_structures_freeCodeCamp/ds_docs/~$Queue.pptx",
     "workspace/data_structures_freeCodeCamp/ds_docs/~$PriorityQueue.pptx",
-    "notes/maths/MathConcepts.md",
     "notes/Testing/Attachments"
   ]
 }

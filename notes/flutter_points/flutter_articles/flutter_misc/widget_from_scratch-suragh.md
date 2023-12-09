@@ -1,5 +1,8 @@
 [medium-source](https://medium.com/flutter-community/creating-a-flutter-widget-from-scratch-a9c01c47c630)
 
+**Important**: First Read [flutter under the hood](#Flutter-under-the-hood) article which is drafted form another blog before reading further. This article explains how createElement works internally
+
+---------- Widgets from scratch by suragh -------------
 _A guide to building your own custom RenderObject_
 
 The normal way to create widgets in Flutter is through composition, which means combining several basic widgets into a more complex one. That’s not what this article is about, but if your not familiar with the concept, you can read more about it in [Creating Reusable Custom Widgets in Flutter](https://www.raywenderlich.com/10126984-creating-reusable-custom-widgets-in-flutter).
@@ -68,10 +71,10 @@ class ProgressBar extends LeafRenderObjectWidget {
 ```
 **Notes**:
 
-- Your widget will extend `[LeafRenderObjectWidget](https://api.flutter.dev/flutter/widgets/LeafRenderObjectWidget-class.html)` because it won’t have any children. If you were making a render object with one child you would use `[SingleChildRenderObjectWidget](https://api.flutter.dev/flutter/widgets/SingleChildRenderObjectWidget-class.html)` and for multiple children you’d use `[MultiChildRenderObjectWidget](https://api.flutter.dev/flutter/widgets/MultiChildRenderObjectWidget-class.html)`.
-- The Flutter framework (that is, the element) will call `[createRenderObject](https://api.flutter.dev/flutter/widgets/Transform/createRenderObject.html)` when it wants to create the render object associated with this widget. Since we named the widget `ProgressBar`, it’s customary to prefix this with “Render” when naming the render object. That’s why you have the return value of `RenderProgressBar`. Note that you haven’t created this class yet. It’s the render object class that you’ll be working on later.
-- Widgets are inexpensive to create, but it would be expensive to recreate render objects every time there was an update. So when a widget property changes, the system will call `[updateRenderObject](https://api.flutter.dev/flutter/widgets/RenderObjectWidget/updateRenderObject.html)`, where you will simply update the public properties of your render object without recreating the whole object.
-- The `[debugFillProperties](https://api.flutter.dev/flutter/widgets/State/debugFillProperties.html)` method provides information about the class properties during debugging, but it’s not very interesting for the purposes of this article.
+- Your widget will extend [LeafRenderObjectWidget](https://api.flutter.dev/flutter/widgets/LeafRenderObjectWidget-class.html) because it won’t have any children. If you were making a render object with one child you would use [SingleChildRenderObjectWidget](https://api.flutter.dev/flutter/widgets/SingleChildRenderObjectWidget-class.html) and for multiple children you’d use [MultiChildRenderObjectWidget](https://api.flutter.dev/flutter/widgets/MultiChildRenderObjectWidget-class.html).
+- The Flutter framework (that is, the element) will call [createRenderObject](https://api.flutter.dev/flutter/widgets/Transform/createRenderObject.html) when it wants to create the render object associated with this widget. Since we named the widget `ProgressBar`, it’s customary to prefix this with “Render” when naming the render object. That’s why you have the return value of `RenderProgressBar`. Note that you haven’t created this class yet. It’s the render object class that you’ll be working on later.
+- Widgets are inexpensive to create, but it would be expensive to recreate render objects every time there was an update. So when a widget property changes, the system will call [updateRenderObject](https://api.flutter.dev/flutter/widgets/RenderObjectWidget/updateRenderObject.html), where you will simply update the public properties of your render object without recreating the whole object.
+- The [debugFillProperties](https://api.flutter.dev/flutter/widgets/State/debugFillProperties.html) method provides information about the class properties during debugging, but it’s not very interesting for the purposes of this article.
 
 ## Filling in the details
 
@@ -171,7 +174,7 @@ _barColor = value;
 markNeedsPaint();  
 }
 ```
-Since the setter is updating the color, you’ll need to repaint the bar with a new color. Calling `[markNeedsPaint](https://api.flutter.dev/flutter/rendering/RenderObject/markNeedsPaint.html)` at the end of the method tells the framework to call the `[paint](https://api.flutter.dev/flutter/rendering/RenderObject/paint.html)` method at some point in the near future. Since painting can be potentially expensive, you should only call `markNeedsPaint` when necessary. That’s the reason for the early return at the beginning of the setter.
+Since the setter is updating the color, you’ll need to repaint the bar with a new color. Calling [markNeedsPaint](https://api.flutter.dev/flutter/rendering/RenderObject/markNeedsPaint.html) at the end of the method tells the framework to call the [paint](https://api.flutter.dev/flutter/rendering/RenderObject/paint.html) method at some point in the near future. Since painting can be potentially expensive, you should only call `markNeedsPaint` when necessary. That’s the reason for the early return at the beginning of the setter.
 
 Now add the code for `thumbColor`:
 ```dart
@@ -196,7 +199,7 @@ _thumbSize = value;
 **markNeedsLayout()**;  
 }
 ```
-The one difference here is that instead of calling `markNeeds**Paint**`, now you are calling `markNeeds**Layout**`. That’s because changing the size of the handle will also affect the size of the whole render object. Calling `[markNeedsLayout](https://api.flutter.dev/flutter/rendering/RenderObject/markNeedsLayout.html)` tells the system to call the `[layout](https://api.flutter.dev/flutter/rendering/RenderObject/layout.html)` method in the near future. Another layout call will automatically result in a repaint, so there is no need to add an additional `markNeedsPaint`.
+The one difference here is that instead of calling `markNeeds**Paint**`, now you are calling `markNeeds**Layout**`. That’s because changing the size of the handle will also affect the size of the whole render object. Calling [markNeedsLayout](https://api.flutter.dev/flutter/rendering/RenderObject/markNeedsLayout.html) tells the system to call the [layout](https://api.flutter.dev/flutter/rendering/RenderObject/layout.html) method in the near future. Another layout call will automatically result in a repaint, so there is no need to add an additional `markNeedsPaint`.
 
 # Layout and size
 
@@ -225,7 +228,7 @@ Given that information you can set the size.
 
 ## Setting the desired size
 
-The `[computeDryLayout](https://master-api.flutter.dev/flutter/rendering/RenderBox/computeDryLayout.html)` method is where you should calculate how big your widget will be based on the given constraints. In the past this was done in `[performLayout](https://api.flutter.dev/flutter/rendering/RenderBox/performLayout.html)` but now you can put the logic in compute dry layout and just reference it from `performLayout`. [See more information here](https://flutter.dev/docs/release/breaking-changes/renderbox-dry-layout).
+The [computeDryLayout](https://master-api.flutter.dev/flutter/rendering/RenderBox/computeDryLayout.html) method is where you should calculate how big your widget will be based on the given constraints. In the past this was done in [performLayout](https://api.flutter.dev/flutter/rendering/RenderBox/performLayout.html) but now you can put the logic in compute dry layout and just reference it from `performLayout`. [See more information here](https://flutter.dev/docs/release/breaking-changes/renderbox-dry-layout).
 
 Add the following code to `RenderProgressBar`:
 ```dart
@@ -243,10 +246,10 @@ Size computeDryLayout(BoxConstraints constraints) {
 ```
 **Notes**:
 
-- If you need the sizes of any children you can get them by calling the child’s `[getDryLayout](https://master-api.flutter.dev/flutter/rendering/RenderBox/getDryLayout.html)` method and passing in some min and max size constraints. (The old way was to call `[layout](https://api.flutter.dev/flutter/rendering/RenderObject/layout.html)` on each of them from inside `performLayout`.) This gives you (that is, the parent render object) the information you need to place the children and determine your own size. (Remember the [quote](https://flutter.dev/docs/development/ui/layout/constraints), _“Constraints go down. Sizes go up. Parent sets position.”_) Since `RenderProgressBar` doesn’t have any children, though, (you made a `LeafRenderObjectWidget` if you recall), all you need to do here is calculate your own size.
-- The `constraints` variable is of type `[BoxContraints](https://api.flutter.dev/flutter/rendering/BoxConstraints-class.html)` and is a property of `RenderBox`. These `BoxContraints` are passed in from the parent and tell you the max and min width and length that you’re allowed to be. You can choose any size for yourself within those bounds. By choosing `maxWidth` you’re saying that you want to expand to be as big as the parent allows. For the desired height you’re hugging your content by using the `thumbSize` property.
+- If you need the sizes of any children you can get them by calling the child’s [getDryLayout](https://master-api.flutter.dev/flutter/rendering/RenderBox/getDryLayout.html) method and passing in some min and max size constraints. (The old way was to call [layout](https://api.flutter.dev/flutter/rendering/RenderObject/layout.html) on each of them from inside `performLayout`.) This gives you (that is, the parent render object) the information you need to place the children and determine your own size. (Remember the [quote](https://flutter.dev/docs/development/ui/layout/constraints), _“Constraints go down. Sizes go up. Parent sets position.”_) Since `RenderProgressBar` doesn’t have any children, though, (you made a `LeafRenderObjectWidget` if you recall), all you need to do here is calculate your own size.
+- The `constraints` variable is of type [BoxContraints](https://api.flutter.dev/flutter/rendering/BoxConstraints-class.html) and is a property of `RenderBox`. These `BoxContraints` are passed in from the parent and tell you the max and min width and length that you’re allowed to be. You can choose any size for yourself within those bounds. By choosing `maxWidth` you’re saying that you want to expand to be as big as the parent allows. For the desired height you’re hugging your content by using the `thumbSize` property.
 - Passing your desired size into `constraints.constrain` makes sure that you are still within the allowed constraints. For example, if `thumbSize` were large, it could exceed the `constraints.maxHeight` from the parent, which isn’t allowed.
-- The `[size](https://api.flutter.dev/flutter/rendering/RenderBox/size.html)` variable is also a property of `RenderBox`. You should only set it from within the `performLayout` method. Everywhere else you should call `markNeedsLayout`. Also, the `computeDryLayout` method should not change any state.
+- The [size](https://api.flutter.dev/flutter/rendering/RenderBox/size.html) variable is also a property of `RenderBox`. You should only set it from within the `performLayout` method. Everywhere else you should call `markNeedsLayout`. Also, the `computeDryLayout` method should not change any state.
 - If you’re simply expanding to fill the parent or wrapping a single child, then you don’t need to override `performLayout`. See the [documentation](https://api.flutter.dev/flutter/rendering/RenderBox-class.html#layout) for more on this.
 
 Now you’ve officially set the size of your render object, and the parent render object will also have that information.
@@ -257,10 +260,14 @@ Given only a height constraint, how wide would your widget naturally want to be?
 
 Add the following four methods to `RenderProgressBar`:
 ```dart
-static const _minDesiredWidth = 100.0;@override  
-double computeMinIntrinsicWidth(double height) => _minDesiredWidth;@override  
-double computeMaxIntrinsicWidth(double height) => _minDesiredWidth;@override  
-double computeMinIntrinsicHeight(double width) => thumbSize;@override  
+static const _minDesiredWidth = 100.0;
+@override  
+double computeMinIntrinsicWidth(double height) => _minDesiredWidth;
+@override  
+double computeMaxIntrinsicWidth(double height) => _minDesiredWidth;
+@override  
+double computeMinIntrinsicHeight(double width) => thumbSize;
+@override  
 double computeMaxIntrinsicHeight(double width) => thumbSize;
 ```
 **Notes**:
@@ -315,12 +322,12 @@ class MyApp extends StatelessWidget {
 ☝🏼`Run that and you’ll see a cyan colored bar`
 
 Since the `Container` has the same size as our `ProgressBar`, we know that the size is working. That’s good.
-
+![[Pasted image 20231204191201.png]]
 On to painting some content in there!
 
 # Painting
 
-All the drawing action of a render object happens in the `[paint](https://api.flutter.dev/flutter/rendering/RenderObject/paint.html)` method.
+All the drawing action of a render object happens in the [paint](https://api.flutter.dev/flutter/rendering/RenderObject/paint.html) method.
 
 Add the following code to the `RenderProgressBar` class:
 ```dart
@@ -359,6 +366,10 @@ child: Container(
 child: ProgressBar(  
 ...
 ```
+![[Pasted image 20231204191343.png]]
+Nice! You can see it now!
+
+It still isn’t interactive yet, though, so let’s handle that.
 # Hit testing
 
 Hit testing just tells Flutter whether or not you want your widget to handle touch events. Since we want to be able to move the thumb on our progress bar, we definitely do want the render object to handle touch events.
@@ -372,8 +383,10 @@ import 'package:flutter/rendering.dart';
 And then add the code below to `RenderProgressBar`:
 
 ```DART
-late HorizontalDragGestureRecognizer _drag;@override  
-bool hitTestSelf(Offset position) => true;@override  
+late HorizontalDragGestureRecognizer _drag;
+@override  
+bool hitTestSelf(Offset position) => true;
+@override  
 void handleEvent(PointerEvent event, BoxHitTestEntry entry) {  
   assert(debugHandleEvent(event, entry));  
   if (event is PointerDownEvent) {  
@@ -383,10 +396,10 @@ void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
 ```
 **Notes**:
 
-- Since you want to be able to move the thumb horizontally along the bar, `[HorizontalDragGestureRecognizer](https://api.flutter.dev/flutter/gestures/HorizontalDragGestureRecognizer-class.html)` allows you to get notifications about these kind of touch events. You make it `late` to give yourself time to initialize it in the constructor. You’ll do that in just a second.
-- Returning `true` in `[hitTestSelf](https://api.flutter.dev/flutter/rendering/RenderBox/hitTestSelf.html)` tells Flutter that touch events get handled by this widget. They won’t be passed on to any widgets below this one. `hitTestSelf` also provides a `position` parameter, so you could theoretically sometimes return `true` and sometimes return `false` based on the `position` of the touch event. This would be useful if you had a donut-shaped widget where you wanted to let touch events in the hole and on the outside pass through.
+- Since you want to be able to move the thumb horizontally along the bar, [HorizontalDragGestureRecognizer](https://api.flutter.dev/flutter/gestures/HorizontalDragGestureRecognizer-class.html) allows you to get notifications about these kind of touch events. You make it `late` to give yourself time to initialize it in the constructor. You’ll do that in just a second.
+- Returning `true` in [hitTestSelf](https://api.flutter.dev/flutter/rendering/RenderBox/hitTestSelf.html) tells Flutter that touch events get handled by this widget. They won’t be passed on to any widgets below this one. `hitTestSelf` also provides a `position` parameter, so you could theoretically sometimes return `true` and sometimes return `false` based on the `position` of the touch event. This would be useful if you had a donut-shaped widget where you wanted to let touch events in the hole and on the outside pass through.
 - The [docs](https://api.flutter.dev/flutter/rendering/RenderBox/debugHandleEvent.html) say to use `debugHandleEvent` here. So I did. Apparently it does something useful.
-- `[handleEvent](https://api.flutter.dev/flutter/rendering/RenderBox/handleEvent.html)` adds a `[PointerDownEvent](https://api.flutter.dev/flutter/gestures/PointerDownEvent-class.html)` to the drag gesture recognizer, but you still need to initialize it and handle other events, which you’ll do next.
+- [handleEvent](https://api.flutter.dev/flutter/rendering/RenderBox/handleEvent.html) adds a [PointerDownEvent](https://api.flutter.dev/flutter/gestures/PointerDownEvent-class.html) to the drag gesture recognizer, but you still need to initialize it and handle other events, which you’ll do next.
 
 ## Dealing with the gesture recognizer
 
@@ -446,7 +459,7 @@ void main() {
 The `debugRepaintRainbowEnabled` flag turns the repaint rainbow on. An alternate way to do it is to use the Dart DevTools as I described [here](https://stackoverflow.com/a/65474341/3681880). The following images are made using the DevTool version. (Sometime the flag version wasn’t adding a rainbow border for me.)
 
 Now restart the app and move the thumb.
-
+![[Pasted image 20231204192920.png]]
 The regions that are being repainted have a rainbow border that changes colors on each repaint. As you can see, the entire window is getting repainted every time you update the thumb position.
 
 Now, for widgets that don’t repaint themselves very often, it doesn’t really matter if the whole parent tree repaints. This is the default behavior in Flutter and even the standard Slider widget is the same. However, an audio progress bar is going to be doing a lot of repainting, not just for when users move the thumb but also whenever the music is playing. For that reason it seems to me that it would be good to limit the repainting to just our widget and not make all of the parent widgets repaint themselves, too.
@@ -460,17 +473,19 @@ The default was `false`, but now you’re setting it to `true`.
 Run the app again and see the difference:
 
 Now only the progress bar widget is getting repainted. The parent widget tree isn’t.
-
+![[Pasted image 20231204193042.png]]
 That’s great isn’t it? Why wouldn’t you always do this? Why isn’t that the default? Well, when you put a repaint boundary around your widget, Flutter makes a new painting layer that is separate from the rest of the tree. Doing so takes more memory resources. If the widget repaints a lot then that’s probably a good use of resources. But if it doesn’t then you’re wasting memory. You need to make that call for your own widget, but in my opinion it makes sense for this one.
 
 Even for widgets that don’t have a repaint boundary, developers can always add one by putting `RepaintBoundary` in their widget tree. Read [the documentation on that](https://api.flutter.dev/flutter/widgets/RepaintBoundary-class.html) and also watch the excellent video [Improve your Flutter Apps performance with a RepaintBoundary](https://youtu.be/Nuni5VQXARo) to learn more.
 
 You can remove the debugging repaint rainbow flag in **main.dart** now:
 
+```dart
 void main() {  
   // debugRepaintRainbowEnabled = true; //  <-- delete this  
   runApp(MyApp());  
 }
+```
 
 There’s one more step before we’re done.
 
@@ -825,23 +840,358 @@ Although there is certainly more work that needs to be done on this custom widge
 - Read the [Flutter source code](https://github.com/flutter/flutter) for any widget that is similar to what you want to make.
 
 
+-------------------------------------------------
+[medium-source](https://medium.com/saugo360/flutters-rendering-engine-a-tutorial-part-1-e9eff68b825d)
+
+Another good read : https://blog.logrocket.com/understanding-renderobjects-flutter/
+# Flutter Rendering Widget
+### So how does Flutter render our apps?
+
+On a very high level, ==rendering in Flutter goes through four phases:==
+
+1. Layout Phase: in this phase, Flutter determines exactly how big each object is, and where it will be displayed on the screen.
+2. Painting Phase: in this phase, Flutter provides each widget with a _canvas_, and tells it to paint itself on it.
+3. Compositing Phase: in this phase, Flutter puts everything together into a _scene_, and sends it to the GPU for processing.
+4. Rasterizing Phase: in this final phase, the scene is displayed on the screen as a matrix of pixels.
+
+These phases are not exclusive to Flutter; you can find very similar phases in other rendering frameworks ([like web browsers](https://blog.logrocket.com/how-browser-rendering-works-behind-the-scenes-6782b0e8fb10)). What’s special about Flutter, though, is that its rendering process, as we shall see, is very simple, yet very efficient.
+
+In Flutter, the layout phase is constituted of two _linear_ passes: the passing of **_constraints_** down the tree, and the passing of **_layout details_** up the tree.
+The process is simple:
+
+1. the parent passes certain _constraints_ to each of its children. Those constraints are the set of rules that the child must respect when laying itself out. It’s as if the parent is telling the child: “OK, do whatever you want, as long as you respect those constraints’. One simple example of constraints is a maximum width constraint; the parent could pass down to its child the maximum width within which it is allowed to render. When the child receives those constraints, it knows not to try to render anything wider than them.
+2. The child, then, generates new constraints, and passes them down to its own children, and this keeps going until we reach a leaf widget with no children.
+3. This widget, then, determines its _layout details_ based on the constraints passed down to it. For example, if its parent passed down to it a maximum width constraint of 500 pixels. It could say: “Well, I will use all of it up!”, or “I will only use a 100 pixels”. It, thus, determines the details necessary for its layout, and passes them back to its parent.
+4. The parent in turn does the same. It uses the details propagated from its children to determine what its own details are going to be, and then passes them up the tree, and we keep going up the tree either until we reach the root, or until certain limits are reached.
+
+But what are those “constraints” and “layout details” that we speak of? That depends on the _layout protocol_ in use. In Flutter, there are two main layout protocols: _the box protocol_, and _the sliver protocol_. The box protocol is used for displaying objects in a simple, 2D Cartesian coordinate system, while the sliver protocol is used for displaying objects that react to scrolling.
+
+In the box protocol, the constraints that the parent passes down to its children are called [**BoxConstraints**](https://docs.flutter.io/flutter/rendering/BoxConstraints-class.html). Those constraints determine the maximum and minimum width and height that each child is allowed to be.
+In the sliver protocol, things are a bit more complicated. The parent passes down to its child [**SliverConstraints**](https://docs.flutter.io/flutter/rendering/SliverConstraints-class.html), containing scrolling information and constraints, like the scroll offset, the overlap, etc. The child in turn sends back to its parent a [**SliverGeometry**](https://docs.flutter.io/flutter/rendering/SliverGeometry-class.html). We will explore the sliver protocol in more detail in a later part.
+
+## Afterwards, we paint..
+
+Once the parent knows all the layout details of its children, it can proceed to painting both itself and its children. To do that, Flutter passes it a [**PaintingContext**](https://docs.flutter.io/flutter/rendering/PaintingContext-class.html), which contains a [**Canvas**](https://docs.flutter.io/flutter/dart-ui/Canvas-class.html) on which it can draw. The painting context also allows it to paint its children, and to create new painting layers, for cases where we need to draw things on top of each other.
+
+## We then go through compositing and rasterization..
+
+which we will pass over for now, for the sake of looking at more concrete details of the rendering process..
+
+# The Render Tree
+
+You know about the widget tree, and how your widgets constitute a tree whose root starts with the App widget, and then explodes into branches and branches as you add widgets to your app. What you might not know, however, is that there is another tree that corresponds to your widget tree, called the _render tree_..
+
+You see, you have been introduced to several kinds of widgets; the StatefulWidget, the StatelessWidget, the InheritedWidget, etc. But there is also another kind of widget called the [**RenderObjectWidget**](https://docs.flutter.io/flutter/widgets/RenderObjectWidget-class.html). This widget does not have a **build** method, rather a [**createRenderObject**](https://docs.flutter.io/flutter/widgets/RenderObjectWidget/createRenderObject.html) method that allows it to create a [**RenderObject**](https://docs.flutter.io/flutter/rendering/RenderObject-class.html) and add it to the render tree.
+
+The **RenderObject** is the most important component of the rendering process. It is to the render tree what the Widget is to the widget tree. Everything in the render tree is a RenderObject. And each RenderObject has a lot of properties and methods used to carry out rendering. It has:
+
+- a [**constraints**](https://docs.flutter.io/flutter/rendering/RenderObject/constraints.html) object which represents the constraints passed to it from its parent
+- a [**parentData**](https://docs.flutter.io/flutter/rendering/RenderObject/parentData.html) object which allows its parent to attach useful information on it.
+- a [**performLayout**](https://docs.flutter.io/flutter/rendering/RenderObject/performLayout.html) method in which we can lay it and its children out.
+- a [**paint**](https://docs.flutter.io/flutter/rendering/RenderObject/paint.html) method in which we can use to paint it and paint its children.
+- etc.
+
+The RenderObject is an abstract class though. It needs to be extended to do any actual rendering. And the two most important classes that extend RenderOject are [**RenderBox**](https://docs.flutter.io/flutter/rendering/RenderBox-class.html) and, you guessed it, [**RenderSliver**](https://docs.flutter.io/flutter/rendering/RenderSliver-class.html). These two classes are the parents of all render objects that implement the box protocol and the sliver protocol, respectively. Those two classes are also extended by tens and tens of other classes that handle specific scenarios, and implement the details of the rendering process.
+
+```dart
+class Stingy extends SingleChildRenderObjectWidget {
+
+  Stingy({Widget child}): super(child: child);
+
+  @override
+  RenderObject createRenderObject(BuildContext context) {
+    return RenderStingy();
+  }
+}
+```
+- Our widget extends [**SingleChildRenderObjectWidget**](https://docs.flutter.io/flutter/widgets/SingleChildRenderObjectWidget-class.html), which is a RenderObjectWidget that, as the name implies, accepts a single child.
+- Our createRenderObject function, which creates and returns the RenderObject, creates an instance of a class that we called **RenderStingy**
 
 
+-------------------------------------------------
+[medium-source](https://medium.com/@chooyan/element-flutter-under-the-hood-3e8937c4eb74)
+# Flutter-under-the-hood
 
+In this article, we are going to reveal how `Element` is created first and what it does in the Flutter framework, especially in the build phase, so that we find the build phase isn’t performed by widgets but by `Element`. We are also going to make it clear the relevant programming based on the mechanism of Flutter.
 
+## Widget Creates Element
 
+Although we don’t see it in our widget, every widget has a method named `createElement()`.
 
+Taking a look at the implementation of `StatelessWidget`, for example, we soon find the code below.
+```dart
+/// Creates a [StatelessElement] to manage this widget's location in the tree.  
+///  
+/// It is uncommon for subclasses to override this method.  
+@override  
+StatelessElement createElement() => StatelessElement(this);
+```
+`StatelessElement` here is a subclass of `Element`, and it’s created by `StatelessWidget` according to the code above.
 
+example dart pad : [override createElement](https://dartpad.dev/?id=ea063238c3356fd8da370b9e081ee168)
 
+Other kinds of widgets, such as `StatefulWidget`, `RenderObjectWidget`, etc, also have their own `createElement()` implementation that returns their corresponding subclasses of `Element`.
+```dart
+/// Creates a [StatefulElement] to manage this widget's location in the tree.  
+///  
+/// It is uncommon for subclasses to override this method.  
+@override  
+StatefulElement createElement() => StatefulElement(this);
+```
+As we can see the widget passes itself to a constructor of `Element`, `Element` preserves the instance of the corresponding `Widget`in once they are instantiated.
+```dart
+Element(Widget widget)  
+: _widget = widget {  
+// ... initialize  
+}
+```
+We now have one question, **“Who calls** `**createElement()**`**, then?”**
 
+The answer is **“the parent** `**Element**`**does”**.
 
+When the Flutter framework is in the build phase, the framework checks widgets returned by `build()` method of `StatelessWidget` or `StatefulWidget` one by one, from parent to child.
 
+In that process, when the framework finds out a certain widget doesn’t have its corresponding `Element` yet, its `createElement()` is called and created `Element` is treated as a `child` ( or one of the `children` ) of the parent `Element`.
 
+By doing that process from the most ancestor `Element` to the very leaf of the tree, `Element` constructs **“Element tree”**.
 
+On the other hand, by the way, widgets DON’T remember their relationship with parent/child in general. When we jump to the definition of `Widget` class, we soon find that they don’t have any field for remembering their parent or children.
 
+Thus, we can say **“**`**Widget**` **doesn’t construct a tree, but** `**Element**` **does”.**
+To sum up, `Element` is created by its parent `Element` by calling the corresponding widget’s `createElement()` method in the build phase, and the creation continues until the build comes to the end leaf of the widgets
+![[Pasted image 20231209181936.png]]
+You can see **Widgets don’t connect to each other while Elements do**, and **Elements also have references to their corresponding widgets** while widgets don’t.
 
+`simplified image of the relations ship between a single widget and element`
+![[Pasted image 20231209181857.png]]
 
+The references to their parent or widgets are preserved in each `Element`, and the actual shape of the “tree” is constructed with `Element`.
+# What Element Do?
 
+It’s now clear how `Element` is created and how the “Tree” is built.
+
+Our next topic is **“How** `**Element**` **contributes to composing our UI in the Flutter framework? What does it do?”**.
+
+`Element` does a lot of things actually, so let’s pick up a couple of the most important roles in this article.
+
+## Build Widgets
+
+One of the important roles of `Element` is building and updating widgets by `rebuild()` method.
+
+Though `rebuild()` doesn’t have a concrete logic, `performRebuild()` called inside `rebuild()` and overridden by its subclasses does have logic in the implementations of each subclass.
+
+For example, `ComponentElement`, which is a common superclass of `StatelessElement` and `StatefulElement`, implements `performRebuild()` like below. (note that assertion or error handlings are omitted)
+```dart
+void performRebuild() {  
+Widget? built;  
+try {  
+built = build();  
+}  
+try {  
+_child = updateChild(_child, built, slot);  
+}  
+}
+```
+In addition, `build()` method called above is implemented in `StatelessElement` and `StatefulElement`.
+```dart
+// implementation by StatelessElement  
+@override  
+Widget build() => (widget as StatelessWidget).build(this);
+
+// implementation by StatefulElement  
+@override  
+Widget build() => state.build(this);
+```
+As we can see, `StatelessElement` calls `build()` method of its corresponding widget, while `StatefulElement` calls `build()` of `state`. They are the methods that we implement every day like below.
+```dart
+@override  
+Widget build(BuildContext context) {  
+return MyPageWidget();  
+}
+```
+After calling `build()`, the returned widget is passed to `updateChild()` method that creates the child of processing `Element` from the widget if necessary, and the process continues recursively until the build isn’t required anymore.
+
+## Optimize Build
+
+Besides `Element`s build widgets to compose UI, they also consider **what** **Element** should be built.
+
+**The widget tree isn’t rebuilt entirely in all the frames**, which comes 60 (or 120) times per seconds, and **each** `**Element**` **manages whether it should be rebuilt in the next frame and also should rebuild its child(ren) or not**.
+
+`Element` has a flag named `_dirty`, which represents whether the `Element` need to be rebuilt in the next frame or not.
+```dart
+/// Returns true if the element has been marked as needing rebuilding.  
+///  
+/// The flag is true when the element is first created and after  
+/// [markNeedsBuild] has been called. The flag is reset to false in the  
+/// [performRebuild] implementation.  
+bool get dirty => _dirty;  
+bool _dirty = true;
+```
+As commented in the code above, this flag changes into `true` when `markNeedsBuild()` is called. The method “marks” the `Element` to be rebuilt in the next frame, with the implementation below.
+```dart
+/// Marks the element as dirty and adds it to the global list of widgets to  
+/// rebuild in the next frame.  
+///  
+/// Since it is inefficient to build an element twice in one frame,  
+/// applications and widgets should be structured so as to only mark  
+/// widgets dirty during event handlers before the frame begins, not during  
+/// the build itself.  
+void markNeedsBuild() {  
+if (_lifecycleState != _ElementLifecycle.active) {  
+return;  
+}  
+if (dirty) {  
+return;  
+}  
+_dirty = true;  
+owner!.scheduleBuildFor(this);  
+}
+```
+`markNeedsBuild()` is called via various ways that issues rebuilding. Typically, for example, `setState()` of `StatefulWidget` calls the method inside like the code below.
+```dart
+void setState(VoidCallback fn) {  
+final Object? result = fn() as dynamic;  
+_element!.markNeedsBuild();  
+}
+```
+As we’ve understood `markNeedsBuild()` only “marks” the `_dirty` flag as `true`, meaning rebuild is required in the next frame, we can now say that **calling** `**setState()**` **multiple times in a single method DOESN’T result in multiple rebuilding**. We don’t need to be nervous trying to refactor not to call `setState()` multiple times within one function call.
+
+**Other state management packages, such as** `**Riverpod**`**,** `**Provider**`**, etc, are also implemented based on this mechanism**. What they are doing, in the end, is calling `markNeedsBuild()` at relevant timings.
+`Element` also optimizes rebuild by considering **how much** they rebuild their child.
+
+When we extract a brief implementation of `updateChild()`, we find three conditional branches like below.
+
+Note that `child.widget` here is the widget built last time, and `newWidget` is the widget built in the current build.
+```dart
+if (hasSameSuperclass && child.widget == newWidget) {  
+newChild = child;  
+} else if (hasSameSuperclass && Widget.canUpdate(child.widget, newWidget)) {  
+final bool isTimelineTracked = !kReleaseMode && _isProfileBuildsEnabledFor(newWidget);  
+child.update(newWidget);  
+newChild = child;  
+} else {  
+deactivateChild(child);  
+newChild = inflateWidget(newWidget, newSlot);  
+}
+```
+The first condition compares two widgets if they are exactly the same object. This case happens when we write `const` for the widget’s constructor that returns exactly the same object at any time.
+
+In this case, nothing happens and its child is not built but the cache is reused.
+
+The second one compares two widgets with `canUpdate()` method whose implementation is written below.
+```dart
+static bool canUpdate(Widget oldWidget, Widget newWidget) {  
+return oldWidget.runtimeType == newWidget.runtimeType  
+&& oldWidget.key == newWidget.key;  
+}
+```
+In the case that the instances of two widgets are different but they have the same `runtimeType` and the same `key` (even if they both are `null` ), `Element` finds there are no changes but the difference of argument at most, as in the difference of `Text('hello')` and `Text('goodbye')`.
+
+In this case, the cached `Element` is reused and the rebuild continues to its child.
+
+The last one is the case that `child.widget` and `newWidget` are completely different, which means the structure of the UI has changed.
+
+In this case, the old `Element` is disposed and a brand new `Element` is created in `inflateWidget()`, and the rebuild continues to its child.
+
+In short, `Element`s checks the difference between the last build and the current rebuild and reuses caches of `Element` as much as possible in order to prevent meaningless computing.
+
+## Find Ancestor Widget
+
+As pointed out above, `Element` preserves the relationships between their parents and children. Using the information, finding other widgets on the tree (typically ancestor widgets) is another important ability.
+
+The mechanism is not only used in the framework but also by us actually.
+
+Before discussing it, we have to check the code calling `build()` method of `StatelessWidget` again.
+```dart
+// implementation by StatelessElement  
+@override  
+Widget build() => (widget as StatelessWidget).build(this);
+```
+We can see `this` is passed to `build()` widget as an argument. As the code is `Element`‘s, `this` is `Element`. Then, let’s take a look at the typical code of `build()` method that we write every day.
+```dart
+@override  
+Widget build(BuildContext context) {  
+return MyPage();  
+}
+```
+As we can see the argument is `BuildContext context`, `context` is an `Element`. We can double-check this by looking at the definition of `Element` below.
+```dart
+abstract class Element extends DiagnosticableTree implements BuildContext {  
+}
+```
+`Element` implements `BuildContext` and its document says `BuildContext` is
+
+> A handle to the location of a widget in the widget tree.
+
+In other words, the type `BuildContext` is an interface for us to perform some methods using the widget tree.
+
+One frequently used example is `Navigator.of(context)`. The static method `of()` of `Navigator` is implemented like below.
+```dart
+static NavigatorState of(
+  BuildContext context, {
+  bool rootNavigator = false,
+}) {
+  NavigatorState? navigator;
+
+  if (context is StatefulElement && context.state is NavigatorState) {
+    navigator = context.state as NavigatorState;
+  }
+  if (rootNavigator) {
+    navigator = context.findRootAncestorStateOfType<NavigatorState>() ?? navigator;
+  } else {
+    navigator = navigator ?? context.findAncestorStateOfType<NavigatorState>();
+  }
+
+  return navigator!;
+}
+```
+Where we need to take a closer look is the methods of `context`, `findRootAncestorStateOfType()` and `findAncestorStateOfType()`.
+
+`findAncestorStateOfType()` is, for example, a method to find an ancestor `State` object of `StatefulWidget`, which is implemented in the class `Element` like below.
+```dart
+@override
+T? findAncestorStateOfType<T extends State<StatefulWidget>>() {
+  Element? ancestor = _parent;
+  while (ancestor != null) {
+    if (ancestor is StatefulElement && ancestor.state is T) {
+      break;
+    }
+    ancestor = ancestor._parent;
+  }
+  final StatefulElement? statefulAncestor = ancestor as StatefulElement?;
+  return statefulAncestor?.state as T?;
+}
+```
+The logic is quite simple, just infinitely looping with `while` and searching `ancestor` until the type of `ancestor.state` matches the given `T`.
+
+Similarly, we have `getInheritedWidgetOfExactType()` method for finding `InheritedWidget`.
+```dart
+@override
+InheritedElement? getElementForInheritedWidgetOfExactType<T extends InheritedWidget>() {
+  final InheritedElement? ancestor = _inheritedElements == null ? null : _inheritedElements![T];
+  return ancestor;
+}
+```
+This one is more simple that it finds a widget whose type is given `T` from `_inheritedElements` whose type is `PersistendHashMap<Type, InheritedWidget>`.
+
+`_inheritedElements` preserves `InheritedWidget`s that are the ancestor of `context` with key-value pair of `Type` and the instance.
+
+By using this, we can access to `InheritedWidget` with O(1) order, which means the depth of the widget tree doesn’t affect the performance to find the target `InheritedWidgt.`
+
+`Element`, a.k.a `BuildContext`, is provided for us to find ancestor widgets.
+# Conclusion
+
+That’s it!
+
+Once we understand what `Element` is and how they work under the hood, many questions can be answered with relevant reasons.
+
+It’s OK to call `setState()` multiple times in a single function, for example, because `setState()` only raises `Element`‘s flag of `_dirty`, and rebuilding only happens once when the next frame comes.
+
+`context` should not be cached with our own logic because `context` is an `Element` and it can be disposed of by the Flutter framework depending on the result of rebuilding.
+
+As long as I understand, many state management packages are also implemented based on this mechanism. `WidgetRef` of `Riverpod` package is exactly the same object with `BuildContext`, or `context.read()` of `Provider` package uses `context.getInheritedWidgetOfExactType()` inside.
+
+If you’ve got interested in this mechanism, I strongly recommend to read the document [Inside Flutter](https://docs.flutter.dev/resources/inside-flutter?source=post_page-----3e8937c4eb74--------------------------------) in docs.flutter.dev and jumping into the implementation of the Flutter framework hitting F12.
 
 
 

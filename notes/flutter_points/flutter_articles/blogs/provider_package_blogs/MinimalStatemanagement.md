@@ -510,6 +510,8 @@ Clone the [timer app](https://github.com/suragch/minimalist_state_management_ti
 -   Add a way to change the start time.
 -   Swap out shared preferences with another storage service implementation (like Hive or Sqflite or Firebase or even a fake storage service).
 
+
+[Another good read](https://medium.com/@chooyan/reinventing-provider-understand-flutter-and-inheritedwidget-underhood-4c833e37a636) - Reinventing provider
 # Conclusion
 
 All of the state management solutions that I have seen so far (except for `setState`) work in basically the same way. They take the app state and logic and separate it from the UI by putting it in a new class. In addition to that, they provide a way for the UI to rebuild when the state changes. The minimalist method I’ve presented here does all of that but without a third-party state management package. GetIt _is_ a third-party package, but I’m not calling it a state management solution because you’re only using it to get a reference to a Dart class. You could even replace GetIt with a singleton if you wanted to. However, an advantage of GetIt over a singleton is that GetIt is easier to test.
