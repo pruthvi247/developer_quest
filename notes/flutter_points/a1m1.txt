@@ -1,5 +1,0 @@
-[source: https://www.reddit.com/r/FlutterDev/comments/adyxx1/sharedpreferences_best_practice/]
-
-> Load all info at app startup, loading shared_pre is slow adn takes time
-> load the data from shared_preferences on app start and then keep the data in memory with some form of state management solution
->

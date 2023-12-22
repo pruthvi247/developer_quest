@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "b2b353d27f2c7ed2",
+        "id": "21ecbf409e9afc2a",
         "type": "tabs",
         "children": [
           {
-            "id": "c7cf21998d1f05d4",
+            "id": "b4843b7f36c675bc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+                "file": "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
                 "mode": "source",
                 "source": false
               }
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+                "file": "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+                "file": "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md"
+                "file": "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md"
               }
             }
           },
@@ -157,52 +157,53 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c7cf21998d1f05d4",
+  "active": "b4843b7f36c675bc",
   "lastOpenFiles": [
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222141729.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222141448.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222141303.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222140510.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222140447.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222135748.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222135725.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222135633.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222135015.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222134945.png",
+    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222134910.png",
+    "notes/UI-Blogs/css-blogs/josh-comeau-css-keyframes.md",
+    "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
+    "notes/unix_learnings/git_learnings.md",
+    "notes/UI-Blogs/nodejs-setup.md",
+    "notes/nodejs-setup.md",
+    "Pasted image 20230912124418.png.md",
+    "2023-08-30.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/dart_learnings.md",
+    "others",
+    "notes/flutter_points/flutter_articles/flutter_misc/flutter_tips_codewithAdrea.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/flutter_issues.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Isolates-dart.md",
+    "notes/flutter_points/flutter_learnings.md",
+    "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
+    "notes/flutter_points/flutter_in_action.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/weather-app-suragh-minimal-state.md",
+    "notes/flutter_points/flutter_articles/blogs/alfianlosari_com_Building_Places_Location_Search_Map_View_Flutter.pdf",
+    "notes/flutter_points/flutter_articles/blogs/Animation-deep-dive.md",
     "notes/flutter_points/flutter_articles/flutter_misc/widget_from_scratch-suragh.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231209181936.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231209181857.png",
+    "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
     "notes/flutter_points/flutter_articles/flutter_misc/Text-rendering-flutter.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205202802.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205200420.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205200207.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205200053.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205195930.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231205195847.png",
     "notes/shortcuts/vs_code_shotcuts.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231204193042.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20231204192920.png",
     "notes/flutter_points/flutter_articles/flutter_misc/Attachments",
     "notes/flutter_points/flutter_articles/Attachments",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/weather-app-suragh-minimal-state.md",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments",
     "notes/flutter_points/flutter_articles/blogs/codingwithjoe_buildingForms_flutter.pdf",
     "notes/flutter_points/flutter_articles/blogs/greg_Notification_Android_iOS_Flutter.pdf",
     "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
     "notes/flutter_points/flutter_articles/blogs/philip-hracek- mythical-designer-developer.md",
-    "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
     "notes/flutter_points/flutter_articles/blogs/addpostframecallback.md",
-    "notes/flutter_points/flutter_shortcuts.md",
-    "notes/flutter_points/flutter_learnings_1.md",
-    "notes/flutter_points/flutter_in_action.md",
-    "notes/flutter_points/flutter_codewithAdrea.md",
-    "notes/git_learnings.md",
-    "notes/flutter_points/Isolates-dart.md",
     "notes/flutter_points/Attachments",
-    "notes/UI-Blogs/css-blogs/josh-comeau-css-keyframes.md",
-    "notes/UI-Blogs/css-blogs/josh-comeau-css-transitions.md",
-    "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
-    "notes/UI-Blogs/css-blogs/css-media-queries.md",
-    "notes/UI-Blogs/css-blogs/10-css-tips.md",
-    "notes/UI-Blogs/css-blogs/css-flex-responsive-layouts.md",
-    "notes/UI-Blogs/css-blogs/css-keyframe-css-transition.md",
-    "notes/unix_learnings/log-processing-commands.md",
-    "notes/unix_learnings/linux_essentials_for_hackers.md",
     "notes/unix_learnings/Attachments",
-    "workspace/data_structures_freeCodeCamp/ds_docs/~$Queue.pptx",
-    "workspace/data_structures_freeCodeCamp/ds_docs/~$PriorityQueue.pptx",
-    "notes/Testing/Attachments"
+    "workspace/data_structures_freeCodeCamp/ds_docs/~$Queue.pptx"
   ]
 }
