@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "21ecbf409e9afc2a",
+        "id": "d99d2899f8ceb2b1",
         "type": "tabs",
         "children": [
           {
-            "id": "b4843b7f36c675bc",
+            "id": "da418124871a1704",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
+                "file": "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 377.51103591918945,
+    "width": 306.50390243530273,
     "collapsed": true
   },
   "right": {
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
+                "file": "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
+                "file": "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md"
+                "file": "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md"
               }
             }
           },
@@ -136,7 +136,9 @@
             "state": {
               "type": "all-properties",
               "state": {
-                "sortOrder": "frequency"
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
               }
             }
           }
@@ -150,28 +152,36 @@
   "left-ribbon": {
     "hiddenItems": {
       "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
+      "graph:Open graph view": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false
     }
   },
-  "active": "b4843b7f36c675bc",
+  "active": "da418124871a1704",
   "lastOpenFiles": [
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222141729.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222141448.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222141303.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222140510.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222140447.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222135748.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222135725.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222135633.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222135015.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222134945.png",
-    "notes/UI-Blogs/css-blogs/Attachments/Pasted image 20231222134910.png",
-    "notes/UI-Blogs/css-blogs/josh-comeau-css-keyframes.md",
+    "NLL/self-study/Attachments/Pasted image 20240122162512.png",
+    "NLL/self-study/Attachments/Pasted image 20240122154515.png",
+    "NLL/self-study/Attachments/Pasted image 20240122141707.png",
+    "NLL/self-study/Attachments/Pasted image 20240122141620.png",
+    "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md",
+    "NLL/self-study/02-competitive-strategy.md",
+    "NLL/self-study/Attachments/Pasted image 20240122134009.png",
+    "NLL/self-study/Attachments/Pasted image 20240122131111.png",
+    "NLL/self-study/01-business-strategy.md",
+    "NLL/self-study/Attachments/Pasted image 20240122094638.png",
+    "NLL/self-study/Attachments/Pasted image 20240122084515.png",
+    "NLL/self-study/Attachments/Pasted image 20240122082619.png",
+    "NLL/self-study/Attachments/Pasted image 20240122082537.png",
+    "NLL/self-study/Attachments/Pasted image 20240122082350.png",
+    "notes/UI-Blogs/css-blogs/css-animation-scroll-driven.md",
+    "NLL/self-study/Attachments",
+    "NLL/self-study",
+    "NLL/Attachments",
+    "NLL",
     "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
+    "notes/UI-Blogs/css-blogs/josh-comeau-css-keyframes.md",
     "notes/unix_learnings/git_learnings.md",
     "notes/UI-Blogs/nodejs-setup.md",
     "notes/nodejs-setup.md",
@@ -195,15 +205,7 @@
     "notes/shortcuts/vs_code_shotcuts.md",
     "notes/flutter_points/flutter_articles/flutter_misc/Attachments",
     "notes/flutter_points/flutter_articles/Attachments",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments",
-    "notes/flutter_points/flutter_articles/blogs/codingwithjoe_buildingForms_flutter.pdf",
-    "notes/flutter_points/flutter_articles/blogs/greg_Notification_Android_iOS_Flutter.pdf",
-    "notes/flutter_points/flutter_articles/blogs/Lifecycle-of-widget-fluttervikings-craig-labenz.md",
-    "notes/flutter_points/flutter_articles/blogs/philip-hracek- mythical-designer-developer.md",
-    "notes/flutter_points/flutter_articles/blogs/addpostframecallback.md",
-    "notes/flutter_points/Attachments",
-    "notes/unix_learnings/Attachments",
-    "workspace/data_structures_freeCodeCamp/ds_docs/~$Queue.pptx"
+    "notes/flutter_points/flutter_articles/blogs/codingwithjoe_buildingForms_flutter.pdf"
   ]
 }
