@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "d99d2899f8ceb2b1",
+        "id": "14ea94a4dfc75404",
         "type": "tabs",
         "children": [
           {
-            "id": "da418124871a1704",
+            "id": "2180cc50f0a8b38f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md",
+                "file": "NLL/self-study/02-week/01-b2b-market-stategy.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 306.50390243530273,
-    "collapsed": true
+    "width": 306.50390243530273
   },
   "right": {
     "id": "05d70312eebde015",
@@ -86,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md",
+                "file": "NLL/self-study/02-week/01-b2b-market-stategy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md",
+                "file": "NLL/self-study/02-week/01-b2b-market-stategy.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md"
+                "file": "NLL/self-study/02-week/01-b2b-market-stategy.md"
               }
             }
           },
@@ -159,22 +158,29 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "da418124871a1704",
+  "active": "2180cc50f0a8b38f",
   "lastOpenFiles": [
+    "notes/unix_learnings/git_learnings.md",
+    "NLL/self-study/02-week/01-b2b-market-stategy.md",
+    "NLL/self-study/02-week/Attachments/Pasted image 20240201204201.png",
+    "NLL/self-study/02-week/Attachments/Pasted image 20240201203849.png",
+    "NLL/self-study/02-week/Attachments/Pasted image 20240201203716.png",
+    "NLL/self-study/02-week/Attachments/Pasted image 20240201203601.png",
+    "NLL/self-study/02-week/Attachments",
+    "NLL/self-study/02-week",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md",
+    "notes/articles/misc_articles/sql-query-execution-diagram.jpg",
+    "notes/articles/misc_articles/cloudnative.jpg",
+    "NLL/self-study/01-week/03-Mergers-And-Acquisitions-Divestiture.md",
+    "NLL/self-study/01-week/02-competitive-strategy.md",
+    "NLL/self-study/01-week/01-business-strategy.md",
+    "NLL/self-study/01-week/01-case-Strategy-in-todays-world.md",
+    "NLL/self-study/01-week",
     "NLL/self-study/Attachments/Pasted image 20240122162512.png",
     "NLL/self-study/Attachments/Pasted image 20240122154515.png",
     "NLL/self-study/Attachments/Pasted image 20240122141707.png",
     "NLL/self-study/Attachments/Pasted image 20240122141620.png",
-    "NLL/self-study/03-Mergers-And-Acquisitions-Divestiture.md",
-    "NLL/self-study/02-competitive-strategy.md",
-    "NLL/self-study/Attachments/Pasted image 20240122134009.png",
-    "NLL/self-study/Attachments/Pasted image 20240122131111.png",
-    "NLL/self-study/01-business-strategy.md",
-    "NLL/self-study/Attachments/Pasted image 20240122094638.png",
-    "NLL/self-study/Attachments/Pasted image 20240122084515.png",
-    "NLL/self-study/Attachments/Pasted image 20240122082619.png",
-    "NLL/self-study/Attachments/Pasted image 20240122082537.png",
-    "NLL/self-study/Attachments/Pasted image 20240122082350.png",
     "notes/UI-Blogs/css-blogs/css-animation-scroll-driven.md",
     "NLL/self-study/Attachments",
     "NLL/self-study",
@@ -182,7 +188,6 @@
     "NLL",
     "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
     "notes/UI-Blogs/css-blogs/josh-comeau-css-keyframes.md",
-    "notes/unix_learnings/git_learnings.md",
     "notes/UI-Blogs/nodejs-setup.md",
     "notes/nodejs-setup.md",
     "Pasted image 20230912124418.png.md",
@@ -195,17 +200,10 @@
     "notes/flutter_points/flutter_learnings.md",
     "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
     "notes/flutter_points/flutter_in_action.md",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/weather-app-suragh-minimal-state.md",
     "notes/flutter_points/flutter_articles/blogs/alfianlosari_com_Building_Places_Location_Search_Map_View_Flutter.pdf",
     "notes/flutter_points/flutter_articles/blogs/Animation-deep-dive.md",
     "notes/flutter_points/flutter_articles/flutter_misc/widget_from_scratch-suragh.md",
-    "notes/UI-Blogs/css-blogs/josh-comeau-interactive-flexbox.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Text-rendering-flutter.md",
-    "notes/shortcuts/vs_code_shotcuts.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments",
-    "notes/flutter_points/flutter_articles/Attachments",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments",
-    "notes/flutter_points/flutter_articles/blogs/codingwithjoe_buildingForms_flutter.pdf"
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments"
   ]
 }
