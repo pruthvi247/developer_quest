@@ -26,3 +26,9 @@ Minimize all screens: command + option + M
 
 > Directly Delete Items Without Moving to Trash - commad + option + delete
 
+If you have multiple PDF files that you want to open in ONE window as ONE file that you can scroll down you can do this:
+1. Open ONLY ONE pdf file in preview.
+    
+2. Use Alt+Cmd+2 (it will open miniatures on the left side).
+    
+3. Select all OTHER pdf files and drag them manually into miniatures sidebar.

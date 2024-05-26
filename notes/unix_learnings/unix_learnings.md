@@ -149,4 +149,7 @@ These are special shell variables which are set internally by the shell and whic
 
 ![[Pasted image 20230611100330.png]]
 
-
+#### [List files having more than 100 lines in a directory and in all it's sub directory](https://askubuntu.com/questions/300915/list-files-having-more-than-100-lines-in-a-directory-and-in-all-its-sub-directo)
+```
+find . -type f | xargs wc -l | awk -F "." '$1>100'
+```

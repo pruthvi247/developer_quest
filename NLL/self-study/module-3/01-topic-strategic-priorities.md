@@ -1,0 +1,1 @@
+[source-sap-success-map](https://sap.plateau.com/learning/user/deeplink.do?OWASP_CSRFTOKEN=OW19-U33M-YKD1-5S42-LF8V-5VF5-T81F-LMXN&catalogAction=launchContent&componentID=SALES_00004347_WBT&componentTypeID=COURSE&linkId=ITEM_DETAILS&nativelogin=y&revisionDate=1701067341000#/1BD981CF38C891B1180018FA24666E5F/onlinecontentplayer/16623060)

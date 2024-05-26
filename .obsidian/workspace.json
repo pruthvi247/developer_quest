@@ -4,22 +4,59 @@
     "type": "split",
     "children": [
       {
-        "id": "14ea94a4dfc75404",
+        "id": "2c46a90dd928e290",
         "type": "tabs",
         "children": [
           {
-            "id": "2180cc50f0a8b38f",
+            "id": "c2073c05ab44bb8e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "NLL/self-study/02-week/01-b2b-market-stategy.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "4cd2a680eb3df049",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "457300c6dc5f462a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9d9a9454eaa5b75e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Diving-into-riverpod-remirousselet.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "NLL/self-study/02-week/01-b2b-market-stategy.md",
+                "file": "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "NLL/self-study/02-week/01-b2b-market-stategy.md",
+                "file": "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "NLL/self-study/02-week/01-b2b-market-stategy.md"
+                "file": "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md"
               }
             }
           },
@@ -158,52 +195,52 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "2180cc50f0a8b38f",
+  "active": "4cd2a680eb3df049",
   "lastOpenFiles": [
-    "notes/unix_learnings/git_learnings.md",
-    "NLL/self-study/02-week/01-b2b-market-stategy.md",
-    "NLL/self-study/02-week/Attachments/Pasted image 20240201204201.png",
-    "NLL/self-study/02-week/Attachments/Pasted image 20240201203849.png",
-    "NLL/self-study/02-week/Attachments/Pasted image 20240201203716.png",
-    "NLL/self-study/02-week/Attachments/Pasted image 20240201203601.png",
-    "NLL/self-study/02-week/Attachments",
-    "NLL/self-study/02-week",
+    "NLL/self-study/module-3/01-topic-strategic-priorities.md",
+    "notes/flutter_points/flutter_articles/blogs/Flutter-bits.md",
+    "notes/flutter_points/flutter_articles/blogs/Attachments/Pasted image 20240526000032.png",
     "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
-    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md",
-    "notes/articles/misc_articles/sql-query-execution-diagram.jpg",
-    "notes/articles/misc_articles/cloudnative.jpg",
-    "NLL/self-study/01-week/03-Mergers-And-Acquisitions-Divestiture.md",
-    "NLL/self-study/01-week/02-competitive-strategy.md",
-    "NLL/self-study/01-week/01-business-strategy.md",
-    "NLL/self-study/01-week/01-case-Strategy-in-todays-world.md",
-    "NLL/self-study/01-week",
-    "NLL/self-study/Attachments/Pasted image 20240122162512.png",
-    "NLL/self-study/Attachments/Pasted image 20240122154515.png",
-    "NLL/self-study/Attachments/Pasted image 20240122141707.png",
-    "NLL/self-study/Attachments/Pasted image 20240122141620.png",
-    "notes/UI-Blogs/css-blogs/css-animation-scroll-driven.md",
-    "NLL/self-study/Attachments",
-    "NLL/self-study",
-    "NLL/Attachments",
-    "NLL",
-    "notes/UI-Blogs/css-blogs/josh-comeau-css-grid.md",
-    "notes/UI-Blogs/css-blogs/josh-comeau-css-keyframes.md",
-    "notes/UI-Blogs/nodejs-setup.md",
-    "notes/nodejs-setup.md",
-    "Pasted image 20230912124418.png.md",
-    "2023-08-30.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/dart_learnings.md",
-    "others",
-    "notes/flutter_points/flutter_articles/flutter_misc/flutter_tips_codewithAdrea.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/flutter_issues.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Isolates-dart.md",
-    "notes/flutter_points/flutter_learnings.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Diving-into-riverpod-remirousselet.md",
     "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
-    "notes/flutter_points/flutter_in_action.md",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/weather-app-suragh-minimal-state.md",
-    "notes/flutter_points/flutter_articles/blogs/alfianlosari_com_Building_Places_Location_Search_Map_View_Flutter.pdf",
-    "notes/flutter_points/flutter_articles/blogs/Animation-deep-dive.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/widget_from_scratch-suragh.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments"
+    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md",
+    "notes/articles/misc_articles/random.md",
+    "NLL/self-study/module-3",
+    "notes/articles/misc_articles/Attachments/Pasted image 20240512123145.png",
+    "notes/articles/misc_articles/Attachments",
+    "notes/book_points/SoftwareDev Books.md",
+    "notes/networking/computer_networks.md",
+    "notes/networking/Attachments/Pasted image 20240502103104.png",
+    "notes/unix_learnings/unix_learnings.md",
+    "notes/networking/osimodel.md",
+    "notes/networking/Attachments/Pasted image 20240422102059.png",
+    "notes/networking/Attachments/Pasted image 20240422102001.png",
+    "notes/networking/Attachments/Pasted image 20240422101831.png",
+    "notes/networking/base-64-working.md",
+    "notes/networking/Attachments/Pasted image 20240422101818.png",
+    "notes/unix_learnings/regEx.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/flutter_tips_codewithAdrea.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Dart_mixins_quickbird.pdf",
+    "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md",
+    "NLL/self-study/module-2/Topic-1-Finance/02-understanding-financial-statement.md",
+    "NLL/self-study/module-2/Topic-1-Finance/03-leader-session-anand-rao.md",
+    "NLL/self-study/module-2/Topic-1-Finance/Attachments/Pasted image 20240411145452.png",
+    "NLL/self-study/module-2/Topic-1-Finance/Attachments/Pasted image 20240411145352.png",
+    "NLL/self-study/module-2/Topic-1-Finance/Attachments/Pasted image 20240411145032.png",
+    "notes/shortcuts/vs_code_shotcuts.md",
+    "notes/DB/01-sql.md",
+    "notes/DB/Attachments",
+    "NLL/self-study/module-2/Topic-1-Finance/Attachments",
+    "notes/unix_learnings/git_learnings.md",
+    "NLL/self-study/module-2/Topic-1-Finance",
+    "NLL/self-study/module-2",
+    "NLL/self-study/05-week/01-Conflict-management.md",
+    "notes/copilot-tips.md",
+    "notes/flutter_points/flutter_articles/blogs/Element-Flutter-Under-the-Hood.md",
+    "notes/dockerAndKube/kubernetes/k8s-begginners/1-Introduction.md",
+    "NLL/self-study/05-week/Attachments",
+    "NLL/self-study/05-week",
+    "notes/DB"
   ]
 }

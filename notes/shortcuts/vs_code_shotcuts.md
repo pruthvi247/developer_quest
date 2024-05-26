@@ -199,4 +199,29 @@ VS Code Settings
 - Add folder to workspace
 - Project Manager -> extension
 - Peacock -> Extension
-- 
+
+
+## Shortcuts
+[source-medium](https://medium.com/flutter-community/flutter-visual-studio-code-shortcuts-for-fast-and-efficient-development-7235bc6c3b7d)
+1. You can find the list of default keyboard shortcuts and also search for shortcuts by using `CTRL+K+S`
+2. `Ctrl+Shift+P` to Show Command Palette with the recently used commands or also to search commands
+3. `Ctrl+.` to find the quick fix options.
+4. Prefix `stless`: Create a new subclass of `StatelessWidget`
+5. Prefix `stful`: Create a new subclass of `StatefulWidget` and it’s associated State subclass.
+6. Prefix `stanim`: Create a new subclass of `StatefulWidget`, and it’s associated State subclass including a field initialized with an `AnimationController`.
+7. **Inorder to see the class hierarchy press `F4` on any `widget` and in a few seconds you will be able to see the widget hierarchy.**
+8. Peek Definition" feature in VSCode. This allows you to quickly peek at the definition of a widget or function without navigating away from your current code. `Option + F12` (Mac).
+9. `Cmd + Shift + O` gives out line of a class
+# Debugging Shortcuts
+
+These are some of the debugging shortcuts which will come in handy, hope you don’t need any examples for the same.
+
+- `F5` - Start Debugging
+- `Ctrl`+`F5` - Start Without Debugging
+- `Shift`+`F5` - Stop Debugging
+- `Ctrl`+`Shift`+`F5` (macOS: `Cmd`+`Shift`+`F5`) - Restart Debugging (Hot Reload when debugging Flutter apps)
+- `Ctrl`+`F5` - Hot Restart (when debugging Flutter apps and in a debug session)
+- `F9` - Toggle Breakpoint
+- `F10` - Step Over
+- `F11` - Step In
+- `Shift`+`F11` - Step Out

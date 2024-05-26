@@ -401,6 +401,10 @@ computers on the Internet can exchange information—such as ICMP messages—in 
 
 ![[Pasted image 20230816094302.png]]
 
+![[Pasted image 20240422101831.png]]
+![[Pasted image 20240422102001.png]]
+![[Pasted image 20240422102059.png]]
+![[Pasted image 20240502103104.png]]
 
 
 
