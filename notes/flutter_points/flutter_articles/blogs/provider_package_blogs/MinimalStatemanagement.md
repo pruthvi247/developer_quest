@@ -89,7 +89,7 @@ Some people may be uncomfortable with this because in essence you have a global 
 
 -   Don’t directly modify state in the state management from the UI layer. Instead call methods on the state management class and let that class modify its own state.
 
-Other people worry about testing because singleton classes are notoriously difficult to test. However, [GetIt provides a way to test these classes](https://pub.dev/packages/get_it#testing-with-getit) so that isn’t really an issue.
+	Other people worry about testing because singleton classes are notoriously difficult to test. However, [GetIt provides a way to test these classes](https://pub.dev/packages/get_it#testing-with-getit) so that isn’t really an issue.
 
 Another advantage for simplicity here is that you use GetIt to set up the service layer in the same way. More on that in a bit.
 
@@ -161,9 +161,9 @@ All you do is wrap the widget you want to rebuild with the `ValueListenableBuil
 class FavoriteButton extends StatelessWidget {  
   const FavoriteButton({Key? key}) : super(key: key);  @override  
   Widget build(BuildContext context) {  
-    final playPage = **getIt**<PlayPageManager>();    return **ValueListenableBuilder**<bool>(  
-      **valueListenable**: playPage.favoriteNotifier,  
-      **builder**: (**context**, **value**, **child**) {  
+    final playPage = getIt<PlayPageManager>();    return ValueListenableBuilder<bool>(  
+      valueListenable: playPage.favoriteNotifier,  
+      builder: (context, value, child) {  
         return IconButton(  
           icon: Icon(  
             (value)   
@@ -189,7 +189,7 @@ Note the following items:
 ```dart
 builder: (_, value, __) {...}
 ```
-**_Tip_**_: Sometimes it’s a pain to wrap a widget with a_ `_ValueListenableBuilder_`_. However, if you use the shortcut key in VS Code or Android Studio to show the context menu, you can choose_ **_Wrap with StreamBuilder_**_. Then just modify the_ `_StreamBuilder_` _into a_ `_ValueListenableBuilder_`_._
+>_Tip_: Sometimes it’s a pain to wrap a widget with a_ `_ValueListenableBuilder_`_. However, if you use the shortcut key in VS Code or Android Studio to show the context menu, you can choose_ **_Wrap with StreamBuilder_**_. Then just modify the_ `_StreamBuilder_` _into a_ `_ValueListenableBuilder_`_._
 
 I recommend keeping it simple and using a `ValueNotifier` and `ValueListenableBuilder` for everything. However, if you decide to expose a `Stream`, `Future`, or `ChangeNotifier`, there are builder widgets for those, too:
 
@@ -212,7 +212,7 @@ The file [**main.dart**](https://github.com/suragch/minimalist_state_management
 The file [**timer_page.dart**](https://github.com/suragch/minimalist_state_management_timer_app/blob/master/lib/pages/timer_page/timer_page.dart) in the **pages** folder has the UI layout.
 Here is a condensed summary:
 ```dart
-class **TimerPage** extends StatefulWidget {...}class _TimerPageState extends State<TimerPage> {  @override  
+class TimerPage extends StatefulWidget {...}class _TimerPageState extends State<TimerPage> {  @override  
   void initState() {  
     ...  
   }  @override  
@@ -223,15 +223,15 @@ class **TimerPage** extends StatefulWidget {...}class _TimerPageState extends St
         child: Column(  
           mainAxisAlignment: MainAxisAlignment.center,  
           children: <Widget>[  
-            **TimerTextWidget**(),  
+            TimerTextWidget(),  
             SizedBox(height: 20),  
-            **ButtonsContainer**(),  
+            ButtonsContainer(),  
           ],  
         ),  
       ),  
     );  
   }  
-}class **TimerTextWidget** extends StatelessWidget {...}class **ButtonsContainer** extends StatelessWidget {...}class **StartButton** extends StatelessWidget {...}class **PauseButton** extends StatelessWidget {...}class **ResetButton** extends StatelessWidget {...}
+}class TimerTextWidget extends StatelessWidget {...}class ButtonsContainer extends StatelessWidget {...}class StartButton extends StatelessWidget {...}class PauseButton extends StatelessWidget {...}class ResetButton extends StatelessWidget {...}
 ```
 These are some key points:
 
@@ -240,7 +240,7 @@ These are some key points:
 -   You couldn’t tell from the code above, but all of those stateless widgets were also `const` widgets. **Make your widgets const whenever possible.** Flutter doesn’t need to rebuild constant widgets, so this is a performance optimization. Note the `const` keyword in the `StartButton` constructor, for example:
 ```dart
 class StartButton extends StatelessWidget {  
-**const** StartButton({Key? key}) : super(key: key);  
+const StartButton({Key? key}) : super(key: key);  
 @override  
 Widget build(BuildContext context) {...}  
 }
@@ -269,8 +269,8 @@ The time left is a string and the button configuration could be represented by a
 Since the UI needs a way to listen to changes in these two states, the next step is to add one `ValueNotifier` for each of them. To do that just add two variables to your state management class:
 ```dart
 class TimerPageManager {  
-  final **timeLeftNotifier** = TimeLeftNotifier();  
-  final **buttonNotifier** =   
+  finaltimeLeftNotifier = TimeLeftNotifier();  
+  final buttonNotifier =   
     ValueNotifier<ButtonState>(ButtonState.initial);  
 }enum ButtonState {  
   initial,  
@@ -318,11 +318,11 @@ Once the UI has a reference to the state management class, the UI can call metho
 ```dart
 class TimerPageManager {  
   final timeLeftNotifier = ...  
-  final buttonNotifier = ...  void **initTimerState**() {...}  
-  void **start**() {...}  
-  void **pause**() {...}  
-  void **reset**() {...}  
-  void **dispose**() {...}  
+  final buttonNotifier = ...  void initTimerState() {...}  
+  void start() {...}  
+  void pause() {...}  
+  void reset() {...}  
+  void dispose() {...}  
 }
 ```
 Then I could call a method from the UI side in [**timer_page.dart**](https://github.com/suragch/minimalist_state_management_timer_app/blob/master/lib/pages/timer_page/timer_page.dart) like so:
@@ -351,10 +351,10 @@ class TimerPageManager {
   final timeLeftNotifier = ...  
   final buttonNotifier = ...  
     
-  **void pause() {  
+  void pause() {  
     timeLeftNotifier.pause();  
     buttonNotifier.value = ButtonState.paused;  
-  }**  ...  
+  }  ...  
 }
 ```
 The `buttonNotifier` direrctly updates the value, while `timeLeftNotifier` forwards the call on to [its own notifier class](https://github.com/suragch/minimalist_state_management_timer_app/blob/master/lib/pages/timer_page/notifiers/time_left_notifier.dart) to handle on its own. Either way, any listeners will get notified about the update.
@@ -375,11 +375,11 @@ you can listen to them with `ValueListenableBuilder` widgets. The timer app UI
 ```dart
 Widget build(BuildContext context) {  
 final stateManager = getIt<TimerPageManager>();  
-return **ValueListenableBuilder**<String>(  
-**valueListenable: stateManager.timeLeftNotifier**,  
-builder: (context, **timeLeft**, child) {  
+return ValueListenableBuilder<String>(  
+valueListenable: stateManager.timeLeftNotifier,  
+builder: (context, timeLeft, child) {  
 return Text(  
-**timeLeft**,  
+timeLeft,  
 style: Theme.of(context).textTheme.headline2,  
 );  },  );  }
 ```
@@ -396,8 +396,8 @@ That’s it for the UI and state management layer interaction, but let me also c
 The timer needs to save its state to local storage when the user leaves the app, so I created a `StorageService` interface to define an API that the state management layer can use. Here it is in [**storage_service.dart**](https://github.com/suragch/minimalist_state_management_timer_app/blob/master/lib/services/storage_service/storage_service.dart):
 ```dart
 abstract class StorageService {  
-Future<int?> **getTimeLeft**();  
-Future<void> **saveTimeLeft**(int seconds);  
+Future<int?> getTimeLeft();  
+Future<void> saveTimeLeft(int seconds);  
 }
 ```
 While that interface could be implemented with a database or web API, I decided to implement it using shared preferences. Here it is in [**shared_preferences_storage.dart**](https://github.com/suragch/minimalist_state_management_timer_app/blob/master/lib/services/storage_service/shared_preferences_storage.dart):
@@ -405,11 +405,11 @@ While that interface could be implemented with a database or web API, I decided 
 import 'package:shared_preferences/shared_preferences.dart';  
 import 'storage_service.dart';class SharedPreferencesStorage extends StorageService {  
   static const time_left_key = 'time_left';  @override  
-  Future<int?> **getTimeLeft**() async {  
+  Future<int?> getTimeLeft() async {  
     final prefs = await SharedPreferences.getInstance();  
     return prefs.getInt(time_left_key);  
   }  @override  
-  Future<void> **saveTimeLeft**(int seconds) async {  
+  Future<void> saveTimeLeft(int seconds) async {  
     final prefs = await SharedPreferences.getInstance();  
     prefs.setInt(time_left_key, seconds);  
   }  
@@ -419,19 +419,19 @@ Then I registered `SharedPreferencesStorage` with GetIt by adding it to the `
 ```dart
 void setupGetIt() {  
 ...  
-getIt.registerLazySingleton<**StorageService**>(  
-() => **SharedPreferencesStorage**()  
+getIt.registerLazySingleton<StorageService>(  
+() => SharedPreferencesStorage()  
 );  
 }
 ```
 After that I could access and use it in the `TimeLeftNotifier` class in [**time_left_notifier.dart**](https://github.com/suragch/minimalist_state_management_timer_app/blob/master/lib/pages/timer_page/notifiers/time_left_notifier.dart):
 ```dart
 class TimeLeftNotifier extends ValueNotifier<String> {  
-**final _storageService = getIt<StorageService>();**  
+final _storageService = getIt<StorageService>();  
   
 void pause() {  
 ...  
-**_storageService.saveTimeLeft(_currentTimeLeft);**  
+_storageService.saveTimeLeft(_currentTimeLeft);  
 }  
 ...  
 }
@@ -512,6 +512,8 @@ Clone the [timer app](https://github.com/suragch/minimalist_state_management_ti
 
 
 [Another good read](https://medium.com/@chooyan/reinventing-provider-understand-flutter-and-inheritedwidget-underhood-4c833e37a636) - Reinventing provider
+[[Reinventing-provider]]
+
 # Conclusion
 
 All of the state management solutions that I have seen so far (except for `setState`) work in basically the same way. They take the app state and logic and separate it from the UI by putting it in a new class. In addition to that, they provide a way for the UI to rebuild when the state changes. The minimalist method I’ve presented here does all of that but without a third-party state management package. GetIt _is_ a third-party package, but I’m not calling it a state management solution because you’re only using it to get a reference to a Dart class. You could even replace GetIt with a singleton if you wanted to. However, an advantage of GetIt over a singleton is that GetIt is easier to test.
@@ -530,3 +532,6 @@ Thank you to the following people who have influenced my thinking with regard to
 -   **Scott Stoll**, from [Flutter Community](https://medium.com/flutter-community). Watching [Flutter: ValueNotifier Simplified, “Explain it to me like I’m 5”](https://www.youtube.com/watch?v=Jx7JzP3-KYE) helped me to finally start to understand `ValueNotifier`. Even though I take a slightly different approach than is presented in that video, there are many similarities.
 -   **Bat-Orgil**, from [Bolorsoft](https://bolorsoft.com/) company. When I asked him what state management solution he used, he told me he just used `ValueListenableBuilder`. I tried it and realized that it was simple to use and eliminated the need for the third-party builder widgets I was using at the time. (Since then, though, Bat-Orgil has switched to Bloc and is happy with it.)
 -   **Uncle Bob Martin**, author of [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) and [Clean Architecture](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164). The separation of the architecture into different layers is a big thing he promotes. I still wonder if I need to add another two layers for use cases and business rules, but I haven’t gotten that far yet. [Reso Coder has](https://resocoder.com/flutter-clean-architecture-tdd/).
+### Refer other documents related to state management and architecture
+[[weather-app-suragh-minimal-state]]
+[[App-architecture-with-riverpod]]

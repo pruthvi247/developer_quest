@@ -490,5 +490,5 @@ scott stoll EL5
 - https://github.com/ScottS2017/valuenotifier_simplified/blob/master/lib/ui_page.dart
 - https://www.youtube.com/watch?v=Jx7JzP3-KYE
 - https://brewyourtech.com/complete-guide-to-valuenotifier-in-flutter/
-- https://medium.com/flutter-ease/4-approaches-to-write-a-reactive-widget-in-flutter-without-using-statefulwidget-96e9a947b97d
-- 
+- https://medium.com/flutter-ease/4-approaches-to-write-a-reactive-widget-in-flutter-without-using-statefulwidget-96e9a947b97d 
+	

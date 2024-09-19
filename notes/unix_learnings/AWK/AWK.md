@@ -14,3 +14,4 @@ Running an awk program
 #####  Other good resources:
 https://www.linode.com/docs/guides/introduction-to-awk/
 https://linuxhandbook.com/awk-command-tutorial/
+![[Pasted image 20240627084532.png]]

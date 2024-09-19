@@ -497,12 +497,12 @@ Shark actions: {Action.eat, Action.swim}
 Difference between factory constructor and static method:
 
 
+https://codewithandrea.com/tips/futures-await-unawaited-ignore/?ref=dailydev
+![[Pasted image 20240917135514.png]]
 
 
 
-
-
-
+![[Pasted image 20240919190727.png]]
 
 
 

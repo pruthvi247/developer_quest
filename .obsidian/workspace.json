@@ -4,59 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "2c46a90dd928e290",
+        "id": "8e79493968fbaa9c",
         "type": "tabs",
         "children": [
           {
-            "id": "c2073c05ab44bb8e",
+            "id": "00c87f96f0dfbe00",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "4cd2a680eb3df049",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "457300c6dc5f462a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9d9a9454eaa5b75e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Diving-into-riverpod-remirousselet.md",
+                "file": "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -106,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 306.50390243530273
+    "width": 317.50390243530273
   },
   "right": {
     "id": "05d70312eebde015",
@@ -122,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md",
+                "file": "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md",
+                "file": "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md"
+                "file": "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md"
               }
             }
           },
@@ -195,52 +158,53 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "4cd2a680eb3df049",
+  "active": "00c87f96f0dfbe00",
   "lastOpenFiles": [
-    "NLL/self-study/module-3/01-topic-strategic-priorities.md",
-    "notes/flutter_points/flutter_articles/blogs/Flutter-bits.md",
-    "notes/flutter_points/flutter_articles/blogs/Attachments/Pasted image 20240526000032.png",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Diving-into-riverpod-remirousselet.md",
-    "notes/flutter_points/flutter_articles/blogs/pragmatic-flutter-arch-riverpod.md",
-    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md",
-    "notes/articles/misc_articles/random.md",
-    "NLL/self-study/module-3",
-    "notes/articles/misc_articles/Attachments/Pasted image 20240512123145.png",
-    "notes/articles/misc_articles/Attachments",
-    "notes/book_points/SoftwareDev Books.md",
-    "notes/networking/computer_networks.md",
-    "notes/networking/Attachments/Pasted image 20240502103104.png",
-    "notes/unix_learnings/unix_learnings.md",
-    "notes/networking/osimodel.md",
-    "notes/networking/Attachments/Pasted image 20240422102059.png",
-    "notes/networking/Attachments/Pasted image 20240422102001.png",
-    "notes/networking/Attachments/Pasted image 20240422101831.png",
-    "notes/networking/base-64-working.md",
-    "notes/networking/Attachments/Pasted image 20240422101818.png",
-    "notes/unix_learnings/regEx.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190920.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190853.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190802.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/flutter_shortcuts.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190740.png",
     "notes/flutter_points/flutter_articles/flutter_misc/flutter_tips_codewithAdrea.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Dart_mixins_quickbird.pdf",
-    "NLL/self-study/module-2/Topic-1-Finance/01-Accounting.md",
-    "NLL/self-study/module-2/Topic-1-Finance/02-understanding-financial-statement.md",
-    "NLL/self-study/module-2/Topic-1-Finance/03-leader-session-anand-rao.md",
-    "NLL/self-study/module-2/Topic-1-Finance/Attachments/Pasted image 20240411145452.png",
-    "NLL/self-study/module-2/Topic-1-Finance/Attachments/Pasted image 20240411145352.png",
-    "NLL/self-study/module-2/Topic-1-Finance/Attachments/Pasted image 20240411145032.png",
-    "notes/shortcuts/vs_code_shotcuts.md",
-    "notes/DB/01-sql.md",
-    "notes/DB/Attachments",
-    "NLL/self-study/module-2/Topic-1-Finance/Attachments",
-    "notes/unix_learnings/git_learnings.md",
-    "NLL/self-study/module-2/Topic-1-Finance",
-    "NLL/self-study/module-2",
-    "NLL/self-study/05-week/01-Conflict-management.md",
-    "notes/copilot-tips.md",
-    "notes/flutter_points/flutter_articles/blogs/Element-Flutter-Under-the-Hood.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/1-Introduction.md",
-    "NLL/self-study/05-week/Attachments",
-    "NLL/self-study/05-week",
-    "notes/DB"
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190727.png",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/weather-app-suragh-minimal-state.md",
+    "notes/dockerAndKube/docker/Blog-dockert-tips.md",
+    "notes/dockerAndKube/docker/docker-mumshad-muhmad.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240917135514.png",
+    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240917135454.png",
+    "Untitled 1.md",
+    "Untitled.md",
+    "notes/dockerAndKube/docker/Attachments/Pasted image 20240910082028.png",
+    "notes/dockerAndKube/docker/Attachments/Pasted image 20240910081700.png",
+    "notes/dockerAndKube/docker/Attachments/Pasted image 20240910081633.png",
+    "notes/dockerAndKube/docker/Attachments/Pasted image 20240910081307.png",
+    "notes/dockerAndKube/docker/Attachments",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+    "notes/flutter_points/flutter_articles/blogs/Theming/Color Schemes-flutter.md",
+    "notes/flutter_points/flutter_articles/blogs/Theming/Attachments",
+    "notes/flutter_points/flutter_articles/blogs/Greg-perry-LifeCycleHandling.md",
+    "notes/flutter_points/flutter_articles/blogs/Theming",
+    "notes/UX/Forms.md",
+    "notes/UX/Attachments",
+    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/2-Kubernetes-CKA-Core-Concepts.pdf",
+    "notes/UX",
+    "others/design_patterns.md",
+    "others/Attachments",
+    "notes/flutter_points/flutter_articles/Error-handling.md",
+    "notes/flutter_points/flutter_articles/flutter_misc/Flutter-Generics.md",
+    "NLL/self-study/module-3/Marketing-Foundations.md",
+    "notes/unix_learnings/AWK/AWK.md",
+    "notes/unix_learnings/AWK/Attachments",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
+    "notes/flutter_points/flutter_articles/issues_solutions/EasyPushNotifications withFlutterandFirebaseCloudMessaging.pdf",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/freecodecamp_org_Provider_Pattern_Flutter.pdf",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/App-architecture-with-riverpod.md",
+    "notes/flutter_points/flutter_articles/blogs/Render-objects.md",
+    "NLL/self-study/module-3/04-topic-managing-energy.md",
+    "notes/networking/network_layer.md",
+    "notes/networking/osimodel.md",
+    "notes/networking/computer_networks.md",
+    "notes/networking/lost-in-network.md"
   ]
 }

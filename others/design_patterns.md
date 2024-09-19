@@ -98,7 +98,8 @@ Builder Pattern:
 --------------
 [Source : https://www.codeproject.com/Articles/1156619/Builder-Design-Pattern-with-Demo] - good example, and also refere to [https://medium.com/@ajinkyabadve/builder-design-patterns-in-java-1ffb12648850]
 
-
+[bytebyte-go](https://blog.bytebytego.com/p/ep17-design-patterns-cheat-sheet)
+![[Pasted image 20240709120612.png]]
 
 
 

@@ -10,3 +10,5 @@ There are 5 components of the SQL language:
     
 - TCL: transaction control language, such as COMMIT, ROLLBACK
 ![[Pasted image 20240403141643.png]]
+[source-bytebytego](https://blog.bytebytego.com/p/ep114-7-must-know-strategies-to-scale)
+![[Pasted image 20240603103448.png]]
