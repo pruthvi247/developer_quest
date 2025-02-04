@@ -1,4 +1,5 @@
-[Source ](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1)
+[Source ](https://suragch.medium.com/flutter-state-management-for-
+minimalists-4c71a2f2f0c1)
 [Github](https://github.com/suragch/minimalist_state_management_timer_app/blob/master/lib/main.dart)
 
 The biggest challenge for me when coming to Flutter was learning state management. People were saying Provider and Bloc and ScopedModel and Redux and MobX and…I had no idea what they were talking about. As time passed the list of state management solutions continued to grow.

@@ -4,19 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "8e79493968fbaa9c",
+        "id": "ab7a9f41a1490de0",
         "type": "tabs",
         "children": [
           {
-            "id": "00c87f96f0dfbe00",
+            "id": "7a0a457a343f7af0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md",
+                "file": "notes/unix_learnings/Linux-for-beginners.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "icon": "lucide-file",
+              "title": "Linux-for-beginners"
             }
           }
         ]
@@ -39,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -48,13 +52,15 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "vscode",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -62,7 +68,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -85,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md",
+                "file": "notes/unix_learnings/Linux-for-beginners.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +101,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Linux-for-beginners"
             }
           },
           {
@@ -102,10 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/Theming/Design-System-from-scratch-flutter.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Design-System-from-scratch-flutter"
             }
           },
           {
@@ -116,7 +128,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -125,8 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md"
-              }
+                "file": "notes/flutter_points/flutter_articles/blogs/Theming/Design-System-from-scratch-flutter.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Design-System-from-scratch-flutter"
             }
           },
           {
@@ -138,7 +154,9 @@
                 "sortOrder": "frequency",
                 "showSearch": false,
                 "searchQuery": ""
-              }
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
             }
           }
         ]
@@ -158,53 +176,53 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "00c87f96f0dfbe00",
+  "active": "7a0a457a343f7af0",
   "lastOpenFiles": [
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190920.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190853.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190802.png",
+    "notes/unix_learnings/Attachments/Pasted image 20250204154953.png",
+    "notes/unix_learnings/Attachments/Pasted image 20250204154916.png",
+    "notes/unix_learnings/Attachments/Pasted image 20250204153340.png",
+    "notes/flutter_points/flutter_articles/blogs/Expanding-Text-Flutter.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/gregperry-itsnotflutter.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments/Pasted image 20250130115547.png",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/Attachments/Pasted image 20250130115540.png",
+    "notes/networking/network_layer.md",
+    "notes/networking/Attachments/Pasted image 20250120101300.png",
+    "notes/networking/lost-in-network.md",
+    "notes/unix_learnings/git_learnings.md",
+    "notes/unix_learnings/Linux-for-beginners.md",
+    "notes/unix_learnings/Attachments/Pasted image 20241217135225.png",
+    "notes/unix_learnings/unix_learnings.md",
+    "notes/flutter_points/flutter_articles/blogs/Theming/Design-System-from-scratch-flutter.md",
+    "notes/flutter_points/flutter_articles/blogs/Theming/Attachments/Pasted image 20241209132721.png",
+    "notes/flutter_points/flutter_articles/blogs/Theming/Attachments/Pasted image 20241209132144.png",
+    "notes/flutter_points/flutter_articles/blogs/Theming/Attachments/Pasted image 20241209131904.png",
+    "notes/flutter_points/flutter_articles/blogs/Theming/Attachments/Pasted image 20241209131712.png",
+    "notes/flutter_points/flutter_articles/blogs/Theming/Color Schemes-flutter.md",
+    "notes/shortcuts/vs_code_shotcuts.md",
+    "NLL/Rishab-tripati-the-alchemy-of-leadership.md",
+    "others/design_patterns.md",
+    "Untitled.md",
+    "Untitled 1.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
+    "2024-11-01.md",
+    "notes/shortcuts/mac_shortcuts.md",
+    "notes/unix_learnings/linux_essentials_for_hackers.md",
+    "notes/unix_learnings/log-processing-commands.md",
+    "notes/unix_learnings/linux_essentials_for_hackers.md.md",
+    "notes/unix_learnings/regEx.md",
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/weather-app-suragh-minimal-state.md",
     "notes/flutter_points/flutter_articles/flutter_misc/flutter_shortcuts.md",
     "notes/flutter_points/flutter_articles/flutter_misc/01-flutter-tips.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190740.png",
     "notes/flutter_points/flutter_articles/flutter_misc/flutter_tips_codewithAdrea.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240919190727.png",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/weather-app-suragh-minimal-state.md",
-    "notes/dockerAndKube/docker/Blog-dockert-tips.md",
-    "notes/dockerAndKube/docker/docker-mumshad-muhmad.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240917135514.png",
-    "notes/flutter_points/flutter_articles/flutter_misc/Attachments/Pasted image 20240917135454.png",
-    "Untitled 1.md",
-    "Untitled.md",
-    "notes/dockerAndKube/docker/Attachments/Pasted image 20240910082028.png",
-    "notes/dockerAndKube/docker/Attachments/Pasted image 20240910081700.png",
-    "notes/dockerAndKube/docker/Attachments/Pasted image 20240910081633.png",
-    "notes/dockerAndKube/docker/Attachments/Pasted image 20240910081307.png",
     "notes/dockerAndKube/docker/Attachments",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/MinimalStatemanagement.md",
-    "notes/flutter_points/flutter_articles/blogs/Theming/Color Schemes-flutter.md",
     "notes/flutter_points/flutter_articles/blogs/Theming/Attachments",
-    "notes/flutter_points/flutter_articles/blogs/Greg-perry-LifeCycleHandling.md",
     "notes/flutter_points/flutter_articles/blogs/Theming",
-    "notes/UX/Forms.md",
     "notes/UX/Attachments",
     "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/2-Kubernetes-CKA-Core-Concepts.pdf",
     "notes/UX",
-    "others/design_patterns.md",
     "others/Attachments",
-    "notes/flutter_points/flutter_articles/Error-handling.md",
-    "notes/flutter_points/flutter_articles/flutter_misc/Flutter-Generics.md",
-    "NLL/self-study/module-3/Marketing-Foundations.md",
-    "notes/unix_learnings/AWK/AWK.md",
     "notes/unix_learnings/AWK/Attachments",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/get_it_package_how_it_works.md",
     "notes/flutter_points/flutter_articles/issues_solutions/EasyPushNotifications withFlutterandFirebaseCloudMessaging.pdf",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/freecodecamp_org_Provider_Pattern_Flutter.pdf",
-    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/App-architecture-with-riverpod.md",
-    "notes/flutter_points/flutter_articles/blogs/Render-objects.md",
-    "NLL/self-study/module-3/04-topic-managing-energy.md",
-    "notes/networking/network_layer.md",
-    "notes/networking/osimodel.md",
-    "notes/networking/computer_networks.md",
-    "notes/networking/lost-in-network.md"
+    "notes/flutter_points/flutter_articles/blogs/provider_package_blogs/freecodecamp_org_Provider_Pattern_Flutter.pdf"
   ]
 }

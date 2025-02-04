@@ -233,9 +233,22 @@ How to add a group and a user to group:
 	> It allows you to monitor the strength and frequency of attacks
 	> Fail2Ban can be setup to block IP address automatically based on specific parameters.
 
+[source](https://www.howtogeek.com/ive-been-using-these-core-linux-commands-wrong-for-years/?ref=dailydev)
+copies aren't exactly the same as the originals. Their modification times, owners, and permissions may all be different.
+These times only differ by a minute, but the problem can be much greater. The fix is simple: use -a (for "archive") instead of -R:
+> cp -a source destination
 
+If you use the command line regularly, you'll be used to navigating directories using cd. You're probably also used to toggling between two directories, going back and forth to run a command in one, inspect files in another, and so on. Maybe you even [use the history command to repeat yourself](https://www.howtogeek.com/465243/how-to-use-the-history-command-on-linux/).
 
+Each time you run "cd -" it will flip between the previous two directories you navigated to, making it very fast and easy to move back and forth.
 
+### Diskusage
+To ease your struggles, try reducing the amount of output. The `--max-depth` option lets you specify how many levels of directories du will report on. You'll still get accurate total sizes, just with less detailed information about every directory in the tree. For example, check the total sizes of just immediate sub-directories with this command:
+> du -h --max-depth 1
+
+whole directory structure with bash's expansions, e.g. if you need to structure your data into years and categories
+
+> mkdir -p /blog/{2021,2022,2023,2024}/{fashion,cars,hardware,travel}
 
 
 
