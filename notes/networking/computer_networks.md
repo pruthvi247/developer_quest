@@ -407,10 +407,129 @@ computers on the Internet can exchange information—such as ICMP messages—in 
 ![[Pasted image 20240502103104.png]]
 
 
+## DHCP
+**Static vs Dynamic
+
+Every network attached device (computer, printer, switch, etc) needs to have an address on the network, much like your home has an address.
+
+If you want to mail a letter to your cousin in another state, you write their address on the envelope, and the postal system knows how to deliver the letter based on the information provided. Without this address, the post office has no idea where to deliver the letter. A home address is a static IP address. It doesn't change. It's something that was given to that house when it was built and meant to be permanent and non changing forever. This is like a static IP address. (For the purposes of this explanation, I'm saying static IP addresses can't change, but they really can and it's a manual process.)
+
+Now, what if you weren't given a permanent address forever. How would you mail letters without an address? You can't. This is where DHCP comes in. DHCP is technically a protocol, but for this explanation that doesn't matter. It exists/is setup as a service on a server or as built in functionality of a router.
+
+DHCP is dynamic, it can change, and does change. Computers and other network devices constantly connect and disconnect. You take your laptop from work, and you bring it home. This is why your laptop can't have a static address (like your home). If everything was static, we would run out of IP Addresses because every time a device connects to a network, that would be it's IP address forever. Also, every network has the potential to have a different subnet. Your work subnet may be 192.168.1.x, and your home may be 192.168.0.x -- we need your laptop IP address to be able to change based on where it is, and the subnet used at that location. IP addresses are finite. So we need a way to release this address after some time as well. If the device is still connected, it will get that IP Address again, if it's not connected, the address will be released so another computer can take it.
+
+The server or router not only issues these addresses, but keeps track of all the IP addresses it gives to all the connected devices. It maintains that time frame where it will release the IP address, and if the computer still needs it, it will give it again.**
+- DHCP takes a pool of IPs and assigns them upon request. Could be public or private
+    
+- NAT (typically) takes routable IP data and sends it through to a non-routable IP (like the ubiquitous 192.168.0.0 block)
+DHCP and NAT serve distinct purposes in network management. **DHCP focuses on dynamic IP address allocation.** It automatically assigns IP addresses, gateways, and DNS settings to devices on a network, simplifying network management and ensuring unique device identifiers.
+
+In contrast, **NAT operates at the network gateway or [router](https://www.baeldung.com/cs/routers-vs-switches-vs-access-points) level.** It acts as an intermediary between a local network and the Internet, concealing the internal IP addresses of local devices. As a result, they share a single public IP address when communicating with external servers. So, **NAT’s primary role is to manage the interaction between a local network and the Internet by mapping internal addresses to a single public address.**
+
+### Subnetting
+![[Pasted image 20250220230449.png]]
+### [How Subnet Masks Work](https://www.freecodecamp.org/news/subnet-cheat-sheet-24-subnet-mask-30-26-27-29-and-other-ip-address-cidr-network-references/)
+
+Subnet masks function as a sort of filter for an IP address. With a subnet mask, devices can look at an IP address, and figure out which parts are the network bits and which are the host bits.
+
+Then using those things, it can figure out the best way for those devices to communicate.
+
+If you've poked around the network settings on your router or computer, you've likely seen this number: `255.255.255.0`.
+
+If so, you've seen a very common subnet mask for simple home networks.
+
+Like IPv4 addresses, subnet masks are 32 bits. And just like converting an IP address into binary, you can do the same thing with a subnet mask.
+
+For example, here's our chart from earlier:
+
+|128|64|32|16|8|4|2|1|
+|---|---|---|---|---|---|---|---|
+|x|x|x|x|x|x|x|x|
+
+Now let's convert the first octet, 255:
+
+|128|64|32|16|8|4|2|1|
+|---|---|---|---|---|---|---|---|
+|1|1|1|1|1|1|1|1|
+
+Pretty simple, right? So any octet that's `255` is just `11111111` in binary. This means that `255.255.255.0` is really `11111111.11111111.11111111.00000000` in binary.
+
+Now let's look at a subnet mask and IP address together and calculate which parts of the IP address are the network bits and host bits.
+
+Here are the two in both decimal and binary:
+
+| Type        | Decimal       | Binary                              |
+| ----------- | ------------- | ----------------------------------- |
+| IP address  | 192.168.0.101 | 11000000.10101000.00000000.01100101 |
+| Subnet mask | 255.255.255.0 | 11111111.11111111.11111111.00000000 |
+
+With the two laid out like this, it's easy to separate `192.168.0.101` into network bits and host bits.
+
+Whenever a bit in a binary subnet mask is 1, then the same bit in a binary IP address is part of the network, not the host.
+
+Since the octet `255` is `11111111` in binary, that whole octet in the IP address is part of the network. So the first three octets, `192.168.0`, is the network portion of the IP address, and `101` is the host portion.
+
+In other words, if the device at `192.168.0.101` wants to communicate with another device, using the subnet mask it knows that anything with the IP address `192.168.0.xxx` is on the same local network.
+
+Another way to express this is with a network ID, which is just the network portion of the IP address. So the network ID of the address `192.168.0.101` with a subnet mask of `255.255.255.0` is `192.168.0.0`.
+
+And it's the same for the other devices on the local network (`192.168.0.102`, `192.168.0.103`, and so on).
+## What is a subnet mask?
+[source](https://community.spiceworks.com/t/subnetting-for-dummies/970210/1)
+
+A subnet mask defines which chunk of an IP address is the host ID and which portion is the subnet network ID.
+
+IP subnetting is a method for dividing a single, physical network into smaller subnetworks, or subnets for short. This is accomplished by manipulating the 32-bits available in an IPv4 address, which can be divided into two parts: a network ID and a host ID. The number of bits you assign to the network ID allows for either a greater number of total subnetworks or more hosts (devices that can be part of each subnet).
+
+## How does subnetting work?
+
+When you subnet a network, how does traffic find its way to its destination? Let’s imagine a network, with a gateway IP address of 139.12.0.0. Now imagine we split this network into two smaller subnets. The following diagram describes how the network looks with these two subnets.
+
+If you’re wondering about how to actually subnet an IPv4 network, check out [How to calculate a subnet mask](https://community.spiceworks.com/networking/articles/2491-how-to-calculate-a-subnet-mask) . You might also be interested in [Advanced subnetting](https://community.spiceworks.com/networking/articles/2487-advanced-subnetting) . And if you’re just looking for tips on how to keep subnetting concepts straight, check our our [Subnet Cheat Sheet](https://static.spiceworks.com/attachments/cms/0000/1873/subnet-cheat-sheet.pdf) .
+
+So the outside world considers the device at 139.12.16.15 to be a part of the 139.12.0.0 network. Any packet sent to this device will be delivered to the router at 139.12.0.0. The router then does the work of figuring out the subnet portion of the host ID to decide whether the packet goes to subnet 16 or subnet 28.
+
+
+### What Does CIDR Mean and What is CIDR Notation?
+
+**CIDR** stands for Classless Inter-Domain Routing, and is used in IPv4, and more recently, IPv6 routing.
+### **Classless addresses**
+
+Classless or Classless Inter-Domain Routing (CIDR) addresses use variable length subnet masking (VLSM) to alter the ratio between the network and host address bits in an IP address. A subnet mask is a set of identifiers that returns the network address’s value from the IP address by turning the host address into zeroes. 
+
+A VLSM sequence allows network administrators to break down an IP address space into subnets of various sizes. Each subnet can have a flexible host count and a limited number of IP addresses. A CIDR IP address appends a suffix value stating the number of network address prefix bits to a normal IP address.
+
+For example, 192.0.2.0/24 is an IPv4 CIDR address where the first 24 bits, or 192.0.2, is the network address.
+
+Classless Inter-Domain Routing (CIDR) is a method of IP address allocation and IP routing that allows for more efficient use of IP addresses. CIDR is based on the idea that IP addresses can be allocated and routed based on their network prefix rather than their class, which was the traditional way of IP address allocation.
+
+CIDR addresses are represented using a slash notation, which specifies the number of bits in the network prefix. For example, an IP address of 192.168.1.0 with a prefix length of 24 would be represented as 192.168.1.0/24. This notation indicates that the first 24 bits of the IP address are the network prefix and the remaining 8 bits are the host identifier.
+
+Source : https://www.youtube.com/watch?v=vv4y_uOneC0
+
+![[Pasted image 20250221001608.png]]
+![[Pasted image 20250221001748.png]]
+![[Pasted image 20250221002007.png]]
+![[Pasted image 20250221002320.png]]
+![[Pasted image 20250221002342.png]]
+![[Pasted image 20250221002635.png]]
+![[Pasted image 20250221002659.png]]
+![[Pasted image 20250221003240.png]]
+![[Pasted image 20250221003409.png]]
+![[Pasted image 20250221003518.png]]
 
 
 
 
+
+
+
+
+## Topics
+DHCP
+DNS
+OSI Model
+NAT - Network address translation
 
 
 

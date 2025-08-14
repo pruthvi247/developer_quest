@@ -77,3 +77,13 @@ Layer 7 - Application: The microphone and speaker on the telephone that let you 
 
 
 ![[protocols-8-in-1.gif]]
+
+![[Pasted image 20250320105615.png]]
+Transport layer -> Segments
+Network Layer -> Packets
+Datat Link Layer -> Frames
+
+![[Pasted image 20250320112842.png]]
+
+
+Data link layer address  -> MAC address (Network address of each device) -> Router will transfer frames to particular device based on mac address

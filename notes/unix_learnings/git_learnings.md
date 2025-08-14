@@ -1,6 +1,8 @@
 ======================================================
 https://www.vogella.com/tutorials/Git/article.html
 ======================================================
+
+![[Pasted image 20250524125852.png]]
 A file in the working tree of a Git repository can have different states. These states are the following:
 
 	> untracked: the file is not tracked by the Git repository. This means that the file never staged nor committed.
@@ -264,7 +266,7 @@ Add all but not few files
 git add --all -- ':!js-learnings/HTML-CSS-Responsive-Udemy/0-all-design-guidelines.pdf' ':!js-learnings/HTML-CSS-Responsive-Udemy/0-theory-lectures-v2-SMALLER.pdf'
 ```
 
-### Clone subdirectory of a repo
+
 # Initialize a new Git repository
 git init
 
@@ -273,9 +275,11 @@ git remote add origin <repository-url>
 
 # Enable sparse-checkout
 git sparse-checkout init --cone
-
+### Clone subdirectory of a repo
 # Set the subdirectory you want to clone
 git sparse-checkout set <subdirectory-path>
 
 # Pull the content of the subdirectory
 git pull origin main
+
+git pull origin main --rebase
