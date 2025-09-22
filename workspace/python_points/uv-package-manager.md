@@ -180,3 +180,53 @@ uv add requests --dry-run
 uv tree
 
 ```
+
+## `uv add` - Project Dependency Management
+
+**Purpose**: Manages dependencies for your **project** or application.[](https://github.com/astral-sh/uv/issues/9219)
+
+- **Scope**: Project-level dependency management
+    
+- **Environment**: Works within your project's virtual environment
+    
+- **Configuration**: Updates `pyproject.toml` and `uv.lock` automatically
+    
+- **Resolution**: Uses universal/cross-platform dependency resolution
+    
+- **Use Case**: Adding libraries your application depends on
+
+**What happens**: UV adds the package to your `pyproject.toml`, updates the `uv.lock` lockfile with cross-platform resolution, and installs it in your project's `.venv`.
+
+## `uv tool` - Global CLI Tool Management
+
+**Purpose**: Manages **command-line tools** that you want available system-wide.[](https://docs.astral.sh/uv/guides/tools/)
+
+- **Scope**: System-wide tool installation
+    
+- **Environment**: Creates isolated environments for each tool
+    
+- **Configuration**: No project files involved
+    
+- **Isolation**: Complete separation between tools and your projects
+    
+- **Use Case**: Installing CLI utilities like `ruff`, `black`, `pytest`, `mypy`
+
+**What happens**: UV creates an isolated environment for the tool in a global location (e.g., `~/.local/share/uv/tools/`) and makes the executable available in your PATH. The tool can be run from anywhere but doesn't affect your project dependencies.
+
+## `uv pip install` - Environment-Level Package Installation
+
+**Purpose**: **pip-compatible** package installation for direct environment manipulation.[](https://github.com/astral-sh/uv/issues/9219)
+
+- **Scope**: Environment-level (whatever environment is currently active)
+    
+- **Environment**: Installs into the current virtual environment
+    
+- **Configuration**: No automatic file updates
+    
+- **Compatibility**: Drop-in replacement for `pip install`
+    
+- **Use Case**: Legacy workflows, quick testing, or when you need pip-like behaviour
+**What happens**: UV installs the package directly into the currently active virtual environment without updating any project configuration files. This is the "lower-level" API that mimics pip behaviour.
+
+The choice between these commands depends on whether you're managing **project dependencies** (`uv add`), **global tools** (`uv tool`), or need **pip compatibility**
+

@@ -37,17 +37,17 @@ There are several interesting protocols to be mentioned here, all of which will 
 
 ARP helps us with this, we can send a request to which the owner of the IP address can respond. The message structure:
 
-|   |   |
-|---|---|
-|2 bytes|hardware type (`0x0001` for Ethernet)|
-|2 bytes|protocol type (`0x0800` for IP)|
-|1 byte|hardware length (`0x06` for Ethernet, because the MAC address is 6 bytes long)|
-|1 byte|protocol length (`0x04` for IP, because an IP (v4) address is 4 bytes long)|
-|2 bytes|operation (`0x0001` is the request, `0x0002` is the response)|
-|6 bytes|sender's hardware address|
-|4 bytes|sender's protocol address|
-|6 bytes|recipient's hardware address|
-|4 bytes|recipient's protocol address|
+|         |                                                                                |
+| ------- | ------------------------------------------------------------------------------ |
+| 2 bytes | hardware type (`0x0001` for Ethernet)                                          |
+| 2 bytes | protocol type (`0x0800` for IP)                                                |
+| 1 byte  | hardware length (`0x06` for Ethernet, because the MAC address is 6 bytes long) |
+| 1 byte  | protocol length (`0x04` for IP, because an IP (v4) address is 4 bytes long)    |
+| 2 bytes | operation (`0x0001` is the request, `0x0002` is the response)                  |
+| 6 bytes | sender's hardware address                                                      |
+| 4 bytes | sender's protocol address                                                      |
+| 6 bytes | recipient's hardware address                                                   |
+| 4 bytes | recipient's protocol address                                                   |
 
 Let's add IP addresses to the above diagram and see a concrete example of a request and response.
 ![[Pasted image 20231006104059.png]]

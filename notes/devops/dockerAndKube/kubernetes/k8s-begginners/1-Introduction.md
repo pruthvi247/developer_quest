@@ -32,3 +32,4 @@ kubelet is the agent that runs on each node in the cluster. The agent is respons
 
 ![[Pasted image 20230924112905.png]]
 ![[Pasted image 20240312132301.png]]
+![[Pasted image 20250908100313.png]]
