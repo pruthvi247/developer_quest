@@ -1,0 +1,13 @@
+ - ansible
+ - gitlab
+ -  all secrets are encrypted
+ - Access control
+ - Audit - logs of access and changes to secrets
+ - dynamic secrets - short lived
+ - api driven
+ - secrets engine - kv, Databases,Aws,Rabbitmq
+ - PKI public key infrastructure
+ - ssh key dynamycally - pem file
+ - k8 service account tokens
+ - 
+ - 

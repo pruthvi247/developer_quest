@@ -4,19 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "4ad11c911fca15e1",
+        "id": "d041da6b3271806c",
         "type": "tabs",
         "children": [
           {
-            "id": "c5cf658514a8bada",
+            "id": "a9691af20615d159",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -38,8 +36,11 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
-              }
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -54,7 +55,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -62,14 +65,16 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 342.5026054382324
+    "width": 396.5
   },
   "right": {
     "id": "05d70312eebde015",
@@ -85,7 +90,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
+                "file": "notes/networking/cli-commands.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,7 +98,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for cli-commands"
             }
           },
           {
@@ -102,10 +109,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md",
+                "file": "notes/flutter_points/flutter_articles/blogs/Theming/Design-System-from-scratch-flutter.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Design-System-from-scratch-flutter"
             }
           },
           {
@@ -116,7 +125,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -125,8 +136,24 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "notes/flutter_points/flutter_articles/blogs/remiRousselet-dartpad.md"
-              }
+                "file": "notes/flutter_points/flutter_articles/blogs/Theming/Design-System-from-scratch-flutter.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Design-System-from-scratch-flutter"
+            }
+          },
+          {
+            "id": "ab39a75e1d0747a3",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
             }
           }
         ]
@@ -138,61 +165,62 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
+      "graph:Open graph view": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false
     }
   },
   "active": "7ed38db13feae60d",
   "lastOpenFiles": [
-    "notes/flutter_points/flutter_shortcuts.md",
-    "notes/flutter_points/flutter_learnings.md",
-    "notes/flutter_points/flutter_learnings_1.md",
-    "notes/flutter_points/flutter_issues.md",
-    "notes/flutter_points/flutter_articles/blogs/Pragmatic-guide-to-buildcontext-flutter.md",
-    "notes/flutter_points/flutter_articles/blogs/greg_Notification_Android_iOS_Flutter.pdf",
-    "notes/flutter_points/flutter_articles/blogs/philip-hracek- mythical-designer-developer.md",
-    "notes/dockerAndKube/kubernetes/cka/5-Application-lifecycle-management.md",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/5-CKA-Application-Lifecycle-Management.pdf",
-    "notes/shortcuts/shortcuts.md.md",
-    "notes/unix_learnings/unix_learnings.md",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912202016.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912201921.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912201559.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912180459.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912175341.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/configmap-diagram.gif",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912175353.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912124708.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912124539.png",
-    "notes/dockerAndKube/kubernetes/cka/Attachments/Pasted image 20230912124513.png",
-    "Pasted image 20230912124418.png.md",
-    "notes/networking/osimodel.md",
-    "notes/networking/computer_networks.md",
-    "notes/dockerAndKube/kubernetes/cka/4-logging-monitoring.md",
-    "notes/dockerAndKube/docker/DockerimagesForDebugging-martinheinz.md",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/4-CKALogging-Monitoring.pdf",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-Kubernetescheduling.pdf",
-    "notes/dockerAndKube/kubernetes/cka/3-Scheduling.md",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-StaticPods.pdf",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-Networking.pdf",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/3-CKA-taints-tolerations.pdf",
-    "notes/dockerAndKube/kubernetes/cka/2-Core-Concepts.md",
-    "notes/dockerAndKube/kubernetes/examples/voting-app/Readme.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
-    "notes/dockerAndKube/kubernetes/metaleap-k8s-troubleshooting.pdf",
-    "notes/dockerAndKube/kubernetes/ckad/ckad_1.md",
-    "notes/git_learnings.md",
-    "notes/dockerAndKube/docker/Blog-dockert-tips.md",
-    "2023-08-30.md",
-    "README.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
-    "notes/dockerAndKube/kubernetes/cka/cka-kodekloud-resources/2-kubernetes-cka-networking.pdf",
-    "notes/dockerAndKube/kubernetes/cka/1-Architecture.md",
-    "notes/dockerAndKube/kubernetes/k8s-begginners/5-pods.md",
-    "notes/dockerAndKube/kubernetes/cka/cka-notes/1-Architecture.md"
+    "workspace/flutter_points/flutter_articles/flutter_misc/addpostframecallback.md",
+    "workspace/flutter_points/flutter_articles/blogs/statemanagement/MinimalStatemanagement.md",
+    "workspace/flutter_points/flutter_articles/blogs/statemanagement/weather-app-suragh-minimal-state.md",
+    "notes/networking/practical-networking/practical-networking.md",
+    "notes/networking/practical-networking/Attachments/Pasted image 20251007115740.png",
+    "notes/networking/practical-networking/Attachments",
+    "notes/networking/practical-networking/Packet-travelling.md",
+    "notes/networking/misc/network_layer.md",
+    "notes/networking/misc/lost-in-network.md",
+    "notes/networking/practical-networking/plurasight-course/01-basics.md",
+    "notes/networking/Attachments/Pasted image 20250903204643.png",
+    "notes/devops/chaos-eng/01-ChaosEngineering.md",
+    "notes/devops/chaos-eng",
+    "notes/devops/Untitled.md",
+    "others/Untitled.md",
+    "notes/devops/chaos-eng/Attachments/Pasted image 20250314205448.png",
+    "notes/devops/chaos-eng/Attachments/Pasted image 20250314180740.png",
+    "notes/devops/chaos-eng/Attachments/Pasted image 20250314175826.png",
+    "notes/devops/chaos-eng/Attachments/Pasted image 20250314175700.png",
+    "notes/devops/chaos-eng/Attachments/Pasted image 20250314175511.png",
+    "notes/images/patterns-project-arch.jpeg",
+    "notes/images/Pasted image 20230829132120.png",
+    "notes/images/Pasted image 20230829131737.png",
+    "workspace/design_patterns/design_patterns.md",
+    "2025-05-31.md",
+    "2024-11-01.md",
+    "others/Prompts/copilot-tips.md",
+    "notes/networking/misc/Aws-Networking-basics.md",
+    "notes/networking/misc/base-64-working.md",
+    "notes/networking/misc/osimodel.md",
+    "notes/networking/misc",
+    "notes/networking/practical-networking/plurasight-course",
+    "notes/interview-prep/intro.md",
+    "notes/networking/practical-networking",
+    "workspace/python_points/python_interview/misc-python.md",
+    "workspace/python_points/python_interview/Attachments",
+    "workspace/python_points/uv-package-manager.md",
+    "others/Prompts/01-deeplearning-metaprompts.md",
+    "others/Prompts/01-Own-Prompts.md",
+    "notes/interview-prep/query-breakup.md",
+    "others/Prompts",
+    "NLL/self-study/02-week/01-b2b-market-stategy.md",
+    "NLL/Rishab-tripati-the-alchemy-of-leadership.md",
+    "notes/devops/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
+    "notes/interview-prep/Attachments",
+    "notes/interview-prep"
   ]
 }
