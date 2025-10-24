@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "27588823d35b1b9e",
+        "id": "d041da6b3271806c",
         "type": "tabs",
         "children": [
           {
-            "id": "c73fee30e065c35b",
+            "id": "a9691af20615d159",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -74,7 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 317.50390243530273
+    "width": 396.5
   },
   "right": {
     "id": "05d70312eebde015",
@@ -174,11 +174,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "c73fee30e065c35b",
+  "active": "7ed38db13feae60d",
   "lastOpenFiles": [
+    "workspace/flutter_points/flutter_articles/flutter_misc/addpostframecallback.md",
+    "workspace/flutter_points/flutter_articles/blogs/statemanagement/MinimalStatemanagement.md",
+    "workspace/flutter_points/flutter_articles/blogs/statemanagement/weather-app-suragh-minimal-state.md",
+    "notes/networking/practical-networking/practical-networking.md",
+    "notes/networking/practical-networking/Attachments/Pasted image 20251007115740.png",
+    "notes/networking/practical-networking/Attachments",
+    "notes/networking/practical-networking/Packet-travelling.md",
+    "notes/networking/misc/network_layer.md",
+    "notes/networking/misc/lost-in-network.md",
     "notes/networking/practical-networking/plurasight-course/01-basics.md",
     "notes/networking/Attachments/Pasted image 20250903204643.png",
-    "notes/networking/practical-networking/Packet-travelling.md",
     "notes/devops/chaos-eng/01-ChaosEngineering.md",
     "notes/devops/chaos-eng",
     "notes/devops/Untitled.md",
@@ -191,18 +199,15 @@
     "notes/images/patterns-project-arch.jpeg",
     "notes/images/Pasted image 20230829132120.png",
     "notes/images/Pasted image 20230829131737.png",
-    "notes/images/Pasted image 20230816094302.png",
     "workspace/design_patterns/design_patterns.md",
     "2025-05-31.md",
     "2024-11-01.md",
     "others/Prompts/copilot-tips.md",
-    "notes/networking/misc/lost-in-network.md",
     "notes/networking/misc/Aws-Networking-basics.md",
     "notes/networking/misc/base-64-working.md",
     "notes/networking/misc/osimodel.md",
     "notes/networking/misc",
     "notes/networking/practical-networking/plurasight-course",
-    "notes/networking/practical-networking/practical-networking.md",
     "notes/interview-prep/intro.md",
     "notes/networking/practical-networking",
     "workspace/python_points/python_interview/misc-python.md",
@@ -214,12 +219,8 @@
     "others/Prompts",
     "NLL/self-study/02-week/01-b2b-market-stategy.md",
     "NLL/Rishab-tripati-the-alchemy-of-leadership.md",
-    "notes/devops/dockerAndKube/kubernetes/k8s-begginners/1-Introduction.md",
-    "notes/devops/dockerAndKube/kubernetes/k8s-begginners/7-services.md",
     "notes/devops/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
-    "notes/networking/misc/computer_networks.md",
     "notes/interview-prep/Attachments",
-    "notes/interview-prep",
-    "NLL/temp"
+    "notes/interview-prep"
   ]
 }

@@ -64,3 +64,4 @@ But client/server don't know whether the other has the same keys
 - From this point, all data between browser and server travels encrypted using symmetric session keys (fast, efficient).
 - Session keys are temporary (ephemeral)—discarded after the session closes, supporting forward secrecy in modern TLS versions.[](https://www.globalsign.com/en/blog/all-about-tls-handshakes)
 ![[Pasted image 20250908163622.png]]
+![[Pasted image 20251007115740.png]]
