@@ -11,6 +11,20 @@
             "id": "a9691af20615d159",
             "type": "leaf",
             "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/llm/01-misc.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "01-misc"
+            }
+          },
+          {
+            "id": "9dbb34c4a8d09241",
+            "type": "leaf",
+            "state": {
               "type": "empty",
               "state": {},
               "icon": "lucide-file",
@@ -74,7 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 396.5
+    "width": 256.5
   },
   "right": {
     "id": "05d70312eebde015",
@@ -174,8 +188,33 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7ed38db13feae60d",
+  "active": "a9691af20615d159",
   "lastOpenFiles": [
+    "notes/llm/Attachments/Pasted image 20251202152840.png",
+    "notes/llm/Attachments",
+    "notes/cyborg/system/01-misc.md",
+    "notes/llm/01-misc.md",
+    "notes/llm",
+    "notes/cyborg/system/Attachments/Pasted image 20251202110852.png",
+    "notes/cyborg/system/Attachments",
+    "notes/interview-prep/intro.md",
+    "notes/cyborg/system",
+    "notes/cyborg",
+    "notes/interview-prep/Attachments/Pasted image 20251127184009.png",
+    "others/cloud/01-cloudflare-vs-aws.md",
+    "others/cloud/Attachments/Pasted image 20251127183918.png",
+    "others/cloud/Attachments",
+    "notes/networking/misc/osimodel.md",
+    "others/cloud",
+    "notes/networking/misc/Attachments/Pasted image 20251103105958.png",
+    "notes/networking/misc/lost-in-network.md",
+    "notes/networking/misc/Attachments/Pasted image 20251103105946.png",
+    "others/freelance/01-grow-hub.md",
+    "notes/networking/misc/latency-throughput.md",
+    "others/freelance",
+    "notes/networking/misc/Attachments/Pasted image 20251026104350.png",
+    "notes/networking/misc/Attachments/Pasted image 20251026104228.png",
+    "notes/networking/misc/Attachments",
     "workspace/flutter_points/flutter_articles/flutter_misc/addpostframecallback.md",
     "workspace/flutter_points/flutter_articles/blogs/statemanagement/MinimalStatemanagement.md",
     "workspace/flutter_points/flutter_articles/blogs/statemanagement/weather-app-suragh-minimal-state.md",
@@ -184,43 +223,18 @@
     "notes/networking/practical-networking/Attachments",
     "notes/networking/practical-networking/Packet-travelling.md",
     "notes/networking/misc/network_layer.md",
-    "notes/networking/misc/lost-in-network.md",
     "notes/networking/practical-networking/plurasight-course/01-basics.md",
     "notes/networking/Attachments/Pasted image 20250903204643.png",
     "notes/devops/chaos-eng/01-ChaosEngineering.md",
-    "notes/devops/chaos-eng",
     "notes/devops/Untitled.md",
     "others/Untitled.md",
     "notes/devops/chaos-eng/Attachments/Pasted image 20250314205448.png",
-    "notes/devops/chaos-eng/Attachments/Pasted image 20250314180740.png",
-    "notes/devops/chaos-eng/Attachments/Pasted image 20250314175826.png",
-    "notes/devops/chaos-eng/Attachments/Pasted image 20250314175700.png",
-    "notes/devops/chaos-eng/Attachments/Pasted image 20250314175511.png",
-    "notes/images/patterns-project-arch.jpeg",
-    "notes/images/Pasted image 20230829132120.png",
-    "notes/images/Pasted image 20230829131737.png",
     "workspace/design_patterns/design_patterns.md",
     "2025-05-31.md",
     "2024-11-01.md",
     "others/Prompts/copilot-tips.md",
     "notes/networking/misc/Aws-Networking-basics.md",
     "notes/networking/misc/base-64-working.md",
-    "notes/networking/misc/osimodel.md",
-    "notes/networking/misc",
-    "notes/networking/practical-networking/plurasight-course",
-    "notes/interview-prep/intro.md",
-    "notes/networking/practical-networking",
-    "workspace/python_points/python_interview/misc-python.md",
-    "workspace/python_points/python_interview/Attachments",
-    "workspace/python_points/uv-package-manager.md",
-    "others/Prompts/01-deeplearning-metaprompts.md",
-    "others/Prompts/01-Own-Prompts.md",
-    "notes/interview-prep/query-breakup.md",
-    "others/Prompts",
-    "NLL/self-study/02-week/01-b2b-market-stategy.md",
-    "NLL/Rishab-tripati-the-alchemy-of-leadership.md",
-    "notes/devops/dockerAndKube/kubernetes/k8s-begginners/KubernetesForBeginners-MumshadMannambeth.pdf",
-    "notes/interview-prep/Attachments",
-    "notes/interview-prep"
+    "workspace/python_points/python_interview/misc-python.md"
   ]
 }

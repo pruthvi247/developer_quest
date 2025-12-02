@@ -119,7 +119,7 @@ The following protocol is IP, which finally gives us IP addresses and the abilit
 |4 bytes|sender's IP address|
 |4 bytes|recipient's IP address|
 ||data|
-
+![[Pasted image 20251103105946.png]]
 #### Internet Control Message Protocol
 
 Since we mentioned ping earlier, we should mention ICMP. It's a strange beast, it belongs to the network layer, but it feels like it should be in the transport layer. It's wrapped into an IP packet in the same way as UDP or TCP, only it's not for data transport. In the case of ping, the message is structured somewhat like this:

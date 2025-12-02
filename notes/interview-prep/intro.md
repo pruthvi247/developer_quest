@@ -8,3 +8,5 @@ Solving the problem, writing a small README, and committing everything doesn’t
 hashing
 uuid
 oauth, bearer
+
+![[Pasted image 20251127184009.png]]

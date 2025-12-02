@@ -327,3 +327,4 @@ Payload: "Hello"
 - Upon receipt, the receiver performs the **same checksum calculation** over the received segment, including header and data.
 - If the calculated checksum matches the checksum value in the header, the data is considered **valid and intact**.
 - If not, the segment is discarded or a retransmission is requested, ensuring **reliability**.
+![[Pasted image 20251103105958.png]]
