@@ -8,30 +8,35 @@
         "type": "tabs",
         "children": [
           {
-            "id": "a9691af20615d159",
+            "id": "9dbb34c4a8d09241",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/llm/01-misc.md",
+                "file": "notes/llm/02-rag.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "01-misc"
+              "title": "02-rag"
             }
           },
           {
-            "id": "9dbb34c4a8d09241",
+            "id": "59909d39a47a0325",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "notes/networking/misc/network_layer.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "network_layer"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -63,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#L2",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -188,12 +193,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "a9691af20615d159",
+  "active": "59909d39a47a0325",
   "lastOpenFiles": [
+    "notes/networking/misc/Attachments/Pasted image 20260101123618.png",
+    "notes/networking/misc/Attachments/Pasted image 20260101123552.png",
+    "notes/networking/misc/osimodel.md",
+    "Untitled 1.base",
+    "Untitled.base",
+    "notes/cyborg/system/02-Latency-numbers.md",
+    "notes/llm/Attachments/Pasted image 20251203172916.png",
+    "notes/llm/01-Context-management.md",
+    "notes/llm/02-rag.md",
+    "notes/llm/Attachments/Screenshot 2025-12-03 at 2.21.30 PM.png",
     "notes/llm/Attachments/Pasted image 20251202152840.png",
     "notes/llm/Attachments",
     "notes/cyborg/system/01-misc.md",
-    "notes/llm/01-misc.md",
     "notes/llm",
     "notes/cyborg/system/Attachments/Pasted image 20251202110852.png",
     "notes/cyborg/system/Attachments",
@@ -204,7 +218,6 @@
     "others/cloud/01-cloudflare-vs-aws.md",
     "others/cloud/Attachments/Pasted image 20251127183918.png",
     "others/cloud/Attachments",
-    "notes/networking/misc/osimodel.md",
     "others/cloud",
     "notes/networking/misc/Attachments/Pasted image 20251103105958.png",
     "notes/networking/misc/lost-in-network.md",
@@ -213,28 +226,20 @@
     "notes/networking/misc/latency-throughput.md",
     "others/freelance",
     "notes/networking/misc/Attachments/Pasted image 20251026104350.png",
-    "notes/networking/misc/Attachments/Pasted image 20251026104228.png",
-    "notes/networking/misc/Attachments",
     "workspace/flutter_points/flutter_articles/flutter_misc/addpostframecallback.md",
     "workspace/flutter_points/flutter_articles/blogs/statemanagement/MinimalStatemanagement.md",
     "workspace/flutter_points/flutter_articles/blogs/statemanagement/weather-app-suragh-minimal-state.md",
     "notes/networking/practical-networking/practical-networking.md",
-    "notes/networking/practical-networking/Attachments/Pasted image 20251007115740.png",
-    "notes/networking/practical-networking/Attachments",
     "notes/networking/practical-networking/Packet-travelling.md",
     "notes/networking/misc/network_layer.md",
     "notes/networking/practical-networking/plurasight-course/01-basics.md",
-    "notes/networking/Attachments/Pasted image 20250903204643.png",
     "notes/devops/chaos-eng/01-ChaosEngineering.md",
     "notes/devops/Untitled.md",
     "others/Untitled.md",
-    "notes/devops/chaos-eng/Attachments/Pasted image 20250314205448.png",
     "workspace/design_patterns/design_patterns.md",
     "2025-05-31.md",
     "2024-11-01.md",
     "others/Prompts/copilot-tips.md",
-    "notes/networking/misc/Aws-Networking-basics.md",
-    "notes/networking/misc/base-64-working.md",
-    "workspace/python_points/python_interview/misc-python.md"
+    "notes/networking/misc/Aws-Networking-basics.md"
   ]
 }

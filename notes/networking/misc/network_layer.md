@@ -36,3 +36,6 @@
 7. The browser executes the JavaScript and renders the page through various steps (tokenizer, parser, render tree, layout, and painting).
     
 8. Finally, the webpage appears on your screen.
+
+![[Pasted image 20260101123552.png]]
+![[Pasted image 20260101123618.png]]
