@@ -1,0 +1,1 @@
+This is the folder for most of the blogs and notes, segregated based on the topics it falls into

@@ -381,11 +381,40 @@ CUDA performance is **resource budgeting**:
 You win by **balance**, not maxing everything.
 
 ---
+# GPU
+[source-byte-byte-go]
 
-If you want next:
+The Graphics Processing Unit was originally designed to render video games. The mathematical requirements of rendering millions of pixels are remarkably similar to deep learning since both demand massive parallelism and high-throughput floating-point arithmetic.
 
-* I can analyze a **real CUDA kernel**
-* Or show **how one bad parameter kills performance**
-* Or teach you **how Nsight Compute maps exactly to these limits**
+NVIDIA’s GPU architecture uses SIMT (Single Instruction, Multiple Threads). The fundamental unit is a group of 32 threads called a warp. All threads in a warp share a single instruction decoder, executing the same instruction simultaneously. This shared control unit saves massive silicon area, which is filled with thousands of arithmetic units instead.
 
-Just say the word.
+While modern CPUs have 16 to 64 complex cores, the NVIDIA H100 contains nearly 17,000 simpler cores. These run at lower clock speeds (1-2 GHz versus 3-6 GHz), but massive parallelism compensates for slower individual operations.
+
+Standard GPU cores execute operations on single numbers, one at a time per thread. Recognizing that AI workloads are dominated by matrix operations, NVIDIA introduced Tensor Cores starting with their Volta architecture. A Tensor Core is a specialized hardware unit that performs an entire matrix multiply-accumulate operation in a single clock cycle. While a standard core completes one floating-point operation per cycle, a Tensor Core executes a 4×4 matrix multiplication involving 64 individual operations (16 multiplies and 16 additions in the multiply step, plus 16 accumulations) instantly. This represents a 64-fold improvement in throughput for matrix operations.
+
+Tensor Cores also support mixed-precision arithmetic, which is crucial for practical AI deployment. They can accept inputs in lower precision formats like FP16 or BF16 (using half the memory of FP32) while accumulating results in higher precision FP32 to preserve numerical accuracy. This combination increases throughput and reduces memory requirements without sacrificing the precision needed for stable model training and accurate inference.
+
+To feed these thousands of compute units, GPUs use High Bandwidth Memory (HBM). Unlike DDR memory that sits on separate modules plugged into the motherboard, HBM consists of DRAM dies stacked vertically on top of each other using through-silicon vias (microscopic vertical wires). These stacks are placed on a silicon interposer directly adjacent to the GPU die, minimizing the physical distance data must travel.
+
+Such an architecture allows GPUs to achieve memory bandwidths exceeding 3,350 GB/s on the H100, more than 20 times faster than CPUs. With this bandwidth, an H100 can load a 140 GB model in roughly 0.04 seconds, enabling token generation speeds of 20 or more tokens per second. This is the difference between a stilted, frustrating interaction and a natural conversational pace.
+
+The combination of massive parallel computing and extreme memory bandwidth makes GPUs the dominant platform for AI workloads.
+
+## TPUs: Google’s Specialized Approach
+
+In 2013, Google calculated that if every user utilized voice search for just three minutes daily, they would need to double their datacenter capacity using CPUs. This led to the Tensor Processing Unit.
+
+![[Pasted image 20260120102106.png]]
+
+
+The defining feature is the systolic array, a grid of interconnected arithmetic units (256 into 256, totaling 65,536 processors). Weights are loaded into the array and remain fixed while input data flows horizontally. Each unit multiplies its stored weight by incoming data, adds to a running sum flowing vertically, and passes both values to its neighbour.
+
+![[Pasted image 20260120102239.png]]
+
+
+This design means intermediate values never touch main memory. Reading from DRAM consumes roughly 200 times more energy than multiplication. By keeping results flowing between adjacent processors, systolic arrays eliminate most memory access overhead, achieving 30 to 80 times better performance per watt than CPUs.
+
+Google’s TPU has no caches, branch prediction, out-of-order execution, or speculative prefetching. This extreme specialization means TPUs cannot run general code, but for matrix operations, the efficiency gains are substantial. Google also introduced bfloat16, which uses 8 bits for exponent (matching FP32 range) and 7 bits for mantissa. Neural networks tolerate low precision but require a wide range, making this format ideal.
+
+![[Pasted image 20260120102439.png]]
+
