@@ -27,3 +27,4 @@ Throughput measures volume per second. It is how much data successfully gets del
 19. Monitoring: Tracks metrics and logs to understand system health.
 20. Authentication & Authorization: Controls user access and verifies identity securely.
 
+![[Pasted image 20260407084803.png]]

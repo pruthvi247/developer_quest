@@ -1,3 +1,37 @@
+
+[source-blog](https://piechowski.io/post/git-commands-before-reading-code/)
+
+# The Git Commands I Run Before Reading Any Code
+
+**What Changes the Most**
+
+```bash
+git log --format=format: --name-only --since="1 year ago" | sort | uniq -c | sort -nr | head -20
+```
+
+**Who built this
+```bash
+git shortlog -sn --no-merges
+```
+
+**Where do bugs cluster**
+```bash
+git log -i -E --grep="fix|bug|broken" --name-only --format='' | sort | uniq -c | sort -nr | head -20
+```
+
+**Is This Project Accelerating or Dying**
+```bash
+git log --format='%ad' --date=format:'%Y-%m' | sort | uniq -c
+```
+
+**How Often Is the Team Firefighting**
+```bash
+git log --oneline --since="1 year ago" | grep -iE 'revert|hotfix|emergency|rollback'
+```
+
+
+
+
 ======================================================
 https://www.vogella.com/tutorials/Git/article.html
 ======================================================
@@ -317,3 +351,13 @@ git compare master...heroku/master
 ```
 
 Admittedly, `compare` is a pretty generic name for this alias. Naming things is [hard](https://jerodsanto.net/2014/09/list-all-git-commits-that-are-on-one-branch-but-arent-on-the-other/2014/08/naming-things-is-hard-lets-go-shopping/). Let me know if you have a better one!
+
+
+------------ 
+```
+```
+
+
+
+
+

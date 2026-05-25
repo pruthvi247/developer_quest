@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "8cf170f648b872e8",
+        "id": "d918f19da1e24266",
         "type": "tabs",
         "children": [
           {
-            "id": "5e246c1a9b70bfe8",
+            "id": "8dbbe4eedeb19b6a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "notes/llm/08-Anatomy-of-an-agent.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "08-Anatomy-of-an-agent"
             }
           }
         ]
@@ -90,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "notes/networking/cli-commands.md",
+                "file": "notes/networking/networking-misc/NAT-Network-Address-Translator.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for cli-commands"
+              "title": "Backlinks for NAT-Network-Address-Translator"
             }
           },
           {
@@ -174,52 +178,54 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7ed38db13feae60d",
+  "active": "8dbbe4eedeb19b6a",
   "lastOpenFiles": [
-    "notes/cyborg/system/01-misc.md",
-    "Untitled 1.base",
-    "workspace/python_points/python_articles/everything-about-python/1_kDCG2OHPSUT8SBM8n9UPkQ.png",
-    "Untitled.base",
-    "notes/readme.md",
-    "notes/devops/unix_learnings/how-to-use-ssh-file.md",
-    "project-work/readme.md.md",
-    "workspace/readme.md.md",
-    "notes/devops/cloud/cloud-things.md",
-    "notes/devops/unix_learnings/unix-file-structure.md",
-    "notes/devops/unix_learnings/Attachments/Pasted image 20260126133716.png",
-    "notes/devops/cloud/01-cloudflare-vs-aws.md",
-    "notes/llm/04-cuda.md",
-    "notes/llm/Attachments/Pasted image 20260120102439.png",
-    "notes/llm/Attachments/Pasted image 20260120102239.png",
-    "notes/llm/Attachments/Pasted image 20260120102106.png",
-    "workspace/design_patterns/blogs-design-patterns/02-message-broker-patterns.md",
-    "workspace/design_patterns/blogs-design-patterns/Attachments/Pasted image 20260119103610.png",
-    "workspace/design_patterns/blogs-design-patterns/00-design_patterns.md",
-    "workspace/design_patterns/blogs-design-patterns/01-database-sharding.md",
-    "workspace/design_patterns/blogs-design-patterns/Attachments/Pasted image 20260119103446.png",
-    "workspace/design_patterns/blogs-design-patterns/Attachments",
-    "workspace/design_patterns/blogs-design-patterns",
-    "notes/llm/Attachments/Pasted image 20260113192144.png",
+    "notes/llm/Attachments/Pasted image 20260517123758.png",
+    "notes/llm/08-Anatomy-of-an-agent.md",
+    "to-delete.md",
+    "to-delete 1.md",
+    "notes/articles/misc_articles/02-Data-base.md",
+    "Untitled.canvas",
+    "notes/articles/misc_articles/01-API-concepts.md",
+    "notes/articles/misc_articles/Attachments/Pasted image 20260429120309.png",
+    "notes/articles/misc_articles/Attachments/Pasted image 20260429120152.png",
+    "notes/devops/cloud/Attachments/Pasted image 20260429100448.png",
     "notes/devops/unix_learnings/git_learnings.md",
+    "notes/devops/devops-random/ai-devops-devsecops.md",
+    "notes/networking/networking-misc/latency-throughput.md",
+    "notes/devops/devops-random",
+    "notes/devops/Untitled.md",
+    "notes/networking/networking-misc/Attachments/Pasted image 20260407084803.png",
+    "notes/networking/networking-misc/Aws-Networking-basics.md",
+    "notes/llm/07-MCP.md",
+    "notes/llm/06-A2A-InsideGoogle.md",
+    "notes/devops/dockerAndKube/docker/docker-mumshad-muhmad.md",
+    "notes/llm/04-Business-note-on-llm.md",
     "notes/devops/git-lab/01-gitlab-runner.md",
+    "Untitled.base",
+    "Untitled 1.base",
+    "NLL/self-study/01-week/01-case-Strategy-in-todays-world.md",
+    "notes/llm/Attachments/Pasted image 20260304172043.png",
+    "notes/llm/Attachments/Pasted image 20260304171855.png",
+    "notes/llm/05-A2A-vs-langchain-agent-protocol.md",
+    "notes/llm/Attachments/Pasted image 20260304115230.png",
+    "notes/llm/Attachments/Pasted image 20260223151704.png",
+    "notes/llm/Attachments/Pasted image 20260223145656.png",
+    "notes/llm/Attachments/Pasted image 20260223145615.png",
     "notes/llm/03-Model-Evaluations.md",
     "notes/llm/02-rag.md",
-    "notes/devops/Attachments/Pasted image 20260104202716.png",
-    "notes/devops/Attachments",
-    "notes/networking/networking-misc/network_layer.md",
-    "notes/networking/networking-misc/Attachments/Pasted image 20260101123618.png",
-    "notes/networking/networking-misc/osimodel.md",
-    "notes/cyborg/system/02-Latency-numbers.md",
     "notes/llm/01-Context-management.md",
-    "notes/llm/Attachments",
-    "notes/llm",
-    "notes/cyborg/system/Attachments",
-    "notes/interview-prep/intro.md",
-    "notes/cyborg/system",
-    "notes/cyborg",
-    "notes/networking/networking-misc/lost-in-network.md",
-    "project-work/freelance/01-grow-hub.md",
-    "notes/networking/networking-misc/latency-throughput.md",
-    "workspace/flutter_points/flutter_articles/flutter_misc/addpostframecallback.md"
+    "workspace/design_patterns/blogs-design-patterns/03-Auth-patterns.md",
+    "workspace/data_structures_freeCodeCamp/dynamic-programming",
+    "notes/networking/networking-misc/NAT-Network-Address-Translator.md",
+    "notes/networking/networking-misc/Network-Troubleshooting.md",
+    "notes/networking/systems/01-memory.md",
+    "notes/networking/systems/Attachments",
+    "notes/networking/systems",
+    "notes/cyborg/system/01-misc.md",
+    "workspace/design_patterns/blogs-design-patterns/Attachments",
+    "workspace/design_patterns/blogs-design-patterns",
+    "notes/devops/Attachments",
+    "notes/llm/Attachments"
   ]
 }
