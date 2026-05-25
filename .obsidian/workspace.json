@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/llm/08-Anatomy-of-an-agent.md",
+                "file": "notes/cyborg/system/03-LDAP.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "08-Anatomy-of-an-agent"
+              "title": "03-LDAP"
             }
           }
         ]
@@ -180,8 +180,11 @@
   },
   "active": "8dbbe4eedeb19b6a",
   "lastOpenFiles": [
-    "notes/llm/Attachments/Pasted image 20260517123758.png",
+    "notes/Seculum/01-rough.md",
+    "notes/Seculum",
     "notes/llm/08-Anatomy-of-an-agent.md",
+    "notes/cyborg/system/03-LDAP.md",
+    "notes/llm/Attachments/Pasted image 20260517123758.png",
     "to-delete.md",
     "to-delete 1.md",
     "notes/articles/misc_articles/02-Data-base.md",
@@ -211,7 +214,6 @@
     "notes/llm/Attachments/Pasted image 20260304115230.png",
     "notes/llm/Attachments/Pasted image 20260223151704.png",
     "notes/llm/Attachments/Pasted image 20260223145656.png",
-    "notes/llm/Attachments/Pasted image 20260223145615.png",
     "notes/llm/03-Model-Evaluations.md",
     "notes/llm/02-rag.md",
     "notes/llm/01-Context-management.md",
@@ -222,10 +224,8 @@
     "notes/networking/systems/01-memory.md",
     "notes/networking/systems/Attachments",
     "notes/networking/systems",
-    "notes/cyborg/system/01-misc.md",
     "workspace/design_patterns/blogs-design-patterns/Attachments",
     "workspace/design_patterns/blogs-design-patterns",
-    "notes/devops/Attachments",
-    "notes/llm/Attachments"
+    "notes/devops/Attachments"
   ]
 }
