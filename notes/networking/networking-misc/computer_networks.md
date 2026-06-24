@@ -28,12 +28,7 @@ DHCP Dynamic Host Configuration Protocol:
 
 > Base band means digital signals
 
-Example application layer protocols
-
-E-Mail - IDAP4,POP3, SMTP
-Web Browser - HTTP,HTTPS
-Remote Access - SSH,Telnet
-
+```
 application layer - Data
 presentation layer - Data
 session layer - Data
@@ -42,9 +37,14 @@ transport Layer - Segment
 Network layer - packet
 Data layer - Frame
 Physical layer - bit
+```
+Example application layer protocols
+`layer 7: Application Layer`
+E-Mail - IDAP4,POP3, SMTP
+Web Browser - HTTP,HTTPS
+Remote Access - SSH,Telnet
 
-
-layer 6 - presentation layer
+`layer 6: Presentation layer`
 
 Web browser - xml ,html,javascript
 graphics Files - jpeg,gif,png
@@ -52,12 +52,12 @@ Audio/video - MPEG,mp3
 Encryption: TLS,ssl
 Text/Data : ASCII,EBCDIC
 
-Layer 5 - session layer:
+`Layer 5: Session layer:`
 > Responsible for setting up, managing and then tearing down sessions between network devices.
 > Ensure data from different application session are kept separate
 > Coordinates communication between system
 
-Layer 4 - transport layer
+`Layer 4: Transport layer`
 
 > ensures data is delivered error free and in sequence
 > segments data and reassembles correctly
@@ -65,7 +65,7 @@ Layer 4 - transport layer
 
 > Application layer can use tcp or udp protocols for communication
 
-Layer 3 - Network layer
+`Layer 3: Network layer`
 > Routing layer
 > Provides logical addressing (ip addressing)
 > places two ip addresses into a packet
@@ -75,7 +75,7 @@ Layer 3 - Network layer
 	Rout-update packets(path determinaion) - RIP,ospf,eigrp etc..
 Layer 3 devices : Routers and multilayer switches,ipv4,ipv6
 
-Layer 2 - Data link layer:
+`Layer 2: Data link layer`
 
 > The switching layer
 > Ensures that messages are delivered to the proper device on a LAN using hardware addresses
@@ -87,7 +87,7 @@ Datalink layer has two layers
 	> logical link control - llc layer
 	> Media Access Control - MAC layer
 
-Layer 1 - Physical layer
+`Layer 1: Physical layer`
 > Defines the physical and electrical medium for network communication
 
 ARP - Address resolution Protocol
@@ -517,13 +517,6 @@ Source : https://www.youtube.com/watch?v=vv4y_uOneC0
 ![[Pasted image 20250221003240.png]]
 ![[Pasted image 20250221003409.png]]
 ![[Pasted image 20250221003518.png]]
-
-
-
-
-
-
-
 
 ## Topics
 DHCP
