@@ -8,17 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "8dbbe4eedeb19b6a",
+            "id": "9d6a427fc2d65329",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "notes/networking/networking-misc/computer_networks.md",
+                "file": "notes/llm/10-ollama-model-instalaltion.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "computer_networks"
+              "title": "10-ollama-model-instalaltion"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -78,8 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 256.5,
-    "collapsed": true
+    "width": 256.5
   },
   "right": {
     "id": "05d70312eebde015",
@@ -179,54 +180,54 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8dbbe4eedeb19b6a",
+  "active": "9d6a427fc2d65329",
   "lastOpenFiles": [
+    "notes/llm/Attachments/Pasted image 20260905124549.png",
+    "notes/llm/Attachments/Pasted image 20260905123430.png",
+    "notes/llm/Attachments/Pasted image 20260905123046.png",
+    "notes/llm/Attachments/Pasted image 20260905123037.png",
+    "notes/llm/Attachments/Pasted image 20260905122758.png",
+    "notes/llm/Attachments/Pasted image 20260905122659.png",
+    "notes/llm/~$lama-model-installation-guide-kali.docx",
+    "notes/llm/ollama-model-installation-guide-kali.docx",
+    "notes/cyborg/system/03-LDAP.md",
+    "notes/llm/10-ollama-model-instalaltion.md",
+    "notes/llm/09-coding-agent-setup-design.md",
+    "NLL/youth-council-2026/02-imp-points.md",
+    "notes/llm/09-architecture.md",
+    "notes/llm/Attachments/Pasted image 20260901090304.png",
+    "notes/llm/08-Anatomy-of-an-agent.md",
+    "NLL/youth-council-2026/04-progress.md",
+    "NLL/youth-council-2026/00-check.md",
+    "NLL/youth-council-2026/100-rough.md",
+    "NLL/youth-council-2026/03-consolidated.md",
+    "NLL/youth-council-2026/01-pb-statement.md",
+    "NLL/youth-council-2026/Attachments/Pasted image 20260723133326.png",
+    "NLL/youth-council-2026/Attachments/Pasted image 20260723133313.png",
+    "NLL/youth-council-2026/Attachments/Pasted image 20260723133246.png",
+    "NLL/youth-council-2026/Attachments",
+    "NLL/Rishab-tripati-the-alchemy-of-leadership.md",
+    "NLL/self-study/01-week/03-Mergers-And-Acquisitions-Divestiture.md",
+    "NLL/self-study/01-week/02-competitive-strategy.md",
+    "NLL/self-study/01-week/01-case-Strategy-in-todays-world.md",
+    "NLL/self-study/01-week/01-business-strategy.md",
+    "NLL/youth-council-2026",
+    "notes/articles/misc_articles/03-LST-AST.md",
+    "notes/networking/networking-misc/computer_networks.md",
     "notes/networking/networking-misc/cloudflare-nginx-dns-ssl-setup.md",
     "notes/networking/networking-misc/network_layer.md",
     "notes/networking/practical-networking/Packet-travelling.md",
     "notes/networking/practical-networking/practical-networking.md",
     "notes/cyborg/system/01-misc.md",
-    "notes/cyborg/system/03-LDAP.md",
     "notes/Seculum/01-rough.md",
     "notes/Seculum",
-    "notes/llm/08-Anatomy-of-an-agent.md",
     "notes/llm/Attachments/Pasted image 20260517123758.png",
     "to-delete.md",
-    "to-delete 1.md",
-    "notes/articles/misc_articles/02-Data-base.md",
     "Untitled.canvas",
-    "notes/articles/misc_articles/01-API-concepts.md",
-    "notes/articles/misc_articles/Attachments/Pasted image 20260429120309.png",
-    "notes/articles/misc_articles/Attachments/Pasted image 20260429120152.png",
-    "notes/devops/cloud/Attachments/Pasted image 20260429100448.png",
-    "notes/devops/unix_learnings/git_learnings.md",
-    "notes/devops/devops-random/ai-devops-devsecops.md",
-    "notes/networking/networking-misc/latency-throughput.md",
     "notes/devops/devops-random",
-    "notes/devops/Untitled.md",
-    "notes/networking/networking-misc/Attachments/Pasted image 20260407084803.png",
-    "notes/networking/networking-misc/Aws-Networking-basics.md",
-    "notes/llm/07-MCP.md",
-    "notes/llm/06-A2A-InsideGoogle.md",
-    "notes/devops/dockerAndKube/docker/docker-mumshad-muhmad.md",
-    "notes/llm/04-Business-note-on-llm.md",
-    "notes/devops/git-lab/01-gitlab-runner.md",
     "Untitled.base",
     "Untitled 1.base",
-    "NLL/self-study/01-week/01-case-Strategy-in-todays-world.md",
-    "notes/llm/Attachments/Pasted image 20260304172043.png",
-    "notes/llm/Attachments/Pasted image 20260304171855.png",
-    "notes/llm/05-A2A-vs-langchain-agent-protocol.md",
-    "notes/llm/Attachments/Pasted image 20260304115230.png",
-    "notes/llm/Attachments/Pasted image 20260223151704.png",
-    "notes/llm/Attachments/Pasted image 20260223145656.png",
-    "notes/llm/03-Model-Evaluations.md",
-    "notes/llm/02-rag.md",
     "workspace/data_structures_freeCodeCamp/dynamic-programming",
-    "notes/networking/systems/Attachments",
-    "notes/networking/systems",
-    "workspace/design_patterns/blogs-design-patterns/Attachments",
-    "workspace/design_patterns/blogs-design-patterns",
-    "notes/devops/Attachments"
+    "notes/networking/systems/Attachments"
   ]
 }
